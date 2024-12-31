@@ -1,10 +1,14 @@
-import networkx as nx
-import torch
-from ogb.nodeproppred import PygNodePropPredDataset
-from torch_geometric.utils import k_hop_subgraph
-import pandas as pd
-import random
 
+import torch
+import pandas as pd
+import networkx as nx
+
+from torch_geometric.utils import k_hop_subgraph
+
+from .utils import CustomPygNodePropPredDataset
+from .utils.sampling import k_hop_sampled_subgraph
+
+from .base_generator import InputGraphGenerator
 
 class OgbnArxivGraphGenerator(InputGraphGenerator):
     """
@@ -12,22 +16,26 @@ class OgbnArxivGraphGenerator(InputGraphGenerator):
     from the OGBN-Arxiv dataset using NetworkX format.
     """
 
-    def __init__(self, num_hops=2):
+    def __init__(self, num_hops=2, sampling=False, neighbor_size:int=None, random_seed:int=None):
         self.num_hops = num_hops
-        self.dataset = None
+        self.sampling = sampling
+        self.neighbor_size = neighbor_size
+        self.random_seed = random_seed
+        if self.sampling:
+            assert neighbor_size is not None, "neighbor_size should be specified"
+            assert random_seed is not None, "random_seed should be specified"
+
         self.graph = None
         self.all_idx = None
-        self.paper_title_mapping = {}
-        self.node_id_mapping = None
-        self.labels = []
+        self.load_data()
 
     def load_data(self):
         """
         Load the OGBN-Arxiv dataset and preprocess required mappings.
         """
         # Load dataset and graph
-        self.root = '../../../../../data'
-        dataset = PygNodePropPredDataset(name='ogbn-arxiv', root=self.root)
+        self.root = '/home/tlin4/projects/LangGFM/data' # run script in LangGFM/
+        dataset = CustomPygNodePropPredDataset(name='ogbn-arxiv', root=self.root)
         self.graph = dataset[0]
         
         # Get split indices
@@ -49,10 +57,18 @@ class OgbnArxivGraphGenerator(InputGraphGenerator):
                     self.paper_mag_id_title_mapping[int(paper_id)] = title
                 except:
                     continue
+       
 
         # Load node-to-paper ID mapping
-        self.paper_node_id_mag_id_mapping = pd.read_csv(f'{self.root}/ogbn_arxiv/mapping/nodeidx2paperid.csv',index_col=0)
-        
+        self.paper_node_id_mag_id_mapping = pd.read_csv(f'{self.root}/ogbn_arxiv/mapping/nodeidx2paperid.csv')
+        self.paper_node_id_mag_id_mapping = dict(zip(self.paper_node_id_mag_id_mapping['node idx'].to_list(),self.paper_node_id_mag_id_mapping['paper id'].to_list()))
+
+        # Map node_id to paper_title
+        self.node_id_to_title_mapping = {
+            node_id: self.paper_mag_id_title_mapping[mag_id]
+            for node_id, mag_id in self.paper_node_id_mag_id_mapping.items()
+            if mag_id in self.paper_mag_id_title_mapping
+        }
 
         # Define category labels
         self.labelidx2arxivcategeory = [
@@ -98,30 +114,41 @@ class OgbnArxivGraphGenerator(InputGraphGenerator):
             "Discrete Mathematics",
         ]
 
-    def generate_graph(self, sample_id: int, num_hops: int = 2) -> tuple[nx.Graph, dict]:
+    def generate_graph(self, sample_id: int, ) -> tuple[nx.Graph, dict]:
         """
         Generate a k-hop subgraph for the given sample ID in NetworkX format.
         """
+        assert sample_id >= 0, "sample id should be greater than zero"
+        assert sample_id < self.graph.num_nodes, f"sample id should be smaller than {self.graph.num_nodes}"
+
         if self.graph is None or self.all_idx is None:
             raise ValueError("Dataset not loaded. Call `load_data` first.")
 
-        # Generate k-hop subgraph
-        # src_to_tgt_subset, src_to_tgt_edge_index, _, src_to_tgt_edge_mask = k_hop_subgraph(
-        #     node_idx=sample_id, num_hops=self.num_hops, edge_index=self.graph.edge_index, 
-        #     relabel_nodes=False, flow='source_to_target', directed=False
-        # )
-        # tgt_to_src_subset, tgt_to_src_edge_index, _, tgt_to_src_edge_mask = k_hop_subgraph(
-        #     node_idx=sample_id, num_hops=self.num_hops, edge_index=self.graph.edge_index, 
-        #     relabel_nodes=False, flow='target_to_source', directed=False
-        # )
-        src_to_tgt_subset, src_to_tgt_edge_index, _, src_to_tgt_edge_mask = k_hop_subgraph(
-            node_idx = sample_id, num_hops=num_hops, edge_index=self.graph.edge_index, 
-            relabel_nodes=False, flow='source_to_target',directed=False
-        )
-        tgt_to_src_subset, tgt_to_src_edge_index, _, tgt_to_src_edge_mask = k_hop_subgraph(
-            node_idx = sample_id, num_hops=num_hops, edge_index=self.graph.edge_index, 
-            relabel_nodes=False, flow='target_to_source',directed=False
-        )
+
+        if self.sampling:
+            # Generate k-hop subgraph with neighbor sampling
+            src_to_tgt_subset, src_to_tgt_edge_index, _, src_to_tgt_edge_mask = k_hop_sampled_subgraph(
+                node_idx = sample_id, num_hops=self.num_hops, edge_index=self.graph.edge_index, 
+                relabel_nodes=False, flow='source_to_target',directed=False, 
+                neighbor_size=self.neighbor_size, random_seed=self.random_seed
+            )
+
+            tgt_to_src_subset, tgt_to_src_edge_index, _, tgt_to_src_edge_mask = k_hop_sampled_subgraph(
+                node_idx = sample_id, num_hops=self.num_hops, edge_index=self.graph.edge_index, 
+                relabel_nodes=False, flow='target_to_source',directed=False,
+                neighbor_size=self.neighbor_size, random_seed=self.random_seed
+            )
+        else:
+            # Generate k-hop subgraph
+            src_to_tgt_subset, src_to_tgt_edge_index, _, src_to_tgt_edge_mask = k_hop_subgraph(
+                node_idx = sample_id, num_hops=self.num_hops, edge_index=self.graph.edge_index, 
+                relabel_nodes=False, flow='source_to_target',directed=False
+            )
+
+            tgt_to_src_subset, tgt_to_src_edge_index, _, tgt_to_src_edge_mask = k_hop_subgraph(
+                node_idx = sample_id, num_hops=self.num_hops, edge_index=self.graph.edge_index, 
+                relabel_nodes=False, flow='target_to_source',directed=False
+            )
         
         # Combine edges and nodes
         sub_graph_edge_index = self.graph.edge_index.T[torch.logical_or(src_to_tgt_edge_mask, tgt_to_src_edge_mask)].T
@@ -130,14 +157,14 @@ class OgbnArxivGraphGenerator(InputGraphGenerator):
         # Create NetworkX graph
         G = nx.MultiDiGraph()
         node_mapping = {raw_node_idx: new_node_idx for new_node_idx, raw_node_idx in enumerate(sub_graph_nodes)}
-        label = self.labels[self.graph.y[sample_id][0].item()]
+        # print(f"{node_mapping=}")
+        label = self.labelidx2arxivcategeory[self.graph.y[sample_id][0].item()]
         
         # Add nodes with attributes
         for raw_node_idx, new_node_idx in node_mapping.items():
             paper_year = self.graph.node_year[raw_node_idx][0].item()
-            paper_title = self.paper_title_mapping[
-                self.node_id_mapping.at[raw_node_idx, 'paper id']
-            ]
+            # print(f"{raw_node_idx=}")
+            paper_title = self.node_id_to_title_mapping[raw_node_idx]
             G.add_node(new_node_idx, title=paper_title, year=paper_year)
         
         # Add edges
@@ -148,6 +175,8 @@ class OgbnArxivGraphGenerator(InputGraphGenerator):
         
         # Metadata
         metadata = {
+            "sample_id": "sample_id",
+            "num_hop"
             "query": f"Please infer the subject area of the query paper (node ID {node_mapping[sample_id]}).",
             "label": label,
             "target_node": node_mapping[sample_id]
