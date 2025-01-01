@@ -4,6 +4,7 @@ import pandas as pd
 import networkx as nx
 
 from torch_geometric.utils import k_hop_subgraph
+from torch_geometric.transforms import RemoveDuplicatedEdges, ToUndirected, RemoveSelfLoops
 
 from .utils import CustomPygNodePropPredDataset
 from .utils.sampling import k_hop_sampled_subgraph
@@ -38,7 +39,17 @@ class OgbnArxivGraphGenerator(InputGraphGenerator):
         # Load dataset and graph
         self.root = '/home/tlin4/projects/LangGFM/data' # run script in LangGFM/
         dataset = CustomPygNodePropPredDataset(name='ogbn-arxiv', root=self.root)
+        
         self.graph = dataset[0]
+        # print(f"{self.graph=}")
+        # self.graph = RemoveSelfLoops()(self.graph)
+        # print(f"{self.graph=} after remove self loops")
+        # transform = RemoveDuplicatedEdges()
+        # self.graph = transform(self.graph)
+        # print(f"{self.graph=} after remove duplicated edges")
+        # to_undirected = ToUndirected()
+        # self.graph = to_undirected(self.graph)
+        # print(f"{self.graph=} after to undirected")
         
         # Get split indices
         split_idx = dataset.get_idx_split()

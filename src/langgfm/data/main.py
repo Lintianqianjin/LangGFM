@@ -3,7 +3,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../src')))
 from langgfm.data.graph_generator.base_generator import InputGraphGenerator
-from langgfm.data.graph_to_text.nxg_to_text import GraphTextualizer
+from langgfm.data.graph_text_transformation.nxg_to_text import GraphTextualizer
 
 import json
 
@@ -40,20 +40,27 @@ def pipeline(datasets = ['ogbn_arxiv'], formats = ['json','graphml','gml','table
 
     # create the GraphTextualizer instance
     converter = GraphTextualizer()
-    
+    dataset_type_path = os.path.join(os.path.dirname(__file__), '../configs/dataset_type.json')
+    with open(dataset_type_path, "r") as f:
+        dataset_type = json.load(f)
+            
     # iter over datasets and formats to generate graph_text
     for dataset in datasets:
         for format in formats:
             for split, sample_id_list in dataset_splits[dataset].items():
-                data_list = []             
+                data_list = []
                 for sample_id in tqdm(sample_id_list, desc=f"Generating {dataset} {split} {format}"):
                     graph, metadata = generators[dataset].generate_graph(sample_id=sample_id)
-                    graph_text = converter.export(graph, format=format)
+                    graph_text = converter.export(graph, format=format, **dataset_type[dataset])
                     data_list.append({"graph_text": graph_text, "metadata": metadata})
                 
-                # save the data_list to a file with the format: {dataset}_{split}_{format}.json
-                filename = os.path.join(os.path.dirname(__file__), f'./outputs/{dataset}_{split}_{format}.json')
-                with open(filename, 'w') as f:
+                # save the data_list to a file with the path {dataset}/{format}/{split}.json
+                # if the directory does not exist, create it
+                if not os.path.exists(os.path.join(os.path.dirname(__file__), f'./outputs/{dataset}/{format}')):
+                    os.makedirs(os.path.join(os.path.dirname(__file__), f'./outputs/{dataset}/{format}'))
+                # create the filename
+                filename = os.path.join(os.path.dirname(__file__), f'./outputs/{dataset}/{format}/{split}.json')
+                with open(filename, 'w', encoding='utf-8') as f:
                     json.dump(data_list, f, indent=4)
 
 # write main function to run the pipeline function and print the result

@@ -1,5 +1,6 @@
 import re
 import io
+import os
 import json
 import numpy as np
 import pandas as pd
@@ -8,12 +9,7 @@ import networkx as nx
 
 from tabulate import tabulate
 
-
-class MyJsonEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, np.int64):
-            return int(obj)
-        return super().default(obj)
+from .utils.custom_json import MyJsonEncoder
     
 class GraphTextualizer:
     """
@@ -35,7 +31,7 @@ class GraphTextualizer:
         graph_text = json.dumps(graph_data, cls=MyJsonEncoder, indent=2)
         return graph_text
 
-    def __to_markdown_table(self, graph: nx.Graph, undirected=False) -> str:
+    def __to_markdown_table(self, graph: nx.Graph, directed=True) -> str:
         """
         Export the graph to a Markdown table format.
 
@@ -76,8 +72,8 @@ class GraphTextualizer:
             if (src, tgt) not in added: 
                 # src, tgt = edge['source'], edge['target']
                 keys = list(edge.keys())
-                if undirected:
-                    sub_edge_feat = {'edge': f"{edge['source']} ↔ {edge['target']}"}
+                if not directed:
+                    sub_edge_feat = {'edge': f"{edge['source']} <-> {edge['target']}"}
                     for key in keys:
                         if key != "source" and key != "target":
                             sub_edge_feat[key] = edge[key]
@@ -87,7 +83,7 @@ class GraphTextualizer:
                     added.add((src, tgt))
                     added.add((tgt, src))
                 else:
-                    sub_edge_feat = {'edge': f"{edge['source']} → {edge['target']}"}
+                    sub_edge_feat = {'edge': f"{edge['source']} -> {edge['target']}"}
                     for key in keys:
                         if key != "source" and key != "target":
                             sub_edge_feat[key] = edge[key]
@@ -95,7 +91,6 @@ class GraphTextualizer:
                     edge_feature_list.append(sub_edge_feat)
 
                     added.add((src, tgt))
-                    # added.add((tgt, src))
 
         edge_df = pd.DataFrame(edge_feature_list)
         edge_df = edge_df.fillna("Unknown")
@@ -109,7 +104,7 @@ class GraphTextualizer:
         # Replace consecutive hyphens with a single hyphen
         edge_markdown_table = re.sub('-+', '-', edge_markdown_table)
         
-        return f"Node Table:\n{node_markdown_table}\n\nEdge Table (`↔` means undirected and `→` means directed.):\n{edge_markdown_table}"
+        return f"Node Table:\n{node_markdown_table}\n\nEdge Table (`<->` means undirected and `->` means directed.):\n{edge_markdown_table}"
 
 
     def __to_graphml(self, graph: nx.Graph) -> str:
@@ -137,7 +132,7 @@ class GraphTextualizer:
         return graph_text
 
 
-    def export(self, graph: nx.Graph, format: str) -> str:
+    def export(self, graph: nx.Graph, format: str, **kwargs) -> str:
         """
         Export the graph in the specified format.
 
@@ -150,7 +145,7 @@ class GraphTextualizer:
         if format == "json":
             return self.__to_json(graph)
         elif format == "table":
-            return self.__to_markdown_table(graph)
+            return self.__to_markdown_table(graph, **kwargs)
         elif format == "graphml":
             return self.__to_graphml(graph)
         elif format == "gml":
@@ -161,20 +156,22 @@ class GraphTextualizer:
 # 示例使用
 if __name__ == "__main__":
     # 创建一个示例图
-    G = nx.Graph()
+    G = nx.MultiDiGraph()
     G.add_node(1, name="Alice", age=30)
     G.add_node(2, name="Bob", age=25)
     G.add_edge(1, 2, weight=5.0)
 
     # 使用 GraphTextualizer
-    print("JSON format:")
-    print(GraphTextualizer.to_json(G))
-
-    print("\nMarkdown format:")
-    print(GraphTextualizer.to_markdown(G))
-
-    print("\nGraphML format:")
-    print(GraphTextualizer.to_graphml(G))
-
-    print("\nGML format:")
-    print(GraphTextualizer.to_gml(G))
+    textualizer = GraphTextualizer()
+    # 导出为 JSON 格式
+    json_text = textualizer.export(G, format="json")
+    print(json_text)
+    # 导出为 Markdown Table 格式
+    markdown_text = textualizer.export(G, format="table")
+    print(markdown_text)
+    # 导出为 GraphML 格式
+    graphml_text = textualizer.export(G, format="graphml")
+    print(graphml_text)
+    # 导出为 GML 格式
+    gml_text = textualizer.export(G, format="gml")
+    print(gml_text)

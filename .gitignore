@@ -3,7 +3,7 @@
 !src/langgfm/data/outputs/.gitkeep
 
 /data/*
-!data/readme.md
+!data/README.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
