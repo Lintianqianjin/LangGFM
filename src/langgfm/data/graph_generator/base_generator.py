@@ -8,6 +8,27 @@ class InputGraphGenerator(ABC):
     specific logic by subclassing this class.
     """
     
+    registry = {}
+
+    @classmethod
+    def register(cls, name):
+        """
+        Decorator to register a subclass with a specific name.
+        """
+        def decorator(subclass):
+            cls.registry[name] = subclass
+            return subclass
+        return decorator
+
+    @classmethod
+    def create(cls, name, *args, **kwargs):
+        """
+        Factory method to create an instance of a registered subclass.
+        """
+        if name not in cls.registry:
+            raise ValueError(f"Unknown generator type: {name}. Available types: {list(cls.registry.keys())}")
+        return cls.registry[name](*args, **kwargs)
+    
     @abstractmethod
     def load_data(self):
         """

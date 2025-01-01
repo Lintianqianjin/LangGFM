@@ -1,6 +1,8 @@
 /input_graph_generator.py
+/src/langgfm/data/outputs/*
+!src/langgfm/data/outputs/.gitkeep
 
-data/*
+/data/*
 !data/readme.md
 
 # Byte-compiled / optimized / DLL files

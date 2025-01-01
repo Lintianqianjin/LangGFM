@@ -1,0 +1,8 @@
+{
+    "ogbn_arxiv": {
+      "num_hops": 2,
+      "sampling": true,
+      "neighbor_size": 15,
+      "random_seed": 42
+    }
+}

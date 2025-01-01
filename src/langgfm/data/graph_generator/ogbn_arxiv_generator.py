@@ -7,9 +7,11 @@ from torch_geometric.utils import k_hop_subgraph
 
 from .utils import CustomPygNodePropPredDataset
 from .utils.sampling import k_hop_sampled_subgraph
+from .utils.shuffle_graph import shuffle_nodes_randomly
 
 from .base_generator import InputGraphGenerator
 
+@InputGraphGenerator.register("ogbn_arxiv")
 class OgbnArxivGraphGenerator(InputGraphGenerator):
     """
     OgbnArxivGraphGenerator: A generator for creating k-hop subgraphs 
@@ -51,7 +53,7 @@ class OgbnArxivGraphGenerator(InputGraphGenerator):
             _, title, _ = fw.readline().split('\t')
             self.paper_mag_id_title_mapping[paper_id] = title
             
-            for line_idx, line in enumerate(fw):
+            for line in fw:
                 try:
                     paper_id, title, _ = line.split('\t')
                     self.paper_mag_id_title_mapping[int(paper_id)] = title
@@ -172,14 +174,25 @@ class OgbnArxivGraphGenerator(InputGraphGenerator):
             src = node_mapping[sub_graph_edge_index[0][edge_idx].item()]
             dst = node_mapping[sub_graph_edge_index[1][edge_idx].item()]
             G.add_edge(src, dst)
+            
+        new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)
+        G = new_G
+        target_node_idx = node_idx_mapping_old_to_new[node_mapping[sample_id]]
         
         # Metadata
         metadata = {
-            "sample_id": "sample_id",
-            "num_hop"
-            "query": f"Please infer the subject area of the query paper (node ID {node_mapping[sample_id]}).",
-            "label": label,
-            "target_node": node_mapping[sample_id]
+            "raw_sample_id": sample_id,
+            "num_hop": self.num_hops,
+            "sampling": {
+                "enable": self.sampling,
+                "neighbor_size": self.neighbor_size,
+                "random_seed": self.random_seed
+            },
+            "main_task": {
+                "query": f"Please infer the subject area of the paper with node id {target_node_idx}. The available areas are: {self.labelidx2arxivcategeory}. ",
+                "label": label,
+                "target_node": target_node_idx
+            }
         }
 
         return G, metadata

@@ -4,3 +4,4 @@ Official code of "A Large Language Model Alone Can be a Powerful Graph Foundatio
 ---
 
 run commands in `LangGFM/`
+
