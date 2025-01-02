@@ -3,7 +3,7 @@ import networkx as nx
 import random
 
 
-@SelfSupervisedGraphTask.register("gae_autoencoder")
+@SelfSupervisedGraphTask.register("topology_autoencoder")
 class TopologyAutoencoder(SelfSupervisedGraphTask):
     def __init__(self, distinguish_directions: bool = False):
         """
