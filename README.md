@@ -3,6 +3,16 @@ Official code of "A Large Language Model Alone Can be a Powerful Graph Foundatio
 
 ---
 
+Environment
+---
+For pip (with python 3.11): `requirements.txt`   
+`pip install -r requirements.txt`
+
+
+For conda `environment.yml`  
+`conda env create -f environment.yml`
+
+
 run commands in `LangGFM/`
 
 
