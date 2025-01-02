@@ -1,0 +1,173 @@
+# connectivity_train: &connectivity_train
+#   min_nodes: [2, 20, 40, 60, 80]
+#   max_nodes: [20, 40, 60, 80, 100]
+#   max_edges: [500, 500, 500, 500, 500]
+#   min_ratio: [0.2, 0.08, 0.04, 0.02, 0.02]
+#   max_ratio: [0.6, 0.1, 0.06, 0.04, 0.03]
+#   weight: [False, False, False, False, False]
+#   directed: [False, False, False, False, False]
+#   samples_needed: [1600, 500, 300, 300, 300]
+#   prompt: "Determine whether two nodes are connected in an undirected graph. 
+#   In an undirected graph, (i,j) means that node i and node j are connected with an undirected edge.
+#   Given a graph and a pair of nodes, you need to output Yes or No, indicating whether the node i and node j are connected. 
+#   Q: The nodes are numbered from {} to {}, and the edges are: {}. Is there a path between node {} and node {}?"
+#   answer: "### {}"
+#   store_path: "../datasets/train_set/connectivity_train.json"
+#   GPT_prompt: "Determine whether two nodes are connected in an undirected graph. 
+#   In an undirected graph, (i,j) means that node i and node j are connected with an undirected edge.
+#   Given a graph and a question containing a pair of nodes, you need to output Yes or No, indicating whether the node i and node j are connected. Your output first contains your reasoning process and then begin with '###' to give your final answer, i.e., '### Yes' or '### No'. Let's think step by step.
+#   I will give you some demonstrations for your better understanding. {} Q: The nodes are numbered from {} to {}, and the edges are: {}. Is there a path between node {} and node {}?"
+
+
+node_counting: &node_counting
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 500
+  val_size: 100
+  test_size: 200
+  query_format: "How many nodes are there in the graph?"
+  answer_format: "There are {} nodes in the graph."
+  file_path: "../../../../data/node_counting.pt"
+  
+
+edge_counting: 
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 500
+  val_size: 100
+  test_size: 200
+  query_format: "How many edges are there in the graph?"
+  answer_format: "There are {} edges in the graph."
+  file_path: "../../../../data/edge_counting.pt"
+
+
+node_attribute_retrieval: 
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 500
+  val_size: 100
+  test_size: 300
+  query_format: "What is the value of attribute[{}] for node [{}]?"
+  answer_format: "The value of attribute [{}] for node [{}] is {}."
+  file_path: "../../../../data/node_attribute_retrieval.pt"
+
+
+edge_attribute_retrieval: 
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: True
+  is_directed: False
+  train_size: 500
+  val_size: 100
+  test_size: 300
+  query_format: "What is the value of attribute [{}] for edge [{}]?"
+  answer_format: "The value of attribute [{}] for edge [{}] is {}."
+  file_path: "../../../../data/edge_attribute_retrieval.pt"
+
+
+degree_counting: 
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 500
+  val_size: 100
+  test_size: 200
+  query_format: "What is the degree of node [{}]?"
+  answer_format: "The degree of node [{}] is {}."
+
+
+edge_existence: 
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 500
+  val_size: 100
+  test_size: 200
+  query_format: "Whether there is an edge between node [{}] and node [{}]?"
+  answer_format: "{}."
+  file_path: "../../../../data/edge_existence.pt"
+
+
+shortest_path: 
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: True
+  is_directed: False
+  train_size: 500
+  val_size: 100
+  test_size: 200
+  query_format: "Please generate all shortest paths in the graph from node {} to node {} in a list format
+  if there is at least one shortest path between the two nodes."
+  answer_format: "All the shortest paths from node {} to node {} are as follows: {}."
+
+
+
+max_triangle_sum: &max_triangle_sum
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: True
+  is_directed: False
+  train_size: 500
+  val_size: 100
+  test_size: 200
+  query_format: "Given a graph, you need to output the maximum sum of the weights of three interconnected nodes. 
+  What is the maximum sum of the weights of three nodes?"
+  answer_format: "The maximum sum of the weights of three interconnected nodes in this graph is {}."
+
+
+
+hamilton_path: &hamilton_path
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.10 # products
+  max_sparsity: 0.40 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 500
+  val_size: 100
+  test_size: 200
+  query_format: "Given a graph, you need to output Yes or No, indicating whether there is a Hamiltonian path in the graph or not.
+  Note that a Hamilton path in graph refers to a path that visits each node exactly once."
+  answer_format: "{}"
+  file_path: "./GraphData/RandomGraph/hamilton_path.pt"
+
+
+graph_automorphic: &graph_automorphic
+  min_nodes: 4
+  max_nodes: 16
+  min_sparsity: 0.20 # products
+  max_sparsity: 0.60 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 500
+  val_size: 100
+  test_size: 200
+  query_format: "Given a graph, a non-trivial automorphism refers that the graph has more automorphisms beyond the identity mapping (each vertex maps to itself).
+  Please analyze the given graph to identify if there are any non-trivial automorphisms.
+  You need to output Yes or No."
+  answer_format: "{}"
+  file_path: "./GraphData/RandomGraph/graph_automorphic.pt"
