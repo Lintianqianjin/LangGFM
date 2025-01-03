@@ -1,4 +1,5 @@
 <div align="center">
+
 # LangGFM: A Large Language Model Alone Can be a Powerful Graph Foundation Model
 
  <a href='https://arxiv.org/abs/2410.14961'><img src='https://img.shields.io/badge/Paper-PDF-orange'></a> 
