@@ -186,3 +186,63 @@ class NodeGraphGenerator(InputGraphGenerator):
         return new_G, metadata
         
         
+        
+@InputGraphGenerator.register("EdgeGraphGenerator")
+class EdgeGraphGenerator(InputGraphGenerator):
+    """
+    A concrete implementation of InputGraphGenerator to generate graphs
+    based on edge-centric sampling logic.
+    """
+    def __init__(self, num_hops=2, sampling=False, neighbor_size: int = None, random_seed: int = None):
+        self.num_hops = num_hops
+        self.sampling = sampling
+        self.neighbor_size = neighbor_size
+        self.random_seed = random_seed
+        self.graph = None
+        
+        if self.sampling:
+            assert neighbor_size is not None, "neighbor_size should be specified"
+            assert random_seed is not None, "random_seed should be specified"
+
+        self.load_data()
+    
+
+    def edge_egograph_sampling(self, sample_id: int) -> nx.Graph:
+        '''
+        Generate a k-hop subgraph for a given edge.
+        
+        Parameters:
+            sample_id: The edge for which the subgraph is generated.
+            
+        Returns:
+            sub_graph_edge_index: The combined edge index of the subgraph.
+            node_mapping: The mapping of raw node indices to new node indices.
+            sub_graph_edge_mask: The edge mask of the overall graph for sub_graph_edge_index.
+        '''
+        sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask = generate_node_centric_k_hop_subgraph(
+            self.graph, sample_id, self.num_hops, self.neighbor_size, 
+            self.random_seed, self.sampling
+        )
+        
+        # raw node index to new node index mapping
+        node_mapping = {
+            raw_node_idx: new_node_idx 
+            for new_node_idx, raw_node_idx in enumerate(sub_graph_nodes)
+        }
+        
+        return sub_graph_edge_index, node_mapping, sub_graph_edge_mask
+    
+    
+    
+    def generate_graph(self, sample_id: int) -> nx.Graph:
+        """
+        Generate a single graph centered around an edge using num_hops.
+        If sampling is enabled, sample neighbors up to neighbor_size.
+
+        Args:
+            sample_id (int): The ID of the edge to center the graph around.
+
+        Returns:
+            nx.Graph: A NetworkX graph for the sample.
+        """
+        raise NotImplementedError("EdgeGraphGenerator is not implemented yet.")
