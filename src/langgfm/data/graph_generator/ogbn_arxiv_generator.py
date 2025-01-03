@@ -114,7 +114,7 @@ class OgbnArxivGraphGenerator(NodeGraphGenerator):
         """
         Get the query for the main task based on the sample ID.
         """
-        return f"Please infer the subject area of the paper with node id {target_node_idx}. The available areas are: {', '.join(self.labelidx2arxivcategeory)}. "
+        return f"Please infer the subject area of the paper with node id {target_node_idx}. The available areas are: {self.labelidx2arxivcategeory}. "
     
     
     def get_answer(self, sample_id, target_node_idx:int) -> str:
