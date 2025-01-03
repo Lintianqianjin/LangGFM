@@ -1,2 +1,5 @@
 from .ogbn_arxiv_generator import OgbnArxivGraphGenerator
 from .wikics_generator import WikicsGraphGenerator
+from .aminer_generator import AMinerGraphGenerator
+from .twitch_generator import TwitchGraphGenerator
+from .usa_airport import USAirportGraphGenerator

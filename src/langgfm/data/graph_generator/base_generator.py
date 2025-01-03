@@ -92,8 +92,18 @@ class NodeGraphGenerator(InputGraphGenerator):
         self.load_data()
 
     def egograph_sampling(self, sample_id: int) -> nx.Graph:
+        '''
+        Generate a k-hop subgraph for a given node ID.
         
-        sub_graph_edge_index, sub_graph_nodes = generate_node_centric_k_hop_subgraph(
+        Parameters:
+            sample_id: The node ID for which the subgraph is generated.
+            
+        Returns:
+            sub_graph_edge_index: The combined edge index of the subgraph.
+            node_mapping: The mapping of raw node indices to new node indices.
+            sub_graph_edge_mask: The edge mask of the overall graph for sub_graph_edge_index.
+        '''
+        sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask = generate_node_centric_k_hop_subgraph(
             self.graph, sample_id, self.num_hops, self.neighbor_size, 
             self.random_seed, self.sampling
         )
@@ -104,7 +114,7 @@ class NodeGraphGenerator(InputGraphGenerator):
             for new_node_idx, raw_node_idx in enumerate(sub_graph_nodes)
         }
         
-        return sub_graph_edge_index, node_mapping
+        return sub_graph_edge_index, node_mapping, sub_graph_edge_mask
     
     @abstractmethod
     def get_query(self, target_node_idx:int) -> str:
@@ -122,13 +132,14 @@ class NodeGraphGenerator(InputGraphGenerator):
         pass
     
     @abstractmethod
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping:dict) -> nx.Graph:
+    def create_networkx_graph(self, sub_graph_edge_index, node_mapping:dict, sub_graph_edge_mask=None) -> nx.Graph:
         """
         Create a NetworkX graph from the sampled subgraph.
         
         Args:
             sub_graph_edge_index: The edge index of the subgraph.
             node_mapping: The mapping of raw node indices to new node indices.
+            sub_graph_edge_mask: The edge mask of the overall graph for sub_graph_edge_index.
         
         Returns:
             nx.Graph: A NetworkX graph object.
@@ -147,8 +158,8 @@ class NodeGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph for the sample.
         """
-        sub_graph_edge_index, node_mapping = self.egograph_sampling(sample_id)
-        G = self.create_networkx_graph(sub_graph_edge_index, node_mapping)
+        sub_graph_edge_index, node_mapping, sub_graph_edge_mask = self.egograph_sampling(sample_id)
+        G = self.create_networkx_graph(sub_graph_edge_index, node_mapping, sub_graph_edge_mask)
         new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)
         # G = new_G
         # target sample_id in the shuffled graph

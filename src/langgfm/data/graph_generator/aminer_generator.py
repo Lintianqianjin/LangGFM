@@ -3,31 +3,16 @@ import networkx as nx
 import pandas as pd
 from torch_geometric.datasets import AMiner
 
-from .utils.sampling import generate_node_centric_k_hop_subgraph
-from .utils.shuffle_graph import shuffle_nodes_randomly
 
-from .base_generator import InputGraphGenerator
+from .base_generator import NodeGraphGenerator
 
 
-@InputGraphGenerator.register("aminer")
-class AMinerGraphGenerator(InputGraphGenerator):
+@NodeGraphGenerator.register("aminer")
+class AMinerGraphGenerator(NodeGraphGenerator):
     """
     AMinerGraphGenerator: A generator for creating k-hop subgraphs 
     from the AMiner dataset using NetworkX format.
     """
-
-    def __init__(self, num_hops=2, sampling=False, neighbor_size:int=None, random_seed:int=None):
-        self.num_hops = num_hops
-        self.sampling = sampling
-        self.neighbor_size = neighbor_size
-        self.random_seed = random_seed
-        if self.sampling:
-            assert neighbor_size is not None, "neighbor_size should be specified"
-            assert random_seed is not None, "random_seed should be specified"
-
-        self.graph = None
-        self.all_idx = None
-        self.load_data()
 
     def load_data(self):
         """
@@ -37,19 +22,30 @@ class AMinerGraphGenerator(InputGraphGenerator):
         self.root = './data'
         
         dataset = AMiner(root=f'{self.root}/AMiner/')
-        graph = dataset[0]
+        self.graph = dataset[0]
+        # print(f"{self.graph=}")
+        # number of authors is 1693531
+        # number of labelled authors is 246678
+        self.author_labelled_index = self.graph['author']['y_index']
+        self.all_sample_ids = set(self.author_labelled_index.tolist())
+        # print(f"{self.all_sample_ids=}")
+        # print(f"{self.author_labelled_index=}")
+        # author_labels is a tensor of size 246678, corresponding to the author_labelled_index
+        self.author_labels = self.graph['author']['y']
+        
+        # create a dict that maps the author_labelled_index to the author_labels
+        self.labelled_author_index_to_label = {}
+        for i in range(self.author_labelled_index.size(0)):
+            self.labelled_author_index_to_label[self.author_labelled_index[i].item()] = self.author_labels[i].item()
+        
+        del self.graph['author']['y_index']
+        del self.graph['author']['y']
+        del self.graph['venue']['y_index']
+        del self.graph['venue']['y']
+        del self.graph[('paper', 'written_by', 'author')]
+        del self.graph[('venue', 'publishes', 'paper')]
 
-        author_labelled_index = graph['author']['y_index']
-        author_labels =  graph['author']['y']
-
-        del graph['author']['y_index']
-        del graph['author']['y']
-        del graph['venue']['y_index']
-        del graph['venue']['y']
-        del graph[('paper', 'written_by', 'author')]
-        del graph[('venue', 'publishes', 'paper')]
-
-        area_mapping = {
+        self.area_mapping = {
             3: 'Computational Linguistics', 
             4: 'Computer Graphics', 
             2: 'Computer Networks & Wireless Communication', 
@@ -60,12 +56,46 @@ class AMinerGraphGenerator(InputGraphGenerator):
             6: 'Theoretical Computer Science'
         }
 
-        graph = graph.to_homogeneous()
-        # print(graph)
+        self.graph = self.graph.to_homogeneous()
 
-        node_type_mapping = {0:'author', 1:'venue', 2:'paper'}
-        edge_type_mapping = {0:'writes', 1:'published_in'}
+        self.node_type_mapping = {0:'author', 1:'venue', 2:'paper'}
+        self.edge_type_mapping = {0:'writes', 1:'published_in'}
 
-        papers = pd.read_csv('./GraphData/PYG/AMiner/raw/paper.txt',sep='\t',names=['idx','title'], index_col=0)
-        venues = pd.read_csv('./GraphData/PYG/AMiner/raw/id_conf.txt',sep='\t',names=['raw_idx','name'])
-        authors = pd.read_csv('./GraphData/PYG/AMiner/raw/id_author.txt',sep='\t',names=['raw_idx','name'])
+        self.papers = pd.read_csv(f'{self.root}/AMiner/raw/paper.txt',sep='\t',names=['idx','title'], index_col=0)
+        self.venues = pd.read_csv(f'{self.root}/AMiner/raw/id_conf.txt',sep='\t',names=['raw_idx','name'])
+        self.authors = pd.read_csv(f'{self.root}/AMiner/raw/id_author.txt',sep='\t',names=['raw_idx','name'])
+    
+    def get_query(self, target_node_idx):
+        query = (f"Please infer the research area of the author with node id of {target_node_idx}. " 
+            f"The available research areas are: {list(self.area_mapping.values())}.")
+        return query
+    
+    def get_answer(self, sample_id, target_node_idx):
+        # area_mapping starts from 1
+        author_label = self.area_mapping[self.labelled_author_index_to_label[sample_id]+1] # 
+        answer = f"The research area of the author with node id of {target_node_idx} is '{author_label}'."
+        return answer
+    
+    def create_networkx_graph(self, sub_graph_edge_index, node_mapping, sub_graph_edge_mask):
+        
+        G = nx.MultiDiGraph()
+        for raw_node_idx, new_node_idx in node_mapping.items():
+            node_type = self.node_type_mapping[self.graph.node_type[raw_node_idx].item()]
+            if node_type == 'paper':
+                paper_idx = raw_node_idx - 1693531 - 3883
+                try:
+                    G.add_node(new_node_idx, type = 'paper', title=self.papers.at[paper_idx,'title'])
+                except KeyError:
+                    G.add_node(new_node_idx, type = 'paper')
+            elif node_type == 'venue':
+                venue_idx = raw_node_idx - 1693531
+                G.add_node(new_node_idx, type = 'venue', name = self.venues.at[venue_idx,'name'][1:])
+        
+        sub_graph_edge_type = self.graph.edge_type[sub_graph_edge_mask]
+        for edge_idx in range(sub_graph_edge_index.size(1)):
+            src = node_mapping[sub_graph_edge_index[0][edge_idx].item()]
+            dst = node_mapping[sub_graph_edge_index[1][edge_idx].item()]
+            edge_type = self.edge_type_mapping[sub_graph_edge_type[edge_idx].item()]
+            G.add_edge(src, dst, type = edge_type)
+    
+        return G

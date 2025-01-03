@@ -3,12 +3,10 @@ import pandas as pd
 import networkx as nx
 
 from .utils import CustomPygNodePropPredDataset
-from .utils.sampling import generate_node_centric_k_hop_subgraph
-from .utils.shuffle_graph import shuffle_nodes_randomly
 
-from .base_generator import InputGraphGenerator, NodeGraphGenerator
+from .base_generator import NodeGraphGenerator
 
-@InputGraphGenerator.register("ogbn_arxiv")
+@NodeGraphGenerator.register("ogbn_arxiv")
 class OgbnArxivGraphGenerator(NodeGraphGenerator):
     """
     OgbnArxivGraphGenerator: A generator for creating k-hop subgraphs 
@@ -38,6 +36,7 @@ class OgbnArxivGraphGenerator(NodeGraphGenerator):
         # split_idx = dataset.get_idx_split()
         # train_idx, valid_idx, test_idx = split_idx["train"], split_idx["valid"], split_idx["test"]
         # self.all_idx = torch.cat([train_idx, valid_idx, test_idx], dim=0)
+        self.all_sample_ids = set(range(self.graph.num_nodes))
         
         # Load title/abstract mappings
         self.paper_mag_id_title_mapping = {}
@@ -115,7 +114,7 @@ class OgbnArxivGraphGenerator(NodeGraphGenerator):
         """
         Get the query for the main task based on the sample ID.
         """
-        return f"Please infer the subject area of the paper with node id {target_node_idx}. The available areas are: {self.labelidx2arxivcategeory}. "
+        return f"Please infer the subject area of the paper with node id {target_node_idx}. The available areas are: {', '.join(self.labelidx2arxivcategeory)}. "
     
     
     def get_answer(self, sample_id, target_node_idx:int) -> str:
@@ -125,7 +124,7 @@ class OgbnArxivGraphGenerator(NodeGraphGenerator):
         return f"The paper with node id {target_node_idx} likely belongs to the subject area '{self.labelidx2arxivcategeory[self.graph.y[sample_id][0].item()]}'."
     
     
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping) -> nx.Graph:
+    def create_networkx_graph(self, sub_graph_edge_index, node_mapping, sub_graph_edge_mask) -> nx.Graph:
         """
         Create a NetworkX graph from the sampled subgraph.
         """

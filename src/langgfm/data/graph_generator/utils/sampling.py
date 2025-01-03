@@ -133,7 +133,8 @@ def generate_node_centric_k_hop_subgraph(graph, sample_id, num_hops, neighbor_si
         )
 
     # Combine edges and nodes
-    sub_graph_edge_index = graph.edge_index.T[torch.logical_or(src_to_tgt_edge_mask, tgt_to_src_edge_mask)].T
+    sub_graph_edge_mask = torch.logical_or(src_to_tgt_edge_mask, tgt_to_src_edge_mask)
+    sub_graph_edge_index = graph.edge_index.T[sub_graph_edge_mask].T
     sub_graph_nodes = set(src_to_tgt_subset.numpy().tolist()) | set(tgt_to_src_subset.numpy().tolist())
 
-    return sub_graph_edge_index, sub_graph_nodes
+    return sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask
