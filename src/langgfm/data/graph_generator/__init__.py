@@ -1,0 +1,2 @@
+from .ogbn_arxiv_generator import OgbnArxivGraphGenerator
+from .wikics_generator import WikicsGraphGenerator
