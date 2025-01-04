@@ -3,6 +3,7 @@ import pandas as pd
 import networkx as nx
 
 from .utils import CustomPygNodePropPredDataset
+# from ogb.nodeproppred import PygNodePropPredDataset
 
 from .base_generator import NodeGraphGenerator
 
@@ -36,7 +37,7 @@ class OgbnArxivGraphGenerator(NodeGraphGenerator):
         # split_idx = dataset.get_idx_split()
         # train_idx, valid_idx, test_idx = split_idx["train"], split_idx["valid"], split_idx["test"]
         # self.all_idx = torch.cat([train_idx, valid_idx, test_idx], dim=0)
-        self.all_sample_ids = set(range(self.graph.num_nodes))
+        self.all_samples = set(range(self.graph.num_nodes))
         
         # Load title/abstract mappings
         self.paper_mag_id_title_mapping = {}

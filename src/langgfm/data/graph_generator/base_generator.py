@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import networkx as nx
-from .utils.sampling import generate_node_centric_k_hop_subgraph
+from .utils.sampling import generate_node_centric_k_hop_subgraph, generate_edge_centric_k_hop_subgraph
 from .utils.shuffle_graph import shuffle_nodes_randomly
 
 class InputGraphGenerator(ABC):
@@ -72,13 +72,13 @@ class InputGraphGenerator(ABC):
     
     
     
-@InputGraphGenerator.register("NodeGraphGenerator")
+# @InputGraphGenerator.register("NodeGraphGenerator")
 class NodeGraphGenerator(InputGraphGenerator):
     """
     A concrete implementation of InputGraphGenerator to generate graphs
     based on node-centric sampling logic.
     """
-    def __init__(self, num_hops=2, sampling=False, neighbor_size: int = None, random_seed: int = None):
+    def __init__(self, num_hops=2, sampling=False, neighbor_size: int = None, random_seed: int = None, **kwargs):
         self.num_hops = num_hops
         self.sampling = sampling
         self.neighbor_size = neighbor_size
@@ -147,29 +147,29 @@ class NodeGraphGenerator(InputGraphGenerator):
         pass
     
     
-    def generate_graph(self, sample_id: int) -> nx.Graph:
+    def generate_graph(self, sample: int) -> nx.Graph:
         """
         Generate a single graph centered around a node using num_hops.
         If sampling is enabled, sample neighbors up to neighbor_size.
 
         Args:
-            sample_id (int): The ID of the node to center the graph around.
+            sample (int): The ID of the node to center the graph around.
 
         Returns:
             nx.Graph: A NetworkX graph for the sample.
         """
-        sub_graph_edge_index, node_mapping, sub_graph_edge_mask = self.egograph_sampling(sample_id)
+        sub_graph_edge_index, node_mapping, sub_graph_edge_mask = self.egograph_sampling(sample)
         G = self.create_networkx_graph(sub_graph_edge_index, node_mapping, sub_graph_edge_mask)
         new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)
         # G = new_G
         # target sample_id in the shuffled graph
-        target_node_idx = node_idx_mapping_old_to_new[node_mapping[sample_id]]
+        target_node_idx = node_idx_mapping_old_to_new[node_mapping[sample]]
         
         query = self.get_query(target_node_idx)
-        answer = self.get_answer(sample_id, target_node_idx)
+        answer = self.get_answer(sample, target_node_idx)
         
         metadata = {
-            "raw_sample_id": sample_id,
+            "raw_sample_id": sample,
             "num_hop": self.num_hops,
             "sampling": {
                 "enable": self.sampling,
@@ -187,13 +187,13 @@ class NodeGraphGenerator(InputGraphGenerator):
         
         
         
-@InputGraphGenerator.register("EdgeGraphGenerator")
+# @InputGraphGenerator.register("EdgeGraphGenerator")
 class EdgeGraphGenerator(InputGraphGenerator):
     """
     A concrete implementation of InputGraphGenerator to generate graphs
     based on edge-centric sampling logic.
     """
-    def __init__(self, num_hops=2, sampling=False, neighbor_size: int = None, random_seed: int = None):
+    def __init__(self, num_hops=2, sampling=False, neighbor_size: int = None, random_seed: int = None, **kwargs):
         self.num_hops = num_hops
         self.sampling = sampling
         self.neighbor_size = neighbor_size
@@ -206,8 +206,7 @@ class EdgeGraphGenerator(InputGraphGenerator):
 
         self.load_data()
     
-
-    def edge_egograph_sampling(self, sample_id: int) -> nx.Graph:
+    def edge_egograph_sampling(self, edge: tuple):
         '''
         Generate a k-hop subgraph for a given edge.
         
@@ -219,8 +218,9 @@ class EdgeGraphGenerator(InputGraphGenerator):
             node_mapping: The mapping of raw node indices to new node indices.
             sub_graph_edge_mask: The edge mask of the overall graph for sub_graph_edge_index.
         '''
-        sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask = generate_node_centric_k_hop_subgraph(
-            self.graph, sample_id, self.num_hops, self.neighbor_size, 
+        
+        sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask = generate_edge_centric_k_hop_subgraph(
+            self.graph, edge, self.num_hops, self.neighbor_size, 
             self.random_seed, self.sampling
         )
         
@@ -233,16 +233,80 @@ class EdgeGraphGenerator(InputGraphGenerator):
         return sub_graph_edge_index, node_mapping, sub_graph_edge_mask
     
     
+    @abstractmethod
+    def get_query(self, target_src_node_idx:int, target_dst_node_idx:int) -> str:
+        """
+        Get the query for the main task based on the target_node_idx 
+        in the networkx graph object."""
+        
+        pass
     
-    def generate_graph(self, sample_id: int) -> nx.Graph:
+    @abstractmethod
+    def get_answer(self, edge:tuple, target_src_node_idx:int, target_dst_node_idx:int) -> str:
+        """
+        edge (tuple): The raw node indices of the src and dst node.
+        target_src_node_idx (int): The new node index of the src node in the networkx graph.
+        target_dst_node_idx (int): The new node index of the dst node in the networkx graph.
+        Get the label of an edge based on the pair of nodes."""
+        
+        pass
+    
+    @abstractmethod
+    def create_networkx_graph(self, sub_graph_edge_index, node_mapping:dict, target_edge, sub_graph_edge_mask=None) -> nx.Graph:
+        """
+        Create a NetworkX graph from the sampled subgraph.
+        
+        Args:
+            sub_graph_edge_index: The edge index of the subgraph.
+            node_mapping: The mapping of raw node indices to new node indices.
+            sub_graph_edge_mask: The edge mask of the overall graph for sub_graph_edge_index.
+        
+        Returns:
+            nx.Graph: A NetworkX graph object.
+        """
+        pass
+    
+    def generate_graph(self, sample: tuple) -> nx.Graph:
         """
         Generate a single graph centered around an edge using num_hops.
         If sampling is enabled, sample neighbors up to neighbor_size.
 
         Args:
-            sample_id (int): The ID of the edge to center the graph around.
+            sample tuple: The node ids of the edge src and dst.
 
         Returns:
             nx.Graph: A NetworkX graph for the sample.
         """
-        raise NotImplementedError("EdgeGraphGenerator is not implemented yet.")
+        
+        sub_graph_edge_index, node_mapping, sub_graph_edge_mask = self.edge_egograph_sampling(sample)
+        
+        G = self.create_networkx_graph(
+            sub_graph_edge_index=sub_graph_edge_index, node_mapping=node_mapping, 
+            edge=sample, sub_graph_edge_mask=sub_graph_edge_mask
+        )
+        
+        new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)
+        
+        src, dst = sample
+        target_src_node_idx = node_idx_mapping_old_to_new[node_mapping[src]]
+        target_dst_node_idx = node_idx_mapping_old_to_new[node_mapping[dst]]
+        
+        query = self.get_query(target_src_node_idx, target_dst_node_idx)
+        answer = self.get_answer(sample, target_src_node_idx, target_dst_node_idx)
+        
+        metadata = {
+            "raw_sample_id": sample,
+            "num_hop": self.num_hops,
+            "sampling": {
+                "enable": self.sampling,
+                "neighbor_size": self.neighbor_size,
+                "random_seed": self.random_seed
+            },
+            "main_task": {
+                "query": query,
+                "answer": answer,
+                "target_edge": (target_src_node_idx, target_dst_node_idx)
+            }
+        }
+
+        return new_G, metadata

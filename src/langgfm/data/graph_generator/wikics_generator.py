@@ -21,7 +21,7 @@ class WikicsGraphGenerator(NodeGraphGenerator):
         wiki_dataset = WikiCS(root=f"{self.root}/WikiCS",is_undirected=False)
         self.graph = wiki_dataset[0]
         
-        self.all_sample_ids = set(range(self.graph.num_nodes))
+        self.all_samples = set(range(self.graph.num_nodes))
         
         with open(f"{self.root}/WikiCS/raw/metadata.json") as json_file:
             self.wiki_meta = json.load(json_file)

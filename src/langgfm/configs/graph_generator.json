@@ -1,23 +1,34 @@
 {
     "ogbn_arxiv": {
+      "task_level": "node",
       "num_hops": 2,
       "sampling": true,
       "neighbor_size": 15,
       "random_seed": 42
     },
     "wikics": {
+      "task_level": "node",
       "num_hops": 2,
       "sampling": true,
       "neighbor_size": 15,
       "random_seed": 42
     },
     "aminer": {
+      "task_level": "node",
       "num_hops": 2,
       "sampling": true,
       "neighbor_size": 15,
       "random_seed": 42
     },
     "twitch": {
+      "task_level": "node",
+      "num_hops": 2,
+      "sampling": true,
+      "neighbor_size": [15, 5],
+      "random_seed": 42
+    },
+    "ogbl_vessel": {
+      "task_level": "edge",
       "num_hops": 2,
       "sampling": true,
       "neighbor_size": [15, 5],

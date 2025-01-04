@@ -1,5 +1,8 @@
 {
     "ogbn_arxiv": {
         "directed": true
+    },
+    "edge_existence": {
+        "directed": false
     }
 }

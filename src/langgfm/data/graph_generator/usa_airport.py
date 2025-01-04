@@ -22,7 +22,7 @@ class USAirportGraphGenerator(NodeGraphGenerator):
         
         self.graph = torch.load(f'{self.root}/USAAirport/usa_airport.pt')
         self.node_idx_label_mapping = self.graph.y.numpy() # array
-        self.all_sample_ids = set(range(self.graph.num_nodes))
+        self.all_samples = set(range(self.graph.num_nodes))
     
     def get_query(self, target_node_idx: int) -> str:
         """

@@ -3,3 +3,5 @@ from .wikics_generator import WikicsGraphGenerator
 from .aminer_generator import AMinerGraphGenerator
 from .twitch_generator import TwitchGraphGenerator
 from .usa_airport import USAirportGraphGenerator
+
+from .ogbl_vessel_generator import OgblVesselGraphGenerator
