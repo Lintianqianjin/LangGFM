@@ -2,13 +2,9 @@ from abc import ABC, abstractmethod
 import os
 import torch
 import networkx as nx
-<<<<<<< HEAD
-from .utils.sampling import generate_node_centric_k_hop_subgraph, generate_edge_centric_k_hop_subgraph
-=======
 from networkx.readwrite import json_graph
 
-from .utils.sampling import generate_node_centric_k_hop_subgraph
->>>>>>> origin/yanpw
+from .utils.sampling import generate_node_centric_k_hop_subgraph, generate_edge_centric_k_hop_subgraph
 from .utils.shuffle_graph import shuffle_nodes_randomly
 from langgfm.utils.io import load_yaml
 
