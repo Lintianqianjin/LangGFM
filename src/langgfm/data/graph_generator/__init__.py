@@ -5,3 +5,4 @@ from .twitch_generator import TwitchGraphGenerator
 from .usa_airport import USAirportGraphGenerator
 
 from .ogbl_vessel_generator import OgblVesselGraphGenerator
+from .edge_existence_generator import EdgeExistenceGraphGenerator

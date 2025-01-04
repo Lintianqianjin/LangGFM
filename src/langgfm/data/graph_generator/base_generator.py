@@ -1,7 +1,16 @@
 from abc import ABC, abstractmethod
+import os
+import torch
 import networkx as nx
+<<<<<<< HEAD
 from .utils.sampling import generate_node_centric_k_hop_subgraph, generate_edge_centric_k_hop_subgraph
+=======
+from networkx.readwrite import json_graph
+
+from .utils.sampling import generate_node_centric_k_hop_subgraph
+>>>>>>> origin/yanpw
 from .utils.shuffle_graph import shuffle_nodes_randomly
+from langgfm.utils.io import load_yaml
 
 class InputGraphGenerator(ABC):
     """
@@ -310,3 +319,69 @@ class EdgeGraphGenerator(InputGraphGenerator):
         }
 
         return new_G, metadata
+    
+
+@InputGraphGenerator.register("StructuralTaskGraphGenerator")
+class StructuralTaskGraphGenerator(InputGraphGenerator):
+    """
+    A concrete implementation of InputGraphGenerator to generate graphs
+    of synthetic graph related tasks.
+    """
+    def __init__(self, task):
+        self.config = load_yaml(
+            os.path.join(
+                os.path.dirname(__file__),
+                "./../../configs/synthetic_graph_generation.yaml"
+            )
+        )[task]
+        self.root = os.path.join(os.path.dirname(__file__), self.config['file_path'])
+        self.load_data()
+
+    def load_data(self):
+        """
+        Load the dataset and preprocess required mappings.
+        """
+        dataset = torch.load(self.root)
+        self.graphs, self.labels = dataset['graphs'], dataset['labels']
+
+    def generate_graph(self, sample_id: int) -> nx.Graph:
+        """
+        Generate a single NetworkX graph for a given sample ID.
+        Args:
+            sample_id (int): The ID of the sample to generate a graph for.
+        Returns:
+            nx.Graph: A NetworkX graph representing the specific sample.
+        """
+        G = json_graph.node_link_graph(self.graphs[sample_id],)
+        G = nx.MultiDiGraph(G)
+        
+        label, query_entity = self.labels[sample_id]
+        query = self._generate_query(query_entity)
+        answer = self._generate_answer(label)
+        
+        meta_data = {
+            "raw_sample_id": sample_id,
+            "main_task": {
+                "query": query,
+                "label": answer,
+                "query_entity": query_entity,
+            }
+        }
+
+        return G, meta_data
+
+    def _generate_query(self, query_entity):
+        return self.config['query_format'].format(*query_entity)
+
+    @abstractmethod
+    def _generate_answer(self, label):
+        """
+        Create a natural language answer based on the label and the task answer format.
+        
+        Args:
+            label: The label of the sample.
+        Returns:
+            str: A text answer, combined with the anwser format.
+        """
+        pass
+    

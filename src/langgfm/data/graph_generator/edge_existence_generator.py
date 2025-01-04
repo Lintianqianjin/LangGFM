@@ -1,10 +1,12 @@
 import os
+import sys
 import torch
 import pandas as pd
 import networkx as nx
 from networkx.readwrite import json_graph
 
-from base_generator import InputGraphGenerator
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
+from langgfm.data.graph_generator.base_generator import InputGraphGenerator
 from langgfm.data.build_synthetic_graph.utils import load_yaml
 
 @InputGraphGenerator.register("edge_existence")
@@ -40,6 +42,7 @@ class EdgeExistenceGraphGenerator(InputGraphGenerator):
             nx.Graph: A NetworkX graph representing the specific sample.
         """
         G = json_graph.node_link_graph(self.graphs[sample_id], directed=True, multigraph=True)
+        G = nx.MultiDiGraph(G)
         target_node = self.labels[sample_id][0]
         label = self.labels[sample_id][1]
         query = self.config['query_format'].format(*target_node)
@@ -48,7 +51,7 @@ class EdgeExistenceGraphGenerator(InputGraphGenerator):
             "raw_sample_id": sample_id,
             "main_task":{
                 "query": query,
-                "label": answer,
+                "anwser": answer,
                 "target_node": target_node,
             }
 
