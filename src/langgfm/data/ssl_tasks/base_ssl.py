@@ -30,7 +30,7 @@ class SelfSupervisedGraphTask(ABC):
         return cls.registry[name](*args, **kwargs)
 
     @abstractmethod
-    def modify_graph(self, graph: nx.Graph) -> nx.Graph:
+    def modify_graph(self, graph: nx.Graph) -> dict:
         """
         Modify the input graph to generate a new graph for self-supervised tasks.
 
@@ -43,7 +43,7 @@ class SelfSupervisedGraphTask(ABC):
         pass
 
     @abstractmethod
-    def generate_query(self, graph: nx.Graph) -> str:
+    def generate_query(self, modify_outputs: dict) -> dict:
         """
         Generate a query for the self-supervised task.
 
@@ -56,7 +56,7 @@ class SelfSupervisedGraphTask(ABC):
         pass
 
     @abstractmethod
-    def generate_answer(self, graph: nx.Graph, query: any) -> str:
+    def generate_answer(self, modify_outputs: dict, query_outputs: dict) -> dict:
         """
         Generate the answer for the self-supervised task based on the query.
 
@@ -82,11 +82,11 @@ class SelfSupervisedGraphTask(ABC):
                 - 'query': The query for the self-supervised task.
                 - 'answer': The answer to the query.
         """
-        modified_graph = self.modify_graph(graph)
-        query = self.generate_query(modified_graph)
-        answer = self.generate_answer(modified_graph, query)
+        modify_outputs = self.modify_graph(graph)
+        query_outputs = self.generate_query(modify_outputs)
+        answer = self.generate_answer(modify_outputs, query_outputs)
         return {
-            'modified_graph': modified_graph,
-            'query': query['query_text'],
+            'modified_graph': modify_outputs['modified_graph'],
+            'query': query_outputs['query_text'],
             'answer': answer
         }

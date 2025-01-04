@@ -9,7 +9,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
 from langgfm.data.graph_generator.ogbn_arxiv_generator import OgbnArxivGraphGenerator
-from langgfm.data.ssl_tasks.gae_ssl import TopologyAutoencoder
+from langgfm.data.ssl_tasks.tae_ssl import TopologyAutoencoder
 
 class TestTopologyAutoencoder(unittest.TestCase):
     

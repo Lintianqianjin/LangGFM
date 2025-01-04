@@ -25,7 +25,7 @@ class TopologyAutoencoder(SelfSupervisedGraphTask):
         Returns:
             nx.Graph: The unmodified graph.
         """
-        return graph
+        return {"modified_graph": graph}
 
     def generate_query(self, graph: nx.Graph) -> dict:
         """
