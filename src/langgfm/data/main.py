@@ -10,7 +10,7 @@ import json
 from tqdm import tqdm
 
 # all GraphGenerator should be imported here for InputGraphGenerator.create()
-from langgfm.data.graph_generator.ogbn_arxiv_generator import OgbnArxivGraphGenerator
+from langgfm.data.graph_generator import EdgeExistenceGraphGenerator
 
 # write a pipeline function to use OgbnArxivGraphGenerator to generate a graph and then use nxg_to_text to convert the graph to a GraphML format string.
 def pipeline(datasets = ['ogbn_arxiv'], formats = ['json','graphml','gml','table']) -> tuple:
@@ -64,10 +64,10 @@ def pipeline(datasets = ['ogbn_arxiv'], formats = ['json','graphml','gml','table
                     json.dump(data_list, f, indent=4)
 
 # write main function to run the pipeline function and print the result
-def main():
-    pipeline()
+def main(datasets,formats):
+    pipeline(datasets,formats)
 
 
 # run the main function
 if __name__ == "__main__":
-    main(dataset=['edge_existence'], formats=['graphml'])
+    main(datasets=['edge_existence'],formats=['json','graphml','gml','table'])

@@ -9,14 +9,14 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.
 from langgfm.data.graph_generator.base_generator import InputGraphGenerator
 from langgfm.data.build_synthetic_graph.utils import load_yaml
 
-@InputGraphGenerator.register("edge_existence")
-class EdgeExistenceGraphGenerator(InputGraphGenerator):
+@InputGraphGenerator.register("node_counting")
+class NodeCountingGraphGenerator(InputGraphGenerator):
     """
-    EdgeExistenceGraphGenerator: A generator for creating graphs with random edge existence.
+    NodeCountingGraphGenerator: A generator for graphs task with node counting.
     """
 
     def __init__(self,):
-        self.task = 'edge_existence'
+        self.task = 'node_counting'
         task_config_lookup = load_yaml(os.path.join(os.path.dirname(__file__), "./../../configs/synthetic_graph_generation.yaml"))
         self.config = task_config_lookup[self.task]
         self.root = os.path.join(os.path.dirname(__file__), self.config['file_path'])
@@ -43,16 +43,16 @@ class EdgeExistenceGraphGenerator(InputGraphGenerator):
         """
         G = json_graph.node_link_graph(self.graphs[sample_id], directed=True, multigraph=True)
         G = nx.MultiDiGraph(G)
-        target_node = self.labels[sample_id][0]
-        label = self.labels[sample_id][1]
-        query = self.config['query_format'].format(*target_node)
+        # !extract the label and the query!
+        label, query_entity = self.labels[sample_id]
+        query = self.config['query_format'].format(*query_entity)
         answer = self.config['answer_format'].format("Yes" if label else "No")
         meta_data = {
             "raw_sample_id": sample_id,
             "main_task":{
                 "query": query,
                 "label": answer,
-                "target_node": target_node,
+                "target_node": query_entity,
             }
 
         }

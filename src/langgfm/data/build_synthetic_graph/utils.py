@@ -1,11 +1,51 @@
+import os
 import yaml
 import argparse
 import networkx as nx
 import random
+import torch
 
 from random import randint, sample, shuffle
 from itertools import combinations, permutations, product
 
+
+def generate_splits_mask(train_ratio=None, val_ratio=None, test_ratio=None, total_size=None, train_size=None, val_size=None, test_size=None):
+    if total_size is None:
+        total_size = train_size + val_size + test_size
+
+    if train_ratio is not None and val_ratio is not None and test_ratio is not None:
+        if not (0 <= train_ratio <= 1 and 0 <= val_ratio <= 1 and 0 <= test_ratio <= 1):
+            raise ValueError("Ratios must be between 0 and 1.")
+        if not (train_ratio + val_ratio + test_ratio == 1):
+            raise ValueError("Ratios must sum to 1.")
+        
+        train_size = int(train_ratio * total_size)
+        val_size = int(val_ratio * total_size)
+        test_size = total_size - train_size - val_size
+
+    # Initialize masks
+    train_mask = torch.zeros(total_size, dtype=torch.bool)
+    val_mask = torch.zeros(total_size, dtype=torch.bool)
+    test_mask = torch.zeros(total_size, dtype=torch.bool)
+
+    # Generate random indices for train, val, test splits
+    indices = list(range(total_size))
+    random.shuffle(indices)
+    train_indices = indices[:train_size]
+    val_indices = indices[train_size:train_size + val_size]
+    test_indices = indices[train_size + val_size:]
+
+    # Assign True to the corresponding indices in the masks
+    train_mask[train_indices] = True
+    val_mask[val_indices] = True
+    test_mask[test_indices] = True
+
+    return train_mask, val_mask, test_mask
+
+
+def safe_mkdir(dir):
+    if not os.path.exists(dir):
+        os.makedirs(dir)
 
 
 def load_yaml(dir):
@@ -195,3 +235,36 @@ def create_topology_graph(min_nodes, max_nodes, min_sparsity, max_sparsity, weig
     
     return G
 
+
+def resave_structure_graphs(task):
+    old_dataset = torch.load(f"./RandomGraph/node_size_counting.pt",)
+    train_mask, val_mask, test_mask = dataset['train_mask'],dataset['val_mask'],dataset['test_mask']
+
+    dataset = torch.load(os.path.join(os.path.dirname(__file__),'../../../../data/structure_graphs.pt'))
+    graphs = dataset['graphs']
+
+
+    dataset = {
+        'graphs': graphs,
+        'labels': labels,
+    }
+    # save the train, val, test split with index list into ../../configs/dataset_splits.json
+    split_indices = {
+        'train': train_mask.nonzero(as_tuple=True)[0].tolist(),
+        'val': val_mask.nonzero(as_tuple=True)[0].tolist(),
+        'test': test_mask.nonzero(as_tuple=True)[0].tolist(),
+    }
+
+    split_path = os.path.join(os.path.dirname(__file__), '../../configs/dataset_splits.json')
+    if os.path.exists(split_path):
+        with open(split_path, 'r') as f:
+            splits = json.load(f)
+    else:
+        splits = {}
+    splits['node_counting'] = split_indices
+    with open(split_path, 'w') as f:
+        json.dump(splits, f, indent=4)
+
+    path = os.path.join(os.path.dirname(__file__),'../../../../data/node_counting_dataset.pt')
+    torch.save(dataset, path)
+    print(f"node counting dataset saved at {path}.")
