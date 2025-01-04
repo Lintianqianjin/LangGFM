@@ -1,4 +1,5 @@
 import os
+import sys
 import random
 import json
 import numpy as np
@@ -7,16 +8,16 @@ from tqdm import tqdm
 from networkx.readwrite import json_graph
 import torch
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
 from utils import (
     create_random_graph,
     create_random_bipartite_graph, 
     create_random_graph_node_weights, 
     create_smaller_graph, 
     create_topology_graph,
-    load_yaml,
-    generate_splits_mask,
-    safe_mkdir
+    generate_splits_mask
 )
+from langgfm.utils.io import load_yaml, safe_mkdir
 
 
 class SyntheticGraphDatasetBuilder:
@@ -247,18 +248,24 @@ if __name__ == "__main__":
         'hamilton_path', 'graph_automorphic'
     ]
     
+    print(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
     for task in tasks:
-        if task == "connectivity":
-            print(f"Building dataset for task: {task}")
-            dataset_builder.build_dataset(task)
+        if task == "node_counting":
+        #     print(f"Building dataset for task: {task}")
+            # dataset_builder.build_dataset(task)
             configs = dataset_builder.config[task]
             
             data_path = os.path.join(os.path.dirname(__file__), configs['file_path'])
             dataset = torch.load(data_path)
-            labels = [label[0] for label in dataset['labels']]
-            print(f"Label distribution for task {task}: {dict(zip(*np.unique(labels, return_counts=True)))}")
+            print(dataset['graphs'][0])
+            print(dataset['labels'][0])
 
-        # # add random splits for graph_structure_detection
-        # if task == "graph_structure_detection":
-        #     print(f"Building dataset splits for task: {task}")
-        #     add_random_splits(500,100,200,"graph_structure_detection")
+            
+            # change the origin labels to the new labels with the format of (label, ())
+        #     labels = [label[0] for label in dataset['labels']]
+        #     print(f"Label distribution for task {task}: {dict(zip(*np.unique(labels, return_counts=True)))}")
+
+        # # # add random splits for graph_structure_detection
+        # # if task == "graph_structure_detection":
+        # #     print(f"Building dataset splits for task: {task}")
+        # #     add_random_splits(500,100,200,"graph_structure_detection")

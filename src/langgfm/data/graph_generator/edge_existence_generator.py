@@ -51,7 +51,7 @@ class EdgeExistenceGraphGenerator(InputGraphGenerator):
             "raw_sample_id": sample_id,
             "main_task":{
                 "query": query,
-                "label": answer,
+                "anwser": answer,
                 "target_node": target_node,
             }
 
