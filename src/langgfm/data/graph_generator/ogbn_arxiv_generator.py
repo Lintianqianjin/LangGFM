@@ -2,8 +2,7 @@ import torch
 import pandas as pd
 import networkx as nx
 
-from .utils import CustomPygNodePropPredDataset
-# from ogb.nodeproppred import PygNodePropPredDataset
+from .utils.ogb_dataset import CustomPygNodePropPredDataset
 
 from .base_generator import NodeGraphGenerator
 

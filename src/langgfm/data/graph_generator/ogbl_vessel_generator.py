@@ -4,8 +4,7 @@ import networkx as nx
 import torch
 import pandas as pd
 
-from .utils import CustomPygLinkPropPredDataset
-# from ogb.linkproppred import PygLinkPropPredDataset
+from .utils.ogb_dataset import CustomPygLinkPropPredDataset
 from .base_generator import EdgeGraphGenerator
 
 @EdgeGraphGenerator.register("ogbl_vessel")
@@ -71,7 +70,6 @@ class OgblVesselGraphGenerator(EdgeGraphGenerator):
         
         split_edge = dataset.get_edge_split()
         train_edge, valid_edge, test_edge = split_edge["train"], split_edge["valid"], split_edge["test"]
-        
         
         self.edge_label_mapping = self.__convert_edges_to_dict(train_edge)
         self.all_samples = set(self.edge_label_mapping.keys())

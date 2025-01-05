@@ -22,7 +22,7 @@ class TestRealGraphGenerator(unittest.TestCase):
         """
         Initialize the generator for testing.
         """
-        self.datasets = ['ogbn_arxiv','ogbl_vessel'] # 'usa_airport', 'twitch', 'ogbn_arxiv','wikics','aminer'
+        self.datasets = ['yelp_review',] # 'movielens1m', 'usa_airport', 'twitch', 'ogbn_arxiv','wikics','aminer', 'ogbn_arxiv','ogbl_vessel'
         # load the generator configuration file
         config_path = os.path.join(os.path.dirname(__file__), '../../src/langgfm/configs/graph_generator.json')
         with open(config_path, 'r') as f:

@@ -2,6 +2,12 @@
     "ogbn_arxiv": {
         "directed": true
     },
+    "ogbl_vessel": {
+        "directed": false
+    },
+    "movielens1m": {
+        "directed": true
+    },
     "edge_existence": {
         "directed": false
     }
