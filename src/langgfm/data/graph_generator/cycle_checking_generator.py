@@ -10,12 +10,12 @@ from langgfm.data.graph_generator.base_generator import StructuralTaskGraphGener
 from langgfm.data.build_synthetic_graph.utils import load_yaml
 
 
-@StructuralTaskGraphGenerator.register("edge_existence")
-class EdgeExistenceGraphGenerator(StructuralTaskGraphGenerator):
+@StructuralTaskGraphGenerator.register("cycle_checking")
+class CycleCheckingGraphGenerator(StructuralTaskGraphGenerator):
     """
-    EdgeExistenceGraphGenerator: A generator for graphs task with edge existence.
+    A generator for graphs task with cycle_checking.
     """
-    def __init__(self, task='edge_existence'):
+    def __init__(self, task='cycle_checking'):
         super().__init__(task)
 
     def _generate_answer(self, label, query_entity=None):
@@ -23,7 +23,7 @@ class EdgeExistenceGraphGenerator(StructuralTaskGraphGenerator):
 
 
 if __name__ == '__main__':
-    generator = EdgeExistenceGraphGenerator()
+    generator = CycleCheckingGraphGenerator()
     G, metadata = generator.generate_graph(0)
     print(G.nodes)
     print(G.edges)

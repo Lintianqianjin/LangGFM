@@ -2,13 +2,9 @@ from abc import ABC, abstractmethod
 import os
 import torch
 import networkx as nx
-<<<<<<< HEAD
-from .utils.sampling import generate_node_centric_k_hop_subgraph, generate_edge_centric_k_hop_subgraph
-=======
 from networkx.readwrite import json_graph
 
-from .utils.sampling import generate_node_centric_k_hop_subgraph
->>>>>>> origin/yanpw
+from .utils.sampling import generate_node_centric_k_hop_subgraph, generate_edge_centric_k_hop_subgraph
 from .utils.shuffle_graph import shuffle_nodes_randomly
 from langgfm.utils.io import load_yaml
 
@@ -352,12 +348,16 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph representing the specific sample.
         """
-        G = json_graph.node_link_graph(self.graphs[sample_id],)
+        G = json_graph.node_link_graph(self.graphs[sample_id], directed=False)
+        print(f"load: {G=}")
         G = nx.MultiDiGraph(G)
-        
+        print(f"multidi: {G=}")
+    
         label, query_entity = self.labels[sample_id]
         query = self._generate_query(query_entity)
-        answer = self._generate_answer(label)
+        print(f"labels: {label=}, {query_entity=}")
+        # exit()
+        answer = self._generate_answer(label, query_entity)
         
         meta_data = {
             "raw_sample_id": sample_id,
@@ -374,7 +374,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         return self.config['query_format'].format(*query_entity)
 
     @abstractmethod
-    def _generate_answer(self, label):
+    def _generate_answer(self, label, query_entity=None):
         """
         Create a natural language answer based on the label and the task answer format.
         
