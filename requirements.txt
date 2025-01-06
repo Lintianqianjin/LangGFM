@@ -35,6 +35,7 @@ pillow==11.0.0
 propcache==0.2.1
 psutil==6.1.1
 pyg-lib==0.4.0+pt25cu124
+- -f https://data.pyg.org/whl/torch-2.5.0+cu124.html
 pyparsing==3.2.0
 python-dateutil==2.9.0.post0
 pytz==2024.2
