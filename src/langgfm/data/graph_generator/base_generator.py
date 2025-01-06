@@ -243,7 +243,6 @@ class EdgeGraphGenerator(InputGraphGenerator):
         """
         Get the query for the main task based on the target_node_idx 
         in the networkx graph object."""
-        
         pass
     
     @abstractmethod
@@ -327,7 +326,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         self.config = load_yaml(
             os.path.join(
                 os.path.dirname(__file__),
-                "./../../configs/synthetic_graph_generation.yaml"
+                "./../../configs/structural_task_generation.yaml"
             )
         )[task]
         self.root = os.path.join(os.path.dirname(__file__), self.config['file_path'])

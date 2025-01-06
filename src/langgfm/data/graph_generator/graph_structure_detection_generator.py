@@ -10,20 +10,23 @@ from langgfm.data.graph_generator.base_generator import StructuralTaskGraphGener
 from langgfm.data.build_synthetic_graph.utils import load_yaml
 
 
-@StructuralTaskGraphGenerator.register("graph_automorphic")
-class GraphAutomorphicGraphGenerator(StructuralTaskGraphGenerator):
+@StructuralTaskGraphGenerator.register("graph_structure_detection")
+class GraphStructureDetectionGraphGenerator(StructuralTaskGraphGenerator):
     """
-    A generator for graphs task with graph_automorphic.
+    A generator for graphs task with graph_structure_detection.
     """
-    def __init__(self, task='graph_automorphic'):
+    def __init__(self, task='graph_structure_detection'):
         super().__init__(task)
 
     def _generate_answer(self, label, query_entity=None):
-        return self.config['answer_format'].format("Yes" if label else "No")
+        return self.config['answer_format'].format(label)
 
 
 if __name__ == '__main__':
-    generator = GraphAutomorphicGraphGenerator()
+    # print("done")
+    # exit()
+    generator = GraphStructureDetectionGraphGenerator()
+
     G, metadata = generator.generate_graph(0)
     print(G.nodes)
     print(G.edges)

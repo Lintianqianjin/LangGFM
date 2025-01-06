@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import json
 import torch
 import sys
 
@@ -7,11 +8,35 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.
 from langgfm.utils.io import load_yaml
 
 
+def add_random_splits(train_size, val_size, test_size, task):
+    train_mask, val_mask, test_mask = generate_splits_mask(
+        train_size=train_size,
+        val_size=val_size,
+        test_size=test_size
+    )
+    split_indices = {
+        'train': train_mask.nonzero(as_tuple=True)[0].tolist(),
+        'val': val_mask.nonzero(as_tuple=True)[0].tolist(),
+        'test': test_mask.nonzero(as_tuple=True)[0].tolist(),
+    }
+    
+    split_path = os.path.join(os.path.dirname(__file__), '../../configs/dataset_splits.json')
+    if os.path.exists(split_path):
+        with open(split_path, 'r') as f:
+            all_splits = json.load(f)
+    else:
+        all_splits = {}
+
+    all_splits[task] = split_indices
+    with open(split_path, 'w') as f:
+        json.dump(all_splits, f, indent=4)
+
+
 def check_label_distribution(task):
     """
     Check the distribution of the labels.
     """
-    config_file_path = os.path.join(os.path.dirname(__file__), '../../configs/synthetic_graph_generation.yaml')
+    config_file_path = os.path.join(os.path.dirname(__file__), '../../configs/structural_task_generation.yaml')
     configs = load_yaml(config_file_path)
     task_configs = configs[task]
     data_path = os.path.join(os.path.dirname(__file__), task_configs['file_path'])
@@ -24,7 +49,7 @@ def transform_labels(task):
     """
     Transform the labels to the required format.
     """
-    config_file_path = os.path.join(os.path.dirname(__file__), '../../configs/synthetic_graph_generation.yaml')
+    config_file_path = os.path.join(os.path.dirname(__file__), '../../configs/structural_task_generation.yaml')
     configs = load_yaml(config_file_path)
     task_configs = configs[task]
     data_path = os.path.join(os.path.dirname(__file__), task_configs['file_path'])

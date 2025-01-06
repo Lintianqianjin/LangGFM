@@ -191,9 +191,12 @@ graph_automorphic:
 
 graph_structure_detection: 
   task_type: "cls"
+  min_nodes: 15
+  max_nodes: 30
   train_size: 500
   val_size: 100
   test_size: 200
+  seed: 42
   query_format: "Please infer the type of the graph.
     The available graph types include: <cycle graph<, <star graph>, <wheel graph>,
     <lollipop graph>, <hypercube graph>, <grid graph>, <clique graph>, <circular ladder graph>.
