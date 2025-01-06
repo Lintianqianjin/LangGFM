@@ -33,7 +33,7 @@ edge_counting:
 
 
 node_attribute_retrieval: 
-  graph_type: "random"
+  graph_type: "node_weights"
   task_type: "rg"
   min_nodes: 10
   max_nodes: 50
@@ -44,7 +44,7 @@ node_attribute_retrieval:
   train_size: 500
   val_size: 100
   test_size: 300
-  query_format: "What is the value of attribute[{}] for node [{}]?"
+  query_format: "What is the value of attribute [{}] for node [{}]?"
   answer_format: "The value of attribute [{}] for node [{}] is {}."
   file_path: "../../../../data/node_attribute_retrieval/raw/data.pt"
 
@@ -96,7 +96,7 @@ edge_existence:
   val_size: 100
   test_size: 200
   query_format: "Is there an edge between node [{}] and node [{}]?"
-  answer_format: "{}."
+  answer_format: "{}"
   file_path: "../../../../data/edge_existence/raw/data.pt"
 
 
@@ -113,7 +113,7 @@ connectivity:
   val_size: 100
   test_size: 200
   query_format: "Is there an path between node [{}] and node [{}]?"
-  answer_format: "{}."
+  answer_format: "{}"
   file_path: "../../../../data/connectivity/raw/data.pt"
 
 
@@ -187,3 +187,22 @@ graph_automorphic:
   You need to output Yes or No."
   answer_format: "{}"
   file_path: "../../../../data/graph_automorphic/raw/data.pt"
+
+
+graph_structure_detection: 
+  task_type: "cls"
+  min_nodes: 15
+  max_nodes: 30
+  train_size: 500
+  val_size: 100
+  test_size: 200
+  seed: 42
+  query_format: "Please infer the type of the graph.
+    The available graph types include: <cycle graph<, <star graph>, <wheel graph>,
+    <lollipop graph>, <hypercube graph>, <grid graph>, <clique graph>, <circular ladder graph>.
+    Please carefully consider the realistic topological structure of the type and 
+    understand the topological structure of the graph. 
+    The type that has the most similar topological structure to the graph's topological structure 
+    is the answer you should output."
+  answer_format: "{}"
+  file_path: "../../../../data/graph_structure_detection/raw/data.pt"

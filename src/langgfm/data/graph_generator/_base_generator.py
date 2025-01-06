@@ -242,7 +242,6 @@ class EdgeTaskGraphGenerator(InputGraphGenerator):
         """
         Get the query for the main task based on the target_node_idx 
         in the networkx graph object."""
-        
         pass
     
     @abstractmethod
@@ -396,7 +395,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         self.config = load_yaml(
             os.path.join(
                 os.path.dirname(__file__),
-                "./../../configs/synthetic_graph_generation.yaml"
+                "./../../configs/structural_task_generation.yaml"
             )
         )[task]
         self.root = os.path.join(os.path.dirname(__file__), self.config['file_path'])
@@ -417,12 +416,16 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph representing the specific sample.
         """
-        G = json_graph.node_link_graph(self.graphs[sample_id],)
+        G = json_graph.node_link_graph(self.graphs[sample_id], directed=False)
+        print(f"load: {G=}")
         G = nx.MultiDiGraph(G)
-        
+        print(f"multidi: {G=}")
+    
         label, query_entity = self.labels[sample_id]
         query = self._generate_query(query_entity)
-        answer = self._generate_answer(label)
+        print(f"labels: {label=}, {query_entity=}")
+        # exit()
+        answer = self._generate_answer(label, query_entity)
         
         meta_data = {
             "raw_sample_id": sample_id,
@@ -439,7 +442,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         return self.config['query_format'].format(*query_entity)
 
     @abstractmethod
-    def _generate_answer(self, label):
+    def _generate_answer(self, label, query_entity=None):
         """
         Create a natural language answer based on the label and the task answer format.
         
