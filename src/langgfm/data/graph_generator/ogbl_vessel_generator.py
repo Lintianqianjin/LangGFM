@@ -5,10 +5,10 @@ import torch
 import pandas as pd
 
 from .utils.ogb_dataset import CustomPygLinkPropPredDataset
-from .base_generator import EdgeGraphGenerator
+from ._base_generator import EdgeTaskGraphGenerator
 
-@EdgeGraphGenerator.register("ogbl_vessel")
-class OgblVesselGraphGenerator(EdgeGraphGenerator):
+@EdgeTaskGraphGenerator.register("ogbl_vessel")
+class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
     """
     OgblVesselGraphGenerator: A generator for creating k-hop subgraphs 
     from the OGBL-Vessel dataset using NetworkX format.
@@ -105,7 +105,7 @@ class OgblVesselGraphGenerator(EdgeGraphGenerator):
         
         return answer
     
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping, edge, sub_graph_edge_mask=None):
+    def create_networkx_graph(self, node_mapping, sub_graph_edge_mask=None, edge=None, **kwargs):
         """
         Create a NetworkX graph from the sampled subgraph.
         """
@@ -116,11 +116,15 @@ class OgblVesselGraphGenerator(EdgeGraphGenerator):
             G.add_node(new_node_idx, x=x, y=y, z=z)
         target_src = node_mapping[edge[0]]
         target_dst = node_mapping[edge[1]]
-        for edge_idx in range(sub_graph_edge_index.size(1)):
-            src = node_mapping[sub_graph_edge_index[0][edge_idx].item()]
-            dst = node_mapping[sub_graph_edge_index[1][edge_idx].item()]
+        
+        for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
+            raw_src, raw_dst = self.graph.edge_index.T[edge_idx]
+            raw_src, raw_dst = raw_src.item(), raw_dst.item()
+            src = node_mapping[raw_src]
+            dst = node_mapping[raw_dst]
             # Skip the target edge
             if not (src == target_src and dst == target_dst) or (src == target_dst and dst == target_src): 
                 G.add_edge(src, dst)
+                G.add_edge(dst, src)
         
         return G

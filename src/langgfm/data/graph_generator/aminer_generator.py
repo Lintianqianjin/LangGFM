@@ -4,11 +4,11 @@ import pandas as pd
 from torch_geometric.datasets import AMiner
 
 
-from .base_generator import NodeGraphGenerator
+from .base_generator import NodeTaskGraphGenerator
 
 
-@NodeGraphGenerator.register("aminer")
-class AMinerGraphGenerator(NodeGraphGenerator):
+@NodeTaskGraphGenerator.register("aminer")
+class AMinerGraphGenerator(NodeTaskGraphGenerator):
     """
     AMinerGraphGenerator: A generator for creating k-hop subgraphs 
     from the AMiner dataset using NetworkX format.

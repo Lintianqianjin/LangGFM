@@ -4,17 +4,17 @@ import networkx as nx
 import torch
 import pandas as pd
 
-from .utils.hetero_graph_utils import get_node_slices
+from .utils.graph_utils import get_node_slices
 
-from .base_generator import EdgeGraphGenerator
+from .base_generator import EdgeTaskGraphGenerator
 from torch_geometric.datasets import MovieLens1M
 
 import pgeocode
 from tqdm import tqdm
     
     
-@EdgeGraphGenerator.register("movielens1m")
-class Movielens1MGraphGenerator(EdgeGraphGenerator):
+@EdgeTaskGraphGenerator.register("movielens1m")
+class Movielens1MGraphGenerator(EdgeTaskGraphGenerator):
     """
     MovielensGraphGenerator: A generator for creating k-hop subgraphs 
     from the MovieLens dataset using NetworkX format.
@@ -32,6 +32,7 @@ class Movielens1MGraphGenerator(EdgeGraphGenerator):
         self.node_slices = get_node_slices(hetero_graph.num_nodes_dict)
         # print(f"{self.node_slices=}")
         self.graph = hetero_graph.to_homogeneous()
+        # print(f"{self.graph.time=}")
         # print(self.graph)
         self.node_type_mapping = {0:'movie', 1:'user'}
         # print(f"{torch.unique(self.graph.node_type,return_counts=True)}")
@@ -51,6 +52,7 @@ class Movielens1MGraphGenerator(EdgeGraphGenerator):
         # change UserID and MovieID in self.ratings to the corresponding node index in the graph
         self.ratings['UserID'] = self.ratings['UserID'].map(self.user_raw_id_to_id_in_pyg_graph)
         self.ratings['MovieID'] = self.ratings['MovieID'].map(self.movie_raw_id_to_id_in_pyg_graph)
+        # print(f"{self.ratings=}")
         
         # samples are all the edges in the graph, i.e., all the ratings
         self.all_samples = [
@@ -166,7 +168,7 @@ class Movielens1MGraphGenerator(EdgeGraphGenerator):
         return answer
         
     
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping:dict, **kwargs):
+    def create_networkx_graph(self, node_mapping:dict, sub_graph_edge_mask, edge, **kwargs):
         '''
         '''
         G = nx.MultiDiGraph()
@@ -187,8 +189,18 @@ class Movielens1MGraphGenerator(EdgeGraphGenerator):
                     occupation = self.users['Occupation'].iloc[raw_node_idx-self.node_slices['user'][0]],
                     location = self.users['Location'].iloc[raw_node_idx-self.node_slices['user'][0]]
                 )
+        
+        target_user_id, target_movie_id = edge
+        # find this edge in self.graph.edge_index
+        target_edge_mask = (self.graph.edge_index[0] == target_user_id) & (self.graph.edge_index[1] == target_movie_id)
+        # find timestamp of this edge
+        target_edge_timestamp = self.graph.time[target_edge_mask]
+        target_edge_timestamp = pd.to_datetime(target_edge_timestamp, unit='s').strftime('%Y-%m-%d %H:%M')
+        # print(f"{target_edge_timestamp=}")
+        
+        for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
             
-        for raw_src, raw_dst in sub_graph_edge_index.T:
+            raw_src, raw_dst = self.graph.edge_index.T[edge_idx]
             raw_src, raw_dst = raw_src.item(), raw_dst.item()
             
             src = node_mapping[raw_src]
@@ -198,12 +210,15 @@ class Movielens1MGraphGenerator(EdgeGraphGenerator):
                 (self.ratings['UserID'] == raw_src-self.node_slices['user'][0]) & 
                 (self.ratings['MovieID'] == raw_dst)
             ]
-            
-            
-            G.add_edge(
-                src, dst, rating = edge_attrs['Rating'].values[0], 
-                time = edge_attrs['Timestamp'].values[0]
-            )
+            # print(f"{edge_attrs['Timestamp'].item()=}, {target_edge_timestamp.item()=}")
+            # print(f"{(edge_attrs['Timestamp'].item()<target_edge_timestamp.item())=}")
+            if edge_attrs['Timestamp'].item()<target_edge_timestamp:
+                G.add_edge(
+                    src, dst, rating = edge_attrs['Rating'].values[0], 
+                    time = edge_attrs['Timestamp'].values[0]
+                )
+            else:
+                continue # do not add edges that are rated after the target edge
         
         return G
     
@@ -215,16 +230,6 @@ class Movielens1MGraphGenerator(EdgeGraphGenerator):
         user_id, movie_id = sample
         user_id += self.node_slices['user'][0] # in homogeneous graph movies is before users
         sample = (user_id, movie_id)
-        
-        # find this edge in self.graph.edge_index
-        target_edge_mask = (self.graph.edge_index[0] == user_id) & (self.graph.edge_index[1] == movie_id)
-        # find timestamp of this edge
-        timestamp = self.graph.time[target_edge_mask]
-        
-        # mask all the edges that are earlier than the target edge (including the target edge)
-        edge_mask = self.graph.time < timestamp
-        # get all the edges that are earlier than the target edge
-        edge_index = self.graph.edge_index[:, edge_mask]
         
         return super().generate_graph(sample, edge_index)
         

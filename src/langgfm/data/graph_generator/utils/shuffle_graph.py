@@ -19,6 +19,7 @@ def shuffle_nodes_randomly(G):
     
     # add_nodes
     nodes_with_data = G.nodes(data=True)
+    print(f"{nodes_with_data=}")
     node_idx_mapping_old_to_new = {}
     for new_idx, old_idx in enumerate(np.random.permutation(len(nodes_with_data))):
         old_data = nodes_with_data[old_idx]

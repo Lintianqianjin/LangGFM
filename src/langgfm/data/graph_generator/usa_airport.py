@@ -3,11 +3,11 @@ import networkx as nx
 
 import torch
 
-from .base_generator import NodeGraphGenerator
+from .base_generator import NodeTaskGraphGenerator
 
 
-@NodeGraphGenerator.register("usa_airport")
-class USAirportGraphGenerator(NodeGraphGenerator):
+@NodeTaskGraphGenerator.register("usa_airport")
+class USAirportGraphGenerator(NodeTaskGraphGenerator):
     """
     USAirportGraphGenerator: A generator for creating k-hop subgraphs 
     from the USAirport dataset using NetworkX format.

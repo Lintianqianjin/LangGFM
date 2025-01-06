@@ -5,11 +5,11 @@ import torch
 import pandas as pd
 from torch_geometric.utils import to_undirected
 
-from .base_generator import NodeGraphGenerator
+from .base_generator import NodeTaskGraphGenerator
 
 
-@NodeGraphGenerator.register("twitch")
-class TwitchGraphGenerator(NodeGraphGenerator):
+@NodeTaskGraphGenerator.register("twitch")
+class TwitchGraphGenerator(NodeTaskGraphGenerator):
     """
     TwitchGraphGenerator: A generator for creating k-hop subgraphs 
     from the Twitch dataset using NetworkX format.

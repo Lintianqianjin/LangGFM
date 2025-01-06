@@ -32,5 +32,7 @@ To ensure compatibility with all graphs in the open world, treat all graphs as M
 * Multiedges are multiple edges between two nodes. Each edge can hold optional data or attributes.
 * A MultiDiGraph holds directed edges. Self loops are allowed.
 
+Treat heterogeneous graph as homogeneous graph with edge_type and node_type as feature.
+
 In an undirected graph, edges have no direction. An undirected edge can be represented as two directed edges in opposite directions. 
 

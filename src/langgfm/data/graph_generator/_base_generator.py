@@ -77,7 +77,7 @@ class InputGraphGenerator(ABC):
     
     
     
-class NodeGraphGenerator(InputGraphGenerator):
+class NodeTaskGraphGenerator(InputGraphGenerator):
     """
     A concrete implementation of InputGraphGenerator to generate graphs
     based on node-centric sampling logic.
@@ -190,9 +190,7 @@ class NodeGraphGenerator(InputGraphGenerator):
         return new_G, metadata
         
         
-        
-# @InputGraphGenerator.register("EdgeGraphGenerator")
-class EdgeGraphGenerator(InputGraphGenerator):
+class EdgeTaskGraphGenerator(InputGraphGenerator):
     """
     A concrete implementation of InputGraphGenerator to generate graphs
     based on edge-centric sampling logic.
@@ -225,7 +223,7 @@ class EdgeGraphGenerator(InputGraphGenerator):
         if edge_index is None:
             edge_index = self.graph.edge_index
             
-        sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask = generate_edge_centric_k_hop_subgraph(
+        sub_graph_nodes, sub_graph_edge_mask = generate_edge_centric_k_hop_subgraph(
             edge_index, edge, self.num_hops, self.neighbor_size, 
             self.random_seed, self.sampling
         )
@@ -236,7 +234,7 @@ class EdgeGraphGenerator(InputGraphGenerator):
             for new_node_idx, raw_node_idx in enumerate(sub_graph_nodes)
         }
         
-        return sub_graph_edge_index, node_mapping, sub_graph_edge_mask
+        return node_mapping, sub_graph_edge_mask
     
     
     @abstractmethod
@@ -258,7 +256,7 @@ class EdgeGraphGenerator(InputGraphGenerator):
         pass
     
     @abstractmethod
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping:dict, target_edge, sub_graph_edge_mask=None) -> nx.Graph:
+    def create_networkx_graph(self, node_mapping:dict, sub_graph_edge_mask=None, edge=None) -> nx.Graph:
         """
         Create a NetworkX graph from the sampled subgraph.
         
@@ -283,17 +281,24 @@ class EdgeGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph for the sample.
         """
+        if len(sample) == 2:
+            src, dst = sample
+        elif len(sample) == 3:
+            # multiplex graph, multiple edges between the same node pair
+            # id_ is the id_-th edge between the same node pair
+            src, dst, id_ = sample
         
-        sub_graph_edge_index, node_mapping, sub_graph_edge_mask = self.edge_egograph_sampling(sample, edge_index=edge_index)
+        node_mapping, sub_graph_edge_mask = self.edge_egograph_sampling((src, dst), edge_index=edge_index)
         
         G = self.create_networkx_graph(
-            sub_graph_edge_index=sub_graph_edge_index, node_mapping=node_mapping, 
-            edge=sample, sub_graph_edge_mask=sub_graph_edge_mask
+            node_mapping=node_mapping, 
+            sub_graph_edge_mask=sub_graph_edge_mask,
+            edge=sample
         )
         
         new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)
         
-        src, dst = sample
+        # src, dst = sample
         target_src_node_idx = node_idx_mapping_old_to_new[node_mapping[src]]
         target_dst_node_idx = node_idx_mapping_old_to_new[node_mapping[dst]]
         
@@ -316,9 +321,72 @@ class EdgeGraphGenerator(InputGraphGenerator):
         }
 
         return new_G, metadata
+
+
+class GraphTaskGraphGenerator(InputGraphGenerator):
+    """
+    A concrete implementation of InputGraphGenerator to generate graphs
+    based on the entire graph.
+    """
+    def __init__(self, **kwargs):
+        """
+        Initialize the dataset and load the data. No sampling is required."""
+        self.load_data()
+    
+    @abstractmethod
+    def get_query(self, sample) -> str:
+        """
+        Get the query for the main task based on the graph object."""
+        
+        pass
+    
+    @abstractmethod
+    def get_answer(self, sample) -> str:
+        """
+        Get the label of the graph."""
+        
+        pass
+    
+    @abstractmethod
+    def create_networkx_graph(self, sample) -> nx.Graph:
+        """
+        Create a NetworkX graph from the graph.
+        
+        Args:
+        
+        Returns:
+            nx.Graph: A NetworkX graph object.
+        """
+        pass
+    
+    def generate_graph(self, sample: int) -> nx.Graph:
+        """
+        Generate the entire graph
+
+        Args:
+            sample (int): The ID of the sample to generate a graph for.
+
+        Returns:
+            nx.Graph: A NetworkX graph for the sample.
+        """
+        G = self.create_networkx_graph(sample)
+        
+        query = self.get_query(sample)
+        answer = self.get_answer(sample)
+        
+        new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)
+        
+        metadata = {
+            "raw_sample_id": sample,
+            "main_task": {
+                "query": query,
+                "answer": answer,
+            }
+        }
+
+        return new_G, metadata
     
 
-# @InputGraphGenerator.register("StructuralTaskGraphGenerator")
 class StructuralTaskGraphGenerator(InputGraphGenerator):
     """
     A concrete implementation of InputGraphGenerator to generate graphs
@@ -360,7 +428,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
             "raw_sample_id": sample_id,
             "main_task": {
                 "query": query,
-                "label": answer,
+                "answer": answer,
                 "query_entity": query_entity,
             }
         }

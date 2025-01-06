@@ -6,13 +6,13 @@ import networkx as nx
 import torch
 import pandas as pd
 from tqdm import tqdm
-
-from .base_generator import EdgeGraphGenerator
-from .utils.hetero_graph_utils import get_node_slices
+from collections import defaultdict
+from .base_generator import EdgeTaskGraphGenerator
+from .utils.graph_utils import get_node_slices, get_edge_idx_in_graph, get_edge_idx_in_etype
 from langgfm.utils.io import load_jsonl
 
-@EdgeGraphGenerator.register("yelp_review")
-class YelpReviewGraphGenerator(EdgeGraphGenerator):
+@EdgeTaskGraphGenerator.register("yelp_review")
+class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
     """
     YelpReviewGraphGenerator: A generator for creating k-hop subgraphs 
     from the Yelp dataset using NetworkX format.
@@ -28,10 +28,12 @@ class YelpReviewGraphGenerator(EdgeGraphGenerator):
         self.root = "./data/Yelp"
         # Corresponding one-to-one with (user, review, business) edges in sequence
         self.raw_reviews_info = load_jsonl(f"{self.root}/yelp_academic_dataset_review.json", return_type="dataframe")
+        self.raw_reviews_info["date"] = pd.to_datetime(self.raw_reviews_info["date"], errors='coerce')
         print(f"{self.raw_reviews_info.shape=}")
         
         # Corresponding one-to-one with user nodes in sequence
         self.raw_users_info = load_jsonl(f"{self.root}/yelp_academic_dataset_user.json", return_type="dataframe")
+        self.raw_users_info["yelping_since"] = pd.to_datetime(self.raw_users_info["yelping_since"], errors='coerce')
         print(f"{self.raw_users_info.shape=}")
         
         # Corresponding one-to-one with business nodes in sequence
@@ -40,10 +42,11 @@ class YelpReviewGraphGenerator(EdgeGraphGenerator):
         
         # Corresponding one-to-one with (user, tip, business) edges in sequence
         self.raw_tips_info = load_jsonl(f"{self.root}/yelp_academic_dataset_tip.json", return_type="dataframe")
+        self.raw_tips_info["date"] = pd.to_datetime(self.raw_tips_info["date"], errors='coerce')
         print(f"{self.raw_tips_info.shape=}")
-        # 其中包含如下类型：
-        #   - 节点: user, business
-        #   - 边: (user, 'friend', user), (user, 'review', business), (user, 'tip', business)
+
+        #   - Nodes: user, business
+        #   - Edges: (user, 'friend', user), (user, 'review', business), (user, 'tip', business)
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", FutureWarning)  # suppress torch.load warning of `weight_only`
             self.hetero_data = torch.load(f"{self.root}/yelp.pt")
@@ -57,19 +60,25 @@ class YelpReviewGraphGenerator(EdgeGraphGenerator):
         self.edge_type_mapping = {0:'friend', 1:'review', 2:'tip'}
         
         # save all the edges in (user, review, business) edges in self.hetero_data
-        self.all_samples = [
-            (user_id.item(), business_id.item()) 
-            for user_id, business_id in self.hetero_data.edge_index('user', 'review', 'business').T
-        ]
+        edge_count = defaultdict(int)  # Dictionary to store the number of times each (src, dst) pair appears
+        edge_dict = defaultdict(int)  # Dictionary to store the mapping from (src, dst, multiplex_id) to edge idx in the edge_index
+        # Iterate through all edges
+        target_edge_type_index = self.hetero_data['user', 'review', 'business'].edge_index
+        for idx, (src, dst) in enumerate(zip(target_edge_type_index[0], target_edge_type_index[1])):
+            key = (int(src), int(dst))
+            multiplex_id = edge_count[key]  # Get the current multiplex_id for this pair
+            edge_dict[(int(src), int(dst), multiplex_id)] = idx  # Store the edge index
+            edge_count[key] += 1   # Increment the count for this (src, dst) pair
+            
+        self.all_samples = set(edge_dict.keys())
 
 
     def get_query(self, target_src_node_idx: int, target_dst_node_idx: int):
         """
         生成一个提示/问题，询问 user 对 business 的评论内容。
         """
-        query = (f"It is known that user with node id {target_src_node_idx} commented on "
-                 f"business with node id {target_dst_node_idx}. Please generate a review text "
-                 f"by mimicking the user {target_src_node_idx}'s style.")
+        query = (f"User with node id {target_src_node_idx} is going to leave a review for business with node id {target_dst_node_idx}. "
+        f"Please generate the review text that mimics the writing style of the user.")
         return query
 
 
@@ -78,155 +87,150 @@ class YelpReviewGraphGenerator(EdgeGraphGenerator):
         给定一个 (user_node_idx_in_homo_pyg_graph, business_node_idx_in_homo_pyg_graph) 边，
         在原始数据中找到对应的评论文本，作为 ground truth。
         """
-        # 比如在 self.reviews 中找到对应的评论
-        # 需要结合 raw user / raw business id 的映射进行查找，这里仅示意
-        # edge 传进来的是 (src_user_nid, dst_business_nid) 在同质图中的索引
-        # 通常需要去除 offset 后，再去 self.reviews 里匹配
+        user_id, business_id, multiplex_id = edge
+        # find the order/index of this edge in self.graph.
+        edge_idx = get_edge_idx_in_graph(src=user_id, dst=business_id,edge_index=self.graph.edge_index,multiplex_id=multiplex_id)
+        review_edge_idx, edge_type = get_edge_idx_in_etype(edge_idx=edge_idx, edge_types=self.graph.edge_type, return_etype=True)
         
-        # 注意：edge[0] - self.node_slices['user'][0] 如果 users 在 homogeneous graph 的 offset 是 self.node_slices['user'][0] 
-        # 这里示例认为 user/biz 刚好是 0 ~ #user - 1, #user ~ #user+#biz - 1
+        if edge_type != 1:  # Ensure it's a review edge
+            raise ValueError(f"Edge ({user_id}, {business_id}) is not a review edge.")
         
-        user_homo_idx, business_homo_idx = edge
-        # 
-        
-        # 这里仅简单示意直接从 self.reviews 中找到一个文本
-        # 在实际情况下，你需要通过 user_homo_idx => user_raw_id => user_id => 再和 df_reviews merge
-        # 同理 business
-        # 下面假设可以直接拿到 star, text ...
-        # 仅供参考
-        # 假设 user_homo_idx, biz_homo_idx 对应 df_reviews 的一行
-        rating = 4
-        text = "This place is absolutely amazing!"
-        
-        answer = (f"User (node id {target_src_node_idx}) gave business (node id {target_dst_node_idx}) "
-                  f"a {rating}-star review and said: \"{text}\"")
+        # get raw review info
+        review_info = self.raw_reviews_info.iloc[review_edge_idx]
+        # rating = review_info['stars']
+        review = review_info['text']
+        answer = (
+            f"User with node id {target_src_node_idx} may leave a review for Business with node id {target_dst_node_idx} as follows: "
+            f"{review}"
+        )
         return answer
 
 
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping: dict, **kwargs):
+    def create_networkx_graph(self, node_mapping: dict, edge, sub_graph_edge_mask, **kwargs):
         """
-        将子图 (通过 edge_index 选出来的节点和边) 构建为一个 NetworkX 的 MultiDiGraph，
-        并将相关的节点/边属性加入。
+            Create a NetworkX graph from the subgraph edge index and node mapping.
         """
         G = nx.MultiDiGraph()
+        # target_edge time
+        user_id, business_id, multiplex_id = edge
+        edge_idx = get_edge_idx_in_graph(src=user_id, dst=business_id,edge_index=self.graph.edge_index,multiplex_id=multiplex_id)
+        target_edge_idx, edge_type = get_edge_idx_in_etype(edge_idx=edge_idx, edge_types=self.graph.edge_type, return_etype=True)
+        # get raw review info
+        review_info = self.raw_reviews_info.iloc[target_edge_idx]
+        # get date
+        target_edge_date = review_info['date']
         
-        # 添加节点 (为每个节点设定属性)
+        
+        # adding nodes with attributes
         for raw_node_idx, new_node_idx in node_mapping.items():
             node_type = self.node_type_mapping[self.graph.node_type[raw_node_idx].item()]
             
             if node_type == 'user':
-                # 如果在同质图中，raw_node_idx - self.node_slices['user'][0] 是用户在 DataFrame 里的行
-                offset_user_idx = raw_node_idx - self.node_slices['user'][0]
+                user_idx = raw_node_idx - self.node_slices['user'][0]
                 
-                # 取一些示例属性
-                df_row = self.users.iloc[offset_user_idx]  # 这里仅示意
+                # get user info
+                df_row = self.raw_users_info.iloc[user_idx]
                 feats = {
                     "type": "user",
+                    "yelping_since": df_row["yelping_since"].strftime("%Y-%m"),
                     "review_count": df_row["review_count"],
                     "average_stars": df_row["average_stars"],
                     "fans": df_row["fans"],
                     "send_useful_votes": df_row["useful"],
                     "send_funny_votes": df_row["funny"],
-                    "send_cool_votes": df_row["cool"]
+                    "send_cool_votes": df_row["cool"],
+                    "elite_year": df_row["elite"],
+                    "compliment_hot": df_row["compliment_hot"],
+                    "compliment_more": df_row["compliment_more"],
+                    "compliment_profile": df_row["compliment_profile"],
+                    "compliment_cute": df_row["compliment_cute"],
+                    "compliment_list": df_row["compliment_list"],
+                    "compliment_note": df_row["compliment_note"],
+                    "compliment_plain": df_row["compliment_plain"],
+                    "compliment_cool": df_row["compliment_cool"],
+                    "compliment_funny": df_row["compliment_funny"],
+                    "compliment_writer": df_row["compliment_writer"],
+                    "compliment_photos": df_row["compliment_photos"]
                 }
                 G.add_node(new_node_idx, **feats)
             
             elif node_type == 'business':
                 offset_business_idx = raw_node_idx - self.node_slices['business'][0]
-                df_row = self.businesses.iloc[offset_business_idx]
+                df_row = self.raw_businesses_info.iloc[offset_business_idx]
                 feats = {
                     "type": "business",
                     "categories": df_row["categories"],
                     "stars": df_row["stars"],
-                    "city": df_row["city"],
+                    "location": f"{df_row['city'], df_row['state']}",
                     "review_count": df_row["review_count"]
                 }
                 G.add_node(new_node_idx, **feats)
             else:
                 raise ValueError(f"Unknown node type: {node_type}")
         
-        # 添加边
-        for raw_src, raw_dst in sub_graph_edge_index.T:
+        # adding edges with attributes
+        for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
+            
+            # edge_idx in self.graph (homo_graph of the hetero_data)
+            edge_idx_within_etype, edge_type_id = get_edge_idx_in_etype(edge_idx=edge_idx, edge_types=self.graph.edge_type, return_etype=True)
+            etype_name = self.edge_type_mapping[edge_type_id]
+            
+            raw_src, raw_dst = self.graph.edge_index.T[edge_idx]
             raw_src, raw_dst = raw_src.item(), raw_dst.item()
             src = node_mapping[raw_src]
             dst = node_mapping[raw_dst]
             
-            edge_type_id = self.graph.edge_type[raw_src, raw_dst].item()  # 仅示意
-            etype = self.edge_type_mapping[edge_type_id]
             
-            if etype == 'friend':
-                G.add_edge(src, dst, type="Friend")
-            elif etype == 'review':
-                # 在实际的 Yelp 数据里，需要去找到具体的 review 内容 (stars, text, date, votes...) 
-                # 这里简单示意
+            if etype_name == 'friend':
+                feats = {
+                    "type": "Friend",
+                }
+                
+            elif etype_name == 'review':
+                # find edge info in raw_reviews_info
+                review_info = self.raw_reviews_info.iloc[edge_idx_within_etype]
                 feats = {
                     "type": "Review",
-                    "stars": 4,
-                    "date": "2020-01-01",
-                    "text": "A placeholder review text",
-                    "receive_useful_votes": 1,
-                    "receive_funny_votes": 0,
-                    "receive_cool_votes": 1
+                    "stars": review_info['stars'],
+                    "date": review_info['date'].strftime("%Y-%m-%d"),
+                    "text": review_info['text'],
+                    "receive_useful_votes": review_info['useful'],
+                    "receive_funny_votes": review_info['funny'],
+                    "receive_cool_votes": review_info['cool']
                 }
-                G.add_edge(src, dst, **feats)
-            elif etype == 'tip':
+                # compare the date of the edge with the target edge
+                # if later than the target edge, remove the edge
+                if review_info['date'] >= target_edge_date:
+                    continue
+                
+            elif etype_name == 'tip':
+                tip_info = self.raw_tips_info.iloc[edge_idx_within_etype]
                 feats = {
                     "type": "Tip",
-                    "date": "2022-05-10",
-                    "text": "Try their new dish!",
-                    "compliment_count": 3
+                    "date": tip_info['date'].strftime("%Y-%m-%d"),
+                    "text": tip_info['text'],
+                    "compliment_count": tip_info['compliment_count']
                 }
-                G.add_edge(src, dst, **feats)
+                # compare the date of the edge with the target edge
+                # if later than the target edge, remove the edge
+                if tip_info['date'] >= target_edge_date:
+                    continue
+                
             else:
-                raise ValueError(f"Unknown edge type: {etype}")
+                raise ValueError(f"Unknown edge type: {etype_name}")
+
+            G.add_edge(src, dst, **feats)
         
         return G
 
-
-    def generate_graph(self, sample: tuple, edge_index=None):
-        """
-        生成针对某一个 (user_homo_idx, business_homo_idx) 的子图，以及对应的 query, answer。
-        与 Movielens1MGraphGenerator 中类似，通过对目标样本的时间戳或其他逻辑筛选出相应子图。
-        这里示例仅展示简单用法。
-        """
-        user_id, business_id = sample
+    def generate_graph(self, sample, edge_index=None):
+        '''
+        Generate a k-hop subgraph for the given sample.
+        '''
+        # sample id (user id and business id in pyg heterogeneous graph object)
+        # convert it into ids in homogeneous graph object
+        user_id, business_id, multiplex_id = sample
+        business_id += self.node_slices['business'][0]
+        sample = (user_id, business_id, multiplex_id)
         
-        # 1) 在这里，你可以像 Movielens1M 一样，根据该条边的时间戳或其他属性做截断
-        #    或者像老版本 YelpReviewGeneration 一样，做 k-hop 邻居采样
-        #    这里为了演示，我们不做时间筛选，而是简单直接把“已有的 homogeneous graph”中
-        #    与这条边相关的 2-hop 邻居拿出来
-        # --------------------------
-        # 示例：只做 k-hop subgraph
-        # (你需要自己实现或者引入类似 torch_geometric.utils.k_hop_subgraph 的函数)
-        
-        # 如果你跟 movielens 保持风格一致，也可以参考:
-        #   timestamp = self.graph.time[target_edge_mask]
-        #   edge_mask = self.graph.time < timestamp
-        #   ...
-        
-        # 这里仅演示: 假设做 2-hop
-        # from torch_geometric.utils import k_hop_subgraph
-        # subset, sub_edge_index, _, edge_mask = k_hop_subgraph(
-        #     node_idx=[user_id, business_id],
-        #     num_hops=2,
-        #     edge_index=self.graph.edge_index,
-        #     relabel_nodes=False
-        # )
-        #
-        # 为了不使示例过长，这里直接把整图都拿来
-        sub_edge_index = self.graph.edge_index
-        # 做一个最简单的 node_mapping
-        node_mapping = {nid: i for i, nid in enumerate(torch.unique(sub_edge_index))}
-
-        # 2) 用 create_networkx_graph 构建 NXG
-        G = self.create_networkx_graph(sub_edge_index, node_mapping)
-
-        # 3) 构造 query, answer
-        query = self.get_query(user_id, business_id)
-        answer = self.get_answer((user_id, business_id), user_id, business_id)
-        
-        # 4) 返回 (graphs, query, answer, meta_info)
-        # 可以与 Movielens1MGraphGenerator 一样返回
-        # 注意，base_generator 通常会在外部遍历 self.all_samples，然后分别调用 generate_graph
-        # 因此你也可以在外部一次性生成
-        return [G], query, answer, f"User({user_id})-Business({business_id})"
+        return super().generate_graph(sample, edge_index)

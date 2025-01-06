@@ -4,10 +4,10 @@ import networkx as nx
 
 from .utils.ogb_dataset import CustomPygNodePropPredDataset
 
-from .base_generator import NodeGraphGenerator
+from .base_generator import NodeTaskGraphGenerator
 
-@NodeGraphGenerator.register("ogbn_arxiv")
-class OgbnArxivGraphGenerator(NodeGraphGenerator):
+@NodeTaskGraphGenerator.register("ogbn_arxiv")
+class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):
     """
     OgbnArxivGraphGenerator: A generator for creating k-hop subgraphs 
     from the OGBN-Arxiv dataset using NetworkX format.

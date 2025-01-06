@@ -47,5 +47,8 @@
       "sampling": true,
       "neighbor_size": [50],
       "random_seed": 42
+    },
+    "fingerprint": {
+      "task_level": "graph"
     }
 }
