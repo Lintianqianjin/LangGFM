@@ -77,7 +77,6 @@ class InputGraphGenerator(ABC):
     
     
     
-# @InputGraphGenerator.register("NodeGraphGenerator")
 class NodeGraphGenerator(InputGraphGenerator):
     """
     A concrete implementation of InputGraphGenerator to generate graphs
@@ -211,21 +210,23 @@ class EdgeGraphGenerator(InputGraphGenerator):
 
         self.load_data()
     
-    def edge_egograph_sampling(self, edge: tuple):
+    def edge_egograph_sampling(self, edge: tuple, edge_index=None):
         '''
         Generate a k-hop subgraph for a given edge.
         
         Parameters:
-            sample_id: The edge for which the subgraph is generated.
+            edge: The src and dst node indices of the edge for which the subgraph is generated.
             
         Returns:
             sub_graph_edge_index: The combined edge index of the subgraph.
             node_mapping: The mapping of raw node indices to new node indices.
             sub_graph_edge_mask: The edge mask of the overall graph for sub_graph_edge_index.
         '''
-        
+        if edge_index is None:
+            edge_index = self.graph.edge_index
+            
         sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask = generate_edge_centric_k_hop_subgraph(
-            self.graph, edge, self.num_hops, self.neighbor_size, 
+            edge_index, edge, self.num_hops, self.neighbor_size, 
             self.random_seed, self.sampling
         )
         
@@ -270,7 +271,7 @@ class EdgeGraphGenerator(InputGraphGenerator):
         """
         pass
     
-    def generate_graph(self, sample: tuple) -> nx.Graph:
+    def generate_graph(self, sample: tuple, edge_index = None) -> nx.Graph:
         """
         Generate a single graph centered around an edge using num_hops.
         If sampling is enabled, sample neighbors up to neighbor_size.
@@ -282,7 +283,7 @@ class EdgeGraphGenerator(InputGraphGenerator):
             nx.Graph: A NetworkX graph for the sample.
         """
         
-        sub_graph_edge_index, node_mapping, sub_graph_edge_mask = self.edge_egograph_sampling(sample)
+        sub_graph_edge_index, node_mapping, sub_graph_edge_mask = self.edge_egograph_sampling(sample, edge_index=edge_index)
         
         G = self.create_networkx_graph(
             sub_graph_edge_index=sub_graph_edge_index, node_mapping=node_mapping, 
@@ -316,7 +317,7 @@ class EdgeGraphGenerator(InputGraphGenerator):
         return new_G, metadata
     
 
-@InputGraphGenerator.register("StructuralTaskGraphGenerator")
+# @InputGraphGenerator.register("StructuralTaskGraphGenerator")
 class StructuralTaskGraphGenerator(InputGraphGenerator):
     """
     A concrete implementation of InputGraphGenerator to generate graphs

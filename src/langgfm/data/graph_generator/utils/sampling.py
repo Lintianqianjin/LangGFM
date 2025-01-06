@@ -141,7 +141,7 @@ def generate_node_centric_k_hop_subgraph(graph, sample_id, num_hops, neighbor_si
 
 
 
-def generate_edge_centric_k_hop_subgraph(graph, edge, num_hops, neighbor_size=None, random_seed=None, sampling=False):
+def generate_edge_centric_k_hop_subgraph(edge_index, edge, num_hops, neighbor_size=None, random_seed=None, sampling=False):
     """
     Generate a k-hop subgraph for a given node ID.
 
@@ -161,31 +161,31 @@ def generate_edge_centric_k_hop_subgraph(graph, edge, num_hops, neighbor_size=No
     if sampling:
         # Generate k-hop subgraph with neighbor sampling
         src_to_tgt_subset, src_to_tgt_edge_index, _, src_to_tgt_edge_mask = k_hop_sampled_subgraph(
-            node_idx=[src, dst], num_hops=num_hops, edge_index=graph.edge_index,
+            node_idx=[src, dst], num_hops=num_hops, edge_index=edge_index,
             relabel_nodes=False, flow='source_to_target', directed=False,
             neighbor_size=neighbor_size, random_seed=random_seed
         )
 
         tgt_to_src_subset, tgt_to_src_edge_index, _, tgt_to_src_edge_mask = k_hop_sampled_subgraph(
-            node_idx=[src, dst], num_hops=num_hops, edge_index=graph.edge_index,
+            node_idx=[src, dst], num_hops=num_hops, edge_index=edge_index,
             relabel_nodes=False, flow='target_to_source', directed=False,
             neighbor_size=neighbor_size, random_seed=random_seed
         )
     else:
         # Generate k-hop subgraph without sampling
         src_to_tgt_subset, src_to_tgt_edge_index, _, src_to_tgt_edge_mask = k_hop_subgraph(
-            node_idx=[src, dst], num_hops=num_hops, edge_index=graph.edge_index,
+            node_idx=[src, dst], num_hops=num_hops, edge_index=edge_index,
             relabel_nodes=False, flow='source_to_target', directed=False
         )
 
         tgt_to_src_subset, tgt_to_src_edge_index, _, tgt_to_src_edge_mask = k_hop_subgraph(
-            node_idx=[src, dst], num_hops=num_hops, edge_index=graph.edge_index,
+            node_idx=[src, dst], num_hops=num_hops, edge_index=edge_index,
             relabel_nodes=False, flow='target_to_source', directed=False
         )
 
     # Combine edges and nodes
     sub_graph_edge_mask = torch.logical_or(src_to_tgt_edge_mask, tgt_to_src_edge_mask)
-    sub_graph_edge_index = graph.edge_index.T[sub_graph_edge_mask].T
+    sub_graph_edge_index = edge_index.T[sub_graph_edge_mask].T
     sub_graph_nodes = set(src_to_tgt_subset.numpy().tolist()) | set(tgt_to_src_subset.numpy().tolist())
 
     return sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask
