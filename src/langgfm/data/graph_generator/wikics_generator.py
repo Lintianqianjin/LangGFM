@@ -2,7 +2,7 @@ import json
 import networkx as nx
 
 from torch_geometric.datasets import WikiCS
-from .base_generator import NodeTaskGraphGenerator
+from ._base_generator import NodeTaskGraphGenerator
 
 
 @NodeTaskGraphGenerator.register("wikics")

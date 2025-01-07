@@ -333,7 +333,7 @@ class GraphTaskGraphGenerator(InputGraphGenerator):
         self.load_data()
     
     @abstractmethod
-    def get_query(self, sample) -> str:
+    def get_query(self, **kwargs) -> str:
         """
         Get the query for the main task based on the graph object."""
         
@@ -370,7 +370,7 @@ class GraphTaskGraphGenerator(InputGraphGenerator):
         """
         G = self.create_networkx_graph(sample)
         
-        query = self.get_query(sample)
+        query = self.get_query() # no need to specify target node or edge
         answer = self.get_answer(sample)
         
         new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)

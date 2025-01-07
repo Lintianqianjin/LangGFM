@@ -4,7 +4,7 @@ import pandas as pd
 from torch_geometric.datasets import AMiner
 
 
-from .base_generator import NodeTaskGraphGenerator
+from ._base_generator import NodeTaskGraphGenerator
 
 
 @NodeTaskGraphGenerator.register("aminer")

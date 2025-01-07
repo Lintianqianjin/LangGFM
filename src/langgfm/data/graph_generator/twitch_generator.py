@@ -5,7 +5,7 @@ import torch
 import pandas as pd
 from torch_geometric.utils import to_undirected
 
-from .base_generator import NodeTaskGraphGenerator
+from ._base_generator import NodeTaskGraphGenerator
 
 
 @NodeTaskGraphGenerator.register("twitch")

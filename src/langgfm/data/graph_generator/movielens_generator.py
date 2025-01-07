@@ -6,7 +6,7 @@ import pandas as pd
 
 from .utils.graph_utils import get_node_slices
 
-from .base_generator import EdgeTaskGraphGenerator
+from ._base_generator import EdgeTaskGraphGenerator
 from torch_geometric.datasets import MovieLens1M
 
 import pgeocode

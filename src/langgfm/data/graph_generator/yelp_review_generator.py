@@ -7,7 +7,7 @@ import torch
 import pandas as pd
 from tqdm import tqdm
 from collections import defaultdict
-from .base_generator import EdgeTaskGraphGenerator
+from ._base_generator import EdgeTaskGraphGenerator
 from .utils.graph_utils import get_node_slices, get_edge_idx_in_graph, get_edge_idx_in_etype
 from langgfm.utils.io import load_jsonl
 

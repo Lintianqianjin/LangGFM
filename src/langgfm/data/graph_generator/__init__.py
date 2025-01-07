@@ -1,5 +1,5 @@
 # Base
-from .__base_generator import InputGraphGenerator
+from ._base_generator import InputGraphGenerator
 
 # Node
 from .ogbn_arxiv_generator import OgbnArxivGraphGenerator
@@ -15,6 +15,9 @@ from .yelp_review_generator import YelpReviewGraphGenerator
 
 # Graph
 from .fingerprint_generator import FingerprintGraphGenerator
+from .bace_generator import BaceGraphGenerator
+from .esol_generator import ESOLGraphGenerator
+from .chebi20_generator import ChEBI20GraphGenerator
 
 # Structure
 from .edge_existence_generator import EdgeExistenceGraphGenerator
