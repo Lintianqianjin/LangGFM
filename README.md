@@ -32,5 +32,10 @@ To ensure compatibility with all graphs in the open world, treat all graphs as M
 * Multiedges are multiple edges between two nodes. Each edge can hold optional data or attributes.
 * A MultiDiGraph holds directed edges. Self loops are allowed.
 
+Treat heterogeneous graph as homogeneous graph with edge_type and node_type as feature.
+
 In an undirected graph, edges have no direction. An undirected edge can be represented as two directed edges in opposite directions. 
 
+
+
+Please estimate the 10-based logarithm of the aqueous solubility ($\log S$) of the given compound directly from its structure. The calculation formula is as follows: $\log S = 0.16 - 0.63 \log P - 0.0062 MW + 0.066 RB - 0.74 Apolar$, where $S$ is Aqueous solubility (mol/L), $\log P$ is the octanol-water partition coefficient (lipophilicity indicator), $MW$ is Molecular weight (g/mol), $RB$ is the number of rotatable bonds (flexibility measure) and $Apolar$ is aromatic proportion, i.e., the proportion of heavy atoms in the molecule that are in anaromatic ring. 

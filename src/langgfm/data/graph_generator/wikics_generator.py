@@ -2,11 +2,11 @@ import json
 import networkx as nx
 
 from torch_geometric.datasets import WikiCS
-from .base_generator import NodeGraphGenerator
+from ._base_generator import NodeTaskGraphGenerator
 
 
-@NodeGraphGenerator.register("wikics")
-class WikicsGraphGenerator(NodeGraphGenerator):
+@NodeTaskGraphGenerator.register("wikics")
+class WikicsGraphGenerator(NodeTaskGraphGenerator):
     """
     WikicsGraphGenerator: A generator for creating k-hop subgraphs 
     from the WikiCS dataset using NetworkX format.

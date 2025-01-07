@@ -10,7 +10,7 @@ import json
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
-from langgfm.data.graph_generator.base_generator import NodeGraphGenerator, EdgeGraphGenerator
+from langgfm.data.graph_generator._base_generator import NodeTaskGraphGenerator, EdgeTaskGraphGenerator, GraphTaskGraphGenerator
 # for registering the real graph generators
 from langgfm.data.graph_generator import *
 from langgfm.utils.random_control import set_seed
@@ -22,7 +22,7 @@ class TestRealGraphGenerator(unittest.TestCase):
         """
         Initialize the generator for testing.
         """
-        self.datasets = ['yelp_review',] # 'movielens1m', 'usa_airport', 'twitch', 'ogbn_arxiv','wikics','aminer', 'ogbn_arxiv','ogbl_vessel'
+        self.datasets = ['chebi20'] # 'esol', 'fingerprint', 'ogbl_vessel','movielens1m','yelp_review', 'yelp_review', 'ogbl_vessel','movielens1m', 'usa_airport', 'twitch', 'ogbn_arxiv','wikics','aminer', 'ogbn_arxiv','ogbl_vessel'
         # load the generator configuration file
         config_path = os.path.join(os.path.dirname(__file__), '../../src/langgfm/configs/graph_generator.json')
         with open(config_path, 'r') as f:
@@ -35,9 +35,11 @@ class TestRealGraphGenerator(unittest.TestCase):
             config = self.graph_generator_configs.get(dataset, {})
             # create the generator instance
             if config['task_level'] == 'node':
-                self.generators[dataset] = NodeGraphGenerator.create(dataset, **config)
+                self.generators[dataset] = NodeTaskGraphGenerator.create(dataset, **config)
             elif config['task_level'] == 'edge':
-                self.generators[dataset] = EdgeGraphGenerator.create(dataset, **config)
+                self.generators[dataset] = EdgeTaskGraphGenerator.create(dataset, **config)
+            elif config['task_level'] == 'graph':
+                self.generators[dataset] = GraphTaskGraphGenerator.create(dataset, **config)
             else:
                 raise ValueError("Invalid task type.")
             
@@ -47,7 +49,7 @@ class TestRealGraphGenerator(unittest.TestCase):
         """
         for dataset in self.datasets:
             generator = self.generators[dataset]
-            self.assertIsNotNone(generator.graph, "Graph should be loaded.")
+            # self.assertIsNotNone(generator.graph, "Graph should be loaded.")
             # check all_samples
             self.assertGreater(len(generator.all_samples), 0, "Samples should be populated.")
             

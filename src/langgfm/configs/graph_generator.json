@@ -47,5 +47,17 @@
       "sampling": true,
       "neighbor_size": [50],
       "random_seed": 42
+    },
+    "fingerprint": {
+      "task_level": "graph"
+    },
+    "bace": {
+      "task_level": "graph"
+    },
+    "esol": {
+      "task_level": "graph"
+    },
+    "chebi20": {
+      "task_level": "graph"
     }
 }
