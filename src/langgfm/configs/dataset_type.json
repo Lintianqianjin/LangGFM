@@ -8,7 +8,40 @@
     "movielens1m": {
         "directed": true
     },
+    "node_counting": {
+        "directed": false
+    },
+    "edge_counting": {
+        "directed": false
+    },
+    "node_attribute_retrieval": {
+        "directed": false
+    },
+    "edge_attribute_retrieval": {
+        "directed": false
+    },
+    "degree_counting": {
+        "directed": false
+    },
     "edge_existence": {
+        "directed": false
+    },
+    "shortest_path": {
+        "directed": false
+    },
+    "connectivity": {
+        "directed": false
+    },
+    "cycle_checking": {
+        "directed": false
+    },
+    "hamilton_path": {
+        "directed": false
+    },
+    "graph_automorphic": {
+        "directed": false
+    },
+    "graph_structure_detection": {
         "directed": false
     }
 }

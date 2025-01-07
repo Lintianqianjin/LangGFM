@@ -13,7 +13,7 @@ class NodeCountingGraphGenerator(StructuralTaskGraphGenerator):
     def __init__(self, task='node_counting'):
         super().__init__(task)
 
-    def _generate_answer(self, label):
+    def _generate_answer(self, label, query_entity=None):
         return self.config['answer_format'].format(label)
 
 

@@ -14,7 +14,7 @@ class ConnectivityGraphGenerator(StructuralTaskGraphGenerator):
         super().__init__(task)
 
     def _generate_answer(self, label, query_entity=None):
-        return self.config['answer_format'].format(label)
+        return self.config['answer_format'].format("Yes" if label else "No")
 
 
 if __name__ == '__main__':

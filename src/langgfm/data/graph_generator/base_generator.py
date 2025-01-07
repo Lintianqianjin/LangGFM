@@ -349,13 +349,13 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
             nx.Graph: A NetworkX graph representing the specific sample.
         """
         G = json_graph.node_link_graph(self.graphs[sample_id], directed=False)
-        print(f"load: {G=}")
+        # print(f"load: {G=}")
         G = nx.MultiDiGraph(G)
-        print(f"multidi: {G=}")
+        # print(f"multidi: {G=}")
     
         label, query_entity = self.labels[sample_id]
         query = self._generate_query(query_entity)
-        print(f"labels: {label=}, {query_entity=}")
+        # print(f"labels: {label=}, {query_entity=}")
         # exit()
         answer = self._generate_answer(label, query_entity)
         

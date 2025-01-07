@@ -10,7 +10,7 @@ import json
 from tqdm import tqdm
 
 # all GraphGenerator should be imported here for InputGraphGenerator.create()
-from langgfm.data.graph_generator import EdgeExistenceGraphGenerator
+from langgfm.data.graph_generator import *
 
 # write a pipeline function to use OgbnArxivGraphGenerator to generate a graph and then use nxg_to_text to convert the graph to a GraphML format string.
 def pipeline(datasets = ['ogbn_arxiv'], formats = ['json','graphml','gml','table']) -> tuple:
@@ -70,4 +70,19 @@ def main(datasets,formats):
 
 # run the main function
 if __name__ == "__main__":
-    main(datasets=['edge_existence'],formats=['json','graphml','gml','table'])
+    # main(datasets=['node_counting'],formats=['json','graphml','gml','table'])
+    # structural_tasks = [ 
+    #     'node_counting', 'edge_counting', 'node_attribute_retrieval','edge_attribute_retrieval', 
+    #     'degree_counting', 'edge_existence',
+    #     'connectivity', 'shortest_path', 'cycle_checking',
+    #     'hamilton_path', 'graph_automorphic', 'graph_structure_detection'
+    # ]
+    structural_tasks = [ 
+        # 'node_counting', 'edge_counting', 'node_attribute_retrieval','edge_attribute_retrieval', 
+        # 'degree_counting', 'edge_existence',
+        'connectivity', 
+        # 'shortest_path', 'cycle_checking',
+        # 'hamilton_path', 
+        # 'graph_automorphic', 'graph_structure_detection'
+    ]
+    main(datasets=structural_tasks,formats=['json','graphml','gml','table'])
