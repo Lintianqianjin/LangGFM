@@ -233,4 +233,8 @@ class Movielens1MGraphGenerator(EdgeTaskGraphGenerator):
         
         return super().generate_graph(sample, edge_index)
         
-    
+    @property
+    def graph_description(self):
+        return "This graph is a heterogeneous graph where users rate movies. "\
+            "Each node represents a user or a movie. The titles and genres (separated by \"|\") of the movies are known. "\
+            "Each edge represents a user rating for a movie. The rating value and the time of the rating are known."

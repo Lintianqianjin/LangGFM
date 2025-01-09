@@ -57,3 +57,7 @@ class ESOLGraphGenerator(GraphTaskGraphGenerator):
         
         return G
             
+    @property
+    def graph_description(self):
+        return "This graph is a molecule graph, where explicit hydrogen atoms " \
+            "have been removed. Nodes represent atoms and edges represent chemical bonds. "

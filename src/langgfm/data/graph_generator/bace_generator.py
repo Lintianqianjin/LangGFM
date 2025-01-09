@@ -13,7 +13,7 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
     BaceGraphGenerator: A generator for creating graphs 
     from the Bace dataset using NetworkX format.
     """
-    
+
     def load_data(self):
         """
         Load the Bace dataset and preprocess required mappings.
@@ -63,3 +63,7 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
         
         return G
             
+    @property
+    def graph_description(self):
+        return "This graph is a molecule graph, where explicit hydrogen "\
+            "atoms have been removed. Nodes represent atoms and edges represent chemical bonds."
