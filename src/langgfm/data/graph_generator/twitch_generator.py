@@ -85,3 +85,8 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
             G.add_edge(src, dst)
         
         return G
+    
+    @property
+    def graph_description(self):
+        return "This graph is an ego-net of a Twitch user. "\
+            "Nodes are users and links are friendships. "

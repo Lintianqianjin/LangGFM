@@ -234,3 +234,9 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
         sample = (user_id, business_id, multiplex_id)
         
         return super().generate_graph(sample, edge_index)
+
+    @property
+    def YelpReviewGeneration(self):
+        return "This is a heterogeneous graph about reviews on the Yelp platform. "\
+            "Each node is either a business or a user. Each edge represents that "\
+            "two users are friends, or a user reviewed a business, or a user left a tip for a business."

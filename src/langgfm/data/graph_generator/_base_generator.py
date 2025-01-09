@@ -75,6 +75,13 @@ class InputGraphGenerator(ABC):
         """
         return "InputGraphGenerator: Abstract class for generating graph samples."
     
+    @property
+    @abstractmethod
+    def graph_description(self) -> str:
+        """
+        A description of the graph structure.
+        """
+        pass
     
     
 class NodeTaskGraphGenerator(InputGraphGenerator):
@@ -401,6 +408,11 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         self.root = os.path.join(os.path.dirname(__file__), self.config['file_path'])
         self.load_data()
 
+    @property
+    def graph_description(self):
+        return "Here is an synthetic undirected graph whose nodes are marked " \
+            "with numbers, and edges are <source, target> pairs."
+    
     def load_data(self):
         """
         Load the dataset and preprocess required mappings.

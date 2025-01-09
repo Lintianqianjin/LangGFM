@@ -102,6 +102,17 @@ def transform_labels(task):
     with open('demo.json', 'w') as f:
         f.write(str(dataset['labels'][0]))  
 
+
+def check_shortest_path(task='shortest_path'):
+    config_file_path = os.path.join(os.path.dirname(__file__), '../../configs/structural_task_generation.yaml')
+    configs = load_yaml(config_file_path)
+    task_configs = configs[task]
+    data_path = os.path.join(os.path.dirname(__file__), task_configs['file_path'])
+    dataset = torch.load(data_path) 
+    for label in dataset['labels']:
+        print(label)
+
+
 if __name__ == "__main__":
     tasks = [
         'node_counting', 'edge_counting', 'node_attribute_retrieval','edge_attribute_retrieval', 
@@ -123,8 +134,11 @@ if __name__ == "__main__":
 
     # check_label_distribution('cycle_checking')
     # check_label_distribution('hamilton_path')
-    check_label_distribution('graph_automorphic')
+    # check_label_distribution('graph_automorphic')
 
+    # check_shortest_path(task='shortest_path')
+
+    # restore the splits 
 
 
             

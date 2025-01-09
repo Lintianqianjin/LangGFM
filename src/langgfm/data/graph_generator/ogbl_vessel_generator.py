@@ -129,3 +129,12 @@ class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
                 G.add_edge(dst, src)
         
         return G
+
+    @property
+    def graph_description(self):
+        """
+        Get the description of the graph.
+        """
+        return "This graph is an undirected, unweighted spatial graph of a partial mouse brain. "\
+            "Nodes represent bifurcation points, edges represent the vessels. The node features are 3-dimensional, "\
+            "representing the spatial (x, y, z) coordinates of the nodes in Allen Brain atlas reference space."

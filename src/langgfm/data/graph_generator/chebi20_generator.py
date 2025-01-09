@@ -13,7 +13,6 @@ class ChEBI20GraphGenerator(GraphTaskGraphGenerator):
     BaceGraphGenerator: A generator for creating graphs 
     from the ChEBI20 dataset using NetworkX format.
     """
-    
     def load_data(self):
         """
         Load the ESOL dataset and preprocess required mappings.
@@ -72,3 +71,7 @@ class ChEBI20GraphGenerator(GraphTaskGraphGenerator):
         
         return G
             
+    @property
+    def graph_description(self):
+        return "This is a chemical compound from ChEBI20 where node " \
+            "represent atom and edge represent chemical bond."

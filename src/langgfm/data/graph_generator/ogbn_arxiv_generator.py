@@ -3,7 +3,6 @@ import pandas as pd
 import networkx as nx
 
 from .utils.ogb_dataset import CustomPygNodePropPredDataset
-
 from ._base_generator import NodeTaskGraphGenerator
 
 @NodeTaskGraphGenerator.register("ogbn_arxiv")
@@ -149,3 +148,15 @@ class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):
             
         return G
     
+    @property
+    def graph_description(self):
+        """
+        Get the description of the graph.
+        """
+        return "This is a directed graph, representing the citation network between some Computer Science (CS) arXiv papers. "\
+            "Each node is an arXiv paper and each directed edge indicates that one paper cites another one. "
+    
+
+if __name__ == "__main__":
+    generator = OgbnArxivGraphGenerator()
+    print(generator.graph_description)

@@ -104,3 +104,9 @@ class AMinerGraphGenerator(NodeTaskGraphGenerator):
             G.add_edge(src, dst, type = edge_type)
     
         return G
+    
+    @property
+    def graph_description(self):
+        return "This graph is a heterogeneous academic graph." \
+            "Each node represents an author or a paper or a venue." \
+            "Each edge represents an \"an author writes a paper\" or \"a paper is published in a venue\". "

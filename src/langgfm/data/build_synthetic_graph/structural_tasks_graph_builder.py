@@ -10,8 +10,7 @@ import math
 from tqdm import tqdm
 from abc import ABC, abstractmethod
 from networkx.readwrite import json_graph
-# from dgl.data import MiniGCDataset
-# from torch_geometric.utils import to_networkx
+
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
 from utils import (
@@ -31,49 +30,38 @@ class StructuralTaskDatasetBuilder(ABC):
     note that structural tasks includes:
     synthetic graph generation tasks, and MiniGC.
     """
-    def __init__(self,seed=42):
-        self._load_config()
+    def __init__(self, task=None, seed=42):
         set_seed(seed)
+        self.task = task
+        self.config = self._load_config()
+        self.num_graphs = sum([
+            self.config['train_size'], 
+            self.config['val_size'], 
+            self.config['test_size']
+        ])
 
     def _load_config(self):
         config_path = os.path.join(os.path.dirname(__file__), '../../configs/structural_task_generation.yaml')
-        self.config = load_yaml(config_path)
+        return load_yaml(config_path)[self.task]
 
-    @abstractmethod
-    def _generate_graphs_and_labels(self, config, label_function, task=None) -> tuple:
-        "graphs, labels, splits = self._generate_graphs_and_labels(task_config, label_function, task)"
-        pass
+    def build_dataset(self):
+        print(f"Building dataset for task: {self.task}:\n {self.config}")
+        graphs, labels, splits = self._generate_graphs_labels_splits()
+        self._save_dataset(graphs, labels)
+        self._save_splits(splits)
+        print(f"{self.task} dataset saved successfully.")
 
-    @abstractmethod
-    def _get_label_function(self, task) -> callable:
-        pass
-
-    def build_dataset(self, task):
-        if task not in self.config:
-            raise ValueError(f"Task {task} is not supported in the configuration file.")
-
-        task_config = self.config[task]
-        print(f"Building dataset for task: {task}:\n {task_config}")
-        label_function = self._get_label_function(task)
-
-        graphs, labels, splits = self._generate_graphs_and_labels(task_config, label_function, task)
-
-        self._save_dataset(task, graphs, labels, task_config)
-        self._save_splits(task, splits)
-        print(f"{task} dataset saved successfully.")
-
-    def _save_dataset(self, task, graphs, labels, task_config):
+    def _save_dataset(self, graphs, labels):
         dataset = {'graphs': graphs, 'labels': labels}
-        dataset_path = os.path.join(os.path.dirname(__file__), task_config['file_path'])
+        dataset_path = os.path.join(os.path.dirname(__file__), self.config['file_path'])
         directory = os.path.dirname(dataset_path)
         safe_mkdir(directory)
         # check the distribution of the labels
-        if task_config['task_type'] == 'cls':
-            labels = [label[0] for label in labels]
-            print(f"Label distribution for task {task}: {dict(zip(*np.unique(labels, return_counts=True)))}")
+        if self.config['task_type'] == 'cls':
+            self._check_label_distribution(labels)
         torch.save(dataset, dataset_path)
     
-    def _save_splits(self, task, splits):
+    def _save_splits(self, splits):
         train_mask, val_mask, test_mask = splits
         split_indices = {
             'train': train_mask.nonzero(as_tuple=True)[0].tolist(),
@@ -88,14 +76,25 @@ class StructuralTaskDatasetBuilder(ABC):
         else:
             all_splits = {}
 
-        all_splits[task] = split_indices
+        all_splits[self.task] = split_indices
         with open(split_path, 'w') as f:
             json.dump(all_splits, f, indent=4)
 
+    def _check_label_distribution(self, labels):
+        labels = [label[0] for label in labels]
+        distribution = dict(zip(*np.unique(labels, return_counts=True)))
+        print(f"Label distribution for task {self.task}: {distribution}")
+        return distribution
+    
+    @abstractmethod
+    def _generate_graphs_labels_splits(self) -> tuple:
+        "`_graph_generate_function`, `_get_label` is used."
+        pass
 
-class SyntheticGraphDatasetBuilder(StructuralTaskDatasetBuilder):
+
+class SyntheticDatasetBuilder(StructuralTaskDatasetBuilder):
     """
-    note that structural tasks includes:
+    note that Synthetic tasks includes:
     - structure free
         - graph size: node counting, edge counting
         - attribute retrieval: node attribute retrieval, edge attribute retrieval
@@ -109,89 +108,128 @@ class SyntheticGraphDatasetBuilder(StructuralTaskDatasetBuilder):
     - global structure
         - hamilton path
         - graph automorphic
-        - graph structure detection (not included here, complemented by dataset *MiniGC*)
     """
-    def __init__(self):
-        self.build_graph_methods = {
+    def __init__(self, task=None, seed=42):
+        super().__init__(task, seed)
+    
+    def _generate_graphs_labels_splits(self) -> tuple:
+        
+        valid = 0
+        try_ = 0
+        graphs, labels = [], []
+
+        pbar = tqdm(total=self.num_graphs)
+        while valid < self.num_graphs:
+            try_ += 1
+            random_graph = self._graph_generate_function()(
+                self.config["min_nodes"],
+                self.config["max_nodes"],
+                self.config["min_sparsity"],
+                self.config["max_sparsity"],
+                self.config['is_weighted'],
+                self.config['is_directed']
+            )
+            if (self.task == "connectivity") ^ nx.is_connected(random_graph):
+                graphs.append(json_graph.node_link_data(random_graph))
+                labels.append(self._get_label(random_graph))
+                valid += 1
+                pbar.update(1)
+        pbar.close()
+
+        splits = generate_splits_mask(
+            train_size=self.config['train_size'],
+            val_size=self.config['val_size'],
+            test_size=self.config['test_size']
+        )
+        return graphs, labels, splits
+
+    def _graph_generate_function(self):
+        build_graph_methods = {
             "random": create_random_graph,
             "bipartite": create_random_bipartite_graph,
             "node_weights": create_random_graph_node_weights,
             "smaller": create_smaller_graph,
             "topology": create_topology_graph
         }
-        super().__init__()
+        return build_graph_methods[self.config['graph_type']]
+    
+    @abstractmethod
+    def _get_label(self) -> tuple:
+        pass
 
-    def _generate_graphs_and_labels(self, config, label_function, task=None):
-        total_size = config['train_size'] + config['val_size'] + config['test_size']
-        valid = 0
-        try_ = 0
-        graphs, labels = [], []
-        pbar = tqdm(total=total_size)
-        
-        while valid < total_size:
-            try_ += 1
-            random_graph = self.build_graph_methods[config['graph_type']](
-                config["min_nodes"],
-                config["max_nodes"],
-                config["min_sparsity"],
-                config["max_sparsity"],
-                config['is_weighted'],
-                config['is_directed']
-            )
-            if (task == "connectivity") ^ nx.is_connected(random_graph):
-                graphs.append(json_graph.node_link_data(random_graph))
-                labels.append(label_function(random_graph))
-                valid += 1
-                pbar.update(1)
-        pbar.close()
-        splits = generate_splits_mask(
-            train_size=config['train_size'],
-            val_size=config['val_size'],
-            test_size=config['test_size']
-        )
-        return graphs, labels, splits
+
+class NodeCountingDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self,seed=42):
+        task = 'node_counting'
+        super().__init__(task, seed)
     
-    def _get_label_function(self, task):
-        if task == 'node_counting':
-            return lambda graph: (graph.number_of_nodes(), ())
-        elif task == 'edge_counting':
-            return lambda graph: (graph.number_of_edges(), ())
-        elif task == 'node_attribute_retrieval':
-            return lambda graph: self._retrieve_random_node_attribute(graph)
-        elif task == 'edge_attribute_retrieval':
-            return lambda graph: self._retrieve_random_edge_attribute(graph)
-        elif task == 'degree_counting':
-            return lambda graph: self._retrieve_node_degree(graph)
-        elif task == 'edge_existence':
-            return lambda graph: self._retrieve_edge_existence(graph)
-        elif task == 'connectivity':
-            # check whether two nodes are connected
-            return lambda graph: self._retrieve_connectivity(graph)
-        elif task == 'shortest_path':
-            return lambda graph: self._retrieve_shortest_path(graph)
-        elif task == 'cycle_checking':
-            return lambda graph: self._retrieve_cycle_checking(graph)
-        else:
-            raise ValueError(f"Task {task} is not implemented.")
+    @classmethod
+    def _get_label(cls, graph):
+            return (graph.number_of_nodes(), ())
     
-    def _retrieve_random_node_attribute(self, graph):
+
+class EdgeCountingDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self, seed=42):
+        task = 'edge_counting'
+        super().__init__(task, seed)
+    
+    def _get_label(self, graph):
+        return (graph.number_of_edges(), ())
+    
+
+class NodeAttributeRetrievalDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self, seed=42):
+        task = 'node_attribute_retrieval'
+        super().__init__(task, seed)
+    
+    def _get_label(self, graph):
         label_node = random.choice(list(graph))
         return (graph.nodes[label_node]['weight'], ('weight', label_node))
+    
 
-    def _retrieve_random_edge_attribute(self, graph):
+class EdgeAttributeRetrievalDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self, seed=42):
+        task = 'edge_attribute_retrieval'
+        super().__init__(task, seed)
+    
+    def _get_label(self, graph):
         sample_edge = random.choice(list(graph.edges(data=True)))
         return (sample_edge[2], ('weight', sample_edge[0], sample_edge[1]))
     
-    def _retrieve_node_degree(self, graph):
+
+class DegreeCountingDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self, seed=42):
+        task = 'degree_counting'
+        super().__init__(task, seed)
+
+    def _get_label(self, graph):
         sample_node = random.choice(list(graph.nodes))
         return (graph.degree(sample_node), (sample_node))
     
-    def _retrieve_edge_existence(self, graph):
+
+class EdgeExistenceDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self, seed=42):
+        task = 'edge_existence'
+        super().__init__(task, seed)
+    
+    def _get_label(self, graph):
         sample_nodes = random.sample(list(graph.nodes), 2)
         return (graph.has_edge(sample_nodes[0], sample_nodes[1]), sample_nodes)
     
-    def _retrieve_connectivity(self, graph):
-        
+
+class ConnectivityDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self, seed=42):
+        task = 'connectivity'
+        super().__init__(task, seed)
+    
+    def _get_label(self, graph):
         def find_disconnected_pair(graph):
             # Precompute connected components
             connected_components = list(nx.connected_components(graph))
@@ -220,13 +258,48 @@ class SyntheticGraphDatasetBuilder(StructuralTaskDatasetBuilder):
             pair = find_disconnected_pair(graph)
 
         return pair
+    
 
-    def _retrieve_shortest_path(self, graph):
+class ShortestPathDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self, seed=42):
+        task = 'shortest_path'
+        super().__init__(task, seed)
+    
+    # TODO
+    def _get_label(self, graph):
         sample_nodes = random.sample(list(graph.nodes), 2)
         return (nx.shortest_path_length(graph, sample_nodes[0], sample_nodes[1]), sample_nodes)
     
-    def _retrieve_cycle_checking(self, graph):
-        return (True if nx.cycle_basis(graph) else False, )
+
+class CycleCheckingDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self, seed=42):
+        task = 'cycle_checking'
+        super().__init__(task, seed)
+    
+    def _get_label(self, graph):
+        return (True if nx.cycle_basis(graph) else False, ())
+
+
+class HamiltonPathDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self, seed=42):
+        task = 'hamilton_path'
+        super().__init__(task, seed)
+    
+    def _get_label(self, graph):
+        return (nx.is_hamiltonian(graph), ())
+    
+
+class GraphAutomorphicDatasetBuilder(SyntheticDatasetBuilder):
+
+    def __init__(self, seed=42):
+        task = 'graph_automorphic'
+        super().__init__(task, seed)
+    
+    def _get_label(self, graph):
+        return (nx.is_isomorphic(graph, graph), ())
 
 
 class GraphStructureDetectionBuilder(StructuralTaskDatasetBuilder):
@@ -234,19 +307,17 @@ class GraphStructureDetectionBuilder(StructuralTaskDatasetBuilder):
     i.e MiniGC
     """
     def __init__(self, seed=42):
-        super().__init__()
-        self.task = 'graph_structure_detection'
-        self.num_graphs = self.config[self.task]['train_size'] \
-            + self.config[self.task]['val_size'] \
-            + self.config[self.task]['test_size']
+        task = 'graph_structure_detection'
+        super().__init__(task, seed)
+        
         self.min_num_v = self.config[self.task]['min_nodes']
         self.max_num_v = self.config[self.task]['max_nodes']
         self.graphs = []
         self.labels = []
 
-
-    def _generate_graphs_and_labels(self, config, label_function, task=None) -> tuple:
+    def _generate_graphs_and_labels_splits(self, config, label_function, task=None) -> tuple:
         "graphs, labels, splits = self._generate_graphs_and_labels(task_config, label_function, task)"
+        # generate graphs, with labels
         self._gen_cycle(self.num_graphs // 8)
         self._gen_star(self.num_graphs // 8)
         self._gen_wheel(self.num_graphs // 8)
@@ -257,7 +328,8 @@ class GraphStructureDetectionBuilder(StructuralTaskDatasetBuilder):
         self._gen_circular_ladder(self.num_graphs - len(self.graphs))
         # preprocess
         graphs = [json_graph.node_link_data(graph) for graph in self.graphs]
-        labels = [label_function(label) for label in self.labels]
+        labels = [self._map_label(label) for label in self.labels]
+        # generate splits
         splits = generate_splits_mask(
             train_size=config['train_size'],
             val_size=config['val_size'],
@@ -332,10 +404,6 @@ class GraphStructureDetectionBuilder(StructuralTaskDatasetBuilder):
             self.graphs.append(g)
             self.labels.append(7)
 
-    def _get_label_function(self, task) -> callable:
-        if task == 'graph_structure_detection':
-            return lambda label: self._map_label(label)
-    
     def _map_label(self, label):
         class_mapping = {
             0 : 'cycle graph',
@@ -351,8 +419,8 @@ class GraphStructureDetectionBuilder(StructuralTaskDatasetBuilder):
 
 
 if __name__ == "__main__":
-    dataset_builder = GraphStructureDetectionBuilder()
-    dataset_builder.build_dataset(task=dataset_builder.task)
+    dataset_builder = ShortestPathDatasetBuilder()
+    dataset_builder.build_dataset()
 
 
     # dataset_builder._load_config()  # Make sure config is loaded

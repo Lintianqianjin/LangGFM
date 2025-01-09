@@ -82,4 +82,10 @@ class WikicsGraphGenerator(NodeTaskGraphGenerator):
             dst = node_mapping[raw_dst]
             G.add_edge(src, dst)
         return G
+
+    @property
+    def graph_description(self):
+        return "This graph is a hyperlink relationship graph between webpages. "\
+            "Each node represents a webpage, and each edge represents a hyperlink "\
+            "on the source node pointing to the target node."
     

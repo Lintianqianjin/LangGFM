@@ -185,3 +185,14 @@ class FingerprintGraphGenerator(GraphTaskGraphGenerator):
         graph = self.__reindex_graph(graph)
         
         return graph
+    
+    @property
+    def graph_description(self):
+        return "Fingerprints are converted into graphs by filtering the images and extracting regions that are relevant. " \
+            "In order to obtain graphs from fingerprint images, the relevant regions are binarized and a noise removal and "\
+            "thinning procedure is applied. This results in a skeletonized representation of the extracted regions. "\
+            "Ending points and bifurcation points of the skeletonized regions are represented by nodes. "\
+            "Additional nodes are inserted in regular intervals between ending points and bifurcation points. "\
+            "Finally, undirected edges are inserted to link nodes that are directly connected through a ridge in the skeleton. "\
+            "Each node is labeled with a two-dimensional attribute giving its position. The edges are attributed with an angle "\
+            "denoting the orientation of the edge with respect to the horizontal direction."
