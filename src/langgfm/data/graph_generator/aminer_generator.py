@@ -13,6 +13,7 @@ class AMinerGraphGenerator(NodeTaskGraphGenerator):
     AMinerGraphGenerator: A generator for creating k-hop subgraphs 
     from the AMiner dataset using NetworkX format.
     """
+    graph_description = ""
 
     def load_data(self):
         """
@@ -76,7 +77,7 @@ class AMinerGraphGenerator(NodeTaskGraphGenerator):
         answer = f"The research area of the author with node id of {target_node_idx} is '{author_label}'."
         return answer
     
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping, sub_graph_edge_mask):
+    def create_networkx_graph(self, node_mapping, sub_graph_edge_mask):
         
         G = nx.MultiDiGraph()
         for raw_node_idx, new_node_idx in node_mapping.items():
@@ -91,11 +92,15 @@ class AMinerGraphGenerator(NodeTaskGraphGenerator):
                 venue_idx = raw_node_idx - 1693531
                 G.add_node(new_node_idx, type = 'venue', name = self.venues.at[venue_idx,'name'][1:])
         
-        sub_graph_edge_type = self.graph.edge_type[sub_graph_edge_mask]
-        for edge_idx in range(sub_graph_edge_index.size(1)):
-            src = node_mapping[sub_graph_edge_index[0][edge_idx].item()]
-            dst = node_mapping[sub_graph_edge_index[1][edge_idx].item()]
-            edge_type = self.edge_type_mapping[sub_graph_edge_type[edge_idx].item()]
+        for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
+            
+            raw_src, raw_dst = self.graph.edge_index.T[edge_idx]
+            raw_src, raw_dst = raw_src.item(), raw_dst.item()
+            
+            src = node_mapping[raw_src]
+            dst = node_mapping[raw_dst]
+            
+            edge_type = self.edge_type_mapping[edge_idx.item()]
             G.add_edge(src, dst, type = edge_type)
     
         return G

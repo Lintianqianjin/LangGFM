@@ -1,9 +1,5 @@
-import os
-import sys
+from ._base_generator import StructuralTaskGraphGenerator
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
-from langgfm.data.graph_generator._base_generator import StructuralTaskGraphGenerator
-from langgfm.data.build_synthetic_graph.utils import load_yaml
 
 @StructuralTaskGraphGenerator.register("degree_counting")
 class DegreeCountingGraphGenerator(StructuralTaskGraphGenerator):
