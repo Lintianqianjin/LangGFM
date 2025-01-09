@@ -134,7 +134,7 @@ class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):
         for raw_node_idx, new_node_idx in node_mapping.items():
             paper_year = self.graph.node_year[raw_node_idx][0].item()
             paper_title = self.node_id_to_title_mapping[raw_node_idx]
-            G.add_node(new_node_idx, title=paper_title, year=paper_year)
+            G.add_node(new_node_idx, type="paper", title=paper_title, year=paper_year)
         
         # Add edges
         for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
@@ -145,7 +145,7 @@ class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):
             src = node_mapping[raw_src]
             dst = node_mapping[raw_dst]
             
-            G.add_edge(src, dst)
+            G.add_edge(src, dst, type="cites")
             
         return G
     
