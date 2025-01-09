@@ -118,7 +118,7 @@ class NodeTaskGraphGenerator(InputGraphGenerator):
             for new_node_idx, raw_node_idx in enumerate(sub_graph_nodes)
         }
         
-        return sub_graph_edge_index, node_mapping, sub_graph_edge_mask
+        return node_mapping, sub_graph_edge_mask
     
     @abstractmethod
     def get_query(self, target_node_idx:int) -> str:
@@ -136,7 +136,7 @@ class NodeTaskGraphGenerator(InputGraphGenerator):
         pass
     
     @abstractmethod
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping:dict, sub_graph_edge_mask=None) -> nx.Graph:
+    def create_networkx_graph(self, node_mapping:dict, sub_graph_edge_mask=None) -> nx.Graph:
         """
         Create a NetworkX graph from the sampled subgraph.
         
@@ -162,8 +162,8 @@ class NodeTaskGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph for the sample.
         """
-        sub_graph_edge_index, node_mapping, sub_graph_edge_mask = self.egograph_sampling(sample)
-        G = self.create_networkx_graph(sub_graph_edge_index, node_mapping, sub_graph_edge_mask)
+        node_mapping, sub_graph_edge_mask = self.egograph_sampling(sample)
+        G = self.create_networkx_graph(node_mapping, sub_graph_edge_mask)
         new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)
         # G = new_G
         # target sample_id in the shuffled graph

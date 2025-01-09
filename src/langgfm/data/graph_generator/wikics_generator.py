@@ -60,7 +60,7 @@ class WikicsGraphGenerator(NodeTaskGraphGenerator):
         label = self.wiki_meta['nodes'][sample_id]['label']
         return f"The webpage with node id {target_node_idx} likely belongs to the category '{label}'."
     
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping: dict, sub_graph_edge_mask) -> nx.Graph:
+    def create_networkx_graph(self, node_mapping: dict, sub_graph_edge_mask) -> nx.Graph:
         """
         Create a NetworkX graph from the sampled subgraph.
         Args:
@@ -72,9 +72,14 @@ class WikicsGraphGenerator(NodeTaskGraphGenerator):
         G = nx.MultiDiGraph()
         for raw_node_idx, new_node_idx in node_mapping.items():
             G.add_node(new_node_idx, title = self.wiki_meta['nodes'][raw_node_idx]['title'])
-        for edge_idx in range(sub_graph_edge_index.size(1)):
-            src = node_mapping[sub_graph_edge_index[0][edge_idx].item()]
-            dst = node_mapping[sub_graph_edge_index[1][edge_idx].item()]
+            
+        for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
+            
+            raw_src, raw_dst = self.graph.edge_index.T[edge_idx]
+            raw_src, raw_dst = raw_src.item(), raw_dst.item()
+            
+            src = node_mapping[raw_src]
+            dst = node_mapping[raw_dst]
             G.add_edge(src, dst)
         return G
     

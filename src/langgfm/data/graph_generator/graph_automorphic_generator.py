@@ -6,7 +6,7 @@ import networkx as nx
 from networkx.readwrite import json_graph
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
-from langgfm.data.graph_generator.base_generator import StructuralTaskGraphGenerator
+from ._base_generator import StructuralTaskGraphGenerator
 from langgfm.data.build_synthetic_graph.utils import load_yaml
 
 

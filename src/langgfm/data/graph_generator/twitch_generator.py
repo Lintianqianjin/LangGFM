@@ -65,7 +65,7 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
         content_type = "mature" if label==1 else "gaming"
         return f"The user with node id {target_node_idx} is likely a {content_type} content streamer."
 
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping, sub_graph_edge_mask=None):
+    def create_networkx_graph(self, node_mapping, sub_graph_edge_mask=None):
         '''
         Create a NetworkX graph from the sampled subgraph.'''
         
@@ -74,9 +74,14 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
         for raw_node_idx, new_node_idx in node_mapping.items():
             G.add_node(new_node_idx, **self.node_idx_feature_mapping[raw_node_idx])
             
-        for edge_idx in range(sub_graph_edge_index.size(1)):
-            src = node_mapping[sub_graph_edge_index[0][edge_idx].item()]
-            dst = node_mapping[sub_graph_edge_index[1][edge_idx].item()]
+        for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
+            
+            raw_src, raw_dst = self.graph.edge_index.T[edge_idx]
+            raw_src, raw_dst = raw_src.item(), raw_dst.item()
+            
+            src = node_mapping[raw_src]
+            dst = node_mapping[raw_dst]
+            
             G.add_edge(src, dst)
         
         return G

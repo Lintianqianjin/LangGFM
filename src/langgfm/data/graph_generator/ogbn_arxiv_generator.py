@@ -18,7 +18,7 @@ class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):
         Load the OGBN-Arxiv dataset and preprocess required mappings.
         """
         # Load dataset and graph
-        self.root = '/home/tlin4/projects/LangGFM/data' # run script in LangGFM/
+        self.root = './data' # run script in LangGFM/
         dataset = CustomPygNodePropPredDataset(name='ogbn-arxiv', root=self.root)
         
         self.graph = dataset[0]
@@ -124,7 +124,7 @@ class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):
         return f"The paper with node id {target_node_idx} likely belongs to the subject area '{self.labelidx2arxivcategeory[self.graph.y[sample_id][0].item()]}'."
     
     
-    def create_networkx_graph(self, sub_graph_edge_index, node_mapping, sub_graph_edge_mask) -> nx.Graph:
+    def create_networkx_graph(self, node_mapping, sub_graph_edge_mask) -> nx.Graph:
         """
         Create a NetworkX graph from the sampled subgraph.
         """
@@ -137,9 +137,14 @@ class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):
             G.add_node(new_node_idx, title=paper_title, year=paper_year)
         
         # Add edges
-        for edge_idx in range(sub_graph_edge_index.size(1)):
-            src = node_mapping[sub_graph_edge_index[0][edge_idx].item()]
-            dst = node_mapping[sub_graph_edge_index[1][edge_idx].item()]
+        for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
+            
+            raw_src, raw_dst = self.graph.edge_index.T[edge_idx]
+            raw_src, raw_dst = raw_src.item(), raw_dst.item()
+            
+            src = node_mapping[raw_src]
+            dst = node_mapping[raw_dst]
+            
             G.add_edge(src, dst)
             
         return G
