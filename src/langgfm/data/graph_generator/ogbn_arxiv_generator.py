@@ -108,6 +108,13 @@ class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):
             "Discrete Mathematics"
         ]
 
+    @property
+    def graph_description(self):
+        """
+        Get the description of the graph.
+        """
+        return "This is a directed graph, representing the citation network between some Computer Science (CS) arXiv papers. "\
+            "Each node is an arXiv paper and each directed edge indicates that one paper cites another one. "
 
     def get_query(self, target_node_idx:int) -> str:
         """
@@ -148,13 +155,6 @@ class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):
             
         return G
     
-    @property
-    def graph_description(self):
-        """
-        Get the description of the graph.
-        """
-        return "This is a directed graph, representing the citation network between some Computer Science (CS) arXiv papers. "\
-            "Each node is an arXiv paper and each directed edge indicates that one paper cites another one. "
     
 
 if __name__ == "__main__":

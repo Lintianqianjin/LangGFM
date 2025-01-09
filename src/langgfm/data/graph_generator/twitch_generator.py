@@ -14,7 +14,7 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
     TwitchGraphGenerator: A generator for creating k-hop subgraphs 
     from the Twitch dataset using NetworkX format.
     """
-
+    
     def load_data(self):
         """
         Load the Twitch dataset and preprocess required mappings.
@@ -44,7 +44,12 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
         self.node_idx_label_mapping = self.nodes[['mature']].to_dict()['mature'] # key is node id (int)
 
         self.all_samples = set(range(self.graph.num_nodes))
-        
+    
+    @property
+    def graph_description(self):
+        return "This graph is an ego-net of a Twitch user. "\
+            "Nodes are users and links are friendships. "
+    
     def get_query(self, target_node_idx: int) -> str:
         """
         Get the query for the main task based on the target_node_idx 
@@ -72,7 +77,7 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
         G = nx.MultiDiGraph()
         
         for raw_node_idx, new_node_idx in node_mapping.items():
-            G.add_node(new_node_idx, **self.node_idx_feature_mapping[raw_node_idx])
+            G.add_node(new_node_idx, type='user', **self.node_idx_feature_mapping[raw_node_idx])
             
         for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
             
@@ -82,11 +87,8 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
             src = node_mapping[raw_src]
             dst = node_mapping[raw_dst]
             
-            G.add_edge(src, dst)
+            G.add_edge(src, dst, type='friendship')
         
         return G
     
-    @property
-    def graph_description(self):
-        return "This graph is an ego-net of a Twitch user. "\
-            "Nodes are users and links are friendships. "
+    

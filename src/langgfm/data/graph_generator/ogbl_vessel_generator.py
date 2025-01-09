@@ -73,7 +73,15 @@ class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
         
         self.edge_label_mapping = self.__convert_edges_to_dict(train_edge)
         self.all_samples = set(self.edge_label_mapping.keys())
-        
+    
+    @property
+    def graph_description(self):
+        """
+        Get the description of the graph.
+        """
+        return "This graph is an undirected, unweighted spatial graph of a partial mouse brain. "\
+            "Nodes represent bifurcation points, edges represent the vessels. The node features are 3-dimensional, "\
+            "representing the spatial (x, y, z) coordinates of the nodes in Allen Brain atlas reference space."
 
     def get_query(self, target_src_node_idx, target_dst_node_idx):
         """
@@ -113,8 +121,8 @@ class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
         
         for raw_node_idx, new_node_idx in node_mapping.items():
             x, y, z = self.graph.x[raw_node_idx].numpy()
-            G.add_node(new_node_idx, x=x, y=y, z=z)
-            
+            G.add_node(new_node_idx, type='bifurcation', x=x, y=y, z=z)
+
         target_src = node_mapping[edge[0]]
         target_dst = node_mapping[edge[1]]
         
@@ -125,16 +133,9 @@ class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
             dst = node_mapping[raw_dst]
             # Skip the target edge
             if not (src == target_src and dst == target_dst) or (src == target_dst and dst == target_src): 
-                G.add_edge(src, dst)
-                G.add_edge(dst, src)
+                G.add_edge(src, dst, type='vessel')
+                G.add_edge(dst, src, type='vessel')
         
         return G
 
-    @property
-    def graph_description(self):
-        """
-        Get the description of the graph.
-        """
-        return "This graph is an undirected, unweighted spatial graph of a partial mouse brain. "\
-            "Nodes represent bifurcation points, edges represent the vessels. The node features are 3-dimensional, "\
-            "representing the spatial (x, y, z) coordinates of the nodes in Allen Brain atlas reference space."
+    
