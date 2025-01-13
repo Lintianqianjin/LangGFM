@@ -1,168 +1,312 @@
 import os
 import networkx as nx
+import numpy as np
 import pandas as pd
 import warnings
 import torch
 
-from ._base_generator import NodeTaskGraphGenerator
+from datetime import datetime, timedelta
 
+from torch_geometric.data import HeteroData
+from ._base_generator import NodeTaskGraphGenerator
+from .utils.graph_utils import get_node_slices
 
 @NodeTaskGraphGenerator.register("re_europe")
 class REEuropeGraphGenerator(NodeTaskGraphGenerator):
     """
-    REEuropeGraphGenerator: A generator for creating subgraphs (or the entire graph)
-    from the RE-Europe dataset to predict the next 24-hour peak load for a specific bus.
+    REEuropeLoadForecastGraphGenerator: A generator for creating subgraphs (or the entire graph)
+    from the RE-Europe dataset, incorporating bus layouts features, generator data,
+    and load signals to predict next 24-hour peak load for a specific bus.
     """
 
-    # 若需要，可在此处对该数据集或本任务做简要描述
     graph_description = (
-        "This generator uses the RE-Europe dataset (Metadata + Nodal_TS) to build "
-        "a graph where each node is a bus and each edge is a power line. "
-        "It also retrieves load time series data for each bus to facilitate 24h peak load forecasts."
+        "Generator uses the RE-Europe dataset (Metadata + Nodal_TS + capacity layouts + generator info) "
+        "to build a graph with bus nodes, generator nodes, and AC/HVDC line edges. "
+        "Bus layout features (like solar/wind capacities) are also assigned to the bus node attributes."
     )
-
+        
     def load_data(self):
         """
-        Load the RE-Europe dataset and build internal structures for graph construction
-        and for the time series load signals.
+        Load the RE-Europe dataset and build internal structures for graph construction,
+        including bus layouts (solar/wind) features, generator info, etc.
         """
-        # 你可以根据自己的目录结构修改 self.root 
-        self.root = "./data/RE-Europe"  
+        self.root = "./data/RE-Europe"
         
-        # 1) 读取网络节点与边的 metadata
-        self.network_nodes = pd.read_csv(
-            os.path.join(self.root, "Metadata", "network_nodes.csv")
-        )
-        self.network_edges = pd.read_csv(
-            os.path.join(self.root, "Metadata", "network_edges.csv")
-        )
         
-        # # 如果有 HVDC 线路，也可以一并读取
-        # hvdc_path = os.path.join(self.root, "Metadata", "network_hvdc_links.csv")
-        # if os.path.exists(hvdc_path):
-        #     self.network_hvdc_links = pd.read_csv(hvdc_path)
-        # else:
-        #     self.network_hvdc_links = pd.DataFrame()
+        # bus historical load data
+        self.bus_load_data = pd.read_csv(os.path.join(self.root, "Nodal_TS", "load_signal.csv"))
+        # 转换时间列
+        self.bus_load_data['Time'] = pd.to_datetime(self.bus_load_data['Time'])
+        self.bus_load_data = self.bus_load_data.set_index('Time')
+        # 确保数据按时间排序
+        self.bus_load_data = self.bus_load_data.sort_index()
         
-        # 2) 读取负载时序数据
-        #    load_signal.csv: 每个 bus 每个小时的负载值 
-        #    （该文件通常包含形如 [timestamp, bus0, bus1, bus2, ...] 或 [hour_index, bus_id, load_value] 等格式，
-        #     请根据实际格式进行解析）
-        self.load_signal = pd.read_csv(
-            os.path.join(self.root, "Nodal_TS", "load_signal.csv")
-        )
         
-        # 如果 load_signal.csv 列很多（每个 bus 一列），你需要知道 bus 与列的映射关系。
-        # 如果是 (hour_index, bus_id, load_value) 这种长表结构，也要将其 pivot 成 (hour_index, busX,...).
-        # 以下仅做示例，不同数据格式需要你实际调整：
-        #
-        # self.load_signal_wide = self.load_signal.pivot(
-        #     index='time_idx', columns='bus_id', values='load_value'
-        # ).fillna(0)
-        #
-        # 这里先简单假设 read_csv 后就得到类似:
-        # "time, bus_0, bus_1, ..., bus_1493"
-        # 其中 time 是连续的小时索引或者时间戳
+        # generator node data
+        self.generator_info = pd.read_csv(os.path.join(self.root, "Metadata", "generator_info.csv"))
+        # lines edge data
+        self.network_edges = pd.read_csv(os.path.join(self.root, "Metadata", "network_edges.csv"))
+            
+        # bus node data
+        if os.path.exists(f"{self.root}/network_nodes_with_all_features.csv"):
+            self.network_nodes = pd.read_csv(f"{self.root}/network_nodes_with_all_features.csv")
+        else:
+            self.network_nodes = pd.read_csv(os.path.join(self.root, "Metadata", "network_nodes.csv"))
+            
+            self.solar_layout_cosmo = pd.read_csv(os.path.join(self.root, "Metadata", "solar_layouts_COSMO.csv"))
+            self.solar_layout_cosmo = self.solar_layout_cosmo.add_suffix("_solar_COSMO")
 
-        # 可以存储 node_id 与其所在行/列的映射，以方便后面调用
-        self.node_id_to_idx = {}
-        for idx, row in self.network_nodes.iterrows():
-            self.node_id_to_idx[row["ID"]] = idx
+            self.wind_layout_cosmo = pd.read_csv(os.path.join(self.root, "Metadata", "wind_layouts_COSMO.csv"))
+            self.wind_layout_cosmo = self.wind_layout_cosmo.add_suffix("_wind_COSMO")
+            
+            self.solar_layout_ecmwf = pd.read_csv(os.path.join(self.root, "Metadata", "solar_layouts_ECMWF.csv"))
+            self.solar_layout_ecmwf = self.solar_layout_ecmwf.add_suffix("_solar_ECMWF")
+            
+            self.wind_layout_ecmwf = pd.read_csv(os.path.join(self.root, "Metadata", "wind_layouts_ECMWF.csv"))
+            self.wind_layout_ecmwf = self.wind_layout_ecmwf.add_suffix("_wind_ECMWF")
+            
+            self.network_nodes = self.network_nodes.merge(self.solar_layout_cosmo, how="left", left_on="ID", right_on='node_solar_COSMO')
+            self.network_nodes = self.network_nodes.merge(self.wind_layout_cosmo, how="left", left_on="ID", right_on='node_wind_COSMO')
+            self.network_nodes = self.network_nodes.merge(self.solar_layout_ecmwf, how="left", left_on="ID", right_on='node_solar_ECMWF')
+            self.network_nodes = self.network_nodes.merge(self.wind_layout_ecmwf, how="left", left_on="ID", right_on='node_wind_ECMWF')
+            
+            self.network_nodes = self.network_nodes.drop(columns=['node_solar_COSMO', 'node_wind_COSMO', 'node_solar_ECMWF', 'node_wind_ECMWF'])
+            
+            self.network_nodes.to_csv(f"{self.root}/network_nodes_with_all_features.csv")
+        
+        # bus node mapping
+        self.bus_id_to_nid = {row["ID"]: idx for idx, row in self.network_nodes.iterrows()}
+        
+        # reindex bus node
+        self.network_edges['fromNode'] = self.network_edges['fromNode'].astype(int).map(self.bus_id_to_nid)
+        self.network_edges['toNode'] = self.network_edges['toNode'].astype(int).map(self.bus_id_to_nid)
+        
+        # reindex generator
+        self.generator_info['origin'] = self.generator_info['origin'].map(self.bus_id_to_nid)
+        self.generator_info['nid'] = self.generator_info.index
+            
+        if os.path.exists(f"{self.root}/RE-Europe.pt"):
+            # load pytorch geometric graph
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", FutureWarning)
+                data = torch.load(f"{self.root}/RE-Europe.pt")
+        else:
+            # change bus id to node id
+            # print(f"{self.network_edges['fromNode'].dtype=}") # int64
+            # print(f"{type(list(self.bus_id_to_nid.keys())[0])=}")
+            # print(f"{type(list(self.bus_id_to_nid.values())[0])=}")
+            # self.network_edges['fromNode'] = self.network_edges['fromNode'].astype(int).map(self.bus_id_to_nid)
+            # self.network_edges['toNode'] = self.network_edges['toNode'].astype(int).map(self.bus_id_to_nid)
+            # get edge index and save in torch tensor
+            lines_edge_index = torch.tensor(self.network_edges[['fromNode', 'toNode']].values.T, dtype=torch.long)
+            # get edge index and save in torch tensor
+            generator_edge_index = torch.tensor(self.generator_info[['origin','nid']].values.T, dtype=torch.long)
+            # print(f"{generator_edge_index.min()=}, {generator_edge_index.max()=}")
+            # create pytorch geometric graph
+            data = HeteroData()
+            data['bus'].num_nodes = len(self.network_nodes)
+            data['generator'].num_nodes = len(self.generator_info)
+            
+            data["bus","close_to","generator"].edge_index = generator_edge_index
+            data["bus","transmission_line","bus"].edge_index = lines_edge_index
+            
+            torch.save(data, f"{self.root}/RE-Europe.pt")
+        
+        # print(f"{data=}")
+        # print(f'{data["bus","close_to","generator"].edge_index.max()=}')
+        # print(f'{data["bus","close_to","generator"].edge_index[1].max()=}')
+        # print(f'{data["bus","transmission_line","bus"].edge_index.max()=}')
+        self.node_slices = get_node_slices(data.num_nodes_dict)
+        self.node_type_mapping = {0: "bus", 1: "generator"}
+        self.edge_type_mapping = {0: "close_to", 1: "transmission_line"}
+        self.graph = data.to_homogeneous()
+        # print(f"{self.graph.edge_index.max()=}")
+        
+        # bus_idx: sample_idx % number_of_bus_nodes
+        # time_idx: sample_idx // number_of_bus_nodes (delta days after 2012-01-08)
 
-        # 为了与 OAG 示例对应，这里可以使用： self.all_samples = set(bus_id列表)
-        self.all_samples = set(self.network_nodes["ID"].unique())
+        num_days = len(np.unique(self.bus_load_data.index.date))
+        num_days = num_days - 7  # 7 days of past data
+        self.all_samples = set(range(len(self.network_nodes) * num_days))
+        
+    def __load_bus_day_avg_load(self, df: pd.DataFrame, target_date: datetime):
+        """
+        计算指定日期当天所有bus 24小时load的平均值，以及过去七天的每天的平均值。
+        
+        :param df: pd.DataFrame, 传入的 load_signal 数据框
+        :param date_str: str, 指定的日期，格式为 'YYYY-MM-DD'
+        :return: tuple (pd.Series, list[pd.Series])，返回当天各bus的平均load，过去七天每天各bus的平均load list
+        """
+        
+        # 计算指定日期的平均值
+        target_day_data = df[df.index.date == target_date.date()]
+        daily_avg = target_day_data.mean()
+        
+        return daily_avg
+    
+    def __load_bus_past_week_avg_load(self, df: pd.DataFrame, target_date: datetime) -> pd.DataFrame:
+        """
+        计算过去七天的每个bus的load均值，并返回一个DataFrame：
+        - index: bus
+        - columns: 过去七天的日期（从 target_date-1 到 target_date-7）
+        
+        Parameters:
+        df (pd.DataFrame): 输入数据，index 为 datetime，columns 为 bus，每个值是对应 bus 在该时间点的 load。
+        target_date (datetime): 目标日期
 
+        Returns:
+        pd.DataFrame: 以 bus 为 index，过去七天的 load 均值为 columns 的 DataFrame
+        """
+        past_load_dict = {}
+
+        for i in range(1, 8):  # 过去7天
+            past_date = target_date - timedelta(days=i)
+            past_day_data = df[df.index.date == past_date.date()]  # 选取过去某天的数据
+            
+            if not past_day_data.empty:
+                past_day_avg = past_day_data.mean(axis=0)  # 计算所有时间点的平均负载
+            else:
+                past_day_avg = pd.Series(index=df.columns, dtype=float)  # 无数据，返回 NaN
+
+            past_load_dict[past_date.strftime('%Y-%m-%d')] = past_day_avg  # 以日期为列名
+
+        # 组合为 DataFrame
+        past_load_df = pd.DataFrame(past_load_dict)
+        past_load_df.index = past_load_df.index.astype(int)
+        # print(f"{past_load_df.index=}")
+        # print(f"{self.bus_id_to_nid=}")
+        past_load_df = past_load_df.rename(index=self.bus_id_to_nid)  # 进行 index 映射转换
+        past_load_df.index.name = "nid"  # 重新命名 index
+
+        return past_load_df
+
+    def generate_graph(self, sample_id):
+        '''
+        convert sample_id to bus_idx and time_idx
+        '''
+        bus_idx = sample_id % len(self.network_nodes)
+        time_idx = sample_id // len(self.network_nodes)
+        # time_idx days after 2012-01-08
+        target_date = datetime.strptime("2012-01-08", "%Y-%m-%d") + timedelta(days=time_idx)
+        self.historical_load_data = self.__load_bus_past_week_avg_load(self.bus_load_data, target_date)
+        # print(f"{self.historical_load_data=}")
+        new_G, metadata = super().generate_graph(bus_idx)
+
+        metadata['raw_sample_id'] = sample_id
+        
+        return new_G, metadata
+        
     def get_query(self, target_node_idx):
         """
         构造对目标 bus 节点的预测请求文本。
-        例如: "请根据历史负载数据和邻近线路，预测该 bus 在未来24小时的峰值负载。"
         """
         query = (
             f"Given the historical load data and the network context of bus {target_node_idx}, "
-            f"could you predict the peak load (in MW) for the next 24 hours?"
+            f"could you predict the average load (in MW) for the next 24 hours?"
         )
         return query
 
     def get_answer(self, sample_id, target_node_idx):
         """
-        按照示例，只给出一个简单的占位回答。
-        实际使用中，你可能在此调用预训练模型、回溯样本数据等，给出真正的预测值。
-        
-        sample_id:   在有些场景下，sample_id 会和 target_node_idx 相同，也可能是个训练集索引。
-                     这里为了与 OAG 例子保持一致，保留此参数。
-        target_node_idx: 指定需要预测的节点(bus) ID。
+        在此处用模型推理得到未来24小时峰值负载预测值。
+        这里给出一个示例占位。
         """
+        bus_idx = sample_id % len(self.network_nodes)
+        time_idx = sample_id // len(self.network_nodes)
+        
+        # get date string
+        target_date = datetime.strptime("2012-01-08", "%Y-%m-%d") + timedelta(days=time_idx)
 
-        peak_load_prediction = 0
+        daily_avg = self.__load_bus_day_avg_load(self.bus_load_data, target_date)
+        avg_load = daily_avg.iloc[bus_idx]
         
         return (
-            f"The predicted peak load for bus {target_node_idx} in the next 24 hours "
-            f"is approximately {peak_load_prediction:.2f} MW."
+            f"The predicted average load for bus {target_node_idx} in the next 24 hours "
+            f"is around {avg_load:.2f} MW."
         )
 
-    def create_networkx_graph(self):
+    def create_networkx_graph(self, node_mapping, sub_graph_edge_mask=None):
         """
-        将 bus 与线路信息导入到 NetworkX 图结构中，并添加必要的属性。
-        如果数据规模过大，也可以只在需要时构建子图。
+        生成包含 bus + generator + line 的 NetworkX 图结构，并将 layouts 特征等合并为 bus 的属性。
         """
+       # Create a NetworkX graph
         G = nx.MultiDiGraph()
+        for raw_node_idx, new_node_idx in node_mapping.items():
+            node_type = self.node_type_mapping[self.graph.node_type[raw_node_idx].item()]
+            if node_type == 'bus':
+                bus_idx = raw_node_idx - self.node_slices['bus'][0]
+                
+                bus_info = self.network_nodes.iloc[bus_idx]
 
-        # 1) 添加节点
-        for _, row in self.network_nodes.iterrows():
-            bus_id = row["ID"]
-            G.add_node(
-                bus_id,
-                type="bus",
-                name=row["name"],
-                country=row["country"],
-                voltage=row["voltage"],
-                latitude=row["latitude"],
-                longitude=row["longitude"],
-            )
-
-        # 2) 添加线路边
-        for _, row in self.network_edges.iterrows():
-            from_node = row["fromNode"]
-            to_node = row["toNode"]
-            # 线路属性示例：X, Y, limit, length 等
-            G.add_edge(
-                from_node,
-                to_node,
-                type="ac_line",
-                reactance=row["X"],
-                susceptance=row["Y"],
-                limit=row["limit"],
-                length=row["length"],
-            )
-
-        # 3) 如果有 HVDC 链接，也把它加进图
-        if not self.network_hvdc_links.empty:
-            for _, row in self.network_hvdc_links.iterrows():
-                from_node = row["fromNode"]
-                to_node = row["toNode"]
-                G.add_edge(
-                    from_node,
-                    to_node,
-                    type="hvdc_line",
-                    limit=row["limit"],
-                    voltage=row["voltage"],
-                    length=row["length"],
+                past_load_data = self.historical_load_data.loc[bus_idx]
+                # print(f"{past_load_data=}")
+                
+                feautres = {
+                    # "voltage (kV)": bus_info['voltage'].item(), most are 380
+                    "COSMO_solar_capacity_proportional (MWh)": bus_info['Proportional_solar_COSMO'].item(),
+                    "COSMO_wind_capacity_proportional (MWh)": bus_info['Proportional_wind_COSMO'].item(),
+                    "daily_avg_load_last_7_days_recent_to_old (MW)": past_load_data.values.round(2).tolist(),
+                }
+                
+                G.add_node(
+                    new_node_idx, type = 'bus', 
+                    **feautres
+                )
+                
+            elif node_type == 'generator':
+                generator_idx = raw_node_idx - self.node_slices['generator'][0]
+                generator_info = self.generator_info.iloc[generator_idx]
+                # print(f"{generator_info=}")
+                feautres = {
+                    "capacity (MW)": generator_info['capacity'].item(),
+                    "marginal_cost ($/MWh)": generator_info['lincost'].item(),
+                    "cycle_cost ($)": generator_info['cyclecost'].item(),
+                    "minimal_up_time (hours)": generator_info['minuptime'].item(),
+                    "minimal_down_time (hours)": generator_info['mindowntime'].item(),
+                    "minimal_production (MW)": generator_info['minonlinecapacity'].item(),
+                }
+                G.add_node(
+                    new_node_idx, type = 'generator',
+                    **feautres
                 )
 
+        for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
+            
+            raw_src, raw_dst = self.graph.edge_index.T[edge_idx]
+            raw_src, raw_dst = raw_src.item(), raw_dst.item()
+            
+            src = node_mapping[raw_src]
+            dst = node_mapping[raw_dst]
+            
+            # check edge_type
+            edge_type = self.graph.edge_type[edge_idx].item()
+            
+            if edge_type == 0:
+                edge_type = 'close_to'
+                G.add_edge(src, dst, type="close_to")
+            
+            elif edge_type == 1:
+                edge_type = 'transmission_line'
+                
+                # get original edge data
+                raw_src, raw_dst = raw_src - self.node_slices['bus'][0], raw_dst - self.node_slices['bus'][0]
+                # print(f"{raw_src=}, {raw_dst=}")
+                # print(
+                #     f"{self.network_edges.loc[(self.network_edges['fromNode'] == raw_src)]=}"
+                # )
+                edge_data = self.network_edges.loc[(self.network_edges['fromNode'] == raw_src) \
+                    & (self.network_edges['toNode'] == raw_dst)]
+                
+                # print(f"{raw_src=}, {raw_dst=}")
+                # print(f"{edge_data=}")
+                
+                feautres = {
+                    "reactance_per_unit": edge_data['X'].values[0].item(),
+                    "susceptance_per_unit": edge_data['Y'].values[0].item(),
+                    # "thermal_limit (MW)": self.network_edges.at[edge_idx, 'limit'], # most are zeros
+                    "great_circle_distance (km)": edge_data['length'].values[0].item()
+                }
+                
+                G.add_edge(src, dst, type="transmission_line", **feautres)
+            
         return G
-
-    def create_networkx_graph_subgraph(self, target_node_idx, k=1):
-        """
-        (可选方法) 创建一个以某个目标 bus 为中心的 k-hop 子图。
-        你可以在训练或预测时只关注目标 bus 及其 k 范围内的邻居。
-        """
-        if not hasattr(self, "graph") or self.graph is None:
-            warnings.warn("Graph not loaded yet, building the entire graph first.")
-            self.graph = self.create_networkx_graph()
-
-        # 采用简单的nx.bfs层次搜索或类似方法来获取k跳邻居
-        nodes_k_hop = nx.bfs_tree(self.graph.to_undirected(), source=target_node_idx, depth_limit=k)
-        sub_nodes = list(nodes_k_hop.nodes())
-        sub_G = self.graph.subgraph(sub_nodes).copy()
-
-        return sub_G

@@ -66,7 +66,7 @@ class TestRealGraphGenerator(unittest.TestCase):
             samples = random.sample(list(generator.all_samples),k=3)  # Select a sample node ID
             print(f"{samples=}")
             for sample in samples:
-                G, metadata = generator.generate_graph(sample=sample)
+                G, metadata = generator.generate_graph(sample_id=sample)
                 
                 print(f"Generated graph with {len(G.nodes)} nodes and {len(G.edges)} edges.")
                 

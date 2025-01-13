@@ -114,10 +114,12 @@ class NodeTaskGraphGenerator(InputGraphGenerator):
             node_mapping: The mapping of raw node indices to new node indices.
             sub_graph_edge_mask: The edge mask of the overall graph for sub_graph_edge_index.
         '''
+        print(f"{sample_id=}")
         sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask = generate_node_centric_k_hop_subgraph(
             self.graph, sample_id, self.num_hops, self.neighbor_size, 
             self.random_seed, self.sampling
         )
+        print(f"{sub_graph_nodes=}")
         
         # raw node index to new node index mapping
         node_mapping = {
@@ -158,7 +160,7 @@ class NodeTaskGraphGenerator(InputGraphGenerator):
         pass
     
     
-    def generate_graph(self, sample: int) -> nx.Graph:
+    def generate_graph(self, sample_id: int) -> nx.Graph:
         """
         Generate a single graph centered around a node using num_hops.
         If sampling is enabled, sample neighbors up to neighbor_size.
@@ -169,18 +171,18 @@ class NodeTaskGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph for the sample.
         """
-        node_mapping, sub_graph_edge_mask = self.egograph_sampling(sample)
+        node_mapping, sub_graph_edge_mask = self.egograph_sampling(sample_id)
         G = self.create_networkx_graph(node_mapping, sub_graph_edge_mask)
         new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)
         # G = new_G
         # target sample_id in the shuffled graph
-        target_node_idx = node_idx_mapping_old_to_new[node_mapping[sample]]
+        target_node_idx = node_idx_mapping_old_to_new[node_mapping[sample_id]]
         
         query = self.get_query(target_node_idx)
-        answer = self.get_answer(sample, target_node_idx)
+        answer = self.get_answer(sample_id, target_node_idx)
         
         metadata = {
-            "raw_sample_id": sample,
+            "raw_sample_id": sample_id,
             "num_hop": self.num_hops,
             "sampling": {
                 "enable": self.sampling,

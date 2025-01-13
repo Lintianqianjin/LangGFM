@@ -8,6 +8,8 @@ from .aminer_generator import AMinerGraphGenerator
 from .twitch_generator import TwitchGraphGenerator
 from .usa_airport import USAirportGraphGenerator
 from .oag_scholar_interest_generator import OAGScholarInterestGraphGenerator
+from .re_europe_generator import REEuropeGraphGenerator
+
 
 # Edge
 from .ogbl_vessel_generator import OgblVesselGraphGenerator

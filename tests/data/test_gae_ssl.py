@@ -4,12 +4,14 @@
 
 import unittest
 import networkx as nx
+import random
 import re
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
 from langgfm.data.graph_generator.ogbn_arxiv_generator import OgbnArxivGraphGenerator
 from langgfm.data.ssl_tasks.tae_ssl import TopologyAutoencoder
+from langgfm.utils.random_control import set_seed
 
 class TestTopologyAutoencoder(unittest.TestCase):
     
@@ -26,8 +28,10 @@ class TestTopologyAutoencoder(unittest.TestCase):
         """
         Test the SSL sample generation pipeline.
         """
+        set_seed(42)
+        samples = random.sample(list(self.generator.all_samples),k=1)
         # generate a graph
-        sample_id = self.generator.all_idx[0].item()  # Select a sample node ID
+        sample_id = samples[0]  # Select a sample node ID
         G, metadata = self.generator.generate_graph(sample_id=sample_id)
 
         # generate SSL samples with the two TopologyAutoencoders

@@ -27,6 +27,13 @@
       "neighbor_size": [15, 5],
       "random_seed": 42
     },
+    "re_europe": {
+      "task_level": "node",
+      "num_hops": 2,
+      "sampling": true,
+      "neighbor_size": [15, 10],
+      "random_seed": 42
+    },
     "oag_scholar_interest": {
       "task_level": "node",
       "num_hops": 2,
