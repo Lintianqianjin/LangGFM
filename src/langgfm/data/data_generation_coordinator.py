@@ -62,7 +62,7 @@ class DataGenerationCoordinator:
         return generated_samples
     
     def format_sample(self, graph, query, answer, fmt, datatype, graph_description):
-        graph_text = self.textualizer.export(graph,fmt)
+        graph_text = self.textualizer.export(graph,fmt, **datatype)
         instruction = self.prompt_template.format(
             graph_description=graph_description,
             graph_text=graph_text,
@@ -112,11 +112,11 @@ if __name__ == "__main__":
     # Example input config (could be read from anywhere, or just declared)
     job = "struc_bace"
     job_config = {
-        "graph_structure_detection": {
-            "generator": {},
-            "index": [101, 102, 103],
-            "format": ["gml", "json"]
-       },
+    #     "graph_structure_detection": {
+    #         "generator": {},
+    #         "index": [101, 102, 103],
+    #         "format": ["gml", "json"]
+    #    },
         "bace": {
             "generator": {"task_level": "graph"},
             "index": [1, 2],
@@ -130,44 +130,52 @@ if __name__ == "__main__":
                     },
                     "augment_ratio":1
                 },
-                # "topology_autoencoder": {
-                #    "generator": {
-                #         "distinguish_directions": False
-                #     },
-                #     "augment_ratio":2
-                # }
+                "edge_feature_masked_autoencoder": {
+                   "generator": {
+                        "mask_node_ratio": 0.2,
+                        "mask_edge_ratio": 0.2,
+                        "mask_reverse_edges": True, 
+                    },
+                    "augment_ratio":1
+                },
+                "topology_autoencoder": {
+                   "generator": {
+                        "distinguish_directions": False
+                    },
+                    "augment_ratio":2
+                }
             },
             "format": ["gml", "json","table","graphml"]
        },
-        # "movielens1m": {
-        #     "generator": {
-        #         "task_level": "edge",
-        #         "num_hops": 1,
-        #         "sampling": True,
-        #         "neighbor_size": [50],
-        #         "random_seed": 42
-        #     },
-        #     "index": [(4027, 1931), (751, 558), (186, 793)],
-        #     "datatype": {"directed": True},
-        #     "ssl_setting": {
-        #        "node_feature_masked_autoencoder": {
-        #            "generator": {
-        #                 "mask_node_ratio": 0.2,
-        #                 "mask_edge_ratio": 0.2,
-        #                 "mask_reverse_edges": True, 
-        #             },
-        #             "augment_ratio":1
-        #         },
-        #         "topology_autoencoder": {
-        #            "generator": {
-        #                 "distinguish_directions": False
-        #             },
-        #             "augment_ratio":2
-        #         }
-        #     },
-        #     # "format": ["gml", "json","table","graphml"]
-        #     "format": ["json","table","graphml"]
-        # }
+        "movielens1m": {
+            "generator": {
+                "task_level": "edge",
+                "num_hops": 1,
+                "sampling": True,
+                "neighbor_size": [50],
+                "random_seed": 42
+            },
+            "index": [(4027, 1931), (751, 558), (186, 793)],
+            "datatype": {"directed": True},
+            "ssl_setting": {
+               "node_feature_masked_autoencoder": {
+                   "generator": {
+                        "mask_node_ratio": 0.2,
+                        "mask_edge_ratio": 0.2,
+                        "mask_reverse_edges": True, 
+                    },
+                    "augment_ratio":1
+                },
+                "topology_autoencoder": {
+                   "generator": {
+                        "distinguish_directions": False
+                    },
+                    "augment_ratio":2
+                }
+            },
+            "format": ["gml", "json","table","graphml"]
+        # #     "format": ["json","table","graphml"] "gml", 
+        }
     }
     
     # Run the pipeline
