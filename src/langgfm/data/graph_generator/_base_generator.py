@@ -278,7 +278,7 @@ class EdgeTaskGraphGenerator(InputGraphGenerator):
         """
         pass
     
-    def generate_graph(self, sample: tuple, edge_index = None) -> nx.Graph:
+    def generate_graph(self, sample_id: tuple, edge_index = None) -> nx.Graph:
         """
         Generate a single graph centered around an edge using num_hops.
         If sampling is enabled, sample neighbors up to neighbor_size.
@@ -289,19 +289,19 @@ class EdgeTaskGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph for the sample.
         """
-        if len(sample) == 2:
-            src, dst = sample
-        elif len(sample) == 3:
+        if len(sample_id) == 2:
+            src, dst = sample_id
+        elif len(sample_id) == 3:
             # multiplex graph, multiple edges between the same node pair
             # id_ is the id_-th edge between the same node pair
-            src, dst, id_ = sample
+            src, dst, id_ = sample_id
         
         node_mapping, sub_graph_edge_mask = self.edge_egograph_sampling((src, dst), edge_index=edge_index)
         
         G = self.create_networkx_graph(
             node_mapping=node_mapping, 
             sub_graph_edge_mask=sub_graph_edge_mask,
-            edge=sample
+            edge=sample_id
         )
         
         new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)
@@ -311,10 +311,10 @@ class EdgeTaskGraphGenerator(InputGraphGenerator):
         target_dst_node_idx = node_idx_mapping_old_to_new[node_mapping[dst]]
         
         query = self.get_query(target_src_node_idx, target_dst_node_idx)
-        answer = self.get_answer(sample, target_src_node_idx, target_dst_node_idx)
+        answer = self.get_answer(sample_id, target_src_node_idx, target_dst_node_idx)
         
         metadata = {
-            "raw_sample_id": sample,
+            "raw_sample_id": sample_id,
             "num_hop": self.num_hops,
             "sampling": {
                 "enable": self.sampling,

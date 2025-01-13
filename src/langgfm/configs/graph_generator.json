@@ -62,6 +62,13 @@
       "neighbor_size": [50],
       "random_seed": 42
     },
+    "fb15k237": {
+      "task_level": "edge",
+      "num_hops": 2,
+      "sampling": true,
+      "neighbor_size": [15, 5],
+      "random_seed": 42
+    },
     "fingerprint": {
       "task_level": "graph"
     },
