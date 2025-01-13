@@ -12,6 +12,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 from langgfm.data.graph_generator.ogbn_arxiv_generator import OgbnArxivGraphGenerator
 from langgfm.data.ssl_tasks.tae_ssl import TopologyAutoencoder
 from langgfm.utils.random_control import set_seed
+from langgfm.utils.logger import logger
 
 class TestTopologyAutoencoder(unittest.TestCase):
     
@@ -55,10 +56,10 @@ class TestTopologyAutoencoder(unittest.TestCase):
         self.assertGreater(len(G_ssl['query']), 0, "Query should not be empty.")
         self.assertGreater(len(G_ssl['answer']), 0, "Answer should not be empty.")
         
-        # print the generated SSL sample
-        print(f"SSL sample:")
-        print(f"Query: {G_ssl['query']}")
-        print(f"Answer: {G_ssl['answer']}")
+        # logger.debug the generated SSL sample
+        logger.debug(f"SSL sample:")
+        logger.debug(f"Query: {G_ssl['query']}")
+        logger.debug(f"Answer: {G_ssl['answer']}")
         
         # validate whether the answer is correct
         
@@ -70,19 +71,19 @@ class TestTopologyAutoencoder(unittest.TestCase):
         answer_nodes = [list(map(int, re.findall(r'\d+', node))) for node in answer_nodes]
         # if two list in answer_nodes, the first is predecessors, the second is successors
         # if one list in answer_nodes, the list is neighbors
-        print(f"Answer nodes: {answer_nodes}")
+        logger.debug(f"Answer nodes: {answer_nodes}")
         
         # parse the query node in query string using regex
         query_node = int(re.findall(r'\d+', G_ssl['query'])[0])
-        print(f"Query node: {query_node}")
+        logger.debug(f"Query node: {query_node}")
         
         # now using networkx to get the predecessors or successors or neighbors of the query node
         predecessors = list(G_ssl['modified_graph'].predecessors(query_node))
         successors = list(G_ssl['modified_graph'].successors(query_node))
         neighbors = list(nx.all_neighbors(G_ssl['modified_graph'], query_node))
-        print(f"Predecessors: {predecessors}")
-        print(f"Successors: {successors}")
-        print(f"Neighbors: {neighbors}")
+        logger.debug(f"Predecessors: {predecessors}")
+        logger.debug(f"Successors: {successors}")
+        logger.debug(f"Neighbors: {neighbors}")
         
         # validate whether the answer is correct
         if len(answer_nodes) == 2:
@@ -101,10 +102,10 @@ class TestTopologyAutoencoder(unittest.TestCase):
         self.assertGreater(len(G_ssl_no_direction['query']), 0, "Query should not be empty.")
         self.assertGreater(len(G_ssl_no_direction['answer']), 0, "Answer should not be empty.")
         
-        # print the generated SSL sample
-        print(f"SSL no_direction sample:")
-        print(f"Query: {G_ssl_no_direction['query']}")
-        print(f"Answer: {G_ssl_no_direction['answer']}")
+        # logger.debug the generated SSL sample
+        logger.debug(f"SSL no_direction sample:")
+        logger.debug(f"Query: {G_ssl_no_direction['query']}")
+        logger.debug(f"Answer: {G_ssl_no_direction['answer']}")
         
         # validate whether the answer is correct
         # parse the predecessors or successors or neighbors of the query node in answer string using regex
@@ -115,19 +116,19 @@ class TestTopologyAutoencoder(unittest.TestCase):
         answer_nodes = [list(map(int, re.findall(r'\d+', node))) for node in answer_nodes]
         # if two list in answer_nodes, the first is predecessors, the second is successors
         # if one list in answer_nodes, the list is neighbors
-        print(f"Answer nodes: {answer_nodes}")
+        logger.debug(f"Answer nodes: {answer_nodes}")
         
         # parse the query node in query string using regex
         query_node = int(re.findall(r'\d+', G_ssl_no_direction['query'])[0])
-        print(f"Query node: {query_node}")
+        logger.debug(f"Query node: {query_node}")
         
         # now using networkx to get the predecessors or successors or neighbors of the query node
         predecessors = list(G_ssl_no_direction['modified_graph'].predecessors(query_node))
         successors = list(G_ssl_no_direction['modified_graph'].successors(query_node))
         neighbors = list(nx.all_neighbors(G_ssl_no_direction['modified_graph'], query_node))
-        print(f"Predecessors: {predecessors}")
-        print(f"Successors: {successors}")
-        print(f"Neighbors: {neighbors}")
+        logger.debug(f"Predecessors: {predecessors}")
+        logger.debug(f"Successors: {successors}")
+        logger.debug(f"Neighbors: {neighbors}")
         
         # validate whether the answer is correct
         if len(answer_nodes) == 2:
