@@ -22,6 +22,11 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
         self.df = pd.read_csv(f"{self.root}/bace.csv",index_col=0)
         self.all_samples = set(self.df['molecule_index'].tolist())
     
+    @property
+    def graph_description(self):
+        return "This graph is a molecule graph, where explicit hydrogen "\
+            "atoms have been removed. Nodes represent atoms and edges represent chemical bonds."
+            
     def get_query(self, **kwargs):
         query = ("β-Secretase 1 (BACE-1) encodes a member of the peptidase A1 family of aspartic proteases. "
         "Alternative splicing results in multiple transcript variants, at least one of which encodes a "
@@ -63,7 +68,4 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
         
         return G
             
-    @property
-    def graph_description(self):
-        return "This graph is a molecule graph, where explicit hydrogen "\
-            "atoms have been removed. Nodes represent atoms and edges represent chemical bonds."
+    

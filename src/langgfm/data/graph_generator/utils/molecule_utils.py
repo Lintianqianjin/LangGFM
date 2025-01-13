@@ -311,9 +311,9 @@ def smiles2graph(smiles_string, removeHs=True, reorder_atoms=False):
         # 'feature node. atom: Bromine , atomic number is 35 , unspecified chirality , 
         # degree of 1 , formal charge of 0 , num of hydrogen is 1 , num of radical electrons is 0 , 
         # hybridization is SP3 , not aromatric , not in ring'
-        G.add_node(node_idx, **desc)
+        G.add_node(node_idx, type = 'atom', **desc)
 
     for (src, dst), desc in zip(graph['edge_list'], graph['edge_feat']): # edge_list already contains both directions
-        G.add_edge(src, dst, **desc)
+        G.add_edge(src, dst, type='bond', **desc)
 
     return G

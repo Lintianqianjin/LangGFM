@@ -1,6 +1,11 @@
 from abc import ABC, abstractmethod
 import networkx as nx
 import random
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
+from langgfm.utils.logger import logger
 
 class SelfSupervisedGraphTask(ABC):
     """
@@ -83,6 +88,7 @@ class SelfSupervisedGraphTask(ABC):
                 - 'answer': The answer to the query.
         """
         modify_outputs = self.modify_graph(graph)
+        logger.debug(f"{modify_outputs=}")
         query_outputs = self.generate_query(modify_outputs)
         answer = self.generate_answer(modify_outputs, query_outputs)
         return {

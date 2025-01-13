@@ -27,7 +27,7 @@ class TopologyAutoencoder(SelfSupervisedGraphTask):
         """
         return {"modified_graph": graph}
 
-    def generate_query(self, graph: nx.Graph) -> dict:
+    def generate_query(self, modify_outputs:dict) -> dict:
         """
         Randomly select a node as the query and format it as natural language.
 
@@ -40,6 +40,7 @@ class TopologyAutoencoder(SelfSupervisedGraphTask):
                   - 'distinguish_directions': Whether to distinguish between predecessors and successors.
                   - 'query_text': The natural language query text.
         """
+        graph = modify_outputs['modified_graph']
         node = random.choice(list(graph.nodes))
         if self.distinguish_directions:
             query_text = (
@@ -59,7 +60,7 @@ class TopologyAutoencoder(SelfSupervisedGraphTask):
             "query_text": query_text,
         }
 
-    def generate_answer(self, graph: nx.Graph, query: dict) -> str:
+    def generate_answer(self, modify_outputs: dict, query_outputs: dict) -> str:
         """
         Generate the answer for the query in natural language format.
 
@@ -70,9 +71,12 @@ class TopologyAutoencoder(SelfSupervisedGraphTask):
         Returns:
             str: The natural language answer.
         """
-        node = query["query_node"]
+        graph = modify_outputs['modified_graph']
+        
+        
+        node = query_outputs["query_node"]
 
-        if query["distinguish_directions"]:
+        if query_outputs["distinguish_directions"]:
             # For directed graphs, distinguish predecessors and successors
             predecessors = sorted(graph.predecessors(node))
             successors = sorted(graph.successors(node))
@@ -96,4 +100,4 @@ class TopologyAutoencoder(SelfSupervisedGraphTask):
                 return (
                     f"The neighbors of node {node}, including both predecessor and successor nodes, "
                     f"are stored in the list: {neighbors}."
-                )   
+                )

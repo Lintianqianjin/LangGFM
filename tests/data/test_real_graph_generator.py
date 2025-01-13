@@ -22,7 +22,7 @@ class TestRealGraphGenerator(unittest.TestCase):
         """
         Initialize the generator for testing.
         """
-        self.datasets = ['movielens1m'] #,'chebi20', 'esol', 'fingerprint', 'ogbl_vessel','movielens1m','yelp_review', 'yelp_review', 'ogbl_vessel','movielens1m', 'usa_airport', 'twitch', 'ogbn_arxiv','wikics','aminer', 'ogbn_arxiv','ogbl_vessel'
+        self.datasets = ['re_europe',] # 'oag_scholar_interest','chebi20', 'esol', 'fingerprint', 'ogbl_vessel','movielens1m','yelp_review', 'yelp_review', 'ogbl_vessel','movielens1m', 'usa_airport', 'twitch', 'ogbn_arxiv','wikics','aminer', 'ogbn_arxiv','ogbl_vessel'
         # load the generator configuration file
         config_path = os.path.join(os.path.dirname(__file__), '../../src/langgfm/configs/graph_generator.json')
         with open(config_path, 'r') as f:
@@ -66,7 +66,7 @@ class TestRealGraphGenerator(unittest.TestCase):
             samples = random.sample(list(generator.all_samples),k=3)  # Select a sample node ID
             print(f"{samples=}")
             for sample in samples:
-                G, metadata = generator.generate_graph(sample=sample)
+                G, metadata = generator.generate_graph(sample_id=sample)
                 
                 print(f"Generated graph with {len(G.nodes)} nodes and {len(G.edges)} edges.")
                 

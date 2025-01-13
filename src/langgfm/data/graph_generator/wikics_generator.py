@@ -39,6 +39,12 @@ class WikicsGraphGenerator(NodeTaskGraphGenerator):
             "Programming language topics"
         ]
         
+    @property
+    def graph_description(self):
+        return "This graph is a hyperlink relationship graph between webpages. "\
+            "Each node represents a webpage, and each edge represents a hyperlink "\
+            "on the source node pointing to the target node."
+    
     def get_query(self, sample_id: int) -> str:
         """
         Get the query for a specific sample node.
@@ -71,7 +77,7 @@ class WikicsGraphGenerator(NodeTaskGraphGenerator):
         """
         G = nx.MultiDiGraph()
         for raw_node_idx, new_node_idx in node_mapping.items():
-            G.add_node(new_node_idx, title = self.wiki_meta['nodes'][raw_node_idx]['title'])
+            G.add_node(new_node_idx, type='webpage', title = self.wiki_meta['nodes'][raw_node_idx]['title'])
             
         for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
             
@@ -80,12 +86,7 @@ class WikicsGraphGenerator(NodeTaskGraphGenerator):
             
             src = node_mapping[raw_src]
             dst = node_mapping[raw_dst]
-            G.add_edge(src, dst)
+            G.add_edge(src, dst, type='hyperlink')
         return G
 
-    @property
-    def graph_description(self):
-        return "This graph is a hyperlink relationship graph between webpages. "\
-            "Each node represents a webpage, and each edge represents a hyperlink "\
-            "on the source node pointing to the target node."
     

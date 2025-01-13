@@ -84,8 +84,6 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
             if node_type == 'paper':
                 paper_idx = raw_node_idx - self.node_slices['paper'][0]
                 
-                self.paper_nodes.at[paper_idx,'title']
-                
                 G.add_node(
                     new_node_idx, type = 'paper', 
                     title=self.paper_nodes.at[paper_idx,'title'],
