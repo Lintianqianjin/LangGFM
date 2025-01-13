@@ -1,0 +1,970 @@
+ID,name,country,origin,latitude,longitude,status,primaryfuel,secondaryfuel,capacity,lincost,cyclecost,minuptime,mindowntime,minonlinecapacity
+2069,Almaraz Nuclear Power Plant Spain,Spain,162,39.8070525078,-5.69859981537,No Data in GEO,Nuclear,Unknown,1957.0,12.4648314371,587100.0,24,24,391.4
+2142,Aramon Oil Power Plant France,France,486,43.880077622,4.65476989746,Operating Fully,Fuel Oil,Unknown,1400.0,123.113577781,77000.0,2,4,560.0
+2154,Argentat Hydroelectric Generating Station,France,457,45.104,1.954,No Data in GEO,Hydro,Unknown,47.5,6.69985332459,204.25,0,0,4.75
+2175,Asco Nuclear Power Plant Spain,Spain,124,41.2008407762,0.567941665649,No Data in GEO,Nuclear,Unknown,2060.0,12.4766094169,618000.0,24,24,412.0
+2300,Belleville Nuclear Power Plant France,France,357,47.5116575867,2.87415544606,Operating Fully,Nuclear,Unknown,2726.0,12.5518457121,817800.0,24,24,545.2
+2329,Beznau Nuclear Power Plant Switzerland,Switzerland,990,47.5518102896,8.22818040848,No Data in GEO,Nuclear,Unknown,760.0,11.4197581025,228000.0,24,24,152.0
+2336,Biblis Nuclear Power Plant Germany,Germany,932,49.7108831077,8.41475486755,No Data in GEO,Nuclear,Unknown,2525.0,10.7942203379,757500.0,24,24,505.0
+2366,Blayais Nuclear Power Plant France,France,451,45.2560057915,-0.69319947969,No Data in GEO,Nuclear,Unknown,3640.0,11.7791814314,1092000.0,24,24,728.0
+2368,Blénod Thermal Power Plant France,France,278,48.8684,6.08024,Operating Fully,Coal,Fuel Oil,750.0,36.3535123656,48750.0,8,8,150.0
+2385,Bohunice Nuclear Power Plant Slovakia,Slovakia,1215,48.4960185205,17.6815902367,No Data in GEO,Nuclear,Unknown,880.0,10.8543491617,264000.0,24,24,176.0
+2401,Borssele Nuclear Power Plant Netherlands,Netherlands,536,51.4311436729,3.71745514471,No Data in GEO,Nuclear,Unknown,515.0,12.1154281329,154500.0,24,24,103.0
+2405,"Bouchain Coal Power Plant, France",France,224,50.2964128512,3.31585407257,No Data in GEO,Coal,Unknown,250.0,39.9199274249,16250.0,8,8,50.0
+2426,"Brennilis Combustion Gas Power Plant, France",France,307,48.3567944165,-3.87065827847,No Data in GEO,Natural Gas,Unknown,295.0,58.2429720552,16225.0,2,4,118.0
+2440,Brokdorf Nuclear Power Plant Germany,Germany,783,53.85090974,9.34484426746,No Data in GEO,Nuclear,Unknown,1440.0,11.2412102681,432000.0,24,24,288.0
+2453,Brunsbuettel Nuclear Power Plant Germany,Germany,785,53.891764078,9.20256093434,No Data in GEO,Nuclear,Unknown,806.0,11.1507713494,241800.0,24,24,161.2
+2471,Bugey Nuclear Power Plant France,France,418,45.7973181269,5.27061189011,No Data in GEO,Nuclear,Unknown,3724.0,12.6737966617,1117200.0,24,24,744.8
+2583,A2A Cassano d'Adda Gas CCGT Italy,Italy,662,45.512,9.509,Operating Fully,Natural Gas,Unknown,1000.0,52.2597655974,55000.0,2,4,400.0
+2589,Cattenom Nuclear Power Plant France,France,244,49.4160453428,6.21694230446,No Data in GEO,Nuclear,Unknown,5448.0,11.9433727558,1634400.0,24,24,1089.6
+2605,Centrale de Lucy Coal Power Station France,France,390,46.667,4.351,No Data in GEO,Coal,Unknown,270.0,37.2831776852,17550.0,8,8,54.0
+2609,Cernavoda Nuclear Power Plant Romania,Romania,1424,44.3215415101,28.0568445629,No Data in GEO,Nuclear,Unknown,1412.0,12.3460505846,423600.0,24,24,282.4
+2665,Chinon Nuclear Power Plant France,France,388,47.2253563321,0.165557769974,No Data in GEO,Nuclear,Unknown,3816.0,10.6247900862,1144800.0,24,24,763.2
+2670,Chooz Nuclear Power Plant France,France,228,50.09,4.789444444,No Data in GEO,Nuclear,Unknown,3120.0,11.9049479218,936000.0,24,24,624.0
+2687,Civaux Nuclear Power Plant France,France,398,46.4563380303,0.654807956874,No Data in GEO,Nuclear,Unknown,3122.0,10.6765386853,936600.0,24,24,624.4
+2694,Claus C CCGT Power Plant Netherlands,Netherlands,628,51.154,5.9106,Operating Fully,Natural Gas,Unknown,1280.0,54.579918607,70400.0,2,4,512.0
+2715,Cofrentes Nuclear Power Plant Spain,Spain,172,39.2177316494,-1.05028867722,No Data in GEO,Nuclear,Unknown,1092.0,11.5495260942,327600.0,24,24,218.4
+2746,Combigolfe CCGT Power Plant France,France,508,43.445,4.9113,Operating Fully,Natural Gas,Unknown,430.0,59.2920914066,23650.0,2,4,172.0
+2771,Cordemais Thermal Power Station France,France,368,47.2755603996,-1.87788963318,No Data in GEO,Coal,Unknown,2600.0,39.4873201179,169000.0,8,8,520.0
+2791,Courrieres Coal Power Plant France (Shutdown),France,225,50.4482409322,2.87399768829,No Data in GEO,Coal,Unknown,234.0,35.1395916664,15210.0,8,8,46.8
+2825,Cruas Nuclear Power Plant France,France,467,44.6324911325,4.75459120098,No Data in GEO,Nuclear,Unknown,3824.0,11.6296813353,1147200.0,24,24,764.8
+2862,Dampierre Nuclear Power Plant France,France,348,47.7321125133,2.51851575344,No Data in GEO,Nuclear,Unknown,3864.0,10.6891078562,1159200.0,24,24,772.8
+2943,"Dirinon Combustion Gas Power Plant, France",France,306,48.3897741246,-4.26198720932,No Data in GEO,Natural Gas,Unknown,170.0,50.4537488777,9350.0,2,4,68.0
+2947,"DK6 (Dunkerque) CCGT Gas Power Plant, France",France,218,51.0481662362,2.32547521591,No Data in GEO,Natural Gas,Unknown,800.0,58.4187109024,44000.0,2,4,320.0
+2948,Doel (Electrabel) Nuclear Power Plant Belgium,Belgium,535,51.3253822938,4.25970115099,No Data in GEO,Nuclear,Unknown,2963.0,11.9534953437,888900.0,24,24,592.6
+2983,Dukovany Nuclear Power Plant Czech Republic,Czech Republic,1071,49.0848451482,16.1478689924,No Data in GEO,Nuclear,Unknown,1760.0,11.2974054496,528000.0,24,24,352.0
+3020,EdF Le Havre Coal Power Plant France,France,269,49.4756536367,0.149130821228,Operating Fully,Coal,Fuel Oil,1995.0,37.7140624474,129675.0,8,8,399.0
+3023,EDIPOWER Centrale Termoelettrica Brindisi Power Plant Italy,Italy,739,40.6431681467,17.9802846909,Operating Partially,Coal,Fuel Oil,1280.0,36.7646527167,83200.0,8,8,256.0
+3067,Emile-Huchet Coal Power Plant France,France,257,49.151,6.697,No Data in GEO,Coal,Unknown,1086.0,35.0749218367,70590.0,8,8,217.2
+3071,Emsland Nuclear Power Plant Germany,Germany,823,52.4716712587,7.32041358948,No Data in GEO,Nuclear,Unknown,1400.0,11.6761515432,420000.0,24,24,280.0
+3078,ENEL Brindisi Sud (Federico II) Coal Power Plant Italy,Italy,739,40.5632424878,18.0318260193,Operating Fully,Coal,Fuel Oil,2640.0,39.8849388447,171600.0,8,8,528.0
+3079,ENEL Andrea Palladio-Fusina Thermal Power Plant Italy,Italy,653,45.4313918607,12.246837616,Operating Fully,Coal,Natural Gas,1131.0,41.0511305328,73515.0,8,8,226.2
+3084,ENIPOWER S.P.A. Stabil. di Brindisi Italy,Italy,739,40.6292784379,18.0032873154,No Data in GEO,Fuel Oil,Unknown,1321.0,116.131958048,72655.0,2,4,528.4
+3171,Fessenheim Nuclear Power Plant France,France,327,47.9031515765,7.56311976401,No Data in GEO,Nuclear,Unknown,1840.0,11.2952481977,552000.0,24,24,368.0
+3183,Flamanville Nuclear Power Plant France,France,250,49.5365739,-1.88234010604,No Data in GEO,Nuclear,Unknown,2764.0,12.6766597753,829200.0,24,24,552.8
+3211,Fos-sur-Mer CCGT Power Plant France,France,508,43.437,4.9056,No Data in GEO,Natural Gas,Unknown,480.0,60.0180262771,26400.0,2,4,192.0
+3343,Goesgen Nuclear Power Plant Switzerland,Switzerland,563,47.3655423609,7.96877861023,No Data in GEO,Nuclear,Unknown,1020.0,12.0905589185,306000.0,24,24,204.0
+3348,Golfech Nuclear Power Plant France,France,484,44.1060281618,0.844260231019,No Data in GEO,Nuclear,Unknown,2726.0,11.7421470821,817800.0,24,24,545.2
+3362,Grafenrheinfeld Nuclear Power Plant Germany,Germany,921,49.9844,10.1828,Operating Fully,Nuclear,Unknown,1345.0,12.6416299361,403500.0,24,24,269.0
+3375,Grandval Hydroelectric Power Plant France,France,459,44.921937806,3.07449817657,No Data in GEO,Hydro,Unknown,74.0,6.64471177013,318.2,0,0,7.4
+3383,Gravelines Nuclear Power Plant France,France,218,51.0141105547,2.13320933595,No Data in GEO,Nuclear,Unknown,5706.0,10.9565398259,1711800.0,24,24,1141.2
+3414,Grohnde Nuclear Power Plant Germany,Germany,836,52.0349134699,9.41119411649,No Data in GEO,Nuclear,Unknown,1430.0,10.9088933201,429000.0,24,24,286.0
+3430,Gundremmingen Nuclear Power Plant Germany,Germany,965,48.5148869047,10.4012075416,No Data in GEO,Nuclear,Unknown,2688.0,12.3851840472,806400.0,24,24,537.6
+3589,Hornaing B Coal Power Plant France,France,224,50.3739340713,3.33896398544,No Data in GEO,Coal,Unknown,253.0,40.1011014381,16445.0,8,8,50.6
+3688,Isar Nuclear Power Plant Germany,Germany,954,48.6049153366,12.2935913711,No Data in GEO,Nuclear,Unknown,2387.0,12.3163365328,716100.0,24,24,477.4
+3753,Jose Cabrera ES-1 (Zorita) Nuclear Power Plant Spain (Shutdown),Spain,144,40.3475253425,-2.88545608521,No Data in GEO,Nuclear,Unknown,440.0,12.9135827381,132000.0,24,24,88.0
+3906,Kozloduy Nuclear Power Plant Bulgaria,Bulgaria,1296,43.7427751593,23.7755898906,No Data in GEO,Nuclear,Unknown,2000.0,12.2667414398,600000.0,24,24,400.0
+3909,Kruemmel Nuclear Power Plant Germany,Germany,788,53.4102865141,10.4101545291,No Data in GEO,Nuclear,Unknown,1316.0,12.2810798921,394800.0,24,24,263.2
+3913,Krsko Nuclear Power Reactor Slovenia,Slovenia,1224,45.9389263153,15.5160409477,No Data in GEO,Nuclear,Unknown,730.0,12.2730408054,219000.0,24,24,146.0
+3929,L'Aigle Hydroelectric Generating Station France,France,445,45.243439744,2.22477436066,No Data in GEO,Hydro,Unknown,360.0,6.50009900813,1548.0,0,0,36.0
+3943,"La Maxe Combustion Coal Power Plant, France",France,255,49.1565622845,6.19053840637,No Data in GEO,Coal,Unknown,500.0,40.0189532082,32500.0,8,8,100.0
+39694,Allement Hydroelectric Power Station France,France,402,46.112,5.422,Operating Fully,Hydro,Unknown,32.0,5.78218126212,137.6,0,0,3.2
+39695,Sault Brenaz Hydroelectric Power Station France,France,418,45.846,5.418,Operating Fully,Hydro,Unknown,45.0,5.9536919871,193.5,0,0,4.5
+39696,Chautagne Hydroelectric Power Station France,France,407,45.879,5.811,Operating Fully,Hydro,Unknown,90.0,6.16752967355,387.0,0,0,9.0
+39697,Seyssel Hydroelectric Power Station France,France,407,45.971,5.834,Operating Fully,Hydro,Unknown,45.0,6.8340454425,193.5,0,0,4.5
+39698,Genissiat Hydroelectric Power Station France,France,407,46.053,5.813,Operating Fully,Hydro,Unknown,420.0,5.9621572706,1806.0,0,0,42.0
+39699,Cize Bolozon Hydroelectric Power Station France,France,402,46.211,5.465,Operating Fully,Hydro,Unknown,23.0,6.36345426056,98.9,0,0,2.3
+39700,Coiselet Hydroelectric Power Station France,France,394,46.294,5.592,Operating Fully,Hydro,Unknown,41.0,6.32615047545,176.3,0,0,4.1
+39701,Moux Charmines Hydroelectric Power Station France,France,402,46.277,5.554,Operating Fully,Hydro,Unknown,28.0,7.02654159478,120.4,0,0,2.8
+39702,Bancairon Hydroelectric Power Station France,France,708,44.003,7.137,Operating Fully,Hydro,Unknown,50.0,6.82108024958,215.0,0,0,5.0
+39703,Saint Dalmas Hydroelectric Power Station France,France,708,44.047,7.586,Operating Fully,Hydro,Unknown,50.0,6.50275576605,215.0,0,0,5.0
+39704,Castillon Hydroelectric Power Station France,France,482,43.878,6.538,Operating Fully,Hydro,Unknown,68.0,6.52539456979,292.4,0,0,6.8
+39705,Chaudanne Hydroelectric Power Station France,France,482,43.848,6.544,Operating Fully,Hydro,Unknown,24.3,7.01284664174,104.49,0,0,2.43
+39706,Oraison Hydroelectric Power Station France,France,482,43.921,5.925,Operating Fully,Hydro,Unknown,195.0,6.45560997348,838.5,0,0,19.5
+39707,Brillanne I ,France,482,43.921,5.925,Operating Fully,Hydro,Unknown,30.0,5.9912870605,129.0,0,0,3.0
+39708,Largue Hydroelectric Power Station France,France,487,43.854,5.859,Operating Fully,Hydro,Unknown,12.0,5.9839080208,51.6,0,0,1.2
+39709,Manosque-Voix Hydroelectric Power Station France,France,487,43.877,5.863,Operating Fully,Hydro,Unknown,55.0,5.8843504038,236.5,0,0,5.5
+39710,Sainte Tulle I,France,493,43.787,5.774,Operating Fully,Hydro,Unknown,97.0,6.71170518024,417.1,0,0,9.7
+39711,Quinson Hydroelectric Power Station France,France,487,43.699,6.051,Operating Fully,Hydro,Unknown,41.0,6.11832303195,176.3,0,0,4.1
+39712,Sainte Croix Hydroelectric Power Station France,France,487,43.737,6.134,Operating Fully,Hydro,Unknown,158.0,6.97636974655,679.4,0,0,15.8
+39713,Salignac Hydroelectric Power Station France,France,480,44.138,5.979,Operating Fully,Hydro,Unknown,88.0,6.18022410575,378.4,0,0,8.8
+39714,Curbans Hydroelectric Power Station France,France,469,44.4476,6.0616,Operating Fully,Hydro,Unknown,165.0,5.87749803446,709.5,0,0,16.5
+39715,Revin Hydroelectric Power Station France,France,233,49.906,4.625,Operating Fully,Hydro,Unknown,800.0,6.29060581654,3440.0,0,0,80.0
+39716,Aston Hydroelectric Power Station France,France,530,42.777,1.677,Operating Fully,Hydro,Unknown,116.0,6.47696675843,498.8,0,0,11.6
+39717,Orlu Hydroelectric Power Station France,France,533,42.689,1.912,Operating Fully,Hydro,Unknown,88.8,6.27504712341,381.84,0,0,8.88
+39718,Teich Hydroelectric Power Station France,France,533,42.71,1.864,Operating Fully,Hydro,Unknown,6.3,6.3714904855,27.09,0,0,0.63
+39719,Nentilla Hydroelectric Power Station France,France,524,42.772,2.213,Operating Fully,Hydro,Unknown,97.0,5.83312578655,417.1,0,0,9.7
+39720,Brommat Hydroelectric Power Station France,France,466,44.768,2.684,Operating Fully,Hydro,Unknown,444.0,6.89403719566,1909.2,0,0,44.4
+39721,Couesque Hydroelectric Power Station France,France,471,44.696,2.585,Operating Fully,Hydro,Unknown,124.0,6.38067298354,533.2,0,0,12.4
+39722,Golinhac Hydroelectric Power Station France,France,471,44.606,2.605,Operating Fully,Hydro,Unknown,45.0,6.89142197014,193.5,0,0,4.5
+39723,Pouget (Le) Hydroelectric Power Station France,France,488,44.06,2.769,Operating Fully,Hydro,Unknown,572.5,6.428764123,2461.75,0,0,57.25
+39724,Truel Hydroelectric Power Station France,France,488,44.06,2.769,Operating Fully,Hydro,Unknown,27.0,6.09902744984,116.1,0,0,2.7
+39726,Sarrans Hydroelectric Power Station France,France,466,44.83,2.74,Operating Fully,Hydro,Unknown,180.0,5.8981422474,774.0,0,0,18.0
+39727,Alrance Hydroelectric Power Station France,France,479,44.122,2.69,Operating Fully,Hydro,Unknown,14.5,6.47765580487,62.35,0,0,1.45
+39728,Cambeyrac Hydroelectric Power Station France,France,471,44.655,2.574,Operating Fully,Hydro,Unknown,9.8,6.64006327138,42.14,0,0,0.98
+39729,Castelnau-Lassouts Hydroelectric Power Station France,France,471,44.505,2.874,Operating Fully,Hydro,Unknown,42.0,5.77816775341,180.6,0,0,4.2
+39730,Lardy Hydroelectric Power Station France,France,471,44.662,2.583,Operating Fully,Hydro,Unknown,45.0,6.30760269194,193.5,0,0,4.5
+39731,Lot Hydroelectric Power Station France,France,471,44.663,2.664,Operating Fully,Hydro,Unknown,28.6,6.66724193056,122.98,0,0,2.86
+39732,Pinet Hydroelectric Power Station France,France,488,44.07,2.805,Operating Fully,Hydro,Unknown,66.5,6.13480168129,285.95,0,0,6.65
+39733,Jouques Hydroelectric Power Station France,France,493,43.681,5.656,Operating Fully,Hydro,Unknown,78.0,6.27578779473,335.4,0,0,7.8
+39734,Mallemort Hydroelectric Power Station France,France,485,43.715,5.205,Operating Fully,Hydro,Unknown,101.0,7.03788960429,434.3,0,0,10.1
+39735,Saint Chamas Hydroelectric Power Station France,France,502,43.527,5.073,Operating Fully,Hydro,Unknown,165.0,6.18862694659,709.5,0,0,16.5
+39736,Saint Esteve-Janson Hydroelectric Power Station France,France,499,43.692,5.385,Operating Fully,Hydro,Unknown,156.0,5.85040698108,670.8,0,0,15.6
+39737,Salon Hydroelectric Power Station France,France,494,43.633,5.114,Operating Fully,Hydro,Unknown,101.0,6.16431668853,434.3,0,0,10.1
+39738,Mareges Hydroelectric Power Station France,France,438,45.392,2.364,Operating Fully,Hydro,Unknown,301.8,6.37439592208,1297.74,0,0,30.18
+39739,Saint Etienne Cantales Hydroelectric Power Station France,France,457,44.945,2.219,Operating Fully,Hydro,Unknown,105.0,6.25814341846,451.5,0,0,10.5
+39740,Auzerette Hydroelectric Power Station France,France,438,45.365,2.646,Operating Fully,Hydro,Unknown,29.0,6.63226648508,124.7,0,0,2.9
+39741,Rhue (La) Hydroelectric Power Station France,France,438,45.415,2.499,Operating Fully,Hydro,Unknown,12.0,5.91006221843,51.6,0,0,1.2
+39742,Enchanet Hydroelectric Power Station France,France,457,45.082,2.194,Operating Fully,Hydro,Unknown,35.0,6.85766904752,150.5,0,0,3.5
+39744,Lanau Hydroelectric Power Station France,France,459,44.891,3.003,Operating Fully,Hydro,Unknown,21.0,6.27325393006,90.3,0,0,2.1
+39745,Argentat Hydroelectric Power Station France,France,457,45.104,1.954,Operating Fully,Hydro,Unknown,48.0,6.94263768358,206.4,0,0,4.8
+39746,Chastang Hydroelectric Power Station France,France,457,45.151,2.01,Operating Fully,Hydro,Unknown,300.0,6.79137212692,1290.0,0,0,30.0
+39747,Gour Noir (Le) Hydroelectric Power Station France,France,457,45.071,2.067,Operating Fully,Hydro,Unknown,40.0,6.97945162468,172.0,0,0,4.0
+39748,Hautefage Hydroelectric Power Station France,France,457,45.06,1.994,Operating Fully,Hydro,Unknown,25.0,6.2774098649,107.5,0,0,2.5
+39749,Bort Les Orgues Hydroelectric Power Station France,France,438,45.413,2.499,Operating Fully,Hydro,Unknown,240.0,6.30492970682,1032.0,0,0,24.0
+39750,Val Beynette Hydroelectric Power Station France,France,438,45.416,2.372,Operating Fully,Hydro,Unknown,30.0,6.83933496834,129.0,0,0,3.0
+39751,Marcillac Hydroelectric Power Station France,France,445,45.215,2.038,Operating Fully,Hydro,Unknown,30.0,6.91175035832,129.0,0,0,3.0
+39752,Triouzoune Hydroelectric Power Station France,France,445,45.347,2.349,Operating Fully,Hydro,Unknown,22.0,6.78927850827,94.6,0,0,2.2
+39753,Monceaux La Virolle Hydroelectric Power Station France,France,426,45.576,1.84,Operating Fully,Hydro,Unknown,19.0,6.22029830291,81.7,0,0,1.9
+39754,Ocana Hydroelectric Power Station France,France,1253,41.946,8.935,Operating Fully,Hydro,Unknown,42.5,6.14835626168,182.75,0,0,4.25
+39755,Tuilieres Hydroelectric Power Station France,France,464,44.845,0.633,Operating Fully,Hydro,Unknown,32.0,6.17091941657,137.6,0,0,3.2
+39756,Beauchastel Hydroelectric Power Station France,France,460,44.824,4.811,Operating Fully,Hydro,Unknown,204.0,6.84049748969,877.2,0,0,20.4
+39757,Bollene Hydroelectric Power Station France,France,478,44.304,4.742,Operating Fully,Hydro,Unknown,354.0,6.29140858896,1522.2,0,0,35.4
+39758,Chateauneuf Du Rhone Hydroelectric Power Station France,France,470,44.499,4.708,Operating Fully,Hydro,Unknown,295.0,6.43964620723,1268.5,0,0,29.5
+39759,Logis Neuf Hydroelectric Power Station France,France,461,44.676,4.787,Operating Fully,Hydro,Unknown,215.0,5.82728675653,924.5,0,0,21.5
+39760,Gervans Hydroelectric Power Station France,France,442,45.136,4.806,Operating Fully,Hydro,Unknown,120.0,5.89982815615,516.0,0,0,12.0
+39761,Bourg Les Valence Hydroelectric Power Station France,France,442,45.011,4.839,Operating Fully,Hydro,Unknown,180.0,6.85904200904,774.0,0,0,18.0
+39762,Beaucaire Hydroelectric Power Station France,France,486,43.824,4.644,Operating Fully,Hydro,Unknown,210.0,6.68688525776,903.0,0,0,21.0
+39763,Castirla Hydroelectric Power Station France,France,1253,42.38,9.134,Operating Fully,Hydro,Unknown,54.5,6.00275229,234.35,0,0,5.45
+39764,Lugo Di Nazza Hydroelectric Power Station France,France,1253,42.091,9.316,Operating Fully,Hydro,Unknown,39.0,5.88810680928,167.7,0,0,3.9
+39765,Oo Hydroelectric Power Station France,France,66,42.804,0.56,Operating Fully,Hydro,Unknown,30.0,6.83365721694,129.0,0,0,3.0
+39766,Portillon (Le) Hydroelectric Power Station France,France,66,42.733,0.553,Operating Fully,Hydro,Unknown,95.0,6.59435107878,408.5,0,0,9.5
+39767,Argentiere-La Bessee Hydroelectric Power Station France,France,452,44.783,6.548,Operating Fully,Hydro,Unknown,38.0,6.89791092158,163.4,0,0,3.8
+39768,Champcella Hydroelectric Power Station France,France,443,44.737,6.575,Operating Fully,Hydro,Unknown,12.0,5.92086250448,51.6,0,0,1.2
+39769,Claux Hydroelectric Power Station France,France,452,44.876,6.48,Operating Fully,Hydro,Unknown,13.5,6.46813364491,58.05,0,0,1.35
+39770,Serre Poncon Hydroelectric Power Station France,France,469,44.47,6.269,Operating Fully,Hydro,Unknown,360.0,6.24700472569,1548.0,0,0,36.0
+39771,Eygliers Hydroelectric Power Station France,France,443,44.672,6.65,Operating Fully,Hydro,Unknown,25.0,6.88443124291,107.5,0,0,2.5
+39772,Lazer (Le) Hydroelectric Power Station France,France,469,44.346,5.868,Operating Fully,Hydro,Unknown,16.5,6.72305743127,70.95,0,0,1.65
+39773,Sisteron Hydroelectric Power Station France,France,480,44.21,5.921,Operating Fully,Hydro,Unknown,256.0,5.87251246878,1100.8,0,0,25.6
+39774,Egets Hydroelectric Power Station France,France,528,42.955,0.565,Operating Fully,Hydro,Unknown,37.3,6.8924601447,160.39,0,0,3.73
+39775,Louron Hydroelectric Power Station France,France,66,42.79,0.41,Operating Fully,Hydro,Unknown,49.3,5.96111556773,211.99,0,0,4.93
+39776,Pragneres Hydroelectric Power Station France,France,531,42.821,0.01,Operating Fully,Hydro,Unknown,292.0,6.6088979721,1255.6,0,0,29.2
+39777,Mazet Hydroelectric Power Station France,France,426,45.801,1.803,Operating Fully,Hydro,Unknown,56.0,5.80520242444,240.8,0,0,5.6
+39778,Fessenheim Hydroelectric Power Station France,France,327,47.915,7.571,Operating Fully,Hydro,Unknown,166.0,6.29996239918,713.8,0,0,16.6
+39779,Ottmarsheim Hydroelectric Power Station France,France,327,47.774,7.523,Operating Fully,Hydro,Unknown,156.0,6.59147896998,670.8,0,0,15.6
+39780,Kembs Hydroelectric Power Station France,France,344,47.655,7.52,Operating Fully,Hydro,Unknown,156.0,5.95014361394,670.8,0,0,15.6
+39782,Eguzon Hydroelectric Power Station France,France,396,46.455,1.613,Operating Fully,Hydro,Unknown,72.0,5.88808016445,309.6,0,0,7.2
+39783,Bissorte Hydroelectric Power Station France,France,439,45.202,6.585,Operating Fully,Hydro,Unknown,883.0,6.01224980972,3796.9,0,0,88.3
+39786,Sautet (Le) Hydroelectric Power Station France,France,452,44.817,5.908,Operating Fully,Hydro,Unknown,76.0,6.69974426748,326.8,0,0,7.6
+39788,St. Guillerme Hydroelectric Power Station France,France,444,45.031,6.079,Operating Fully,Hydro,Unknown,116.0,6.74827995513,498.8,0,0,11.6
+39789,Bregnier-Cordon Hydroelectric Power Station France,France,422,45.654,5.605,Operating Fully,Hydro,Unknown,70.0,6.72715187872,301.0,0,0,7.0
+39790,Monteyard-Avigonnet Hydroelectric Power Station France,France,447,44.961,5.689,Operating Fully,Hydro,Unknown,360.0,5.9771519713,1548.0,0,0,36.0
+39791,Beauvoir Hydroelectric Power Station France,France,436,45.121,5.319,Operating Fully,Hydro,Unknown,39.0,6.72972281602,167.7,0,0,3.9
+39792,Sablons Hydroelectric Power Station France,France,437,45.307,4.797,Operating Fully,Hydro,Unknown,160.0,6.44771572349,688.0,0,0,16.0
+39793,Vaugris Hydroelectric Power Station France,France,427,45.495,4.826,Operating Fully,Hydro,Unknown,72.0,6.80356382093,309.6,0,0,7.2
+39794,Saint Georges de Commiers Hydroelectric Power Station France,France,447,45.006,5.687,Operating Fully,Hydro,Unknown,60.0,6.53001425359,258.0,0,0,6.0
+39795,Saut Mortier Hydroelectric Power Station France,France,394,46.372,5.642,Operating Fully,Hydro,Unknown,44.0,6.24918830155,189.2,0,0,4.4
+39796,Vouglans Hydroelectric Power Station France,France,394,46.397,5.666,Operating Fully,Hydro,Unknown,262.0,6.80343974766,1126.6,0,0,26.2
+39798,Grangent Hydroelectric Power Station France,France,440,45.467,4.248,Operating Fully,Hydro,Unknown,37.0,6.97539485245,159.1,0,0,3.7
+39799,Laval de Cere  1 ,France,457,44.953,1.95,Operating Fully,Hydro,Unknown,132.0,6.36293365752,567.6,0,0,13.2
+39800,Pied-de-Borne Hydroelectric Power Station France,France,468,44.479,3.986,Operating Fully,Hydro,Unknown,110.0,6.97580889595,473.0,0,0,11.0
+39801,Hourat Hydroelectric Power Station France,France,529,43.075,-0.42,Operating Fully,Hydro,Unknown,139.0,5.89249990161,597.7,0,0,13.9
+39802,Artouste Hydroelectric Power Station France,France,529,42.887,-0.411,Operating Fully,Hydro,Unknown,88.0,6.00317939358,378.4,0,0,8.8
+39803,Soulom Hydroelectric Power Station France,France,526,42.953,-0.069,Operating Fully,Hydro,Unknown,57.0,5.99144734883,245.1,0,0,5.7
+39804,Licq-Atherey Hydroelectric Power Station France,France,529,43.048,-0.886,Operating Fully,Hydro,Unknown,27.4,6.73861698609,117.82,0,0,2.74
+39805,Tet (La) Hydroelectric Power Station France,France,532,42.553,2.267,Operating Fully,Hydro,Unknown,41.1,6.83562593383,176.73,0,0,4.11
+39806,Hospitalet (L') Hydroelectric Power Station France,France,533,42.588,1.797,Operating Fully,Hydro,Unknown,93.3,5.84415806497,401.19,0,0,9.33
+39807,Gerstheim Hydroelectric Power Station France,France,975,48.404,7.728,Operating Fully,Hydro,Unknown,141.0,6.06229513223,606.3,0,0,14.1
+39808,Marckolsheim Hydroelectric Power Station France,France,315,48.154,7.589,Operating Fully,Hydro,Unknown,156.0,5.82027179565,670.8,0,0,15.6
+39809,Rhinau Hydroelectric Power Station France,France,315,48.284,7.678,Operating Fully,Hydro,Unknown,152.0,6.2817818693,653.6,0,0,15.2
+39810,Gambsheim Hydroelectric Power Station France,France,963,48.682,7.919,Operating Fully,Hydro,Unknown,108.0,6.56307283045,464.4,0,0,10.8
+39811,Strasbourg Hydroelectric Power Station France,France,975,48.526,7.797,Operating Fully,Hydro,Unknown,141.0,6.42192116907,606.3,0,0,14.1
+39812,Cusset-Jonage Hydroelectric Power Station France,France,416,45.79,5.025,Operating Fully,Hydro,Unknown,85.0,6.60876588591,365.5,0,0,8.5
+39813,Pierre Benite Hydroelectric Power Station France,France,427,45.702,4.842,Operating Fully,Hydro,Unknown,84.0,6.44954694812,361.2,0,0,8.4
+39815,Brevieres/Malgovert Hydroelectric Power Station France,France,424,45.618,6.79,Operating Fully,Hydro,Unknown,396.0,6.7807218108,1702.8,0,0,39.6
+39816,Brens-Virigin Hydroelectric Power Station France,France,422,45.725,5.698,Operating Fully,Hydro,Unknown,90.0,6.76487538824,387.0,0,0,9.0
+39817,Villarodin Hydroelectric Power Station France,France,430,45.213,6.721,Operating Fully,Hydro,Unknown,360.0,6.70205315982,1548.0,0,0,36.0
+39818,Aussois + Combe d'Avrieux Hydroelectric Power Station France,France,430,45.215,6.712,Operating Fully,Hydro,Unknown,198.0,6.43136769287,851.4,0,0,19.8
+39819,Coche (La) Hydroelectric Power Station France,France,423,45.482,6.535,Operating Fully,Hydro,Unknown,300.0,5.91557847933,1290.0,0,0,30.0
+39820,Montahut Hydroelectric Power Station France,France,507,43.571,2.94,Operating Fully,Hydro,Unknown,99.0,6.5482880212,425.7,0,0,9.9
+39821,Saint Cassien Hydroelectric Power Station France,France,491,43.602,6.841,Operating Fully,Hydro,Unknown,21.7,5.84319411703,93.31,0,0,2.17
+39822,Vinon Hydroelectric Power Station France,France,493,43.725,5.827,Operating Fully,Hydro,Unknown,32.5,5.86472380051,139.75,0,0,3.25
+39823,Avignon  Hydroelectric Power Station France,France,486,43.976,4.817,Operating Fully,Hydro,Unknown,176.0,6.24299281519,756.8,0,0,17.6
+39824,Beaumont Hydroelectric Power Station France,France,493,43.735,5.753,Operating Fully,Hydro,Unknown,44.0,7.01835725899,189.2,0,0,4.4
+39825,Caderousse Hydroelectric Power Station France,France,478,44.096,4.724,Operating Fully,Hydro,Unknown,156.0,7.00855815873,670.8,0,0,15.6
+4000,Larderello Geothermal Power Station Italy,Italy,717,43.25,10.87,No Data in GEO,Geothermal,Unknown,562.5,0.0,2418.75,0,0,112.5
+4025,Leibstadt Nuclear Power Plant Switzerland,Switzerland,990,47.6011860714,8.18447113037,No Data in GEO,Nuclear,Unknown,1220.0,12.531693671,366000.0,24,24,244.0
+40596,Zeran CHP Coal Power Plant Poland,Poland,1098,52.295,20.993,Operating Fully,Coal,Biomass,350.0,34.9850624666,22750.0,8,8,70.0
+40597,Turow CHP Coal Power Plant Poland,Poland,1141,50.948,14.911,Operating Fully,Lignite,Unknown,2106.0,26.0494649059,136890.0,8,8,421.2
+40598,Lagisza CHP Coal Power Plant Poland,Poland,1150,50.349,19.142,Operating Fully,Coal,Unknown,840.0,34.8608205435,54600.0,8,8,168.0
+40599,Lagisza II Supercritical Coal Power Plant Poland,Poland,1150,50.3477,19.141,Operating Fully,Coal,Biomass,460.0,37.3018264751,29900.0,8,8,92.0
+40600,Laziska CHP Coal Power Plant Polan,Poland,1169,50.133,18.846,Operating Fully,Coal,Fuel Oil,1155.0,41.4021333497,75075.0,8,8,231.0
+40601,Jaworzno III CHP Coal Power Plant Poland,Poland,1160,50.207,19.203,Operating Fully,Coal,Fuel Oil,1345.0,35.7602760419,87425.0,8,8,269.0
+40602,Jaworzno II CHP Coal Power Plant Poland,Poland,1160,50.213,19.227,Operating Fully,Coal,Fuel Oil,190.0,40.6858958588,12350.0,8,8,38.0
+40603,Halemba Coal CHP Power Plant Poland,Poland,1162,50.232,18.852,Operating Fully,Coal,Unknown,200.0,37.3721698225,13000.0,8,8,40.0
+40604,Blachownia CHP Coal Power Plant Poland,Poland,1159,50.356,18.29,No Data in GEO,Coal,Unknown,165.0,35.3798024951,10725.0,8,8,33.0
+40605,Bielsko-Polnoc (EC1) CHP Coal Power Plant Poland,Poland,1166,49.873,19.029,Operating Fully,Coal,Fuel Oil,55.0,37.0101287728,3575.0,8,8,11.0
+40606,Bielsko-Biala (EC1) CHP Coal Power Plant Poland,Poland,1167,49.812,19.052,Operating Fully,Coal,Fuel Oil,77.0,37.4717331428,5005.0,8,8,15.4
+40607,Rybnik Coal Power Plant Poland,Poland,1162,50.135,18.5223,Operating Fully,Coal,Unknown,1775.0,37.1560619428,115375.0,8,8,355.0
+40608,Elcho Chorzow CHP Coal Power Plant Poland,Poland,1150,50.308,18.969,Operating Fully,Coal,Unknown,226.0,40.3211887958,14690.0,8,8,45.2
+40609,Miechowice CHP Coal Power Plant Poland,Poland,1146,50.349,18.843,Operating Fully,Coal,Waste,125.0,42.311702405,8125.0,8,8,25.0
+40610,Bedzin CHP Coal Power Plant Poland,Poland,1150,50.3025,19.1385,Operating Fully,Coal,Unknown,81.5,39.6602660886,5297.5,8,8,16.3
+40611,Adamow CHP Coal Power Plant Poland,Poland,1110,52.012,18.546,Operating Fully,Lignite,Biomass,600.0,24.6923759927,39000.0,8,8,120.0
+40612,Patnow Coal Power Plant Poland,Poland,1102,52.302,18.237,Operating Partially,Lignite,Unknown,800.0,23.6829291632,52000.0,8,8,160.0
+40613,Patnow II Coal Power Plant Poland,Poland,1102,52.302,18.237,Operating Fully,Lignite,Unknown,464.0,22.6798068751,30160.0,8,8,92.8
+40614,Konin CHP Coal Power Plant Poland,Poland,1102,52.283,18.27,Operating Fully,Lignite,Unknown,488.0,24.8946392562,31720.0,8,8,97.6
+40615,Skawina CHP Coal Power Plant Poland,Poland,1164,49.976,19.804,Operating Fully,Coal,Unknown,590.0,42.1710490373,38350.0,8,8,118.0
+40616,Krakow CHP Coal Power Plant Poland,Poland,1155,50.054,20.006,Operating Fully,Coal,Unknown,460.0,40.3508990355,29900.0,8,8,92.0
+40628,Dolna Odra CHP Coal Power Plant Poland,Poland,1097,53.207,14.465,Operating Fully,Coal,Unknown,1832.0,38.0175957114,119080.0,8,8,366.4
+40629,Belchatow Coal Power Plant Poland,Poland,1119,51.268,19.325,Operating Fully,Lignite,Unknown,4440.0,22.6095423153,288600.0,8,8,888.0
+40631,Belchatow II Coal Power Plant Poland,Poland,1119,51.268,19.325,Under Construction,Lignite,Unknown,858.0,23.0062232488,55770.0,8,8,171.6
+40653,Kozienice Coal Power Plant Poland,Poland,1107,51.666,21.464,Operating Fully,Coal,Unknown,2880.0,40.5424721518,187200.0,8,8,576.0
+40654,Ostroleka B Coal Power Plant Poland,Poland,1085,53.099,21.599,Operating Fully,Coal,Biomass,647.0,41.5619286867,42055.0,8,8,129.4
+40655,Siekierki CHP Coal Power Plant Poland,Poland,1098,52.1872,21.0889,Operating Fully,Coal,Unknown,622.0,39.3148956595,40430.0,8,8,124.4
+40656,Polaniec Coal Power Plant Poland,Poland,1134,50.437,21.337,Operating Fully,Coal,Biomass,1800.0,36.7518503185,117000.0,8,8,360.0
+40883,Scholven (Gelsenkirchen) Coal Power Plant Germany,Germany,872,51.6023991928,7.00635910034,Operating Fully,Coal,Unknown,2216.0,37.1788441935,144040.0,8,8,443.2
+40967,Turceni Coal Power Station Romania,Romania,1415,44.6698,23.4077,Operating Fully,Lignite,Fuel Oil,2310.0,22.919286578,150150.0,8,8,462.0
+40968,Rovinari Coal Power Station Romania,Romania,1414,44.9068,23.1383,Operating Fully,Lignite,Natural Gas,1320.0,25.7683516856,85800.0,8,8,264.0
+40969,Mintia-Deva Power Station Romania,Romania,1473,45.9134,22.8254,Operating Fully,Coal,Natural Gas,1285.0,35.1777794786,83525.0,8,8,257.0
+40970,Isalnita Coal Power Plant Romania,Romania,1456,44.3886,23.718,Operating Fully,Lignite,Natural Gas,630.0,21.9827193974,40950.0,8,8,126.0
+40971,Craiova II Power Station Romania,Romania,1456,44.3453,23.8156,Operating Fully,Lignite,Natural Gas,300.0,25.3052876856,19500.0,8,8,60.0
+40972,Bucharest South CHPP Power Station Romania,Romania,1419,44.4046,26.1523,Operating Fully,Fuel Oil,Natural Gas,550.0,131.485611805,30250.0,2,4,220.0
+40973,Ludus-Lernut (Mures) Power Station Romania,Romania,1442,46.4677,24.1833,Operating Fully,Natural Gas,Unknown,800.0,51.5752918355,44000.0,2,4,320.0
+40974,Galati Thermal Power Station Romania,Romania,1429,45.436,27.9814,Operating Fully,Fuel Oil,Natural Gas,535.0,110.523265822,29425.0,2,4,214.0
+40975,Iron Gate I Hydroelectric Power Station Romania,Romania,1377,44.6733,22.532,Operating Fully,Hydro,Unknown,1166.0,6.04327993862,5013.8,0,0,116.6
+40976,Iron Gate II Hydroelectric Power Station Romania,Romania,1446,44.3074,22.5672,Operating Fully,Hydro,Unknown,320.0,5.92093539558,1376.0,0,0,32.0
+40977,Lotru-Ciunget Hydroelectric Power Plant Romania,Romania,1453,45.4472,23.7683,No Data in GEO,Hydro,Unknown,510.0,5.89671941767,2193.0,0,0,51.0
+40978,Bicaz-Stejaru Hydroelectric Power Station Romania,Romania,1489,46.9386,26.1029,Operating Fully,Hydro,Unknown,210.0,6.10754375716,903.0,0,0,21.0
+40979,Bradisor Hydroelectric Power Station Romania,Romania,1468,45.3549,24.1053,Operating Fully,Hydro,Unknown,115.0,6.41004041667,494.5,0,0,11.5
+40980,Vidraru Hydroelectric Power Station Romania,Romania,1468,45.3667,24.6307,Operating Fully,Hydro,Unknown,220.0,6.06817505402,946.0,0,0,22.0
+40981,Sugag (Tau) Hydroelectric Power Station Romania,Romania,1452,45.6892,23.6094,Operating Fully,Hydro,Unknown,150.0,6.53542005417,645.0,0,0,15.0
+40982,Tismana (Motru) Hydroelectric Power Station Romania,Romania,1414,45.0444,22.9472,Operating Fully,Hydro,Unknown,106.0,5.99901511965,455.8,0,0,10.6
+40983,Raul Mare (Retezat) Hydroelectric Power Station Romania,Romania,1449,45.3391,22.7213,Operating Fully,Hydro,Unknown,335.0,6.54019577497,1440.5,0,0,33.5
+40984,Ruieni Hydroelectric Power Station Romania,Romania,1449,45.426,22.4757,Operating Fully,Hydro,Unknown,140.0,6.42747428659,602.0,0,0,14.0
+40985,Galceag (Oasa) Hydroelectric Power Station Romania,Romania,1453,45.5879,23.6279,Operating Fully,Hydro,Unknown,150.0,5.96370941208,645.0,0,0,15.0
+40986,Dragan (Remeti) Hydroelectric Power Station Romania,Romania,1438,46.7889,22.7156,Operating Fully,Hydro,Unknown,146.0,5.95490542259,627.8,0,0,14.6
+40987,Mariselu Hydroelectric Power Station Romania,Romania,1438,46.6679,23.059,Operating Fully,Hydro,Unknown,221.0,6.54551239753,950.3,0,0,22.1
+40988,Paroseni CHPP Power Station Romania,Romania,1453,45.3647,23.261,Operating Fully,Coal,Unknown,300.0,36.1986023379,19500.0,8,8,60.0
+4103,Lucciana Thermal Power Plant France,France,1253,42.5273414833,9.44987297058,No Data in GEO,Fuel Oil,Unknown,131.0,125.60636478,7205.0,2,4,52.4
+41124,Trbovlje (TES) Coal Power Plant Slovenia,Slovenia,1221,46.1258,15.06114,Operating Fully,Lignite,Natural Gas,125.0,24.7931496939,8125.0,8,8,25.0
+41125,Sostanj (TES) Coal Power Plant Slovenia,Slovenia,1221,46.3723,15.0534,Operating Fully,Lignite,Natural Gas,695.0,23.5449090102,45175.0,8,8,139.0
+41126,Ljubljana (TE-TOL) Coal CHPP Slovenia,Slovenia,1223,46.058,14.5451,Operating Fully,Coal,Unknown,124.0,39.8802772833,8060.0,8,8,24.8
+41127,Brestanica (TEB) Gas Power Plant Slovenia,Slovenia,1224,45.9975,15.4796,Operating Fully,Natural Gas,Fuel Oil,323.0,53.5561756098,17765.0,2,4,129.2
+41134,CET Bucuresti West CHPP Romania,Romania,1419,44.4233,25.979,Operating Fully,Fuel Oil,Natural Gas,250.0,117.27652186,13750.0,2,4,100.0
+41135,Bucharest Grozavesti CHPP Power Station Romania,Romania,1419,44.4404,26.06333,Operating Fully,Fuel Oil,Natural Gas,100.0,115.886715404,5500.0,2,4,40.0
+41136,CET Bucharest-Progresu CHPP Power Plant Romania,Romania,1419,44.372,26.1073,Operating Fully,Natural Gas,Fuel Oil,200.0,51.3955003681,11000.0,2,4,80.0
+41137,CET Constanta CHPP Power Plant Romania,Romania,1423,44.1585,28.607,Operating Fully,Fuel Oil,Natural Gas,100.0,132.742469123,5500.0,2,4,40.0
+41141,CET Bacau CHPP Romania,Romania,1430,46.531,26.938,Operating Fully,Lignite,Natural Gas,74.25,25.9352154249,4826.25,8,8,14.85
+41142,CET Brasov CHPP Romania,Romania,1431,45.6623,25.646,Operating Fully,Lignite,Fuel Oil,100.0,21.7869729363,6500.0,8,8,20.0
+41143,CET Govora Coal CHPP Romania,Romania,1468,45.04,24.29,Operating Fully,Lignite,Natural Gas,200.0,22.3581515047,13000.0,8,8,40.0
+41144,Romag-Termo CHPP Romania,Romania,1447,44.6754,22.6883,Operating Fully,Lignite,Fuel Oil,225.0,21.9804537745,14625.0,8,8,45.0
+41145,Brazi (Dalkia Termo Prahova) Thermal CHPP Power Plant Romania,Romania,1462,44.8833,26.00888,Operating Partially,Fuel Oil,Natural Gas,610.0,129.614832735,33550.0,2,4,244.0
+4192,"Martigues Combustion Oil Power Plant, France",France,508,43.3575750661,5.02049446106,No Data in GEO,Fuel Oil,Unknown,750.0,128.101354413,41250.0,2,4,300.0
+41947,Amercoeur CCGT Power Plant Belgium,Belgium,555,50.4304,4.3955,Operating Fully,Natural Gas,Unknown,420.0,51.181190819,23100.0,2,4,168.0
+41948,Saint-Ghislain CCGT Power Plant Belgium,Belgium,226,50.4719,3.8248,Operating Fully,Natural Gas,Fuel Oil,350.0,54.2348531521,19250.0,2,4,140.0
+41949,Ringvaart CCGT Power Plant Belgium,Belgium,539,51.1049,3.7257,Operating Fully,Natural Gas,Fuel Oil,359.0,54.6477757662,19745.0,2,4,143.6
+41950,Brugge-Herdersbrug CCGT Power Plant Belgium,Belgium,536,51.2629,3.2112,Operating Fully,Natural Gas,Fuel Oil,460.0,59.9458089997,25300.0,2,4,184.0
+41951,COO I and II Pumped Storage Hydroelectric Power Project Belgium,Belgium,551,50.3849,5.8618,Operating Fully,Hydro,Unknown,1164.0,6.64230148227,5005.2,0,0,116.4
+41953,Drogenbos CCGT Power Plant Belgium,Belgium,546,50.8023,4.299,Operating Fully,Natural Gas,Unknown,538.0,55.4783820669,29590.0,2,4,215.2
+41954,Awirs 4 and 5 thermal Power Plant Belgium,Belgium,548,50.5851,5.418,Operating Fully,Natural Gas,Biomass,389.0,58.4334796052,21395.0,2,4,155.6
+41956,Rodenhuize Thermal Power Plant Belgium,Belgium,539,51.1337,3.7759,Operating Partially,Coal,Unknown,438.0,40.501316103,28470.0,8,8,87.6
+41965,Langerlo Thermal Power Plant Belgium,Belgium,544,50.9405,5.4906,No Data in GEO,Coal,Natural Gas,556.0,37.7388198506,36140.0,8,8,111.2
+41966,Kallo Thermal Power Plant Belgium,Belgium,535,51.2577,4.2941,Operating Fully,Natural Gas,Unknown,261.0,57.3387178286,14355.0,2,4,104.4
+41967,Seraing CCGT Power Plant Belgium,Belgium,548,50.603,5.4917,Operating Fully,Natural Gas,Unknown,460.0,55.2603868665,25300.0,2,4,184.0
+41968,ExxonMobil Antwerp Refinery CHP Power Plant Belgium,Belgium,535,51.2565,4.3383,Operating Fully,Natural Gas,Unknown,130.0,51.6060995289,7150.0,2,4,52.0
+41969,Vilvoorde (Verbrande-Brug) CCGT Power Plant Belgium,Belgium,541,50.9414,4.4246,Operating Fully,Natural Gas,Unknown,385.0,59.1772205922,21175.0,2,4,154.0
+41970,Marcinelle Energie (Carsid) CCGT Power Plant Belgium,Belgium,555,50.4138,4.4067,Operating Fully,Natural Gas,Unknown,410.0,58.9528344777,22550.0,2,4,164.0
+41971,Plate Taille Hydroelectric Pumped Storage Project Belgeium,Belgium,230,50.1884,4.3861,Operating Fully,Hydro,Unknown,144.0,5.91048907063,619.2,0,0,14.4
+41973,Knippegroen CCGT Power Plant Belgium,Belgium,539,51.1587,3.8068,Operating Fully,Unknown,Unknown,350.0,142.388758999,22750.0,8,8,140.0
+41974,Ruien Thermal Power Plant Belgium,Belgium,545,50.7836,3.4904,Operating Fully,Coal,Natural Gas,889.0,35.5218048364,57785.0,8,8,177.8
+41975,Ham (Ghent) OCGT and Heat Power Plant Belgium,Belgium,539,51.0596,3.7364,Operating Fully,Natural Gas,Unknown,156.0,51.6128650658,8580.0,2,4,62.4
+41976,Angleur Gas Power Plant Belgium,Belgium,548,50.6177,5.5837,Operating Fully,Natural Gas,Unknown,238.0,51.0074304381,13090.0,2,4,95.2
+41985,Buggenum (Willem-Alexander) IGCC Power Plant Netherlands,Netherlands,628,51.2203,5.9725,Operating Fully,Natural Gas,Biomass,253.0,51.5802479292,13915.0,2,4,101.2
+41986,Delesto-2 CCGT Power Plant Netherlands,Netherlands,608,53.3185,6.9544,Operating Fully,Natural Gas,Unknown,360.0,52.4639583357,19800.0,2,4,144.0
+41998,Mol Coal Power Plant Belgium (Shutdown),Belgium,538,51.2234,5.099,Decommissioned,Coal,Unknown,255.0,36.9062481306,16575.0,8,8,51.0
+42000,Floriffoux Hydroelectric Power Plant Belgium,Belgium,555,50.4468,4.7767,Operating Fully,Hydro,Unknown,0.8,6.43974866243,3.44,0,0,0.08
+42001,Grand-Malades Hydroelectric Power Plant Belgium,Belgium,552,50.4665,4.8992,Operating Fully,Hydro,Unknown,5.0,6.9283729456,21.5,0,0,0.5
+42002,Andenne-Seilles Hydroelectric Power Plant Belgium,Belgium,552,50.4928,5.07,Operating Fully,Hydro,Unknown,9.0,6.48709354978,38.7,0,0,0.9
+42003,Ampsin Neuville Hydroelectric Power Plant Belgium,Belgium,548,50.5335,5.2962,Operating Fully,Hydro,Unknown,9.9,6.41655933623,42.57,0,0,0.99
+42005,Monsin Hydroelectric Power Plant Belgium,Belgium,548,50.6517,5.6308,Operating Fully,Hydro,Unknown,19.7,6.68232438693,84.71,0,0,1.97
+42006,Ivoz-Ramet,Belgium,548,50.5922,5.4613,No Data in GEO,Hydro,Unknown,10.0,6.35973418187,43.0,0,0,1.0
+42007,Lixhe Hydroelectric Power Plant Belgium,Belgium,544,50.7517,5.6863,Operating Fully,Hydro,Unknown,20.0,6.79653813955,86.0,0,0,2.0
+42009,Beverce (Robertville) Hydroelectric Power Project Belgium,Belgium,992,50.4387,6.0386,Operating Fully,Hydro,Unknown,9.2,6.42573956442,39.56,0,0,0.92
+42010,Hydro de la Vierre,Belgium,240,49.733,5.377,Operating Fully,Hydro,Unknown,1.9,6.03016078885,8.17,0,0,0.19
+42011,Heid-de-Goreux Hydroelectric Power Plant Belgium,Belgium,551,50.426,5.7328,Operating Fully,Hydro,Unknown,8.1,7.01507380677,34.83,0,0,0.81
+42012,Butgenbach Hydroelectric Power plant Belgium,Belgium,992,50.4359,6.2106,Operating Fully,Hydro,Unknown,1.8,6.3859010598,7.74,0,0,0.18
+42172,Chaira Pumped Storage Hydroelectric Power Plant Bulgaria,Bulgaria,1342,42.1589,23.870845,Operating Fully,Hydro,Unknown,864.0,6.97213546935,3715.2,0,0,86.4
+42173,Belmeken Pumped Storage Hydroelectric Power Plant Bulgaria,Bulgaria,1321,42.1995,23.858,Operating Fully,Hydro,Unknown,375.0,6.57547730267,1612.5,0,0,37.5
+42174,Sestrimo Hydroelectric Power Plant Bulgaria,Bulgaria,1286,42.1913161,24.3321331,Operating Fully,Hydro,Unknown,240.0,6.65319806551,1032.0,0,0,24.0
+42176,Momina Klisura Hydroelectric Power Station Bulgaria,Bulgaria,1321,42.2319,23.9494,Operating Fully,Hydro,Unknown,120.0,5.9746041256,516.0,0,0,12.0
+42177,Maritsa Iztok-1 Coal Power Plant Bulgaria,Bulgaria,1328,42.1573,25.9084,Operating Fully,Lignite,Unknown,670.0,24.6152132231,43550.0,8,8,134.0
+42178,Maritsa Iztok-2 Coal Power Plant Bulgaria,Bulgaria,1290,42.255,26.135,Operating Fully,Lignite,Unknown,1450.0,23.9799412599,94250.0,8,8,290.0
+42179,Maritsa Iztok-3 Coal Power Plant Bulgaria,Bulgaria,1328,42.1444,26.0033,Operating Fully,Lignite,Unknown,840.0,22.8021310461,54600.0,8,8,168.0
+42180,Bobov Dol Coal Power Plant Bulgaria,Bulgaria,1285,42.285556,23.032778,Operating Fully,Coal,Unknown,630.0,39.88227332,40950.0,8,8,126.0
+42181,Maritsa 3 Coal Power Plant Bulgaria,Bulgaria,1329,42.0524,25.62377,Operating Fully,Coal,Fuel Oil,120.0,37.7887884893,7800.0,8,8,24.0
+42183,Varna Coal Power Plant Bulgaria,Bulgaria,1299,43.196,27.7644,Operating Fully,Coal,Unknown,1260.0,34.9734601063,81900.0,8,8,252.0
+42185,Batak Hydroelectric Power Plant Bulgaria,Bulgaria,1342,41.922589,24.1694,Operating Fully,Hydro,Unknown,46.8,6.69537775169,201.24,0,0,4.68
+42186,Orfeus Pumped Storage Hydroelectric Power Plant Bulgeria,Bulgaria,1324,41.9404,24.4471,Operating Fully,Hydro,Unknown,160.0,6.11779692194,688.0,0,0,16.0
+42187,Krichim Hydroelectric Power Plant Bulgaria,Bulgaria,1286,41.99178,24.468033,Operating Fully,Hydro,Unknown,80.0,6.19775933236,344.0,0,0,8.0
+42188,Teshel Hydroelectric Power Plant Bulgaria,Bulgaria,1324,41.6428,24.153,Operating Fully,Hydro,Unknown,60.0,5.96308009658,258.0,0,0,6.0
+42189,Devin Hydroelectric Power Plant Bulgaria,Bulgaria,1324,41.7201,24.425,Operating Fully,Hydro,Unknown,80.0,6.24011428415,344.0,0,0,8.0
+42190,Peshtera Hydroelectric Power Plant Bulgaria,Bulgaria,1286,42.0135,24.2579,Operating Fully,Hydro,Unknown,128.0,6.19878910637,550.4,0,0,12.8
+42191,Aleko Hydroelectric Power Plant Bulgaria,Bulgaria,1286,42.1194,24.289,Operating Fully,Hydro,Unknown,66.0,5.94810469919,283.8,0,0,6.6
+42192,Kardzhali Hydroelectric Power Plant Bulgaria,Bulgaria,1326,41.6334,25.34,Operating Fully,Hydro,Unknown,106.0,6.84320706395,455.8,0,0,10.6
+42193,Studen Kladenets Hydroelectric Power Plant Bulgaria,Bulgaria,1341,41.6195,25.6415,Operating Fully,Hydro,Unknown,82.0,5.8337218411,352.6,0,0,8.2
+42194,Ivaylovgrad Hydroelectric Power Plant Bulgaria,Bulgaria,1341,41.5837,26.1074,Operating Fully,Hydro,Unknown,104.0,6.12549649275,447.2,0,0,10.4
+42195,Prunerov I and II CHP Coal Power Plant Czeech,Czech Republic,1047,50.418,13.259,Operating Fully,Lignite,Unknown,1490.0,23.0339732985,96850.0,8,8,298.0
+42196,Chvaletice Coal Power Plant Czech,Czech Republic,1055,50.0275,15.4533,Operating Fully,Lignite,Unknown,800.0,25.3969318861,52000.0,8,8,160.0
+42197,Pocerady Coal Power Plant Czech,Czech Republic,1044,50.4268,13.6788,Operating Fully,Lignite,Unknown,1000.0,25.0981728444,65000.0,8,8,200.0
+42198,Detmarovice Coal Power Plant Czech,Czech Republic,1168,49.9058,18.4681,Operating Fully,Coal,Natural Gas,800.0,35.9549182128,52000.0,8,8,160.0
+42199,Tusimice Coal Power Plant Czech,Czech Republic,1047,50.38247,13.340213,Operating Fully,Lignite,Unknown,800.0,23.9073604382,52000.0,8,8,160.0
+42200,Melnik II and III Coal Power Plants Czech,Czech Republic,1041,50.4119,14.4188,Operating Fully,Lignite,Unknown,720.0,21.8647792233,46800.0,8,8,144.0
+42201,Melnik I Coal Power Plants Czech,Czech Republic,1041,50.4146,14.4138,Operating Fully,Lignite,Unknown,352.0,24.4137015938,22880.0,8,8,70.4
+42202,Ledvice Coal Power Plant Czech,Czech Republic,1044,50.5766,13.7794,Operating Fully,Lignite,Unknown,330.0,22.1732948224,21450.0,8,8,66.0
+42203,Opatovice CHP Coal Power Plant Czech,Czech Republic,1043,50.1264,15.7922,Operating Fully,Lignite,Unknown,363.0,23.136691927,23595.0,8,8,72.6
+42204,Komorany CHP Cioal Power Plant Czech,Czech Republic,1044,50.522,13.5718,Operating Fully,Lignite,Unknown,237.0,25.9931201582,15405.0,8,8,47.4
+42205,Tisova CHP Coal Power Plant Czech,Czech Republic,1059,50.1496,12.6108,Operating Fully,Lignite,Unknown,295.8,24.1442010402,19227.0,8,8,59.16
+42206,Petrom Brazi CCGT Power Plant Romania,Romania,1462,44.8802,25.9988,Under Construction,Natural Gas,Unknown,860.0,58.5519135405,47300.0,2,4,344.0
+42240,Montezic Pump Storage Hydroelectric Power Station France,France,466,44.734,2.641,Operating Fully,Hydro,Unknown,910.0,6.11598496159,3913.0,0,0,91.0
+42323,Kladno CHP Thermal Power Plant Czech,Czech Republic,1057,50.15318,14.12898,Operating Fully,Unknown,Unknown,388.0,117.085388553,25220.0,8,8,155.2
+42324,Porici Coal Power Plant Czech,Czech Republic,1156,50.5727,15.9634,Operating Fully,Lignite,Coal,165.0,25.8893907928,10725.0,8,8,33.0
+42325,Hodonin Coal CHP Power Plant Czech,Czech Republic,1212,48.8474,17.1197,Operating Fully,Lignite,Unknown,95.0,24.102411069,6175.0,8,8,19.0
+42326,Vresova CCGT Power Plant Czech Republic,Czech Republic,1050,50.25764,12.6932,No Data in GEO,Coal,Natural Gas,370.0,38.9875470016,24050.0,8,8,74.0
+42358,Lipno Hydroelectric Power Plant Czech Republic,Czech Republic,1073,48.6333,14.2375,Operating Fully,Hydro,Unknown,120.0,6.5733380209,516.0,0,0,12.0
+42359,Slapy Hydroelectric Power Plant Czech Republic,Czech Republic,1058,49.82354,14.434501,Operating Fully,Hydro,Unknown,144.0,5.9121226458,619.2,0,0,14.4
+42360,Stechovice-I Hydroelectric Power Plant Czech Republic,Czech Republic,1058,49.84625,14.42176,Operating Fully,Hydro,Unknown,22.5,6.92220150033,96.75,0,0,2.25
+42361,Stechovice-II PS Hydroelectric Power Plant Czech Republic,Czech Republic,1058,49.8455,14.42067,Operating Fully,Hydro,Unknown,45.0,5.95077845181,193.5,0,0,4.5
+42362,Orlik Hydroelectric Power Plant Czech Republic,Czech Republic,1066,49.6064,14.1812,No Data in GEO,Hydro,Unknown,364.0,6.35807421547,1565.2,0,0,36.4
+42363,Dalesice Pumped Storage Hydroelectric Power Plant Czech Republic,Czech Republic,1071,49.125,16.1224,Operating Fully,Hydro,Unknown,450.0,7.02469113782,1935.0,0,0,45.0
+42364,Dlouhe Strane Pumped Storage Hydroelectric Power Plant Czech Republic,Czech Republic,1042,50.08259,17.180557,Operating Fully,Hydro,Unknown,650.0,6.983341055,2795.0,0,0,65.0
+42365,Kamyk Hydroelectric Power Plant Czech Republic,Czech Republic,1066,49.633,14.2468,Operating Fully,Hydro,Unknown,40.0,6.33134983144,172.0,0,0,4.0
+42366,Vrane Hydroelectric Power Plant Czech Republic,Czech Republic,1057,49.9381,14.3749,Operating Fully,Hydro,Unknown,13.88,6.62300626363,59.684,0,0,1.388
+42367,Strekov Hydroelectric Power Plant Czech Republic,Czech Republic,1041,50.6386,14.0478,Operating Fully,Hydro,Unknown,19.5,6.59509396933,83.85,0,0,1.95
+42462,Opole Coal Power Plant Poland,Poland,1149,50.751,17.8825,Operating Fully,Coal,Unknown,1532.0,37.3167644802,99580.0,8,8,306.4
+42463,Tauron Siersza Power Plant Poland,Poland,1160,50.2086,19.4609,Operating Fully,Coal,Unknown,676.0,41.5129548564,43940.0,8,8,135.2
+42464,Tauron Stalowa Wola Coal Power Plant Poland,Poland,1128,50.5525,22.081111,Operating Fully,Coal,Unknown,250.0,36.7134595734,16250.0,8,8,50.0
+42465,Roznow Hydroelectric Power Plant Poland,Poland,1158,49.7614,20.6631,Operating Fully,Hydro,Unknown,50.0,6.87980252886,215.0,0,0,5.0
+42466,Porabka-Zar Pumped Storage Power Plant Poland,Poland,1167,49.7809,19.21148,Operating Fully,Hydro,Unknown,500.0,6.8907300102,2150.0,0,0,50.0
+42467,Czchow Hydroelectric Power Plant Poland,Poland,1158,49.81,20.680556,Operating Fully,Hydro,Unknown,8.0,6.07171863585,34.4,0,0,0.8
+42468,Dychow Pumped Storage Hydroelectric Power Plant Poland,Poland,813,51.9883,15.053333,Operating Fully,Hydro,Unknown,90.0,6.7999829689,387.0,0,0,9.0
+42469,Wloclawek Hydroelectric Power Plant Poland,Poland,1090,52.6564,19.1339,Operating Fully,Hydro,Unknown,160.2,5.91397402329,688.86,0,0,16.02
+42470,Zydowo Pumped Storage Hydroelectric Power Plant Poland,Poland,1082,54.024965,16.7069,Operating Fully,Hydro,Unknown,151.0,6.75338613856,649.3,0,0,15.1
+42471,Debe Hydroelectric Power Plant Poland,Poland,1091,52.4883,20.9236,Operating Fully,Hydro,Unknown,20.0,6.89341849927,86.0,0,0,2.0
+42472,Porabka Hydroelectric Power Plant Poland,Poland,1167,49.8073,19.202,Operating Fully,Hydro,Unknown,12.6,7.02051857371,54.18,0,0,1.26
+42473,Myczkowce Hydroelectric Power Plant Poland,Poland,1244,49.4311,22.4084,Operating Fully,Hydro,Unknown,8.2,6.83590207714,35.26,0,0,0.82
+42474,Solina Pumped Storage Hydroelectric Power Plant Poland,Poland,1244,49.3956,22.454,Operating Fully,Hydro,Unknown,200.0,6.06190127349,860.0,0,0,20.0
+42475,Tresna Hydroelectric Power Plant Poland,Poland,1167,49.7473,19.2075,Operating Fully,Hydro,Unknown,21.0,5.80906641293,90.3,0,0,2.1
+42476,Niedzica Pumped Storage Power Plant Poland,Poland,1198,49.4192,20.3228,Operating Fully,Hydro,Unknown,92.8,6.42074407926,399.04,0,0,9.28
+42477,Zur Hydroelectric Power Plant Poland,Poland,1084,53.5613,18.354,Operating Fully,Hydro,Unknown,8.0,6.03645482362,34.4,0,0,0.8
+42478,Grodek Hydroelectric Power Plant Poland,Poland,1084,53.4999,18.3736,Operating Fully,Hydro,Unknown,3.5,6.74506872557,15.05,0,0,0.35
+42479,Koronowo Hydroelectric Power Plant Poland,Poland,1089,53.2753,17.9527,Operating Fully,Hydro,Unknown,26.0,5.99596487452,111.8,0,0,2.6
+42480,Bielkowo Hydroelectric Power Plant Poland,Poland,1079,54.2696,18.51,Operating Fully,Hydro,Unknown,7.2,6.57278631163,30.96,0,0,0.72
+42481,Brzeg Dolny (Waly Slaskie) Hydroelectric Power Plant Poland,Poland,1130,51.2605,16.7656,Operating Fully,Hydro,Unknown,9.8,6.73380262885,42.14,0,0,0.98
+42482,Pilchowice Hydroelectric Power Plant Poland,Poland,1148,50.964,15.645,Operating Fully,Hydro,Unknown,7.5,6.10644809462,32.25,0,0,0.75
+42483,Zarnowiec Pumped Storage Hydroelectric Power Plant Poland,Poland,1074,54.7225,18.0825,Operating Fully,Hydro,Unknown,716.0,6.50053891041,3078.8,0,0,71.6
+42484,Kielce CHP Power Plant Poland,Poland,1127,50.896,20.613,Operating Fully,Coal,Biomass,10.5,38.2274219266,682.5,8,8,2.1
+42486,Zielona Gora CCGT Power Plant Poland,Poland,1125,51.9513,15.488,Operating Fully,Natural Gas,Unknown,198.0,52.0893853399,10890.0,2,4,79.2
+42487,Wroclaw CHP Power Plant Poland,Poland,1130,51.1236,17.0244,Operating Fully,Coal,Unknown,263.0,36.1717021715,17095.0,8,8,52.6
+42488,Wybrzeze (Gdansk/Gdynia) CHP Power Plant Poland,Poland,1078,54.3778,18.6405,Operating Fully,Coal,Unknown,322.5,39.4634231821,20962.5,8,8,64.5
+42494,Dalkia Poznan Karolin CHP Power Plant Poland,Poland,1103,52.4363,16.9879,Operating Fully,Coal,Unknown,275.0,38.2104969653,17875.0,8,8,55.0
+42495,Dalkia Lodz EC-2 CHP Power Plant Poland,Poland,1112,51.7419,19.4493,Operating Fully,Coal,Unknown,87.0,39.3242853684,5655.0,8,8,17.4
+42496,Dalkia Lodz EC-3 CHP Power Plant Poland,Poland,1112,51.7983,19.4214,Operating Fully,Coal,Unknown,205.85,40.4464722702,13380.25,8,8,41.17
+42497,Dalkia Lodz EC-4 CHP Power Plant Poland,Poland,1112,51.7463,19.5401,Operating Fully,Coal,Unknown,210.0,36.8264149765,13650.0,8,8,42.0
+42498,Bydgoszcz EC-II CHP Power Plant Poland,Poland,1089,53.099,18.0882,Operating Fully,Coal,Unknown,227.0,39.2252401687,14755.0,8,8,45.4
+42499,Gorzow CHP Power Plant Poland,Poland,1104,52.7496,15.2687,Operating Fully,Natural Gas,Coal,97.5,51.2611474309,5362.5,2,4,39.0
+42632,Vojany Thermal Power Plant Slovakia,Slovakia,1170,48.5536,21.97817,Operating Fully,Coal,Natural Gas,880.0,42.1206626605,57200.0,8,8,176.0
+42634,Novaky (ENO) Thermal CHP Power Plant Slovakia,Slovakia,1211,48.69884,18.53346,Operating Fully,Lignite,Fuel Oil,518.0,22.2823998102,33670.0,8,8,103.6
+42635,Cierny Vah Pumped Storage Hydroelectric Power Plant Slovakia,Slovakia,1199,49.00879,19.912224,Operating Fully,Hydro,Unknown,735.0,6.52251776233,3160.5,0,0,73.5
+42636,Liptovska Mara Pumped Storage Hydroelectric Power Plant Slovakia,Slovakia,1199,49.09861,19.488889,Operating Fully,Hydro,Unknown,198.0,6.68613622255,851.4,0,0,19.8
+42637,Gabcikovo Hydroelectric Power Plant Slovakia,Slovakia,1218,47.88,17.5384,Operating Fully,Hydro,Unknown,720.0,6.64900007112,3096.0,0,0,72.0
+42638,Malzenice CCGT Power Plant Slovakia,Slovakia,1215,48.4296,17.6978,Operating Fully,Natural Gas,Unknown,430.0,58.3607459186,23650.0,2,4,172.0
+42639,Levice CCGT CHP Power Plant Slovakia,Slovakia,1214,48.2022,18.597,Operating Fully,Natural Gas,Unknown,80.0,50.2984044179,4400.0,2,4,32.0
+42640,PPC Bratislava CCGT CHP Power Plant Slovakia,Slovakia,1217,48.1775,17.1548,Operating Fully,Natural Gas,Unknown,218.0,55.3510949329,11990.0,2,4,87.2
+42641,Cunovo Hydroelectric Power Plant Slovakia,Slovakia,1217,48.02987,17.2254,Operating Fully,Hydro,Unknown,24.0,5.77189751061,103.2,0,0,2.4
+42642,Nosice Hydroelectric Power Plant Slovakia,Slovakia,1206,49.127459,18.364248,Operating Fully,Hydro,Unknown,67.5,6.52663390498,290.25,0,0,6.75
+42643,Miskova Hydroelectric Power Plant Slovakia,Slovakia,1201,49.1928,18.5083,Operating Fully,Hydro,Unknown,93.6,6.65075133269,402.48,0,0,9.36
+42644,Povazska Bystrica Hydroelectric Power Plant Slovakia,Slovakia,1201,49.133149,18.45377,Operating Fully,Hydro,Unknown,55.2,6.18748663217,237.36,0,0,5.52
+42645,Lipovec Hydroelectric Power Plant Slovakia,Slovakia,1203,49.132,18.9114,Operating Fully,Hydro,Unknown,38.4,6.56500546435,165.12,0,0,3.84
+42646,Ruzin Pumped Storage Hydroelectric Power plant Slovakia,Slovakia,1172,48.8616,21.0911,Operating Fully,Hydro,Unknown,60.0,6.02737459559,258.0,0,0,6.0
+42647,Sucany Hydroelectric Power Plant Slovakia,Slovakia,1202,49.1072,18.9916,Operating Fully,Hydro,Unknown,38.4,6.87629903048,165.12,0,0,3.84
+42648,Kreplany Hydroelectric Power Plant Slovakia,Slovakia,1202,49.1281,19.0941,Operating Fully,Hydro,Unknown,24.75,5.91939632812,106.425,0,0,2.475
+42649,Hricov Hydroelectric Power Plant Slovakia,Slovakia,1201,49.2594,18.6815,Operating Fully,Hydro,Unknown,31.5,6.18192640785,135.45,0,0,3.15
+42650,Madunice Hydroelectric Power Plant Slovakia,Slovakia,1215,48.4884,17.7938,Operating Fully,Hydro,Unknown,43.2,6.03598792682,185.76,0,0,4.32
+42651,Kralova Hydroelectric Power Plant Slovakia,Slovakia,1176,48.1912,19.8296,Operating Fully,Hydro,Unknown,45.06,6.75156320125,193.758,0,0,4.506
+42652,Orava Hydroelectric Power Plant Slovakia,Slovakia,1199,49.3756,19.557,Operating Fully,Hydro,Unknown,21.75,6.7606631443,93.525,0,0,2.175
+42653,Trencin Hydroelectric Power Plant Slovakia,Slovakia,1206,48.9022,18.056,Operating Fully,Hydro,Unknown,16.5,6.5102462471,70.95,0,0,1.65
+42654,Kostolna Hydroelectric Power Plant Slovakia,Slovakia,1208,48.861,17.9689,Operating Fully,Hydro,Unknown,25.5,6.42026691919,109.65,0,0,2.55
+42655,Nove Mesto n.V. Hydroelectric Power Plant Slovakia,Slovakia,1208,48.7725,17.8516,Operating Fully,Hydro,Unknown,25.5,6.3696778217,109.65,0,0,2.55
+42656,Horna Streda Hydroelectric Power Plant Slovakia,Slovakia,1208,48.6605,17.855,Operating Fully,Hydro,Unknown,25.5,5.93855969398,109.65,0,0,2.55
+42660,Ladce Hydroelectric Power Plant Slovakia,Slovakia,1206,49.0499,18.2978,Operating Fully,Hydro,Unknown,18.9,5.95105030305,81.27,0,0,1.89
+42661,Ilava Hydroelectric Power Plant Slovakia,Slovakia,1206,49.0057,18.235,Operating Fully,Hydro,Unknown,15.0,5.97571807075,64.5,0,0,1.5
+42662,Dubnica nad Vahom Hydroelectric Power Plant Slovakia,Slovakia,1206,48.9638,18.1454,Operating Fully,Hydro,Unknown,16.5,6.83153464936,70.95,0,0,1.65
+42664,Lorenci OCGT Power Plant Hungary,Hungary,1181,47.71644,19.67779,Operating Fully,Natural Gas,Fuel Oil,170.0,57.3874712611,9350.0,2,4,68.0
+42665,Sajoszoged OCGT Power Plant Hungary,Hungary,1175,47.9393,20.97,Operating Fully,Natural Gas,Unknown,120.0,52.3096022895,6600.0,2,4,48.0
+42666,Liter OCGT Power Plant Hungary,Hungary,1187,47.1075,18.0143,Operating Fully,Natural Gas,Fuel Oil,120.0,50.462551318,6600.0,2,4,48.0
+42667,Csepel CCGT Power Plant Hungary,Hungary,1188,47.428,19.0525,Operating Fully,Natural Gas,Fuel Oil,403.0,58.3463526222,22165.0,2,4,161.2
+42668,Matra Coal Power Plant Hungary,Hungary,1180,47.79027,20.06358,Operating Fully,Lignite,Unknown,950.0,25.2178670814,61750.0,8,8,190.0
+42669,E.ON Debrecen OCGT CHP Power Plant Hungary,Hungary,1186,47.5185,21.6329,Operating Fully,Natural Gas,Unknown,95.0,59.4421540856,5225.0,2,4,38.0
+42670,E.ON Gonyu CCGT Power Plant Hungary,Hungary,1183,47.7384,17.8033,Operating Fully,Natural Gas,Unknown,433.0,55.1712789168,23815.0,2,4,173.2
+42671,E.ON Nyiregyhaza OCGT CHP Power Plant Hungary,Hungary,1175,47.9569,21.6988,Operating Fully,Natural Gas,Unknown,49.0,52.1342780743,2695.0,2,4,19.6
+42672,Oroszlany CHP Coal Power Plant Hungary,Hungary,1185,47.5017,18.2701,Operating Fully,Lignite,Unknown,240.0,22.003949296,15600.0,8,8,48.0
+42673,AES Tisza II Thermal Power Plant Hungary,Hungary,1204,48.9174,21.077,Operating Fully,Natural Gas,Fuel Oil,900.0,57.8089554465,49500.0,2,4,360.0
+42674,Dunamenti II Thermal Power Plant Hungary,Hungary,1188,47.3283,18.9169,Operating Fully,Natural Gas,Fuel Oil,1290.0,52.1872729063,70950.0,2,4,516.0
+42675,Kiskore Hydroelectric Power Plant Hungary,Hungary,1180,47.49317,20.5157,Operating Fully,Hydro,Unknown,28.0,6.90162382745,120.4,0,0,2.8
+42676,Tiszalok Hydroelectric Power Plant Hungary,Hungary,1175,48.0254,21.3078,No Data in GEO,Hydro,Unknown,13.5,5.88791194246,58.05,0,0,1.35
+42677,Kesznyeten (Hernadviz) Hydroelectric Power Plant Hungary,Hungary,1175,47.966,21.033,Operating Fully,Hydro,Unknown,4.4,5.793327437,18.92,0,0,0.44
+42678,Kelenfold CCGT CHP Power Plant Hungary,Hungary,1179,47.4624,19.0563,Operating Fully,Natural Gas,Fuel Oil,196.0,60.28546357,10780.0,2,4,78.4
+42679,Ujpest CCGT CHP Power Plant Hungary,Hungary,1179,47.554,19.1023,Operating Fully,Natural Gas,Unknown,110.0,59.0064922126,6050.0,2,4,44.0
+42680,Kispest CCGT CHP Power Plant Hungary,Hungary,1179,47.4568,19.1673,Operating Fully,Natural Gas,Fuel Oil,114.0,53.9211343376,6270.0,2,4,45.6
+42681,TVK CCGT CHP Power Plant Hungary,Hungary,1175,47.9144,21.0236,Operating Fully,Natural Gas,Unknown,33.4,50.0910781591,1837.0,2,4,13.36
+42682,BC (Borsodchem) CHP Power Plant Hungary,Hungary,1174,48.2453,20.6476,Operating Fully,Natural Gas,Fuel Oil,47.0,55.5645289782,2585.0,2,4,18.8
+42683,Pannonpower (Pecs) Thermal Power Plant Hungary,Hungary,1231,46.0641,18.2634,Operating Fully,Natural Gas,Biomass,182.4,59.3835047006,10032.0,2,4,72.96
+42685,Pljevlja Coal Power Plant Montenegro,Montenegro,1346,43.3342,19.3271,Operating Fully,Coal,Unknown,218.5,36.158797596,14202.5,8,8,43.7
+42686,Piva (Mratinje) Hydroelectric Power Plant Montenegro,Montenegro,1350,43.2725,18.84221,Operating Fully,Hydro,Unknown,360.0,6.95525716221,1548.0,0,0,36.0
+42687,Perucica Hydroelectric Power Plant Montenegro,Montenegro,1347,42.6718,18.9951,Operating Fully,Hydro,Unknown,307.0,6.21211840224,1320.1,0,0,30.7
+42688,Fierza Hydroelectric Power Station Albania,Albania,1306,42.25139,20.04306,Operating Fully,Hydro,Unknown,500.0,6.31344355729,2150.0,0,0,50.0
+42689,Koman Hydroelectric Power Station Albania,Albania,1306,42.10325,19.82238,Operating Fully,Hydro,Unknown,600.0,6.98971704577,2580.0,0,0,60.0
+42690,Vau I Dejes Hydroelectric Power Plant Albania,Albania,1306,42.01368,19.63585,Operating Fully,Hydro,Unknown,250.0,6.61354684005,1075.0,0,0,25.0
+42691,Lanabregas Hydroelectric Power Station Albania,Albania,1278,41.34278,19.8964,Operating Fully,Hydro,Unknown,5.0,6.76294812615,21.5,0,0,0.5
+42692,Bistrice I Hydroelectric Power Station Albania,Albania,1513,39.91677,20.13748,Operating Fully,Hydro,Unknown,22.5,6.34262690998,96.75,0,0,2.25
+42693,Bistrice II Hydroelectric Power Station Albania,Albania,1513,39.9116,20.10467,Operating Fully,Hydro,Unknown,5.0,5.76456127249,21.5,0,0,0.5
+42694,Shkopet Hydroelectric Power Station Albania,Albania,1305,41.67962,19.83048,Operating Fully,Hydro,Unknown,24.0,6.10258606601,103.2,0,0,2.4
+42695,Ulez Hydroelectric Power Station Albania,Albania,1305,41.67962,19.89358,Operating Fully,Hydro,Unknown,25.2,6.06454551115,108.36,0,0,2.52
+42696,Fier Thermal Power Plant Albania (Shutdown),Albania,1301,40.7009,19.5507,Decommissioned,Fuel Oil,Unknown,186.0,127.589484485,10230.0,2,4,74.4
+42697,TEC Vlora CCGT Power Plant Albania,Albania,1301,40.4874,19.434,Operating Fully,Fuel Oil,Unknown,97.0,130.366085923,5335.0,2,4,38.8
+42698,Kosovo A Coal Power Plant Kosovo,Kosovo,1411,42.67675,21.0867,Operating Partially,Lignite,Unknown,800.0,21.6738695541,52000.0,8,8,160.0
+42699,Kosovo B Coal Power Plant Kosovo,Kosovo,1411,42.69374,21.05695,Operating Fully,Lignite,Unknown,678.0,23.9645374411,44070.0,8,8,135.6
+42700,Bitola Coal Power Plant Macedonia,Republic of Macedonia,1271,41.058,21.4832,Operating Fully,Lignite,Unknown,675.0,23.109504236,43875.0,8,8,135.0
+42701,Oslomej Coal Power Plant Macedonia,Republic of Macedonia,1280,41.5824,21.0006,Operating Fully,Lignite,Unknown,125.0,21.7154640017,8125.0,8,8,25.0
+42702,Negotino Thermal Power Plant Macedonia,Republic of Macedonia,1281,41.49205,22.09354,Decommissioned,Fuel Oil,Unknown,210.0,125.425307226,11550.0,2,4,84.0
+42703,Spilje Hydroelectric Power Plant Macedonia,Republic of Macedonia,1280,41.4936,20.5054,Operating Fully,Hydro,Unknown,84.0,5.91837733217,361.2,0,0,8.4
+42704,Globocica Hydroelectric Power Plant Macedonia,Republic of Macedonia,1314,41.1775,20.6788889,Operating Fully,Hydro,Unknown,42.0,6.92263813129,180.6,0,0,4.2
+42705,Kozjak Hydroelectric Power Plant Macedonia,Republic of Macedonia,1310,41.8792,21.1921,Operating Fully,Hydro,Unknown,80.0,5.7844735573,344.0,0,0,8.0
+42706,Tikves Hydroelectric Power Plant Macedonia,Republic of Macedonia,1281,41.4035,21.9373,Operating Fully,Hydro,Unknown,116.0,5.94896223478,498.8,0,0,11.6
+42707,Vrben Hydroelectric Power Plant Macedonia,Republic of Macedonia,1311,41.7166,20.7219,Operating Fully,Hydro,Unknown,12.8,6.96809740667,55.04,0,0,1.28
+42708,Vrutok Hydroelectric Power Plant Macedonia,Republic of Macedonia,1311,41.7707,20.8377,Operating Fully,Hydro,Unknown,150.0,6.13666055759,645.0,0,0,15.0
+42709,Raven Hydroelectric Power Plant Macedonia,Republic of Macedonia,1311,41.7791,20.8563,Operating Fully,Hydro,Unknown,19.2,6.31084242592,82.56,0,0,1.92
+42710,ENEL Sulcis (Grazia Deledda) Coal Power Plant Italy,Italy,1253,39.1961,8.4002,Operating Fully,Coal,Fuel Oil,585.0,36.2442960912,38025.0,8,8,117.0
+42712,A2A Monfalcone Coal Power Plant Italy,Italy,638,45.7979,13.5455,Operating Fully,Coal,Fuel Oil,336.0,36.4306734948,21840.0,8,8,67.2
+42713,TirrenoPower Vado Ligure Coal Power Plant Italy,Italy,704,44.2755,8.4305,Operating Fully,Coal,Unknown,660.0,38.3100594923,42900.0,8,8,132.0
+42714,TirrenoPower Vado Ligure CCGT Power Plant Italy,Italy,704,44.2755,8.4305,Operating Fully,Natural Gas,Unknown,800.0,58.8323498126,44000.0,2,4,320.0
+42715,E.ON Fiume Santo Coal Power Plant Italy,Italy,1253,40.8461,8.3068,Operating Fully,Coal,Fuel Oil,1040.0,40.288001214,67600.0,8,8,208.0
+42762,Aghios Dimitrios Coal Power Plant Greece,Greece,1313,40.3933,21.9249,Operating Fully,Lignite,Unknown,1595.0,22.4420637695,103675.0,8,8,319.0
+42763,Aminteo (Amyntaio)  Coal Power Plant Greece,Greece,1270,40.6191,21.6838,Operating Fully,Lignite,Unknown,600.0,25.7256123038,39000.0,8,8,120.0
+42764,Megalopoli Coal Power Plant Greece,Greece,1262,37.418,22.1083,Operating Fully,Lignite,Unknown,850.0,24.1524669002,55250.0,8,8,170.0
+42765,Florina  Coal Power Plant Greece,Greece,1270,40.8114,21.6014,Operating Fully,Lignite,Unknown,330.0,24.3748476504,21450.0,8,8,66.0
+42766,Kardia  Coal Power Plant Greece,Greece,1313,40.4105,21.7851,Operating Fully,Lignite,Unknown,1250.0,24.5040052537,81250.0,8,8,250.0
+42767,Ptolemais Coal Power Plant Greece,Greece,1313,40.4807,21.7282,Operating Fully,Lignite,Unknown,550.0,23.1828752638,35750.0,8,8,110.0
+42768,Aglos Georgios Thermal Power Plant Greece,Greece,1257,37.9539,23.61037,Operating Fully,Natural Gas,Fuel Oil,360.0,57.1644205112,19800.0,2,4,144.0
+42769,Komotini CCGT Power Plant Greece,Greece,1275,41.0645,25.4895,Operating Fully,Natural Gas,Unknown,485.0,53.5555625566,26675.0,2,4,194.0
+42770,Heron-II CCGT Power Plant Greece,Greece,1258,38.2792,23.3299,Operating Fully,Natural Gas,Unknown,435.0,52.9048856046,23925.0,2,4,174.0
+42771,Heron-I OCGT Power Plant Greece,Greece,1258,38.2801,23.3264,Operating Fully,Natural Gas,Fuel Oil,148.0,55.8971639997,8140.0,2,4,59.2
+42772,Thessaloniki CCGT Power Plant Greece,Greece,1273,40.6872,22.885,Operating Fully,Natural Gas,Fuel Oil,400.0,50.6416487766,22000.0,2,4,160.0
+42773,Thisvi CCGT Power Plant Greece,Greece,1258,38.2369,22.949,Operating Fully,Natural Gas,Fuel Oil,420.0,53.5476890766,23100.0,2,4,168.0
+42774,Lavario-V CCGT Power Plant Greece,Greece,1257,37.745,24.068,Operating Fully,Natural Gas,Unknown,378.0,55.0386516153,20790.0,2,4,151.2
+42775,Lavario Megalo CCGT Power Plant Greece,Greece,1257,37.7464,24.065,Operating Fully,Natural Gas,Fuel Oil,570.0,53.4483827874,31350.0,2,4,228.0
+42776,Aliveri Thermal Power Plant Greece,Greece,1259,38.3896,24.0524,Operating Fully,Fuel Oil,Unknown,380.0,127.803895775,20900.0,2,4,152.0
+42777,Lavario Thermal Power Plant Greece,Greece,1257,37.7464,24.067,Operating Fully,Natural Gas,Fuel Oil,450.0,50.3731824773,24750.0,2,4,180.0
+42780,Thermie Serres CHP Power Plant Greece,Greece,1274,41.0634,23.5184,Operating Fully,Natural Gas,Unknown,16.0,52.6568352863,880.0,2,4,6.4
+42784,Distomo CCGT Heat and Power Plant Greece,Greece,1261,38.3585,22.6894,Operating Fully,Natural Gas,Unknown,316.0,53.0014127043,17380.0,2,4,126.4
+42785,Protergia CCGT Power Plant Greece,Greece,1261,38.3585,22.6883,Operating Fully,Natural Gas,Unknown,430.0,55.1256628286,23650.0,2,4,172.0
+42786,Korinthos Power CCGT Power Plant Greece,Greece,1258,37.9168,23.0694,Operating Fully,Natural Gas,Unknown,437.0,56.8542975762,24035.0,2,4,174.8
+42788,Agras Hydroelectric Power Plant Greece,Greece,1313,40.8068,22.0215,Operating Fully,Hydro,Unknown,50.0,6.11804608926,215.0,0,0,5.0
+42789,Asomata Hydroelectric Power Plant Greece,Greece,1272,40.4744,22.2439,Operating Fully,Hydro,Unknown,108.0,5.79732313883,464.4,0,0,10.8
+42790,Ilarionas Hydroelectric Power Plant Greece,Greece,1267,40.0966,21.8039,Operating Fully,Hydro,Unknown,154.0,6.55205010596,662.2,0,0,15.4
+42791,Mesochora Hydroelectric Power Plant Greece,Greece,1266,39.4644,21.3042,Operating Partially,Hydro,Unknown,162.0,6.25583033514,696.6,0,0,16.2
+42792,Aoos (Piges Aoos) Hydroelectric Power Plant Greece,Greece,1268,39.8271,21.0092,Operating Fully,Hydro,Unknown,230.0,6.85504424275,989.0,0,0,23.0
+42793,Kastraki Hydroelectric Power Plant Greece,Greece,1266,38.7415,21.3642,Operating Fully,Hydro,Unknown,320.0,7.01035280257,1376.0,0,0,32.0
+42794,Kremasta Hydroelectric Power Plant Greece,Greece,1266,38.8863,21.4954,Operating Fully,Hydro,Unknown,437.2,6.76210920055,1879.96,0,0,43.72
+42795,Plastira Hydroelectric Power Plant Greece,Greece,1266,39.2361,21.7462,Operating Fully,Hydro,Unknown,129.9,6.58865147277,558.57,0,0,12.99
+42796,Platanovrisi Hydroelectric Power Plant Greece,Greece,1327,41.3355,24.4621,Operating Fully,Hydro,Unknown,122.0,6.30592660912,524.6,0,0,12.2
+42797,Polyfyto  Hydroelectric Power Plant Greece,Greece,1313,40.3305,22.1253,Operating Fully,Hydro,Unknown,375.0,6.70874261658,1612.5,0,0,37.5
+42799,Poyrnari-I Hydroelectric Power Plant Greece,Greece,1266,39.1845,21.0255,Operating Fully,Hydro,Unknown,300.0,5.92107313393,1290.0,0,0,30.0
+42800,Stratos Hydroelectric Power Plant Greece,Greece,1266,38.676,21.3233,Operating Fully,Hydro,Unknown,156.7,6.38248450494,673.81,0,0,15.67
+42801,Thesavros (Thesaurus) Hydroelectric Power Plant Greece,Greece,1327,41.35462,24.36698,Operating Fully,Hydro,Unknown,384.0,6.64684406953,1651.2,0,0,38.4
+42802,Sfikia Hydroelectric Power Plant Greece,Greece,1272,40.3973,22.1922,Operating Fully,Hydro,Unknown,315.0,6.51625037774,1354.5,0,0,31.5
+42813,Montoir-de Bretagne CCGT Power Plant France,France,368,47.3070670289,-2.13681439025,No Data in GEO,Natural Gas,Unknown,435.0,54.4236952479,23925.0,2,4,174.0
+42969,Grand'maison Hydroelectric Power Station France,France,441,45.146,6.051,Operating Fully,Hydro,Unknown,1800.0,6.36987149043,7740.0,0,0,180.0
+43185,Buschhaus Coal Power Station Germany,Germany,825,52.17139,10.97694,Operating Fully,Lignite,Unknown,390.0,25.0891343666,25350.0,8,8,78.0
+43186,Schkopau CHP Coal Power Station Germany,Germany,859,51.39845,11.95032,Operating Fully,Lignite,Unknown,916.0,23.1452063197,59540.0,8,8,183.2
+43189,Klingenberg CHP Coal Power Plant Germany,Germany,808,52.4889,13.4968,Operating Fully,Lignite,Natural Gas,188.0,23.1460115142,12220.0,8,8,37.6
+4330,Mochovce Nuclear Power Plant Slovakia,Slovakia,1214,48.2620732648,18.4590021866,No Data in GEO,Nuclear,Unknown,880.0,12.211341979,264000.0,24,24,176.0
+43374,Sagunto CCGT Power Plant Spain,Spain,159,39.6426,-0.2344,Operating Fully,Natural Gas,Unknown,1212.6,60.5689656381,66693.0,2,4,485.04
+43380,Sabon CCGT Power Plant Spain,Spain,29,43.329,-8.503,Operating Fully,Natural Gas,Unknown,400.0,55.9286703482,22000.0,2,4,160.0
+43404,Trillo Nuclear Power Plant Spain,Spain,144,40.7016,-2.62265,Operating Fully,Nuclear,Unknown,1066.0,12.5880867684,319800.0,24,24,213.2
+43534,Alqueva Hydroelectric Power Plant Portugal,Portugal,190,38.1975,-7.4964,Operating Fully,Hydro,Unknown,240.0,6.1236689411,1032.0,0,0,24.0
+43535,Alto Lindoso Hydroelectric Power Plant Portugal,Portugal,1,41.872,-8.2025,Operating Fully,Hydro,Unknown,630.0,6.85370403785,2709.0,0,0,63.0
+43536,Pocinho Hydroelectric Power Plant Portugal,Portugal,8,41.1343,-7.1141,Operating Fully,Hydro,Unknown,186.0,6.75974857611,799.8,0,0,18.6
+43537,Miranda Hydroelectric Power Plant Portugal,Portugal,4,41.4886,-6.2656,Operating Fully,Hydro,Unknown,390.0,6.30621084625,1677.0,0,0,39.0
+43538,Picote Hydroelectric Power Plant Portugal,Portugal,127,41.379,-6.3525,Operating Fully,Hydro,Unknown,426.0,6.43954415181,1831.8,0,0,42.6
+43539,Bemposta Hydroelectric Power Plant Portugal,Portugal,127,41.3009,-6.4699,Operating Fully,Hydro,Unknown,401.0,6.29694786883,1724.3,0,0,40.1
+43540,Valeira Hydroelectric Power Plant Portugal,Portugal,5,41.1605,-7.3742,Operating Fully,Hydro,Unknown,216.0,6.34693613472,928.8,0,0,21.6
+43541,Regua Hydroelectric Power Plant Portugal,Portugal,7,41.1461,-7.74,Operating Fully,Hydro,Unknown,156.0,6.06271316873,670.8,0,0,15.6
+43542,Carrapatelo Hydroelectric Power Plant Portugal,Portugal,6,41.0849,-8.1306,Operating Fully,Hydro,Unknown,201.0,6.55589454959,864.3,0,0,20.1
+43543,Crestuma-Lever Hydroelectric Power Plant Portugal,Portugal,6,41.0716,-8.486,Operating Fully,Hydro,Unknown,108.0,6.13508397969,464.4,0,0,10.8
+43544,Salamonde Hydroelectric Power Plant Portugal,Portugal,2,41.6917,-8.0912,Operating Fully,Hydro,Unknown,42.0,6.73099232116,180.6,0,0,4.2
+43545,Canicada Hydroelectric Power Plant Portugal,Portugal,2,41.653,-8.231,Operating Fully,Hydro,Unknown,60.0,6.60015086781,258.0,0,0,6.0
+43546,Paradela Hydroelectric Power Plant Portugal,Portugal,2,41.7686,-7.9504,Operating Fully,Hydro,Unknown,54.0,6.24666211248,232.2,0,0,5.4
+43547,Alto Rabagao Hydroelectric Power Plant Portugal,Portugal,2,41.7395,-7.8576,Operating Fully,Hydro,Unknown,68.0,7.00145701564,292.4,0,0,6.8
+43548,Vilarinho das Furnas Hydroelectric Power Plant Portugal,Portugal,2,41.7634,-8.209,Operating Fully,Hydro,Unknown,125.0,5.82657784932,537.5,0,0,12.5
+43549,Cabril Hydroelectric Power Plant Portugal,Portugal,16,39.91727,-8.13244,Operating Fully,Hydro,Unknown,97.0,5.88812985891,417.1,0,0,9.7
+43550,Castelo do Bode Hydroelectric Power Plant Portugal,Portugal,19,39.5429,-8.3188,Operating Fully,Hydro,Unknown,139.0,5.86209355534,597.7,0,0,13.9
+43551,Sines Coal Power Plant Portugal,Portugal,24,37.9318,-8.8035,Operating Fully,Coal,Unknown,1192.0,37.6764549442,77480.0,8,8,238.4
+43559,Ribatejo CCGT Power Plant Portugal,Portugal,21,39.0116,-8.9519,Operating Fully,Natural Gas,Unknown,1176.0,59.4945406831,64680.0,2,4,470.4
+43560,Pego Coal Power Plant Portugal,Portugal,19,39.4679,-8.11,Operating Fully,Coal,Unknown,628.0,35.6268709691,40820.0,8,8,125.6
+43561,Tapada de Outerio CCGT Power Plant Portugal,Portugal,6,41.0698,-8.4595,Operating Fully,Natural Gas,Unknown,990.0,56.8952804839,54450.0,2,4,396.0
+43562,Lares CCGT Power Plant Portugal,Portugal,16,40.1247,-8.7751,Operating Fully,Natural Gas,Unknown,862.0,54.764675703,47410.0,2,4,344.8
+43563,Tunes OCGT Power Plant Portugal,Portugal,24,37.1642,-8.2647,Operating Fully,Natural Gas,Fuel Oil,197.0,54.2943906979,10835.0,2,4,78.8
+43564,ElecGas Pego CCGT Power Plant Portugal,Portugal,19,39.4688,-8.1115,Operating Fully,Natural Gas,Unknown,830.0,60.1763472207,45650.0,2,4,332.0
+43565,Venda Nova II PS Hydroelectric Power Plant Portugal,Portugal,2,41.684,-8.02174,Operating Fully,Hydro,Unknown,191.6,6.01164171239,823.88,0,0,19.16
+43566,Aguieira Hydroelectric Power Plant Brazil,Portugal,14,40.3402,-8.197,Operating Fully,Hydro,Unknown,336.0,6.23656089145,1444.8,0,0,33.6
+43567,Setubal Thermal Power Plant Portugal,Portugal,23,38.51,-8.845,Operating Fully,Fuel Oil,Unknown,1000.0,126.251258635,55000.0,2,4,400.0
+43568,Barreiro Cogen Thermal Power Plant Brazil,Portugal,22,38.675,-9.0545,Operating Fully,Fuel Oil,Unknown,64.0,129.337123458,3520.0,2,4,25.6
+43569,Carregado Thermal Power Plant Brazil,Portugal,21,39.0137,-8.9554,Operating Fully,Fuel Oil,Natural Gas,750.0,116.371104383,41250.0,2,4,300.0
+43570,Lindoso Hydroelectric Power Plant Brazil,Portugal,1,41.8593,-8.2712,Operating Fully,Hydro,Unknown,42.0,6.22015380582,180.6,0,0,4.2
+43571,Touvedo Hydroelectric Power Plant Portugal,Portugal,2,41.8124,-8.354,Operating Fully,Hydro,Unknown,22.0,6.75947984978,94.6,0,0,2.2
+43572,Fratel Hydroelectric Power Plant Portugal,Portugal,18,39.5428,-7.8029,Operating Fully,Hydro,Unknown,132.0,6.68447880538,567.6,0,0,13.2
+43573,Torrao Hydroelectric Power Plant Portugal,Portugal,6,41.0965,-8.2631,Operating Fully,Hydro,Unknown,146.0,6.58756356113,627.8,0,0,14.6
+43574,Vilar-Tabuaco Hydroelectric Power Plant Portugal,Portugal,9,40.9871,-7.5353,Operating Fully,Hydro,Unknown,64.0,6.51731917486,275.2,0,0,6.4
+43575,Bouca Hydroelectric Power Plant Portugal,Portugal,16,39.854,-8.2197,Operating Fully,Hydro,Unknown,50.0,5.94820308761,215.0,0,0,5.0
+43576,Pracana Hydroelectric Power Plant Portugal,Portugal,18,39.5649,-7.8123,Operating Fully,Hydro,Unknown,41.0,5.99146864942,176.3,0,0,4.1
+43577,Caldeirao Hydroelectric Power Plant Portugal,Portugal,9,40.5316,-7.3297,Operating Fully,Hydro,Unknown,40.0,6.82120800531,172.0,0,0,4.0
+43578,Raiva Hydroelectric Power Plant Portugal,Portugal,14,40.3095,-8.2488,Operating Fully,Hydro,Unknown,24.0,6.45063100158,103.2,0,0,2.4
+43579,Sines Cogen OCGT Power Plant Portugal,Portugal,24,37.9583,-8.8048,Operating Fully,Natural Gas,Unknown,82.0,60.7266685223,4510.0,2,4,32.8
+43673,Abono Thermal Power plant Spain,Spain,31,43.5528,-5.7231,Operating Fully,Coal,Waste,921.7,35.1017153321,59910.5,8,8,184.34
+43674,Soto de Ribera Coal Power Plant Spain,Spain,33,43.3122,-5.87423,Operating Fully,Coal,Unknown,615.0,38.3474382123,39975.0,8,8,123.0
+43675,Soto de Ribera CCGT Power Plant Spain,Spain,33,43.3161,-5.8777,Operating Fully,Natural Gas,Fuel Oil,865.5,58.6137253363,47602.5,2,4,346.2
+43676,Castejon HCE CCGT Power Plant Spain,Spain,94,42.1773,-1.6943,No Data in GEO,Natural Gas,Unknown,855.3,56.67182792,47041.5,2,4,342.12
+43677,Anllares Coal Power Plant Spain,Spain,63,42.8385,-6.5332,Operating Fully,Coal,Unknown,365.2,35.5315725351,23738.0,8,8,73.04
+43678,Compostilla II Coal Power Plant Spain,Spain,68,42.6125,-6.5647,Operating Fully,Coal,Unknown,1199.6,40.5384308822,77974.0,8,8,239.92
+43679,Los Barrios Coal Power Plant Spain,Spain,215,36.1828,-5.42,Operating Fully,Coal,Unknown,568.0,41.751484315,36920.0,8,8,113.6
+43682,Edipower Chivasso CCGT Power Plant Italy,Italy,676,45.1856,7.9016,Operating Fully,Natural Gas,Unknown,1179.0,50.9172273972,64845.0,2,4,471.6
+43684,E.ON Livorno Ferraris CCGT Power Plant Italy,Italy,676,45.23723,8.1932,Operating Fully,Natural Gas,Unknown,800.0,57.8205638502,44000.0,2,4,320.0
+43685,Edipower Turbigo Thermal and CCGT Power Plant Italy,Italy,657,45.5201,8.7422,Operating Fully,Natural Gas,Fuel Oil,1770.0,51.3126436875,97350.0,2,4,708.0
+43686,Edipower Sermide CCGT Power Plant Italy,Italy,675,45.02652,11.2522,Operating Fully,Natural Gas,Fuel Oil,1140.0,59.8359677459,62700.0,2,4,456.0
+43691,Edipower San Filippo del Mela Thermal Power Plant Italy,Italy,755,38.2049,15.2818,Operating Fully,Fuel Oil,Unknown,1280.0,122.240985356,70400.0,2,4,512.0
+43692,Edipower Piacenza CCGT Power Plant Italy,Italy,679,45.0543,9.70856,Operating Fully,Natural Gas,Fuel Oil,855.0,51.682045272,47025.0,2,4,342.0
+43694,E.ON Ostiglia CCGT Power Plant Italy,Italy,675,45.0603,11.1374,Operating Fully,Natural Gas,Fuel Oil,1482.0,53.834070358,81510.0,2,4,592.8
+43695,E.ON Tavazzano CCGT Power Plant Italy,Italy,671,45.3325,9.4364,Operating Fully,Natural Gas,Fuel Oil,1740.0,50.3108818662,95700.0,2,4,696.0
+43696,Scandale CCGT Power Plant Italy,Italy,752,39.1022,17.0325,Operating Fully,Natural Gas,Fuel Oil,814.0,59.2714852251,44770.0,2,4,325.6
+43697,Sparanise CCGT Power Plant Italy,Italy,736,41.1783,14.1129,Operating Fully,Natural Gas,Unknown,760.0,56.0778520993,41800.0,2,4,304.0
+43698,Rizziconi CCGT Power Plant Italy,Italy,754,38.4453,15.99,Operating Fully,Natural Gas,Unknown,760.0,50.8950268085,41800.0,2,4,304.0
+43699,FE Ferrara CCGT Power Plant Italy,Italy,680,44.8605,11.5869,Operating Fully,Natural Gas,Unknown,840.0,50.1330380304,46200.0,2,4,336.0
+43700,Eni Ferrera Erbognone CCGT Power Plant Italy,Italy,686,45.0998,8.8668,Operating Fully,Natural Gas,Unknown,1030.0,58.338494002,56650.0,2,4,412.0
+43701,Eni Brindisi CCGT Power Plant Italy,Italy,739,40.6293,18.0031,Operating Fully,Natural Gas,Unknown,1185.0,61.0439466147,65175.0,2,4,474.0
+43702,Eni Ravenna CCGT Power Plant Italy,Italy,690,44.4487,12.2382,Operating Fully,Natural Gas,Unknown,780.0,54.6567358934,42900.0,2,4,312.0
+43703,Eni Mantova CCGT Power Plant Italy,Italy,674,45.1492,10.835,Operating Fully,Natural Gas,Unknown,780.0,55.9560730023,42900.0,2,4,312.0
+43708,A2A Gissi CCGT Power Plant Italy,Italy,727,42.0695,14.5934,Operating Fully,Natural Gas,Unknown,840.0,58.1499583711,46200.0,2,4,336.0
+43709,Del Mincio CCGT Power Plant Italy,Italy,659,45.3993,10.7142,Operating Fully,Natural Gas,Unknown,380.0,58.3168036132,20900.0,2,4,152.0
+43712,TirrenoPower Napoli Levante CCGT Power Plant Italy,Italy,744,40.8339,14.3006,Operating Fully,Natural Gas,Unknown,400.0,50.2562946021,22000.0,2,4,160.0
+43713,TirrenoPower Torrevaldaliga South Thermal Power Plant Italy,Italy,728,42.1241,11.7624,Operating Fully,Natural Gas,Fuel Oil,1520.0,60.3681495453,83600.0,2,4,608.0
+43714,ENEL Torrevaldaliga Nord Thermal Power Plant Italy,Italy,728,42.1269,11.7583,Operating Fully,Coal,Fuel Oil,1980.0,36.8173060019,128700.0,8,8,396.0
+43723,ENEL Genoa Coal Power Plant Italy,Italy,698,44.4028,8.9044,Operating Fully,Coal,Fuel Oil,295.0,40.800598933,19175.0,8,8,59.0
+43724,ENEL La Spezia (Eugenio Montale) CCGT and Thermal Power Plant Italy,Italy,705,44.1116,9.8743,Operating Fully,Natural Gas,Coal,1280.0,58.761727938,70400.0,2,4,512.0
+43725,ENEL Pietro Vannucci (Bastardo) Coal Power Plant Italy,Italy,724,42.8971,12.5381,Operating Fully,Lignite,Fuel Oil,150.0,23.5084952897,9750.0,8,8,30.0
+43758,As Pontes Coal Power Plant Spain,Spain,27,43.4407,-7.8619,Operating Fully,Lignite,Fuel Oil,1400.0,22.2801367069,91000.0,8,8,280.0
+43759,San Roque-1 (GasNatural)  CCGT Power Plant Spain,Spain,215,36.1955,-5.4131,Operating Fully,Natural Gas,Fuel Oil,800.0,51.3302639844,44000.0,2,4,320.0
+43761,Puerto de Barcelona CCGT Power Plant Spain,Spain,111,41.3366,2.1594,Operating Fully,Natural Gas,Unknown,850.0,60.792912857,46750.0,2,4,340.0
+43762,E.ON Tarragona CCGT Power Plant Spain,Spain,129,41.1081,1.1912,Operating Fully,Natural Gas,Unknown,410.0,50.5740190417,22550.0,2,4,164.0
+43763,Plana Del Vent CCGT Power Plant Italy,Spain,137,40.9596,0.8692,Operating Fully,Natural Gas,Fuel Oil,800.0,60.8067246882,44000.0,2,4,320.0
+43764,Tarragona Power CCGT Power Plant Spain,Spain,132,41.1096,1.1817,Operating Fully,Natural Gas,Unknown,424.0,60.1848534796,23320.0,2,4,169.6
+43766,E.ON Escatron CCGT Power Plant Spain,Spain,128,41.2977,-0.3376,Operating Fully,Natural Gas,Unknown,804.0,54.3377733381,44220.0,2,4,321.6
+43767,Amorebieta (Boroa) CCGT Power Plant Spain,Spain,48,43.234722,-2.749722,Operating Fully,Natural Gas,Unknown,755.0,55.4957825582,41525.0,2,4,302.0
+43768,Bahia de Bizkaia (BBE) CCGT Power Plant Spain,Spain,45,43.3592,-3.093,Operating Fully,Natural Gas,Fuel Oil,800.0,59.3291134229,44000.0,2,4,320.0
+43769,Santurtzi (Santurce) CCGT Power Plant Spain,Spain,41,43.34,-3.05394,Operating Fully,Natural Gas,Unknown,400.0,60.4271158342,22000.0,2,4,160.0
+43770,Sant Adria (Besos) CCGT Power Plant Spain,Spain,111,41.4185,2.2286,Operating Fully,Natural Gas,Unknown,800.0,55.5624476488,44000.0,2,4,320.0
+43771,ENEL La Casella Power Plant Italy,Italy,679,45.0904,9.4805,Operating Fully,Natural Gas,Unknown,1504.0,54.6550310075,82720.0,2,4,601.6
+43776,Escombreras Iberdrola CCGT Power Plant Spain,Spain,201,37.5653,-0.9514,Operating Fully,Natural Gas,Fuel Oil,840.0,51.1174729717,46200.0,2,4,336.0
+43777,Cartagena (Escombreras GN) CCGT Power Plant Spain,Spain,197,37.5732,-0.9392,Operating Fully,Natural Gas,Unknown,1200.0,54.8580256537,66000.0,2,4,480.0
+43778,Cartegana (El Fangal) CCGT Power Plant Spain,Spain,201,37.5709,-0.9458,Operating Fully,Natural Gas,Unknown,1200.0,60.3275960329,66000.0,2,4,480.0
+43783,Castellon 4 CCGT Power Plant Spain,Spain,150,39.95925,-0.00098,Operating Fully,Unknown,Unknown,854.0,135.193603239,55510.0,8,8,341.6
+43784,Castellon 3 CCGT Power Plant Spain,Spain,150,39.9557,0.0017,Operating Fully,Natural Gas,Unknown,795.0,61.0449727241,43725.0,2,4,318.0
+43786,Puertollano IGCC Power Plant Spain,Spain,182,38.6478,-4.1214,Operating Fully,Coal,Natural Gas,335.0,42.2316286274,21775.0,8,8,67.0
+43787,Puertollano Coal Power Plant Spain,Spain,182,38.6478,-4.123,Operating Fully,Coal,Unknown,221.0,38.7890314066,14365.0,8,8,44.2
+43788,Aceca-4 Fenosa CCGT Power Plant Spain,Spain,156,39.9427,-3.8548,Operating Fully,Natural Gas,Fuel Oil,400.0,58.5622674164,22000.0,2,4,160.0
+43789,Aceca-3 Iberdrola CCGT Power Plant Spain,Spain,156,39.9442,-3.8558,Operating Fully,Natural Gas,Unknown,400.0,51.0750846285,22000.0,2,4,160.0
+43790,Aceca Thermal Power Plant Spain,Spain,156,39.941,-3.8569,Operating Fully,Fuel Oil,Natural Gas,629.0,128.861320263,34595.0,2,4,251.6
+43794,Malaga (Campanillas) CCGT Power Plant Spain,Spain,210,36.7495,-4.5631,Operating Fully,Natural Gas,Unknown,400.0,60.6876395519,22000.0,2,4,160.0
+43795,Arcos de la Frontera CCGT Power Plant Spain,Spain,212,36.6721,-5.8164,Operating Fully,Natural Gas,Unknown,1600.0,56.9530573653,88000.0,2,4,640.0
+43796,Campo de Gibraltar CCGT Power Plant Spain,Spain,215,36.1834,-5.3933,Operating Fully,Natural Gas,Unknown,800.0,53.0771614587,44000.0,2,4,320.0
+43797,Cristobal Colon CCGT Power Plant Spain,Spain,202,37.2156,-6.943,Operating Fully,Natural Gas,Fuel Oil,400.0,59.5538646646,22000.0,2,4,160.0
+43798,Bahia de Algeciras CCGT Power Plant Spain,Spain,215,36.1829,-5.3905,Operating Fully,Natural Gas,Fuel Oil,800.0,57.6990896397,44000.0,2,4,320.0
+43799,Palos de la Frontera CCGT Power Plant Spain,Spain,202,37.1843,-6.8857,Operating Fully,Natural Gas,Fuel Oil,1200.0,54.0455863511,66000.0,2,4,480.0
+43800,Castejon-2 Iberdrola CCGT Power Plant Spain,Spain,94,42.1718,-1.6773,Operating Fully,Natural Gas,Fuel Oil,400.0,53.5409032475,22000.0,2,4,160.0
+43801,Arrubal CCGT Power Plant Spain,Spain,89,42.4194,-2.2511,Operating Fully,Natural Gas,Natural Gas,800.0,57.9049889953,44000.0,2,4,320.0
+43802,Castelnou CCGT Power Plant Spain,Spain,128,41.2167,-0.2928,Operating Fully,Natural Gas,Unknown,760.0,50.2673099331,41800.0,2,4,304.0
+43803,Puentes CCGT Power Plant Spain,Spain,27,43.4451,-7.8621,Operating Fully,Natural Gas,Unknown,850.0,57.4628404881,46750.0,2,4,340.0
+43816,Cas Tresorer CCGT Power Plant Spain,Spain,126,39.5672,2.6895,Operating Fully,Natural Gas,Fuel Oil,460.0,57.8351365257,25300.0,2,4,184.0
+43817,Son Reus CCGT Power Plant Spain,Spain,126,39.6484,2.6811,Operating Fully,Natural Gas,Fuel Oil,601.5,56.7128319297,33082.5,2,4,240.6
+43818,Besos-5 CCGT Power Plant Spain,Spain,111,41.41958,2.2294,Operating Fully,Natural Gas,Unknown,859.0,54.7755884535,47245.0,2,4,343.6
+43819,Escatron Peaker CCGT Power Plant Spain,Spain,128,41.28055,-0.21778,Operating Fully,Natural Gas,Unknown,285.0,52.3535886595,15675.0,2,4,114.0
+43820,Teruel-Andorra Coal Power Plant Spain,Spain,136,40.9972,-0.3806,Operating Fully,Lignite,Unknown,1050.0,21.6923200256,68250.0,8,8,210.0
+43821,Litoral de Almeira (Carboneras) Coal Power Plant Spain,Spain,207,36.9783,-1.9054,Operating Fully,Coal,Unknown,1158.0,39.3810496987,75270.0,8,8,231.6
+43822,Jose Maria de Oriol (Alcantara) Hydroelectric Power Plant Spain,Spain,163,39.73,-6.88472,Operating Fully,Hydro,Unknown,957.0,5.76333857765,4115.1,0,0,95.7
+43823,Aldeadavila Hydroelectric Power Plant Spain,Spain,133,41.21167,-6.68556,Operating Fully,Hydro,Unknown,1230.0,5.8852229581,5289.0,0,0,123.0
+43825,Almendra (Villarino) Hydroelectric Power Plant Spain,Spain,127,41.27016,-6.3208,Operating Fully,Hydro,Unknown,842.0,6.23524949537,3620.6,0,0,84.2
+43826,Talarn Hydroelectric Power Plant Spain,Spain,83,42.17969,0.91314,Operating Fully,Hydro,Unknown,300.0,6.03633373468,1290.0,0,0,30.0
+43830,Meirama Coal Power Plant Spain,Spain,29,43.1685,-8.4111,Operating Fully,Coal,Natural Gas,563.0,35.3829841754,36595.0,8,8,112.6
+43831,Narcea Coal Power Plant Spain,Spain,47,43.2924,-6.3937,Operating Fully,Coal,Fuel Oil,595.0,37.16756428,38675.0,8,8,119.0
+43832,Lada Coal Power Plant Spain,Spain,51,43.3081,-5.7,Operating Fully,Coal,Unknown,513.0,40.8438287865,33345.0,8,8,102.6
+43833,Cercs (Serchs) Coal Power Plant Spain,Spain,96,42.1741,1.8577,Operating Fully,Lignite,Unknown,162.0,21.470927258,10530.0,8,8,32.4
+43834,Puente Nuevo-3 Coal Power Plant Spain,Spain,191,38.1108,-4.9354,Operating Fully,Coal,Unknown,324.0,36.8522060893,21060.0,8,8,64.8
+43835,La Robla Coal Power Plant Spain,Spain,73,42.7924,-5.634,Operating Fully,Coal,Unknown,655.0,35.3400234421,42575.0,8,8,131.0
+43836,Pasajes Coal Power Plant Spain,Spain,39,43.3238,-1.9105,Decommissioned,Coal,Unknown,217.0,41.976214643,14105.0,8,8,43.4
+43837,Velilla (Guarda) Coal Power Plant Spain,Spain,56,42.8181,-4.8539,Operating Fully,Coal,Fuel Oil,516.0,36.1902662333,33540.0,8,8,103.2
+43838,Escucha Coal Power Plant Spain,Spain,136,40.7954,-0.8156,Operating Fully,Coal,Unknown,160.0,42.1457047055,10400.0,8,8,32.0
+43839,Escatron Coal Power Plant Spain (Shutdown),Spain,128,41.2971,-0.3399,Decommissioned,Lignite,Unknown,80.0,23.8480139085,5200.0,8,8,16.0
+43841,Besos-4 (Sant Adria)  CCGT Power Plant Spain,Spain,111,41.4187,2.2286,Operating Fully,Natural Gas,Unknown,407.0,59.107100959,22385.0,2,4,162.8
+43843,San Roque-2 (Endesa) CCGT Power Plant Spain,Spain,215,36.1955,-5.4131,Operating Fully,Natural Gas,Fuel Oil,402.0,52.4291645819,22110.0,2,4,160.8
+4396,Muehlberg Nuclear Power Plant Switzerland,Switzerland,575,46.9690080331,7.26797103882,No Data in GEO,Nuclear,Unknown,372.0,10.9614743946,111600.0,24,24,74.4
+43971,Edolo Pumped Storage Hydroelectric Power Plant Italy,Italy,640,46.171,10.348,Operating Fully,Hydro,Unknown,1000.0,5.94932458266,4300.0,0,0,100.0
+43978,Edison Torviscosa CCGT Power Plant Italy,Italy,638,45.817,13.2891,Operating Fully,Natural Gas,Unknown,785.0,52.3067501228,43175.0,2,4,314.0
+43979,Edison Simeri Crichi CCGT Power Plant Italy,Italy,753,38.8759,16.6569,Operating Fully,Natural Gas,Unknown,857.0,61.0513078294,47135.0,2,4,342.8
+43980,ENIPOWER SPA  Brindisi CCGT Power Plant Italy,Italy,739,40.6293,18.0033,Operating Fully,Natural Gas,Unknown,1321.0,58.2310161984,72655.0,2,4,528.4
+43983,Edison Candela CCGT Power Plant Italy,Italy,730,41.2014,15.4762,Operating Fully,Natural Gas,Unknown,360.0,53.1889960766,19800.0,2,4,144.0
+43985,Edison Altomonte CCGT Power Plant Italy,Italy,751,39.7118,16.215,Operating Fully,Natural Gas,Unknown,757.0,51.5549756404,41635.0,2,4,302.8
+43986,Edison Marghera Levante CCGT Power Plant Italy,Italy,653,45.4458,12.2552,Operating Fully,Natural Gas,Unknown,766.0,50.0865418544,42130.0,2,4,306.4
+43987,TE Kolubara Coal Power Plant Serbia,Serbia,1398,44.28,20.17,Operating Fully,Coal,Unknown,270.0,38.1562994969,17550.0,8,8,54.0
+43988,FWI Ferrara CCGT Power Plant Italy,Italy,680,44.8606,11.587,Operating Fully,Natural Gas,Unknown,150.0,50.4720001516,8250.0,2,4,60.0
+43989,FWI Teverola CCGT Power Plant Italy,Italy,744,41.0092,14.2281,Operating Fully,Natural Gas,Unknown,150.0,60.6834402423,8250.0,2,4,60.0
+43990,Sorgenia Aprilia CCGT Power Plant Italy,Italy,737,41.5616,12.6337,Operating Fully,Natural Gas,Unknown,800.0,56.7110376777,44000.0,2,4,320.0
+43991,Sorgenia Termoli CCGT Power Plant Italy,Italy,727,41.9372,15.001,Operating Fully,Natural Gas,Unknown,765.0,56.1205901571,42075.0,2,4,306.0
+43993,Sorgenia Modugno CCGT Power Plant Italy,Italy,733,41.1025,16.756,Operating Fully,Natural Gas,Unknown,760.0,52.3932553899,41800.0,2,4,304.0
+43994,Sorgenia Bertonico-Turano Lodigiano CCGT Power Plant Italy,Italy,671,45.2268,9.6377,Operating Fully,Natural Gas,Unknown,800.0,61.0887920428,44000.0,2,4,320.0
+43995,Api Energia Falconara IGCC Power Plant Italy,Italy,710,43.6411,13.3796,Operating Fully,Fuel Oil,Unknown,280.0,123.714571883,15400.0,2,4,112.0
+43996,Montalto di Castro (Alessandro Volta) CCGT Power Plant,Italy,726,42.3572,11.5373,Operating Fully,Natural Gas,Fuel Oil,3600.0,51.1088435045,198000.0,2,4,1440.0
+43997,ENEL Porto Corsini (Teodora)  CCGT Power Plant Italy,Italy,690,44.4836,12.2652,Operating Fully,Natural Gas,Unknown,750.0,58.9200438387,41250.0,2,4,300.0
+43998,ENEL Priolo Gargallo (Archimede)  CCGT Power Plant Italy,Italy,764,37.14,15.2159,Operating Fully,Natural Gas,Fuel Oil,750.0,51.4638711511,41250.0,2,4,300.0
+43999,Santa  Barbara CCGT Power Plant Italy,Italy,709,43.565,11.4777,Operating Fully,Natural Gas,Unknown,390.0,53.5151043231,21450.0,2,4,156.0
+44000,ENEL Porto Tolle Thermal Power Plant Italy,Italy,672,44.9569,12.4883,Operating Fully,Fuel Oil,Unknown,2640.0,116.954070452,145200.0,2,4,1056.0
+44001,ENEL Rossano Thermal Power Plant Italy,Italy,750,39.6218,16.6084,Operating Partially,Natural Gas,Fuel Oil,1976.0,56.8196518189,108680.0,2,4,790.4
+44002,ENEL Galileo Ferraris (Trino) CCGT Power Plant Italy,Italy,676,45.2521,8.1938,Operating Fully,Unknown,Unknown,746.0,119.967544046,48490.0,8,8,298.4
+44003,IRIDE Moncalieri CCGT Power Plant Italy,Italy,678,44.993,7.6755,Operating Fully,Natural Gas,Unknown,778.0,54.7049555189,42790.0,2,4,311.2
+44004,BG Rivalta CCGT Power Plant Italy,Italy,678,44.994,7.5069,No Data in GEO,Natural Gas,Unknown,50.0,59.0133155311,2750.0,2,4,20.0
+44005,BG Cassino CCGT Power Plant Italy,Italy,735,41.476,13.752,Operating Fully,Natural Gas,Unknown,100.0,60.0518074805,5500.0,2,4,40.0
+44006,BG Melfi CCGT Power Plant Italy,Italy,734,41.0664,15.7119,Operating Fully,Natural Gas,Unknown,100.0,50.6555714194,5500.0,2,4,40.0
+44007,BG Termoli CCGT Power Plant Italy,Italy,727,41.9567,14.9963,Operating Fully,Natural Gas,Unknown,100.0,51.0057319236,5500.0,2,4,40.0
+44008,ENEL Piombino Thermal Power Plant Italy,Italy,719,42.9565,10.6034,Operating Partially,Fuel Oil,Unknown,1280.0,128.26410775,70400.0,2,4,512.0
+44009,ENEL Pietrafitta CCGT Power Plant Italy,Italy,713,42.9954,12.1995,Operating Fully,Natural Gas,Unknown,528.0,51.9353829107,29040.0,2,4,211.2
+44018,Edison Sarmato CCGT Power Plant Italy,Italy,679,45.0522,9.5072,Operating Fully,Natural Gas,Unknown,180.0,58.6940884245,9900.0,2,4,72.0
+44019,Edison Jesi CCGT Power Plant Italy,Italy,710,43.5537,13.285,Operating Fully,Natural Gas,Unknown,125.0,51.9102063976,6875.0,2,4,50.0
+44020,Edison Bussi sul Tirino CCGT Power Plant Italy,Italy,725,42.2002,13.8398,Operating Fully,Natural Gas,Unknown,133.0,61.1527667405,7315.0,2,4,53.2
+44021,Edison Verzuolo-Gever CCGT Power Plant Italy,Italy,692,44.5947,7.4858,Operating Fully,Natural Gas,Unknown,120.0,57.2677370546,6600.0,2,4,48.0
+44032,Edison San Quirco CCGT Power Plant Italy,Italy,673,44.9289,10.3055,Operating Fully,Natural Gas,Unknown,133.0,56.6317754628,7315.0,2,4,53.2
+44033,Edison Porcari CCGT Power Plant Italy,Italy,707,43.8235,10.6023,Operating Fully,Natural Gas,Unknown,100.0,53.6846034263,5500.0,2,4,40.0
+44034,Edison Terni CCGT Power Plant Italy,Italy,724,42.554,12.6176,Operating Fully,Natural Gas,Unknown,100.0,53.4750594762,5500.0,2,4,40.0
+44102,Acerra Power Plant Italy,Italy,741,40.9319,14.385,Operating Fully,Unknown,Unknown,100.0,134.866852844,6500.0,8,8,40.0
+44103,Servola CCGT Power Plant Italy,Italy,643,45.6195,13.783,Operating Fully,Natural Gas,Unknown,180.0,50.8945200039,9900.0,2,4,72.0
+44104,Enel Marzocco Oil Power Plant Italy,Italy,714,43.56727,10.31,Operating Partially,Fuel Oil,Unknown,310.0,127.500200799,17050.0,2,4,124.0
+44105,Ottana Oil CHP Power Plant,Italy,1253,40.2387,9.0176,Operating Partially,Fuel Oil,Unknown,140.0,111.886872639,7700.0,2,4,56.0
+44107,Sarlux (Cagliari) IGCC Power Plant Italy,Italy,762,39.1037,9.0063,Operating Fully,Fuel Oil,Unknown,550.0,132.194736754,30250.0,2,4,220.0
+44108,ISAB Priolo Gargallo IGCC Power Plant Italy,Italy,764,37.1399,15.2158,Operating Fully,Fuel Oil,Unknown,562.6,127.595548674,30943.0,2,4,225.04
+44111,Djerdap-1 (Iron Gate I) Hydroelectric Power Station Serbia,Serbia,1377,44.6684,22.5268,Operating Fully,Hydro,Unknown,1026.0,5.88233819012,4411.8,0,0,102.6
+44112,Djerdap-11 (Iron Gate II) Hydroelectric Power Station Serbia,Serbia,1446,44.30646,22.5667,Operating Fully,Hydro,Unknown,270.0,5.91052671195,1161.0,0,0,27.0
+44113,Nikola Tesla A Coal Power Plant Serbia,Serbia,1404,44.6707,20.1592,Operating Fully,Lignite,Unknown,1564.0,21.7323219222,101660.0,8,8,312.8
+44114,Nikola Tesla B Coal Power Plant Serbia,Serbia,1404,44.6553,20.0052,Operating Fully,Lignite,Unknown,1240.0,25.6296325933,80600.0,8,8,248.0
+44115,Morava Coal Power Plant Serbia,Serbia,1379,44.2248,21.1627,Operating Fully,Lignite,Unknown,115.0,24.8314064202,7475.0,8,8,23.0
+44116,Kostolac-A Coal Power Plant Serbia,Serbia,1408,44.7229,21.1717,Operating Fully,Lignite,Unknown,310.0,25.7993994168,20150.0,8,8,62.0
+44117,Kostolac-B Coal Power Plant Serbia,Serbia,1408,44.7307,21.2104,Operating Fully,Lignite,Unknown,697.0,23.1030279734,45305.0,8,8,139.4
+44118,Novi Sad CHP Power Plant Serbia,Serbia,1387,45.2681,19.8849,Operating Fully,Fuel Oil,Natural Gas,230.0,124.147037658,12650.0,2,4,92.0
+44119,Zrenjanin CHP Power Plant Serbia,Serbia,1387,45.3572,20.4158,Operating Fully,Natural Gas,Fuel Oil,120.0,56.7623060343,6600.0,2,4,48.0
+44120,Sremska Mitrovica CHP Power Plant Serbia,Serbia,1355,44.9611,19.6543,Operating Fully,Natural Gas,Fuel Oil,45.0,50.5795932939,2475.0,2,4,18.0
+44121,Bajina Basta Hydroelectric Power Plant Serbia,Serbia,1370,43.9645,19.4102,Operating Fully,Hydro,Unknown,365.0,6.42854447409,1569.5,0,0,36.5
+44122,Bajina Basta Pumped Storage Hydroelectric Power Plant Serbia,Serbia,1370,43.9625,19.4123,Operating Fully,Hydro,Unknown,614.0,6.20884852197,2640.2,0,0,61.4
+44123,Pirot Hydroelectric Power Plant Serbia,Serbia,1295,43.1579,22.6154,Operating Fully,Hydro,Unknown,80.0,6.4001584019,344.0,0,0,8.0
+44124,Zvornik Hydroelectric Power Plant Serbia,Serbia,1353,44.3679,19.1067,Operating Fully,Hydro,Unknown,96.0,5.77841089477,412.8,0,0,9.6
+44125,Potpec Hydroelectric Power Plant Serbia,Serbia,1345,43.5228,19.5768,Operating Fully,Hydro,Unknown,51.0,6.06203312632,219.3,0,0,5.1
+44126,Kokin Brod Hydroelectric Power Plant Serbia,Serbia,1345,43.5189,19.8115,Operating Fully,Hydro,Unknown,22.0,6.83971858081,94.6,0,0,2.2
+44127,Bistrica Hydroelectric Power Plant Serbia,Serbia,1345,43.5223,19.742,Operating Fully,Hydro,Unknown,104.0,6.01515309915,447.2,0,0,10.4
+44128,Uvac Hydroelectric Power Plant Serbia,Serbia,1344,43.4224,19.9295,Operating Fully,Hydro,Unknown,36.0,6.35227474237,154.8,0,0,3.6
+44129,Ovcar Banja Hydroelectric Power Plant Serbia,Serbia,1400,43.8995,20.1803,Operating Fully,Hydro,Unknown,6.0,5.83786277732,25.8,0,0,0.6
+44130,Medjuvrsje Hydroelectric Power Plant Serbia,Serbia,1400,43.909,20.2327,Operating Fully,Hydro,Unknown,7.0,6.31578162294,30.1,0,0,0.7
+44131,Saucelle Hydroelectric Power Plant Spain,Spain,133,41.045,-6.8067,Operating Fully,Hydro,Unknown,525.0,6.01190412038,2257.5,0,0,52.5
+44133,Castro Hydroelectric Power Plant Spain,Spain,114,41.5754,-6.18907,Operating Fully,Hydro,Unknown,190.0,5.81242879815,817.0,0,0,19.0
+44134,Ricobayo Hydroelectric Power Plant Spain,Spain,114,41.5274,-5.9857,Operating Fully,Hydro,Unknown,291.0,6.01499459949,1251.3,0,0,29.1
+44135,Villalcampo Hydroelectric Power Plant Spain,Spain,114,41.4913,-6.0861,Operating Fully,Hydro,Unknown,206.0,6.17933645285,885.8,0,0,20.6
+44195,Janschwalde Coal Power Plant Germany,Germany,813,51.8347,14.4603,Operating Fully,Lignite,Unknown,3000.0,22.7290400184,195000.0,8,8,600.0
+44196,Boxberg Coal Power Plant Germany,Germany,835,51.4161,14.564722,Operating Fully,Lignite,Unknown,2575.0,21.918139668,167375.0,8,8,515.0
+44197,Lippendorf Coal Power Plant Germany,Germany,856,51.1822,12.3733,Operating Fully,Lignite,Unknown,1866.0,23.6434073444,121290.0,8,8,373.2
+44199,Heyden Coal Power Plant Germany,Germany,826,52.3819,8.998333,Operating Fully,Coal,Unknown,875.0,41.647420642,56875.0,8,8,175.0
+44200,Voerde Coal Power Plant Germany,Germany,876,51.5771,6.6814,Operating Fully,Lignite,Unknown,2234.0,21.9517177591,145210.0,8,8,446.8
+44208,Großkrotzenburg (Staudinger) Coal CHP Power Station Germany,Germany,919,50.088,8.9522,Operating Fully,Coal,Natural Gas,1823.0,38.702121764,118495.0,8,8,364.6
+44209,Neurath BOA Coal Power Plant Germany,Germany,895,51.035,6.6333,Operating Fully,Lignite,Unknown,2200.0,25.3149836636,143000.0,8,8,440.0
+44210,Neurath Coal Power Plant Germany,Germany,895,51.03786,6.61206,Operating Fully,Lignite,Unknown,2205.0,21.7783326797,143325.0,8,8,441.0
+44211,Frimmersdorf Coal Power Plant Germany,Germany,895,51.0555,6.5767,Operating Fully,Lignite,Unknown,2413.0,23.9053465997,156845.0,8,8,482.6
+44212,Bergkamen Coal CHP Power Plant Germany,Germany,868,51.6368,7.61908,Operating Fully,Coal,Unknown,747.0,35.6577098552,48555.0,8,8,149.4
+44213,Herne Coal CHP Power Plant Germany,Germany,875,51.5502,7.18727,Operating Fully,Coal,Unknown,950.0,38.5181899537,61750.0,8,8,190.0
+44217,Kyndby Thermal Power Plant Denmark,Denmark,1038,55.8134,11.8792,Operating Fully,Fuel Oil,Unknown,646.0,121.256011148,35530.0,2,4,258.4
+44218,Asnaes Coal CHP Power Plant Denmark,Denmark,1038,55.6614,11.0828,Operating Fully,Coal,Fuel Oil,790.0,35.3969872419,51350.0,8,8,158.0
+44219,Avedore Coal CHP Power Plant Denmark,Denmark,1511,55.6027,12.4792,Operating Fully,Coal,Fuel Oil,825.0,42.2421702523,53625.0,8,8,165.0
+44220,Studstrup Coal CHP Power Plant Denmark,Denmark,1036,56.2504,10.344,Operating Fully,Coal,Biomass,750.0,38.1817519945,48750.0,8,8,150.0
+44221,Esbjerb Coal CHP Power Plant Denmark,Denmark,1039,55.4552,8.4544,Operating Fully,Coal,Fuel Oil,378.0,37.056232803,24570.0,8,8,75.6
+44222,Ensted Coal CHP Power Plant Denmark,Denmark,768,55.0206,9.4419,Operating Fully,Coal,Fuel Oil,626.0,42.0150869579,40690.0,8,8,125.2
+44223,Nordjylland Coal CHP Power Station Denmark,Denmark,1032,57.0736,10.0416,Operating Fully,Coal,Fuel Oil,716.0,37.8741673644,46540.0,8,8,143.2
+44224,Fyns Coal CHP Power Plant Denmark,Denmark,1038,55.4287,10.4074,Operating Fully,Coal,Biomass,397.0,41.6296019533,25805.0,8,8,79.4
+44225,Amager Coal CHP Power Plant Denmark,Denmark,1511,55.686,12.627,Operating Fully,Coal,Biomass,438.0,40.6367943079,28470.0,8,8,87.6
+44226,Stignaes Coal CHP Power Plant Denmark,Denmark,1511,55.2079,11.2528,Operating Fully,Coal,Fuel Oil,409.0,36.938416798,26585.0,8,8,81.8
+44227,Randers Coal CHP Power Plant Denmark,Denmark,1033,56.4584,10.0475,Operating Fully,Coal,Biomass,52.0,36.9867999151,3380.0,8,8,10.4
+44234,Svanemolle CHP Power Plant Denmark,Denmark,1511,55.7131,12.588,Operating Fully,Natural Gas,Fuel Oil,81.0,52.5486851392,4455.0,2,4,32.4
+44235,HC Orsted CHP Power Plant Denmark,Denmark,1511,55.6761,12.56834,Operating Fully,Natural Gas,Fuel Oil,185.0,55.5642530925,10175.0,2,4,74.0
+44236,Herning CHP Power Plant Denmark,Denmark,1035,56.1214,9.0068,Operating Fully,Waste,Unknown,95.0,42.1262634766,6175.0,8,4,19.0
+44237,Skaerbaek CHP Power Plant Denmark,Denmark,1037,55.5118,9.6148,Operating Fully,Natural Gas,Fuel Oil,392.0,51.2656133068,21560.0,2,4,156.8
+44303,Altbach Coal Power Plant Germany,Germany,958,48.7175,9.375,Operating Fully,Coal,Unknown,1200.0,38.0273098671,78000.0,8,8,240.0
+44304,Berlin-Mite CCGT CHP Power Plant Germany,Germany,808,52.5116,13.421,Operating Fully,Natural Gas,Fuel Oil,444.0,52.2025697689,24420.0,2,4,177.6
+44305,Irsching-4 (Ulrich Hartmann) CCGT Power Plant Germany,Germany,950,48.767,11.581,Operating Fully,Natural Gas,Fuel Oil,550.0,55.7343931876,30250.0,2,4,220.0
+44306,Irsching-5 CCGT Power Plant Germany,Germany,950,48.7677,11.5854,Operating Fully,Natural Gas,Unknown,850.0,58.7930209639,46750.0,2,4,340.0
+44307,Munchen Sud CCGT CHP Power Plant Germany,Germany,972,48.1143,11.5559,Operating Fully,Natural Gas,Fuel Oil,698.0,52.8726723913,38390.0,2,4,279.2
+44308,Munchen Nord CHP Power Plant Germany,Germany,972,48.1805,11.6393,Operating Fully,Coal,Waste,360.0,36.143124594,23400.0,8,8,72.0
+44309,Freimann CHP Power Plant Germany,Germany,972,48.1889,11.5957,Operating Fully,Natural Gas,Unknown,160.0,51.6399225022,8800.0,2,4,64.0
+44310,Ludwigshafen Mitte CCGT CHP Power Plant Germany,Germany,940,49.4988,8.4341,Operating Fully,Natural Gas,Unknown,496.0,59.495375489,27280.0,2,4,198.4
+44311,Dormagen CCGT CHP Power Plant Germany,Germany,890,51.079,6.8288,Operating Fully,Natural Gas,Fuel Oil,560.0,61.1099133,30800.0,2,4,224.0
+44312,Hamm-Uentrop CHP CCGT Power Plant Germany,Germany,858,51.6736,7.9288,Operating Fully,Natural Gas,Unknown,850.0,57.3145349534,46750.0,2,4,340.0
+44313,Herdecke CCGT Power Plant Germany,Germany,878,51.403,7.4144,Operating Fully,Natural Gas,Unknown,417.0,57.9204082897,22935.0,2,4,166.8
+44315,Nossener Brücke CHP CCGT Power Plant Germany,Germany,865,51.0420638343,13.7086163884,Operating Fully,Natural Gas,Fuel Oil,270.0,55.3265102285,14850.0,2,4,108.0
+44316,Mainz-Wiesbaden CCGT CHP Power Plant Germany,Germany,924,50.0264,8.2373,Operating Fully,Natural Gas,Unknown,406.0,57.8257552136,22330.0,2,4,162.4
+44317,Niehl CCGT CHP Power Plant Germany,Germany,904,50.9748,6.9888,Operating Fully,Natural Gas,Fuel Oil,406.0,51.1726022847,22330.0,2,4,162.4
+44318,Weisweiler Coal Power Plant Germany,Germany,903,50.8387,6.3219,Operating Fully,Lignite,Unknown,1800.0,23.6969367908,117000.0,8,8,360.0
+44319,Niederaussem Coal Power Plant Germany,Germany,904,50.9921,6.6666,Operating Fully,Lignite,Unknown,3400.0,23.3594356513,221000.0,8,8,680.0
+44321,Datteln Coal CHP Power Plant Germany,Germany,875,51.6295,7.3313,Operating Partially,Coal,Unknown,303.0,39.8847466792,19695.0,8,8,60.6
+44322,Knepper CHP Coal Power Plant Germany,Germany,875,51.5683,7.3494,Operating Fully,Coal,Unknown,345.0,40.2985866286,22425.0,8,8,69.0
+44323,Lingen (Emsland) CCGT CHP Power Plant Germany,Germany,823,52.4828,7.3039,Operating Fully,Natural Gas,Fuel Oil,886.0,50.5530660198,48730.0,2,4,354.4
+44324,Lingen Cogeneration Power Plant Germany,Germany,823,52.4807,7.3062,Operating Fully,Natural Gas,Unknown,854.0,60.5405869263,46970.0,2,4,341.6
+44325,Bexbach Coal CHP Power Plant Germany,Germany,943,49.3631,7.23778,Operating Fully,Coal,Unknown,773.0,39.6943086078,50245.0,8,8,154.6
+44327,Weiher-3 (Quierschied) CHP Coal Power Plant Germany,Germany,943,49.3347,7.0348,Operating Fully,Coal,Unknown,724.0,40.6167683479,47060.0,8,8,144.8
+44328,Duisburg-Walsum Coal CHP Power Plant Germany,Germany,876,51.52849,6.71389,Operating Fully,Coal,Unknown,1285.0,35.2452736001,83525.0,8,8,257.0
+44329,Lünen CHP Coal Power Plant Germany,Germany,868,51.6142,7.4805,Operating Fully,Coal,Unknown,507.0,35.8841834608,32955.0,8,8,101.4
+44330,Völklingen-Fens CHP Coal Power Plant Germany,Germany,263,49.2489,6.8812,Operating Fully,Coal,Unknown,466.0,38.0784421467,30290.0,8,8,93.2
+44331,Charlottenburg CHP Power Plant Germany,Germany,802,52.5222,13.3093,Operating Fully,Natural Gas,Fuel Oil,214.0,51.2786171681,11770.0,2,4,85.6
+44332,Wilmersdorf CHP Power Plant Germany,Germany,808,52.4816,13.3078,Operating Fully,Fuel Oil,Natural Gas,330.0,113.535615763,18150.0,2,4,132.0
+44334,Brunsbüttel OCGT Power Plant Germany,Germany,785,53.8925,9.2009,Operating Fully,Fuel Oil,Unknown,256.0,129.401772342,14080.0,2,4,102.4
+44335,Duisberg-Huckingen CHP Power Plant Germany,Germany,876,51.3762,6.7239,Operating Fully,Natural Gas,Natural Gas,606.0,52.6907144526,33330.0,2,4,242.4
+44336,Goldisthal Pumped Storage Power Plant Germany,Germany,902,50.5075,11.0049,Operating Fully,Hydro,Unknown,1060.0,6.26342534338,4558.0,0,0,106.0
+44337,Markersbach Pumped Storage Power Plant Germany,Germany,849,51.10454,13.20174,Operating Fully,Hydro,Unknown,1045.0,6.55871615874,4493.5,0,0,104.5
+44351,Koepchenwerk II (Herdecke) Pumped Storage Power Plant Germany,Germany,878,51.4102,7.4526,Operating Fully,Hydro,Unknown,154.0,6.60898704189,662.2,0,0,15.4
+44352,Erzhausen Pumped Storage Power Plant Germany,Germany,842,51.899,9.9243,Operating Fully,Hydro,Unknown,220.0,6.34410299456,946.0,0,0,22.0
+44353,Wendefurth Pumped Storage Power Plant Germany,Germany,846,51.739,10.9069,Operating Fully,Hydro,Unknown,80.0,6.39390038154,344.0,0,0,8.0
+44354,Rönkhausen Pumped Storage Power Plant Germany,Germany,883,51.2247,7.9934,Operating Fully,Hydro,Unknown,140.0,6.72671508133,602.0,0,0,14.0
+44355,Waldeck I Pumped Storage Power Plant Germany,Germany,886,51.166,9.0461,Operating Fully,Hydro,Unknown,140.0,6.66455166599,602.0,0,0,14.0
+44356,Waldeck II Pumped Storage Power Plant Germany,Germany,886,51.165,9.0427,Operating Fully,Hydro,Unknown,480.0,6.59299561122,2064.0,0,0,48.0
+44379,Super-Bissorte Pumped Storage Hydroelectric Power Station France,France,439,45.202,6.576,Operating Fully,Hydro,Unknown,750.0,6.69921172005,3225.0,0,0,75.0
+44380,Rance Tidal Hydroelectric Power Station France,France,303,48.618,-2.022,Operating Fully,Hydro,Unknown,240.0,6.86166519264,1032.0,0,0,24.0
+44437,Werne (Gersteinwerk Block K) Coal Power Plant Germany,Germany,868,51.6739,7.7195,Operating Fully,Coal,Natural Gas,770.0,39.1783201521,50050.0,8,8,154.0
+44438,Gersteinwerk CCGT Power Plant Germany,Germany,868,51.6732,7.7141,Operating Fully,Natural Gas,Unknown,1285.0,59.2177648757,70675.0,2,4,514.0
+44455,Mannheim Coal CHP Power Plant Germany,Germany,940,49.4442,8.5001,Operating Fully,Coal,Fuel Oil,1455.0,37.9968791066,94575.0,8,8,291.0
+44456,Wehr Pumped Storage Hydroelectric Power Plant Germany,Germany,991,47.6523,7.9262,Operating Fully,Hydro,Unknown,992.0,6.4742054622,4265.6,0,0,99.2
+44459,Schwarze Pumpe Coal Power Plant Germany,Germany,835,51.5357,14.3538,Operating Fully,Lignite,Unknown,1600.0,21.8349682529,104000.0,8,8,320.0
+44460,Wedel CHP Power Plant Germany,Germany,790,53.5667,9.72528,Operating Fully,Coal,Natural Gas,391.7,41.9072240676,25460.5,8,8,78.34
+44461,Wilhelmshaven Coal Power Plant Germany,Germany,793,53.5647,8.1469,Operating Fully,Coal,Fuel Oil,757.0,34.8150100319,49205.0,8,8,151.4
+44462,Zolling Coal CHP Power Plant Germany,Germany,960,48.4554,11.8017,No Data in GEO,Coal,Unknown,474.0,41.3252894726,30810.0,8,8,94.8
+44463,Reuter West CHP Coal Power Plant Germany,Germany,802,52.535,13.2427,Operating Fully,Coal,Fuel Oil,600.0,41.2569570164,39000.0,8,8,120.0
+44464,Heilbronn Coal CHP Power Plant Germany,Germany,944,49.176,9.2073,Operating Fully,Coal,Unknown,1066.0,36.8150668086,69290.0,8,8,213.2
+44465,Berlin Lichterfelde CHP Power PlantGermany,Germany,808,52.4247,13.3102,Operating Fully,Natural Gas,Fuel Oil,450.0,59.6598736368,24750.0,2,4,180.0
+44466,Franken 1 Power Plant Germany,Germany,933,49.4209,11.0081,Operating Fully,Natural Gas,Fuel Oil,843.0,58.3102773275,46365.0,2,4,337.2
+44467,Huckingen Thermal Power Plant Germany,Germany,876,51.3763,6.7239,Operating Fully,Coal,Unknown,640.0,36.1818592067,41600.0,8,8,128.0
+44468,Ibbenburen Coal Power Plant Germany,Germany,832,52.2865,7.7464,Operating Fully,Coal,Fuel Oil,838.0,35.9837279561,54470.0,8,8,167.6
+44469,Ingolstadt Thermal Power Plant Germany,Germany,953,48.7614,11.5032,Operating Fully,Fuel Oil,Unknown,840.0,132.964747965,46200.0,2,4,336.0
+44470,Karlsruhe RDK 7 and 8 Power Plant Germany,Germany,955,49.0131,8.308,Operating Fully,Coal,Unknown,1462.0,38.2827228638,95030.0,8,8,292.4
+44471,Karlsruhe RDK 4s Power Plant Germany,Germany,955,49.0133,8.3028,Operating Partially,Natural Gas,Unknown,365.0,57.5790534102,20075.0,2,4,146.0
+44472,Knapsack CCGT Power Plant Germany,Germany,904,50.8621,6.8491,Operating Fully,Unknown,Unknown,430.0,117.242456887,27950.0,8,8,172.0
+44473,Rostock CHP Coal Power Plant Germany,Germany,774,54.1414,12.1319,Operating Fully,Coal,Unknown,553.0,40.28625753,35945.0,8,8,110.6
+44474,Gustav Knepper Coal Power Plant Germany,Germany,875,51.5683,7.3489,Operating Fully,Coal,Natural Gas,364.0,36.6611946239,23660.0,8,8,72.8
+44475,Westfalen Coal Power Plant Germany,Germany,858,51.6805,7.9696,Operating Fully,Coal,Unknown,305.0,39.8217497931,19825.0,8,8,61.0
+44476,Mehrum Coal Power Plant Germany,Germany,822,52.315,10.093,Operating Fully,Coal,Unknown,750.0,34.8415143642,48750.0,8,8,150.0
+44479,Veltheim Coal Power Plant Germany,Germany,833,52.1898,8.9335,Operating Fully,Coal,Unknown,320.0,41.7117003671,20800.0,8,8,64.0
+44480,Lausward E CHP Coal Power Plant Germany,Germany,890,51.222,6.7317,Operating Fully,Coal,Natural Gas,458.0,35.9235984008,29770.0,8,8,91.6
+44481,Westfalen Hamm Coal Power Plant Germany,Germany,858,51.6766,7.9724,Operating Fully,Coal,Unknown,1600.0,41.8355500249,104000.0,8,8,320.0
+44482,Hamburg-Moorburg CHP Coal Power Plant Gerrmany,Germany,788,53.489,9.949,Built and In Test Stage,Coal,Unknown,1640.0,37.0236351216,106600.0,8,8,328.0
+44483,Irsching 3 Power Plant Germany,Germany,950,48.767,11.58,Operating Partially,Natural Gas,Fuel Oil,440.0,52.0871433119,24200.0,2,4,176.0
+44495,Eems CCGT Power Plant Netherlands,Netherlands,607,53.4348,6.8791,Operating Fully,Natural Gas,Unknown,1705.0,51.8387079865,93775.0,2,4,682.0
+44496,Sloe CCGT CHP Power Plant Netherland,Netherlands,536,51.4481,3.6926,Operating Fully,Natural Gas,Unknown,870.0,54.6723791322,47850.0,2,4,348.0
+44497,Rijnmond CCGT power plant Netherland,Netherlands,621,51.8902,4.3552,Operating Fully,Natural Gas,Unknown,790.0,51.2056843246,43450.0,2,4,316.0
+44498,Den Hague Repower CHP Power Plant Netherlands,Netherlands,621,52.076,4.2905,Operating Fully,Natural Gas,Unknown,120.0,54.1084894022,6600.0,2,4,48.0
+44499,Diemen-33 CCGT CHP Power Plant Netherlands,Netherlands,619,52.3389,5.0213,Operating Fully,Natural Gas,Unknown,266.0,53.5711510218,14630.0,2,4,106.4
+44500,Diemen-34 CCGT CHP Power Plant Netherlands,Netherlands,619,52.3384,5.0218,Operating Fully,Natural Gas,Unknown,435.0,55.2354708458,23925.0,2,4,174.0
+44501,Flevo Maxima Centrale CCGT Power Plant Netherlands,Netherlands,614,52.5772,5.53,Operating Fully,Natural Gas,Unknown,860.0,58.1893559861,47300.0,2,4,344.0
+44502,Enecogen CCGT Power Plant Netherlands,Netherlands,621,51.957,4.0916,Operating Fully,Natural Gas,Unknown,870.0,57.0718623172,47850.0,2,4,348.0
+44503,Langeweide CHP Power Plant Netherlands,Netherlands,619,52.1026,5.0713,Operating Fully,Natural Gas,Unknown,266.0,59.8520765768,14630.0,2,4,106.4
+44504,Merwedekanaal CHP Power Plant Netherlands,Netherlands,619,52.1017,5.0794,Operating Fully,Natural Gas,Unknown,425.0,59.8574618617,23375.0,2,4,170.0
+44505,Hemweg 9 CCGT CHP Power Plant Netherlands,Netherlands,617,52.4063,4.8418,Operating Fully,Natural Gas,Unknown,435.0,54.5542113569,23925.0,2,4,174.0
+44511,Elsta CCGT Power Plant Netherlands,Netherlands,539,51.3331,3.7787,Operating Fully,Natural Gas,Unknown,460.0,60.8134893148,25300.0,2,4,184.0
+44512,Maasstroom CCGT Power Plant Netherlands,Netherlands,621,51.8901,4.352,Operating Fully,Natural Gas,Unknown,428.0,60.6169043856,23540.0,2,4,171.2
+44513,Magnum CCGT Power Plant Netherland,Netherlands,607,53.448,6.8527,Operating Fully,Natural Gas,Unknown,1290.0,55.0016845106,70950.0,2,4,516.0
+44514,Moerdijk-2 CCGT Power Plant Netherlands,Netherlands,624,51.6861,4.580278,Operating Fully,Natural Gas,Unknown,430.0,52.7675188703,23650.0,2,4,172.0
+44515,Moerdijk-1 CHP Power Plant Netherlands,Netherlands,624,51.6849,4.5805,Operating Fully,Natural Gas,Unknown,339.0,52.9965029354,18645.0,2,4,135.6
+44516,Swentibold CHP Power Plant Netherlands,Netherlands,628,50.9721,5.7911,Operating Fully,Natural Gas,Coal,231.0,51.4064828854,12705.0,2,4,92.4
+44517,Amer CHP Coal Power Plant Netherlands,Netherlands,624,51.7081,4.8438,Operating Fully,Coal,Natural Gas,1245.0,37.5032224583,80925.0,8,8,249.0
+44518,Gelderland Coal Power Plant Netherlands,Netherlands,622,51.8561,5.8294,Operating Fully,Coal,Biomass,590.0,36.1813726701,38350.0,8,8,118.0
+44519,Maasvlakte Electrabel Coal Power Plant Netherlands,Netherlands,621,51.9443,4.0723,Operating Fully,Coal,Unknown,800.0,37.2002467852,52000.0,8,8,160.0
+44520,Hemweg-8 Coal Power Plant Netherlands,Netherlands,617,52.4049,4.8465,Operating Fully,Coal,Unknown,680.0,38.5981743618,44200.0,8,8,136.0
+44521,Maasvlakte 1-2 Coal Power Plant Netherlands,Netherlands,621,51.9588,4.026,Operating Fully,Coal,Natural Gas,1080.0,38.2062304413,70200.0,8,8,216.0
+44522,Maasvlakte-3 USC coal Power Plant Netherlands,Netherlands,621,51.9626,4.0217,Built and In Test Stage,Coal,Natural Gas,1113.0,35.883523593,72345.0,8,8,222.6
+44523,Eemshaven USC Coal Power Plant Netherlands,Netherlands,607,53.4441,6.856,Under Construction,Coal,Biomass,1600.0,38.5937410299,104000.0,8,8,320.0
+44525,Borssele Coal Power Plant Netherland,Netherlands,536,51.4331,3.7169,Operating Fully,Coal,Biomass,406.0,37.3759022463,26390.0,8,8,81.2
+44527,Maasvlakte UCML CHP Power Plant Netherlands,Netherlands,621,51.96,4.0254,Operating Fully,Natural Gas,Coal,80.0,58.5744667873,4400.0,2,4,32.0
+44528,Gallileistraat CHP Power Plant Netherlands,Netherlands,621,51.9107,4.4269,Operating Fully,Natural Gas,Unknown,230.0,54.8132665093,12650.0,2,4,92.0
+44529,RoCA3 CHP Power Plant Netherlands,Netherlands,623,51.9536,4.5614,Operating Fully,Natural Gas,Unknown,218.0,51.1801458936,11990.0,2,4,87.2
+4453,Neckarwestheim Nuclear Power Plant Germany,Germany,952,49.0407817639,9.17587430584,No Data in GEO,Nuclear,Unknown,2235.0,12.799123095,670500.0,24,24,447.0
+44530,Almere CHP Power Plant Netherlands,Netherlands,619,52.3883,5.2158,Operating Fully,Natural Gas,Unknown,128.0,56.4899855926,7040.0,2,4,51.2
+44531,Harculo HC60 (IJssel Centrale) Power Plant Netherlands,Netherlands,616,52.468,6.1088,Operating Fully,Natural Gas,Fuel Oil,350.0,52.6088393381,19250.0,2,4,140.0
+44532,Velsen Power Plant Netherlands,Netherlands,617,52.4723,4.6331,No Data in GEO,Natural Gas,Natural Gas,820.0,52.9875137881,45100.0,2,4,328.0
+44533,Claus A power Plant Netherlands,Netherlands,628,51.1542,5.907,Operating Fully,Natural Gas,Unknown,640.0,58.2734059771,35200.0,2,4,256.0
+44536,Purmerend CHP Power Plant Netherlands,Netherlands,617,52.5161,4.9954,Operating Fully,Natural Gas,Unknown,69.0,52.8452194222,3795.0,2,4,27.6
+44537,IJmond CHP Power Plant Netherlands,Netherlands,617,52.4758,4.6048,Operating Fully,Natural Gas,Natural Gas,144.0,53.9679716013,7920.0,2,4,57.6
+44538,Shell Pernis Power Plant Netherlands,Netherlands,621,51.881,4.3376,Operating Fully,Natural Gas,Unknown,82.0,54.5345991727,4510.0,2,4,32.8
+44764,Capljina Pumped Storage Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1358,43.013325,17.803991,Operating Fully,Hydro,Unknown,420.0,6.35269036283,1806.0,0,0,42.0
+44765,Visegrad Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1346,43.760324,19.289053,Operating Fully,Hydro,Unknown,315.0,6.11506059117,1354.5,0,0,31.5
+44766,Salakovac Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1254,43.447752,17.836906,Operating Fully,Hydro,Unknown,210.0,6.17402851518,903.0,0,0,21.0
+44767,Jablanica Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1254,43.692406,17.732527,No Data in GEO,Hydro,Unknown,180.0,7.0112126209,774.0,0,0,18.0
+44768,Trebinje I Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1357,42.706912,18.381028,Operating Fully,Hydro,Unknown,180.0,6.70493963821,774.0,0,0,18.0
+44770,Rama Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1254,43.747041,17.675838,Operating Fully,Hydro,Unknown,160.0,6.38422405465,688.0,0,0,16.0
+44771,Grabovica Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1254,43.5872,17.71886,Operating Fully,Hydro,Unknown,115.0,6.98700336688,494.5,0,0,11.5
+44772,Bocac Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1372,44.562603,17.135024,Operating Fully,Hydro,Unknown,110.0,6.03767421478,473.0,0,0,11.0
+44773,Mostar Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1254,43.377414,17.844829,Operating Fully,Hydro,Unknown,72.0,6.01449562933,309.6,0,0,7.2
+44777,Freudenau Hydroelectric Power Plant Austria,Austria,999,48.1766,16.4814,Operating Fully,Hydro,Unknown,172.0,6.6209870342,739.6,0,0,17.2
+44791,Tuzla CHP Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1365,44.5215,18.6056,Operating Fully,Lignite,Unknown,730.0,23.5235343644,47450.0,8,8,146.0
+44792,Kakanj CHP Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1361,44.08988,18.11426,Operating Fully,Lignite,Unknown,450.0,22.957944641,29250.0,8,8,90.0
+44793,Gacko Coal CHP Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1358,43.1724,18.5128,Operating Fully,Lignite,Unknown,300.0,24.6712050929,19500.0,8,8,60.0
+44794,Ugljevik CHP Coal Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1365,44.6829,18.9671,Operating Fully,Lignite,Unknown,300.0,23.467709433,19500.0,8,8,60.0
+44805,Dubrovnik Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1357,42.6037,18.2357,Operating Fully,Hydro,Unknown,216.0,6.40197858616,928.8,0,0,21.6
+44806,Trebinje II Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1357,42.70664,18.3805,Operating Fully,Hydro,Unknown,8.0,6.24736499162,34.4,0,0,0.8
+44808,Pec Mlini Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1242,43.3375,17.3261,Operating Fully,Hydro,Unknown,30.0,6.40485788355,129.0,0,0,3.0
+44809,Mostarsko Blato Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1254,43.2989,17.794,Operating Fully,Hydro,Unknown,60.0,6.25446191808,258.0,0,0,6.0
+44811,Jajce I Hidroelektrana Bosnia and Herzegovina,Bosnia and Herzegovina,1238,44.377384575,17.2815995202,Operating Fully,Hydro,Unknown,48.0,6.44278299815,206.4,0,0,4.8
+44813,Jajce II Hidroelektrana Bosnia and Herzegovin,Bosnia and Herzegovina,1238,44.427775,17.239535,Operating Fully,Hydro,Unknown,30.0,6.86258920315,129.0,0,0,3.0
+44814,Malta Oberstufe Pumped Storage Power Plant Austria,Austria,1021,47.0790144097,13.3432920344,Operating Fully,Hydro,Unknown,120.0,5.83769836412,516.0,0,0,12.0
+44815,Malta Haupstufe (Rottau)  Pumped Storage Power Plant Austria,Austria,1021,46.8707,13.3294,Operating Fully,Hydro,Unknown,730.0,6.44625918447,3139.0,0,0,73.0
+44818,Krupa Hydroelectric Power Plant Bosnia and Herzegovina,Bosnia and Herzegovina,1372,44.5624,17.135,Operating Fully,Hydro,Unknown,48.5,6.17100663742,208.55,0,0,4.85
+44819,Malta Unterstufe (Moellbruecke) Hydroelectric Power Plant Austria,Austria,1021,46.833219,13.360147,Operating Fully,Hydro,Unknown,41.0,6.99721510474,176.3,0,0,4.1
+44820,Plomin Thermal Power Plant Croatia,Croatia,1234,45.137,14.164,Operating Fully,Coal,Unknown,330.0,35.8007947843,21450.0,8,8,66.0
+44821,Sisak Thermal Power Plant Croatia,Croatia,1228,45.4538,16.4144,Operating Fully,Fuel Oil,Natural Gas,420.0,129.171749845,23100.0,2,4,168.0
+44822,Rijeka Thermal Power Plant Croatia,Croatia,1234,45.2862,14.5207,Operating Fully,Fuel Oil,Unknown,320.0,129.574348691,17600.0,2,4,128.0
+44823,Zagreb Te-To CHP Power Plant Croatia,Croatia,1229,45.7816,16.0169,Operating Fully,Natural Gas,Fuel Oil,328.0,52.3398882528,18040.0,2,4,131.2
+44824,Zagreb El-To CHP Power Plant Croatia,Croatia,1229,45.8069,15.9498,Operating Fully,Natural Gas,Fuel Oil,86.8,58.2112106951,4774.0,2,4,34.72
+44825,Jertovec CCGT Power Plant Croatia,Croatia,1228,46.0386,16.1814,Operating Fully,Natural Gas,Fuel Oil,78.0,56.6206565373,4290.0,2,4,31.2
+44826,Osijek TE-TO CHP Power Plant Croatia,Croatia,1508,45.542,18.7449,Operating Fully,Natural Gas,Fuel Oil,89.0,57.5721624336,4895.0,2,4,35.6
+44828,Varazdin Hydroelectric Power Plant Croatia Croatia,Croatia,1241,46.3479,16.2684,Operating Fully,Hydro,Unknown,94.0,6.62162888573,404.2,0,0,9.4
+44829,Cakovec Hydroelectric Power Plant Croatia Croatia,Croatia,1241,46.3113,16.4945,Operating Fully,Hydro,Unknown,76.0,6.40922135072,326.8,0,0,7.6
+44830,Dubrava Hydroelectric Power Plant Croatia Croatia,Croatia,1241,46.3205,16.7489,Operating Fully,Hydro,Unknown,76.0,7.01149447634,326.8,0,0,7.6
+44831,Peruca Hydroelectric Power Plant Croatia,Croatia,1242,43.7951,16.5968,Operating Fully,Hydro,Unknown,60.0,6.16563154457,258.0,0,0,6.0
+44832,Zakucac Hydroelectric Power Plant Croatia,Croatia,1242,43.4581,16.7027,Operating Fully,Hydro,Unknown,522.0,5.82186341712,2244.6,0,0,52.2
+44834,Orlovac Hydroelectric Power Plant Croatia,Croatia,1242,43.6737,16.784,Operating Fully,Hydro,Unknown,237.0,5.99847307429,1019.1,0,0,23.7
+44835,Djale Hydroelectric Power Plant Croatia,Croatia,1242,43.5745,16.7115,Operating Fully,Hydro,Unknown,40.8,6.41225654632,175.44,0,0,4.08
+44836,Kraljevac Hydroelectric Power Plant Croatia,Croatia,1242,43.4307,16.8849,Operating Fully,Hydro,Unknown,46.4,6.64257009509,199.52,0,0,4.64
+44837,Jaruga Hydroelectric Power Plant Croatia Croatia,Croatia,1240,43.805,15.9626,Operating Fully,Hydro,Unknown,7.2,6.74827180488,30.96,0,0,0.72
+44838,Maljacka Hydroelectric Power Plant Croatia Croatia,Croatia,1240,44.00194,16.01917,Operating Fully,Hydro,Unknown,24.0,6.73785019947,103.2,0,0,2.4
+44840,Golubic Hydroelectric Power Plant Croatia Croatia,Croatia,1240,44.09,16.2204,Operating Fully,Hydro,Unknown,7.5,6.80562768995,32.25,0,0,0.75
+44841,Vinodol Hydroelectric Power System Croatia Croatia,Croatia,1233,45.2286,14.6736,Operating Fully,Hydro,Unknown,90.0,6.67516283462,387.0,0,0,9.0
+44842,Senj Hydroelectric Power System Croatia Croatia,Croatia,1236,44.9429,14.9276,Operating Fully,Hydro,Unknown,216.0,6.8427894344,928.8,0,0,21.6
+44843,Ozalj Hydroelectric Power Plant Croatia Croatia,Croatia,1229,45.6143,15.4778,Operating Fully,Hydro,Unknown,5.5,6.34055721093,23.65,0,0,0.55
+44844,Gojak Hydroelectric Power Plant Croatia Croatia,Croatia,1235,45.2989,15.2633,Operating Fully,Hydro,Unknown,55.5,6.63772398549,238.65,0,0,5.55
+44845,Sklope Hydroelectric Power Plant Croatia Croatia,Croatia,1236,44.6895,15.2706,Operating Fully,Hydro,Unknown,22.5,5.77042807382,96.75,0,0,2.25
+44846,Lesce Hydroelectric Power Plant Croatia Croatia,Croatia,1235,45.3485,15.3452,Operating Fully,Hydro,Unknown,42.3,6.74021018682,181.89,0,0,4.23
+45014,Cheylas (Le) Hydroelectric Power Station France,France,434,45.385,5.999,Operating Fully,Hydro,Unknown,480.0,6.9583091943,2064.0,0,0,48.0
+45029,Shamrock Coal Power Plant Germany,Germany,875,51.5283,7.179,Decommissioned,Coal,Unknown,120.0,39.1820298627,7800.0,8,8,24.0
+45030,Lünen Trianel Coal Power Plant Germany,Germany,868,51.61412,7.46155,Operating Fully,Coal,Unknown,750.0,41.0873930584,48750.0,8,8,150.0
+45035,Gerlos I-II Hydroelectric Power Plant Austria,Austria,1015,47.2342852358,11.8994173056,No Data in GEO,Hydro,Unknown,200.0,6.36112539446,860.0,0,0,20.0
+45043,Rosshag Pumped Storage Power Plant Austria,Austria,1019,47.086589,11.773926,Operating Fully,Hydro,Unknown,231.0,6.38643986454,993.3,0,0,23.1
+45044,Mayrhofen Storage Power Plant Austria,Austria,1015,47.158065,11.850133,Operating Fully,Hydro,Unknown,345.0,6.6488273794,1483.5,0,0,34.5
+45046,Haeusling Pumped Storage Power Plant Austria,Austria,1015,47.14613,11.967519,No Data in GEO,Hydro,Unknown,360.0,6.86119280153,1548.0,0,0,36.0
+45051,Kaprun Limberg II Pumped Storage Power Plant Austria,Austria,1013,47.19719,12.719205,Operating Fully,Hydro,Unknown,480.0,6.96063033833,2064.0,0,0,48.0
+45055,Altenwoerth Hydroelectric Power Plant Austria,Austria,997,48.3745,15.8556,Operating Fully,Hydro,Unknown,328.0,6.70949080618,1410.4,0,0,32.8
+45056,Greifenstein Hydroelectric Power Plant Austria,Austria,996,48.3553,16.242,Operating Fully,Hydro,Unknown,293.0,6.17376341832,1259.9,0,0,29.3
+45057,Aschach Hydroelectric Power Plant Austria,Austria,1001,48.3853,14.023,Operating Fully,Hydro,Unknown,287.0,6.62725165915,1234.1,0,0,28.7
+4511,Nogent Nuclear Power Plant France,France,304,48.5170848669,3.51809949311,No Data in GEO,Nuclear,Unknown,2726.0,12.241650751,817800.0,24,24,545.2
+45146,Mellach CCGT Power Plant Austria,Austria,1017,46.90859,15.49214,Operating Fully,Natural Gas,Unknown,838.0,50.0825119717,46090.0,2,4,335.2
+45150,Mellach CHP Power Plant Austria,Austria,1017,46.9115,15.4884,Operating Fully,Coal,Unknown,246.0,36.9673917058,15990.0,8,8,49.2
+45151,Duernrohr CHP Power Plant Austria,Austria,997,48.3264,15.9246,Operating Fully,Coal,Natural Gas,757.0,42.1288556694,49205.0,8,8,151.4
+45154,Villerest Hydroelectric Power Station France,France,412,45.9869,4.04938,Operating Fully,Hydro,Unknown,58.0,6.09488696603,249.4,0,0,5.8
+45155,Bathie (La) Hydroelectric Power Station France,France,423,45.64467,6.44817,Operating Fully,Hydro,Unknown,546.0,6.69029241906,2347.8,0,0,54.6
+45157,Revin Pump Storage Hydroelectric Power Station France,France,233,49.92537,4.614,Operating Fully,Hydro,Unknown,800.0,6.8776471413,3440.0,0,0,80.0
+45164,Ottenheim-Wilhering Hydroelectric Power Plant Austria,Austria,1001,48.31663,14.1512,Operating Fully,Hydro,Unknown,179.0,6.19723403394,769.7,0,0,17.9
+45165,Abwinden-Asten Hydroelectric Power Plant Austria,Austria,1000,48.24798,14.4305,Operating Fully,Hydro,Unknown,168.0,5.78434351391,722.4,0,0,16.8
+45166,Wallsee- Mitterkirchen Hydroelectric Power Plant Austria,Austria,1000,48.16656,14.6953,Operating Fully,Hydro,Unknown,210.0,6.2499906855,903.0,0,0,21.0
+45167,Ybbs-Persenburg Hydroelectric Power Plant Austria,Austria,1002,48.18916,15.0682,Operating Fully,Hydro,Unknown,236.5,6.18594277846,1016.95,0,0,23.65
+45168,Melk Hydroelectric Power Plant Austria,Austria,998,48.2232,15.3042,Operating Fully,Hydro,Unknown,187.0,6.49838264814,804.1,0,0,18.7
+45169,Jochenstein Hydroelectric Power Plant Austria,Austria,1030,48.5184,13.7076,Operating Fully,Hydro,Unknown,132.0,5.92511060246,567.6,0,0,13.2
+45173,Werndorf-Neudorf CHP Power Plant Austria,Austria,1017,46.90835,15.4836,Operating Partially,Fuel Oil,Unknown,164.0,116.10757957,9020.0,2,4,65.6
+45176,Simmering CCGT Power Plant Austria,Austria,999,48.1814,16.4339,Operating Fully,Natural Gas,Fuel Oil,700.0,56.728497966,38500.0,2,4,280.0
+45177,Timelkam CCGT CHP Power Plant Austria,Austria,1005,48.0122,13.5895,Operating Fully,Natural Gas,Unknown,405.0,51.7965457678,22275.0,2,4,162.0
+45178,Donaustadt 1-3 Power Plant Austria,Austria,999,48.19917,16.4633,Operating Fully,Natural Gas,Fuel Oil,529.0,51.2384426767,29095.0,2,4,211.6
+45179,Salzburg Mitte CHP Power Plant Austria,Austria,1007,47.8092,13.038,Operating Fully,Natural Gas,Fuel Oil,83.7,56.9350248241,4603.5,2,4,33.48
+45180,Salzburg North CHP Power Plant Austria,Austria,1007,47.8274,13.0336,Operating Fully,Natural Gas,Fuel Oil,13.5,60.5185070817,742.5,2,4,5.4
+45181,Leopoldau CHP Power Plant Austria,Austria,996,48.2767,16.4339,Operating Fully,Natural Gas,Fuel Oil,155.0,55.0566119703,8525.0,2,4,62.0
+45182,Feistritz-Ludmannsdorf Hydroelectric Power Plant Austria,Austria,1027,46.5347,14.1712,Operating Fully,Hydro,Unknown,88.0,7.03349830384,378.4,0,0,8.8
+45183,Paternion Hydroelectric Power Plant Austria,Austria,1021,46.72089,13.6453,Operating Fully,Hydro,Unknown,24.0,6.1516537816,103.2,0,0,2.4
+45184,Villach Hydroelectric Power Plant Austria,Austria,1027,46.6329,13.8294,Operating Fully,Hydro,Unknown,24.6,6.37488929735,105.78,0,0,2.46
+45185,Kellersberg Hydroelectric Power Plant Austria,Austria,1021,46.67,13.7255,Operating Fully,Hydro,Unknown,24.6,6.02081450247,105.78,0,0,2.46
+45186,Rosegg-St. Jakob Hydroelectric Power Plant Austria,Austria,1027,46.5696,14.0268,Operating Fully,Hydro,Unknown,80.0,6.61273620287,344.0,0,0,8.0
+45187,Ferlach-Maria Rain Hydroelectric Power Plant Austria,Austria,1029,46.5462,14.2985,Operating Fully,Hydro,Unknown,75.0,6.11552815845,322.5,0,0,7.5
+45188,Annabruecke Hydroelectric Power Plant Austria,Austria,1026,46.5612,14.4795,Operating Fully,Hydro,Unknown,90.0,5.8574021933,387.0,0,0,9.0
+45190,Edling Hydroelectric Power Plant Austria,Austria,1026,46.6297,14.7012,Operating Fully,Hydro,Unknown,87.0,5.88647271776,374.1,0,0,8.7
+45191,Schwabeck Hydroelectric Power Plant Austria,Austria,1022,46.658,14.8726,Operating Fully,Hydro,Unknown,79.0,6.74862388768,339.7,0,0,7.9
+45192,Lavamuend Hydroelectric Power Plant Austria,Austria,1022,46.6433,14.9377,Operating Fully,Hydro,Unknown,28.0,5.88877019959,120.4,0,0,2.8
+45194,Boesdornau Hydroelectric Power Plant Austria,Austria,1019,47.1516,11.8326,Operating Fully,Hydro,Unknown,25.3,6.23118322622,108.79,0,0,2.53
+45195,Tuxbach Hydroelectric Power Plant Austria,Austria,1019,47.1485,11.8225,Operating Fully,Hydro,Unknown,1.0,6.13034125749,4.3,0,0,0.1
+45197,Funsingau Hydroelectric Power Plant Austria,Austria,1015,47.2354,12.05826,Operating Fully,Hydro,Unknown,25.0,6.68826977997,107.5,0,0,2.5
+45199,Kolbnitz (Reisseck/Kreuzeck) Hydroelectric Power Plant Austria,Austria,1021,46.8727,13.3117,Operating Fully,Hydro,Unknown,138.1,6.86235313019,593.83,0,0,13.81
+45204,Feldsee Pumped storage Power Plant Austria,Austria,1013,46.9932,13.0459,Operating Fully,Hydro,Unknown,140.0,6.19359920417,602.0,0,0,14.0
+45205,Innerfragant Pumped Storage Power Plant Austria,Austria,1025,46.977,13.0509,Operating Fully,Hydro,Unknown,108.0,6.01365963412,464.4,0,0,10.8
+45206,Rodund I Hydroelectric Power Plant Austria,Austria,1023,47.085,9.88167,Operating Fully,Hydro,Unknown,198.0,6.09298073834,851.4,0,0,19.8
+45207,Rodund II Pumped Storage Power Plant Austria,Austria,1023,47.0841,9.88088,Operating Fully,Hydro,Unknown,295.0,6.10050198661,1268.5,0,0,29.5
+45208,Obervermunt Hydroelectric Power Plant Austria,Austria,1028,46.9271,10.0536,Operating Fully,Hydro,Unknown,29.0,6.85591973868,124.7,0,0,2.9
+45209,Vermunt Hydroelectric Power Plant Austria,Austria,1028,46.9688,10.0558,Operating Fully,Hydro,Unknown,157.0,6.16172361657,675.1,0,0,15.7
+45210,Kops I Hydroelectric Power Plant Austria,Austria,1028,46.9712,10.0576,Operating Fully,Hydro,Unknown,247.0,6.81772884119,1062.1,0,0,24.7
+45211,Kops II Pumped Storage Power Plant Austria,Austria,1028,46.9781,10.04169,Operating Fully,Hydro,Unknown,450.0,5.96777017136,1935.0,0,0,45.0
+45212,Rifa Pumped Storage Power Plant Austria,Austria,1028,46.9743,10.0433,Operating Fully,Hydro,Unknown,7.0,6.01835031596,30.1,0,0,0.7
+45213,Luenersee Pumped Storage Power Plant Austria,Austria,1023,47.0737,9.8735,Operating Fully,Hydro,Unknown,260.0,6.37955778959,1118.0,0,0,26.0
+45214,Walgau Hydroelectric Power Plant Austria,Austria,1020,47.1989,9.6699,Operating Fully,Hydro,Unknown,94.0,6.38142641402,404.2,0,0,9.4
+45215,Latschau Hydroelectric Power Plant Austria,Austria,1023,47.0739,9.8749,Operating Fully,Hydro,Unknown,9.0,6.25651319285,38.7,0,0,0.9
+45216,Vianden Pumped Storage Power Plant Luxembourg,Luxembourg,604,49.9518,6.1784,Operating Fully,Hydro,Unknown,1296.0,6.75475571545,5572.8,0,0,129.6
+45217,Esch-sur-Alzette CCGT Power Plant Luxembourg,Luxembourg,606,49.5119,5.9646,Operating Fully,Natural Gas,Unknown,385.0,51.638196893,21175.0,2,4,154.0
+45218,Grande Dixence Hydroelectric Power Scheme Switzerland,Switzerland,601,46.0731,7.4034,Operating Fully,Hydro,Unknown,2069.0,5.82575553749,8896.7,0,0,206.9
+45219,Verzasca Hydroelectric Power Plant Switzerland,Switzerland,591,46.1941,8.8497,Operating Fully,Hydro,Unknown,105.0,6.27637326211,451.5,0,0,10.5
+45220,Felsenau Hydroelectric Power Plant Switzerland,Switzerland,575,46.9688,7.4391,Operating Fully,Hydro,Unknown,11.3,6.39450232289,48.59,0,0,1.13
+45221,Muehleberg Hydroelectric Power Plant Switzerland,Switzerland,575,46.9692,7.2844,Operating Fully,Hydro,Unknown,45.0,6.87450331931,193.5,0,0,4.5
+45222,Aarberg Hydroelectric Power Plant Switzerland,Switzerland,575,47.0378,7.272,Operating Fully,Hydro,Unknown,15.5,6.36600981228,66.65,0,0,1.55
+45223,Niederried-Radelfingen Hydroelectric Power Plant Switzerland,Switzerland,575,47.0031,7.241,Operating Fully,Hydro,Unknown,15.0,6.81716531558,64.5,0,0,1.5
+45288,Mauvoisin Hydroelectric Power Plant Switzerland,Switzerland,601,46.15726,7.20922,Operating Fully,Hydro,Unknown,388.0,5.81943914599,1668.4,0,0,38.8
+45400,Bayet CCGT Power Plant France,France,405,46.2731,3.3007,Operating Fully,Natural Gas,Unknown,408.0,58.4164236513,22440.0,2,4,163.2
+45424,San Fiorano Pumped Storage Power Plant Italy,Italy,640,46.0442,10.3521,Operating Fully,Hydro,Unknown,568.0,6.06968820391,2442.4,0,0,56.8
+45429,Koralpe Pumped Storage Power Plant Austria,Austria,1022,46.6339,14.956,Operating Fully,Hydro,Unknown,50.0,6.08529662154,215.0,0,0,5.0
+45430,Presenzano (Domenico Cimarosa) Pumped Storage Power Plant Italy,Italy,736,41.38158,14.09034,Operating Fully,Hydro,Unknown,1000.0,6.78145977954,4300.0,0,0,100.0
+45431,Roncovalgrande Pumped Storage Power Plant Italy,Italy,647,46.0702,8.7339,Operating Fully,Hydro,Unknown,1016.0,7.02275170257,4368.8,0,0,101.6
+45432,Entracque Chiotas-Piastra Pumped Storage Power Plant Italy,Italy,702,44.2256,7.38417,Operating Fully,Hydro,Unknown,1184.0,6.00343589277,5091.2,0,0,118.4
+45433,Entracque Rovina-Piastra Pumped Storage Power Plant Italy,Italy,702,44.2256,7.3817,Operating Fully,Hydro,Unknown,134.0,6.17170081362,576.2,0,0,13.4
+45434,Anapo Pumped Storage Power Plant Italy,Italy,764,37.1183,15.1394,Operating Fully,Hydro,Unknown,500.0,7.02361874314,2150.0,0,0,50.0
+45435,La Batiaz Hydroelectric Power Plant Switzerland,Switzerland,603,46.10667,7.0526,Operating Fully,Hydro,Unknown,162.0,6.67167225383,696.6,0,0,16.2
+45436,Linth–Limmern (Tierfehd) Hydroelectric Power Stations Switzerland,Switzerland,576,46.8763,8.9916,Operating Fully,Hydro,Unknown,479.0,5.85004178622,2059.7,0,0,47.9
+45437,Linth-Limmern Pumped Storage Power Plant Switzerland,Switzerland,576,46.84886,9.01184,Under Construction,Hydro,Unknown,1000.0,6.89807850645,4300.0,0,0,100.0
+45438,Grimsel I Hydroelectric Power Plant Switzerland,Switzerland,582,46.57716,8.3392,Operating Fully,Hydro,Unknown,67.0,6.12213070756,288.1,0,0,6.7
+45439,Grimsel 2 Pumped Storage Power Plant Switzerland,Switzerland,582,46.5653591063,8.32775617981,Operating Fully,Hydro,Unknown,348.0,6.25714228548,1496.4,0,0,34.8
+45440,Handeck 1 Hydroelectric Power Plant Switzerland,Switzerland,582,46.6167,8.30768,Operating Fully,Hydro,Unknown,100.0,6.77373790155,430.0,0,0,10.0
+45443,Handeck 2 Hydroelectric Power Plant Switzerland,Switzerland,582,46.6157,8.30382,Operating Fully,Hydro,Unknown,136.0,6.80859559479,584.8,0,0,13.6
+45444,Handeck 3 Hydroelectric Power Plant Switzerland,Switzerland,582,46.617,8.30627,Operating Fully,Hydro,Unknown,55.0,6.28968185599,236.5,0,0,5.5
+45445,Hopflauenen Hydroelectric Power Plant Switzerland,Switzerland,582,46.71484,8.27435,Operating Fully,Hydro,Unknown,92.0,6.3072620915,395.6,0,0,9.2
+45446,Innertkirchen 2 Hydroelectric Power Plant Switzerland,Switzerland,582,46.70857,8.22597,Operating Fully,Hydro,Unknown,62.0,6.67190996539,266.6,0,0,6.2
+45447,Innertkirchen 1 Hydroelectric Power Plant Switzerland,Switzerland,582,46.7021,8.2353,Operating Fully,Hydro,Unknown,255.0,5.84930694458,1096.5,0,0,25.5
+45448,Fuhren Hydroelectric Power Plant Switzerland,Switzerland,582,46.72717,8.3337,Operating Fully,Hydro,Unknown,10.0,7.0214007627,43.0,0,0,1.0
+45459,Verbois Hydroelectric Power Plant Switzerland,Switzerland,397,46.1927,6.0281,Operating Fully,Hydro,Unknown,100.0,5.91815656925,430.0,0,0,10.0
+45460,Chancy-Pougny Hydroelectric Power Plant Switzerland,Switzerland,397,46.1604,5.9766,Operating Fully,Hydro,Unknown,49.0,6.86861169495,210.7,0,0,4.9
+45461,Seujet Hydroelectric Power Plant Switzerland,Switzerland,602,46.2042,6.1355,Operating Fully,Hydro,Unknown,5.6,6.64943090947,24.08,0,0,0.56
+45462,Eglisau Hydroelectric Power Plant Switzerland,Switzerland,990,47.5748,8.4733,Operating Fully,Hydro,Unknown,47.0,6.02532997993,202.1,0,0,4.7
+45463,Stalden Hydroelectric Power Plant Switzerland,Switzerland,599,46.24027,7.8744,Operating Fully,Hydro,Unknown,185.0,5.88497336189,795.5,0,0,18.5
+45464,Zermeiggern Hydroelectric Power Plant Switzerland,Switzerland,599,46.0824,7.9572,Operating Fully,Hydro,Unknown,74.0,6.00657163903,318.2,0,0,7.4
+45465,Croix Hydroelectric Power Plant Switzerland,Switzerland,590,46.30874,7.43558,Operating Fully,Hydro,Unknown,66.0,6.65139263143,283.8,0,0,6.6
+45466,St-Leonard Hydroelectric Power Plant Switzerland,Switzerland,596,46.2606,7.4446,Operating Fully,Hydro,Unknown,34.0,6.6001756749,146.2,0,0,3.4
+45467,Gabi Hydroelectric Power Plant Switzerland,Switzerland,599,46.1882,8.0702,Operating Fully,Hydro,Unknown,11.0,6.42214041524,47.3,0,0,1.1
+45468,Gondo Hydroelectric Power Plant Switzerland,Switzerland,594,46.1961,8.1505,Operating Fully,Hydro,Unknown,45.0,6.32793134346,193.5,0,0,4.5
+45484,Nant de Drance Pumped Storage Power Plant Switzerland,Switzerland,603,46.0629,6.9101,Operating Fully,Hydro,Unknown,900.0,6.19596402326,3870.0,0,0,90.0
+45486,Chatelard-Vallorcine Pumped Storage Power Plant Switzerland,Switzerland,603,46.0615,6.9586,Operating Fully,Hydro,Unknown,189.0,6.80337997069,812.7,0,0,18.9
+4680,Paks Nuclear Power Plant Hungary,Hungary,1190,46.5741610809,18.8527912459,No Data in GEO,Nuclear,Unknown,1866.0,11.7054292066,559800.0,24,24,373.2
+4689,Paluel Nuclear Power Plant France,France,242,49.8582204395,0.635370428642,No Data in GEO,Nuclear,Unknown,5528.0,11.8877057078,1658400.0,24,24,1105.6
+4746,Penly Reprocessing and Nuclear Power Plant France,France,235,49.9764408618,1.21073798197,No Data in GEO,Nuclear,Unknown,2764.0,10.9119851343,829200.0,24,24,552.8
+4776,Phenix Nuclear Power Plant France,France,478,44.143574463,4.71241116807,No Data in GEO,Nuclear,Unknown,250.0,11.7106213011,75000.0,24,24,50.0
+4780,Philippsburg Nuclear Power Plant Germany,Germany,945,49.2529011191,8.43643383931,No Data in GEO,Nuclear,Unknown,2384.0,11.4538430391,715200.0,24,24,476.8
+4844,Pont-Sur-Sambre Combustion Gas Power Plant France,France,230,50.23084,3.8653,Operating Fully,Natural Gas,Unknown,412.0,54.2005798393,22660.0,2,4,164.8
+4850,"Porcheville II Thermal Power Plant, France",France,291,48.9691746196,1.75884246826,Operating Fully,Fuel Oil,Unknown,2400.0,130.394013586,132000.0,2,4,960.0
+4938,Provence Coal Power Station France,France,499,43.4672324415,5.48745632172,No Data in GEO,Coal,Unknown,868.0,38.4255297379,56420.0,8,8,173.6
+5075,"Richemont Combustion Gas Power Plant, France",France,255,49.2824761006,6.17970228195,No Data in GEO,Natural Gas,Unknown,180.0,58.6925786585,9900.0,2,4,72.0
+5216,Saint-Alban Nuclear Power Plant France,France,437,45.4043385739,4.75536030947,No Data in GEO,Nuclear,Unknown,2782.0,11.9973519104,834600.0,24,24,556.4
+5217,Saint-Laurent Nuclear Power Plant France,France,354,47.7196899233,1.578337634,No Data in GEO,Nuclear,Unknown,1912.0,11.824787763,573600.0,24,24,382.4
+5270,Santa Maria de Garona Nuclear Power Plant Spain,Spain,64,42.7750543752,-3.2072353363,No Data in GEO,Nuclear,Unknown,466.0,11.6819027488,139800.0,24,24,93.2
+5682,Temelin Nuclear Power Plant Czech Republic,Czech Republic,1072,49.1810921601,14.3749252552,No Data in GEO,Nuclear,Unknown,2026.0,12.597810434,607800.0,24,24,405.2
+5724,Tihange Nuclear Power Plant Belgium,Belgium,548,50.5341931244,5.27505210534,Operating Fully,Nuclear,Unknown,3129.0,12.6523358186,938700.0,24,24,625.8
+5778,Tricastin Nuclear Power Plant France,France,478,44.3311365821,4.73112032018,No Data in GEO,Nuclear,Unknown,3820.0,11.1667402665,1146000.0,24,24,764.0
+5873,Unterweser Nuclear Power Plant Germany,Germany,793,53.4275284321,8.47794293801,No Data in GEO,Nuclear,Unknown,1410.0,11.8607544325,423000.0,24,24,282.0
+5910,Vandellos Nuclear Power Plant Spain,Spain,137,40.9508626281,0.865623950958,No Data in GEO,Nuclear,Unknown,2087.0,12.4569598534,626100.0,24,24,417.4
+5917,Vazzio Thermal Power Plant France,France,1253,41.9320872331,8.72044086456,No Data in GEO,Fuel Oil,Unknown,135.5,118.510525491,7452.5,2,4,54.2
+5953,Vogelgrun Hydroelectric Power Station France,France,984,48.0200705149,7.57425785065,No Data in GEO,Hydro,Unknown,140.4,6.67466944451,603.72,0,0,14.04
+6032,Werdohl-Elverlingsen E CCGT Power Plant Germany,Germany,887,51.2772463638,7.70523548126,No Data in GEO,Natural Gas,Unknown,210.0,53.1089993292,11550.0,2,4,84.0
+6033,Werdohl-Elverlingsen E Coal Power Plant Germany,Germany,887,51.2758704958,7.70679116249,No Data in GEO,Coal,Unknown,487.0,39.9255496423,31655.0,8,8,97.4
