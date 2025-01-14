@@ -4,7 +4,7 @@ import unittest
 import random
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
+
 from langgfm.utils.random_control import set_seed
 
 class TestRandomControl(unittest.TestCase):

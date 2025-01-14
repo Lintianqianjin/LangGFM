@@ -1,7 +1,7 @@
 # import OgbnArxivGraphGenerator and GraphTextualizer
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../src')))
+
 from langgfm.data.graph_generator._base_generator import InputGraphGenerator
 from langgfm.data.graph_text_transformation.nxg_to_text import GraphTextualizer
 

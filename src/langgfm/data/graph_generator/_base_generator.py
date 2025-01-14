@@ -6,7 +6,7 @@ from networkx.readwrite import json_graph
 
 from .utils.sampling import generate_node_centric_k_hop_subgraph, generate_edge_centric_k_hop_subgraph
 from .utils.shuffle_graph import shuffle_nodes_randomly
-from langgfm.utils.io import load_yaml
+from ...utils.io import load_yaml
 
 class InputGraphGenerator(ABC):
     """
