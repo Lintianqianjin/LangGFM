@@ -5,7 +5,7 @@ import time
 import json
 
 
-from langgfm.data.data_generation_coordinator import DatasetGenerationCoordinator
+from langgfm.data.dataset_generation_coordinator import DatasetGenerationCoordinator
 
 
 class TestDataGeneration(unittest.TestCase):
