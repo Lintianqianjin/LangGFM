@@ -42,5 +42,5 @@ class Logger:
         self.log(logging.CRITICAL, message)
 
 # create global Logger instance
-logger = Logger()
+logger = Logger(level=logging.ERROR)
 
