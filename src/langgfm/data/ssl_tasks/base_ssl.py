@@ -88,7 +88,7 @@ class SelfSupervisedGraphTask(ABC):
                 - 'answer': The answer to the query.
         """
         modify_outputs = self.modify_graph(graph)
-        logger.debug(f"{modify_outputs=}")
+        # logger.debug(f"{modify_outputs=}")
         query_outputs = self.generate_query(modify_outputs)
         answer = self.generate_answer(modify_outputs, query_outputs)
         return {

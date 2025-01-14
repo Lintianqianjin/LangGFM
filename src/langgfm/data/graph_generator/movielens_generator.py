@@ -214,7 +214,7 @@ class Movielens1MGraphGenerator(EdgeTaskGraphGenerator):
             # print(f"{(edge_attrs['Timestamp'].item()<target_edge_timestamp.item())=}")
             if edge_attrs['Timestamp'].item()<target_edge_timestamp:
                 G.add_edge(
-                    src, dst, rating = edge_attrs['Rating'].values[0], 
+                    src, dst, rating = int(edge_attrs['Rating'].values[0]), 
                     time = edge_attrs['Timestamp'].values[0]
                 )
             else:
