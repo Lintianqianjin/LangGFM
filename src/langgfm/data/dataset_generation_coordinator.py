@@ -14,10 +14,11 @@ from langgfm.data.ssl_tasks.base_ssl import SelfSupervisedGraphTask
 from langgfm.data.ssl_tasks.tae_ssl import TopologyAutoencoder
 from langgfm.data.ssl_tasks.fmae_ssl import NodeFeatureMaskedAutoencoder, EdgeFeatureMaskedAutoencoder
 from langgfm.data.graph_text_transformation.nxg_to_text import GraphTextualizer
-from projects.LangGFM.src.langgfm.configs.instruction_template import PROMPT_TEMPLATE
+from langgfm.configs.instruction_template import PROMPT_TEMPLATE
 
 
-class AsyncDataGenerationCoordinator:
+
+class DatasetGenerationCoordinator:
     """
     Coordinator class to manage the generation of graphs and their textual representations (asynchronously).
     This version parallelizes among datasets, writes everything into a single `data.json`,
