@@ -114,12 +114,12 @@ class NodeTaskGraphGenerator(InputGraphGenerator):
             node_mapping: The mapping of raw node indices to new node indices.
             sub_graph_edge_mask: The edge mask of the overall graph for sub_graph_edge_index.
         '''
-        print(f"{sample_id=}")
+        # print(f"{sample_id=}")
         sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask = generate_node_centric_k_hop_subgraph(
             self.graph, sample_id, self.num_hops, self.neighbor_size, 
             self.random_seed, self.sampling
         )
-        print(f"{sub_graph_nodes=}")
+        # print(f"{sub_graph_nodes=}")
         
         # raw node index to new node index mapping
         node_mapping = {

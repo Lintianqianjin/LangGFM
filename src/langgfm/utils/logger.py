@@ -49,5 +49,7 @@ class Logger:
     def critical(self, message):
         self.log(logging.CRITICAL, message)
 
+# create global Logger instance
+logger = Logger(level=logging.ERROR)
 
 logger = Logger(level=logging.INFO)
