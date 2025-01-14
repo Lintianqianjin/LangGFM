@@ -4,8 +4,8 @@ import networkx as nx
 import pandas as pd
 
 
-from ._base_generator import GraphTaskGraphGenerator
-from .utils.molecule_utils import smiles2graph
+from .._base_generator import GraphTaskGraphGenerator
+from ..utils.molecule_utils import smiles2graph
 
 @GraphTaskGraphGenerator.register("bace")
 class BaceGraphGenerator(GraphTaskGraphGenerator):

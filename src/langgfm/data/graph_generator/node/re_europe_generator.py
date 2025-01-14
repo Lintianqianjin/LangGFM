@@ -8,8 +8,8 @@ import torch
 from datetime import datetime, timedelta
 
 from torch_geometric.data import HeteroData
-from ._base_generator import NodeTaskGraphGenerator
-from .utils.graph_utils import get_node_slices
+from .._base_generator import NodeTaskGraphGenerator
+from ..utils.graph_utils import get_node_slices
 
 @NodeTaskGraphGenerator.register("re_europe")
 class REEuropeGraphGenerator(NodeTaskGraphGenerator):

@@ -5,9 +5,9 @@ import warnings
 
 import torch
 
-from .utils.graph_utils import get_node_slices
+from ..utils.graph_utils import get_node_slices
 
-from ._base_generator import NodeTaskGraphGenerator
+from .._base_generator import NodeTaskGraphGenerator
 
 
 @NodeTaskGraphGenerator.register("oag_scholar_interest")

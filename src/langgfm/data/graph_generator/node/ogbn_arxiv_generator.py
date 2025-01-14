@@ -2,8 +2,8 @@ import torch
 import pandas as pd
 import networkx as nx
 
-from .utils.ogb_dataset import CustomPygNodePropPredDataset
-from ._base_generator import NodeTaskGraphGenerator
+from ..utils.ogb_dataset import CustomPygNodePropPredDataset
+from .._base_generator import NodeTaskGraphGenerator
 
 @NodeTaskGraphGenerator.register("ogbn_arxiv")
 class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):

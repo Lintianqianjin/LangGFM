@@ -4,8 +4,8 @@ import networkx as nx
 import pandas as pd
 
 
-from ._base_generator import GraphTaskGraphGenerator
-from .utils.molecule_utils import smiles2graph
+from .._base_generator import GraphTaskGraphGenerator
+from ..utils.molecule_utils import smiles2graph
 
 @GraphTaskGraphGenerator.register("esol")
 class ESOLGraphGenerator(GraphTaskGraphGenerator):
@@ -40,7 +40,7 @@ class ESOLGraphGenerator(GraphTaskGraphGenerator):
         if len(filtered_df) == 1:
             label = filtered_df.iloc[0]  # get graph string
         else:
-            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample}")
+            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample_id}")
 
         answer = f"The $\log S$ of this compound is likely {label}."
         
@@ -51,7 +51,7 @@ class ESOLGraphGenerator(GraphTaskGraphGenerator):
         if len(filtered_df) == 1:
             graph = filtered_df.iloc[0]  # get graph string
         else:
-            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample}")
+            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample_id}")
     
         G = smiles2graph(graph)
         

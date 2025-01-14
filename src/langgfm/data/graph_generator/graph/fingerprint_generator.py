@@ -4,7 +4,7 @@ import networkx as nx
 import pandas as pd
 
 
-from ._base_generator import GraphTaskGraphGenerator
+from .._base_generator import GraphTaskGraphGenerator
 
 
 @GraphTaskGraphGenerator.register("fingerprint")

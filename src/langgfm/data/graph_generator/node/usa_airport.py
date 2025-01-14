@@ -3,7 +3,7 @@ import networkx as nx
 
 import torch
 
-from ._base_generator import NodeTaskGraphGenerator
+from .._base_generator import NodeTaskGraphGenerator
 
 
 @NodeTaskGraphGenerator.register("usa_airport")

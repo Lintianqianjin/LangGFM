@@ -1,4 +1,4 @@
-from ._base_generator import StructuralTaskGraphGenerator
+from .._base_generator import StructuralTaskGraphGenerator
 
 
 @StructuralTaskGraphGenerator.register("node_attribute_retrieval")
