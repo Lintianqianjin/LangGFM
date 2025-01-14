@@ -1,4 +1,3 @@
-# run at LangGFM.
 import os
 import sys
 import json
@@ -7,14 +6,12 @@ import yaml
 
 from typing import Dict, Any, List
 
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-from langgfm.data.graph_generator._base_generator import InputGraphGenerator
-from langgfm.data.ssl_tasks.base_ssl import SelfSupervisedGraphTask
-from langgfm.data.ssl_tasks.tae_ssl import TopologyAutoencoder
-from langgfm.data.ssl_tasks.fmae_ssl import NodeFeatureMaskedAutoencoder, EdgeFeatureMaskedAutoencoder
-from langgfm.data.graph_text_transformation.nxg_to_text import GraphTextualizer
-from langgfm.configs.instruction_template import PROMPT_TEMPLATE
+from ..data.graph_generator._base_generator import InputGraphGenerator
+from ..data.ssl_tasks.base_ssl import SelfSupervisedGraphTask
+from ..data.ssl_tasks.tae_ssl import TopologyAutoencoder
+from ..data.ssl_tasks.fmae_ssl import NodeFeatureMaskedAutoencoder, EdgeFeatureMaskedAutoencoder
+from ..data.graph_text_transformation.nxg_to_text import GraphTextualizer
+from ..configs.instruction_template import PROMPT_TEMPLATE
 
 
 

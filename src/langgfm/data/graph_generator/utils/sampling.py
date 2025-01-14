@@ -6,7 +6,7 @@ from torch import Tensor
 from torch_geometric.utils.num_nodes import maybe_num_nodes
 from torch_geometric.utils import k_hop_subgraph
 
-from langgfm.utils.random_control import set_seed
+from ....utils.random_control import set_seed
 
 def k_hop_sampled_subgraph(
     node_idx: Union[int, List[int], Tensor],

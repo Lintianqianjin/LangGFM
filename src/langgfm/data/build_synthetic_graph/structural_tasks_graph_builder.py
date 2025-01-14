@@ -11,9 +11,7 @@ from tqdm import tqdm
 from abc import ABC, abstractmethod
 from networkx.readwrite import json_graph
 
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
-from utils import (
+from .utils import (
     create_random_graph,
     create_random_bipartite_graph, 
     create_random_graph_node_weights, 

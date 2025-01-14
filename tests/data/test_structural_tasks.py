@@ -7,7 +7,7 @@ import os
 import re
 import random
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
+
 from langgfm.data.graph_text_transformation.text_to_nxg import TextualizedGraphLoader
 
 

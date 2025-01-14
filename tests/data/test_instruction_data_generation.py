@@ -4,8 +4,8 @@ import sys
 import time
 import json
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
-from langgfm.data.dataset_generation_coordinator import DatasetGenerationCoordinator
+
+from langgfm.data.data_generation_coordinator import DatasetGenerationCoordinator
 
 
 class TestDataGeneration(unittest.TestCase):

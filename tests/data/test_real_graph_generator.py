@@ -9,7 +9,7 @@ import networkx as nx
 import json
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
+
 from langgfm.data.graph_generator._base_generator import NodeTaskGraphGenerator, EdgeTaskGraphGenerator, GraphTaskGraphGenerator
 # for registering the real graph generators
 from langgfm.data.graph_generator import *
