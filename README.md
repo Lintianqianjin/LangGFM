@@ -24,7 +24,11 @@ For conda `environment.yml`
 `conda env create -f environment.yml`
 
 
-run commands in `LangGFM/`
+# Installation
+```
+pip install -e .
+```
+<!-- run commands in `LangGFM/` -->
 
 
 To ensure compatibility with all graphs in the open world, treat all graphs as MultiDiGraph: 
