@@ -400,6 +400,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
     A concrete implementation of InputGraphGenerator to generate graphs
     of synthetic graph related tasks.
     """
+    directed = False
     def __init__(self, task):
         self.config = load_yaml(
             os.path.join(

@@ -27,43 +27,49 @@ class DatasetGenerationCoordinator:
     For the configs, 
     """
 
-    def __init__(self, job_name: str = "default_job"):
-        self.job_name = job_name
+    def __init__(self, job_path: str = "./experiments/default_job"):
+        self.root = job_path
         self.prompt_template = PROMPT_TEMPLATE  # Suppose this is imported
         self.textualizer = GraphTextualizer()   # Suppose this is imported
 
-        # load the config
+        # load the config and indices
         self._load_config()
+        self._load_indices()
         
         # Root path for saving outputs
-        self.root = os.path.join("./data/instruction_data/", job_name)
-        self._mkdir()
+        # self.root = os.path.join("./experiments/", job_name)
+        # self._mkdir()
         
         # This lock ensures only one task at a time appends to data.json
         self.data_file_lock = asyncio.Lock()
 
     def _load_config(self):
-        "load generation needed config, from LangGFM/experiments/{job_name}/data_generation.yaml"
-        with open(f"./experiments/{self.job_name}/data_generation.yaml", "r") as file:
+        "load generation needed config, from {self.root}/data_generation.yaml"
+        with open(os.path.join(self.root, "data_generation.yaml"), "r") as file:
             self.config = yaml.safe_load(file)
+        
+    def _load_indices(self):
+        "load indices for each dataset, from {self.root}/indices.json"
+        with open(os.path.join(self.root, "indices.json"), "r") as file:
+            self.indices = json.load(file)
 
     def _mkdir(self):
         """Create the job root directory if it doesn't exist."""
         if not os.path.exists(self.root):
             os.makedirs(self.root)
 
-    def _save_configs(self):
-        """Save the coordinator config to disk for reproducibility."""
-        config_path = os.path.join(self.root, "config.json")
-        with open(config_path, "w") as f:
-            json.dump(self.config, f, indent=4)
+    # def _save_configs(self):
+    #     """Save the coordinator config to disk for reproducibility."""
+    #     config_path = os.path.join(self.root, "config.json")
+    #     with open(config_path, "w") as f:
+    #         json.dump(self.config, f, indent=4)
 
     def _append_dataset_samples(self, dataset_samples: list):
         """
-        Append the dataset samples to data.json in self.root.
-        If data.json doesn't exist, create it with an empty list first.
+        Append the dataset samples to instruction_dataset.json in self.root.
+        If instruction_dataset.json doesn't exist, create it with an empty list first.
         """
-        data_file = os.path.join(self.root, "data.json")
+        data_file = os.path.join(self.root, "instruction_dataset.json")
 
         # Load existing data if present
         if os.path.exists(data_file):
@@ -101,7 +107,7 @@ class DatasetGenerationCoordinator:
         Returns a list of (modified_graph, query, answer) tuples.
         """
         generated_samples = []
-        ssl_generator_config = ssl_task_config["generator"]
+        ssl_generator_config = ssl_task_config.get("generator", {})
         ssl_ratio = ssl_task_config["augment_ratio"]
 
         ssl_task_generator = SelfSupervisedGraphTask.create(ssl_task_name, **ssl_generator_config)
@@ -189,12 +195,13 @@ class DatasetGenerationCoordinator:
         """
         task_config = self.config[dataset_name]
 
-        sample_indices = task_config.get("index", [])
+        # sample_indices = task_config.get("index", [])
+        sample_indices = self.indices[dataset_name]
         output_formats = task_config.get("format", ["json"])
         ssl_settings = task_config.get("ssl_setting", None)
 
         # Create the main generator
-        generator_config = task_config["generator"]
+        generator_config = task_config.get("generator", {})
         generator = InputGraphGenerator.create(dataset_name, **generator_config)
         graph_description = generator.graph_description
         directed = generator.directed
@@ -250,7 +257,7 @@ class DatasetGenerationCoordinator:
          - create a task per dataset
          - gather them 
         """
-        self._save_configs()
+        # self._save_configs()
 
         # Create parallel tasks for each dataset
         tasks = []
