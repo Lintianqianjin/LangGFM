@@ -1,11 +1,11 @@
 import unittest
 import os
+import sys
 import time
 import json
 
-from src.langgfm.data.data_generation_coordinator import AsyncDataGenerationCoordinator
-from src.langgfm.data.data_generation_coordinator import DataGenerationCoordinator
-
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
+from langgfm.data.data_generation_coordinator import AsyncDataGenerationCoordinator
 
 
 class TestDataGeneration(unittest.TestCase):
@@ -16,55 +16,9 @@ class TestDataGeneration(unittest.TestCase):
         Setup runs before each test method. We'll define a config
         and a unique job name so we don't collide with other runs.
         """
-        self.job_name = "unittest_job"
+        self.job_name = "test"
         self.root_path = os.path.join("./data/instruction_data/", self.job_name)
-        idx = list(range(0, 400))
         # Example input config (mirroring your example)
-        self.job_config = {
-            "graph_structure_detection": {
-                "generator": {},
-                "index": idx,
-                "format": ["gml", "json","table","graphml"]
-            },
-            "bace": {
-                "generator": {"task_level": "graph"},
-                "index": idx,
-                "datatype": {"directed": False},
-                "ssl_setting": {
-                   "node_feature_masked_autoencoder": {
-                       "generator": {
-                            "mask_node_ratio": 0.2,
-                            "mask_edge_ratio": 0.2,
-                            "mask_reverse_edges": True, 
-                        },
-                        "augment_ratio": 1
-                    },
-                },
-                "format": ["gml", "json","table","graphml"]
-            },
-            # "movielens1m": {
-            #     "generator": {
-            #         "task_level": "edge",
-            #         "num_hops": 1,
-            #         "sampling": True,
-            #         "neighbor_size": [50],
-            #         "random_seed": 42
-            #     },
-            #     "index": [(4027, 1931), (751, 558), (186, 793)],
-            #     "datatype": {"directed": True},
-            #     "ssl_setting": {
-            #        "node_feature_masked_autoencoder": {
-            #            "generator": {
-            #                 "mask_node_ratio": 0.2,
-            #                 "mask_edge_ratio": 0.2,
-            #                 "mask_reverse_edges": True, 
-            #             },
-            #             "augment_ratio": 1
-            #         },
-            #     },
-            #     "format": ["json","table","graphml"]
-            # }
-        }
 
         # Clean up any prior run data if it exists
         if os.path.exists(self.root_path):
@@ -80,7 +34,6 @@ class TestDataGeneration(unittest.TestCase):
         """
         # Instantiate the coordinator with our config
         coordinator = AsyncDataGenerationCoordinator(
-            config=self.job_config,
             job_name=self.job_name
         )
 
