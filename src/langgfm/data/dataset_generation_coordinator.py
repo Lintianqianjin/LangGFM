@@ -23,8 +23,6 @@ class DatasetGenerationCoordinator:
     Coordinator class to manage the generation of graphs and their textual representations (asynchronously).
     This version parallelizes among datasets, writes everything into a single `data.json`,
     and uses an asyncio.Lock to safely append results.
-    
-    For the configs, 
     """
 
     def __init__(self, job_path: str = "./experiments/default_job"):
