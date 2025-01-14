@@ -45,9 +45,9 @@ class ChEBI20GraphGenerator(GraphTaskGraphGenerator):
         )
         return query
 
-    def get_answer(self, sample):
+    def get_answer(self, sample_id):
         
-        filtered_df = self.dataset.loc[self.dataset['CID'] == sample]['description']
+        filtered_df = self.dataset.loc[self.dataset['CID'] == sample_id]['description']
         
         if len(filtered_df) == 1:
             molecule_desc = filtered_df.iloc[0]  # get graph string
@@ -58,9 +58,9 @@ class ChEBI20GraphGenerator(GraphTaskGraphGenerator):
         
         return answer
     
-    def create_networkx_graph(self, sample):
+    def create_networkx_graph(self, sample_id):
         
-        filtered_df = self.dataset.loc[self.dataset['CID'] == sample]['SMILES']
+        filtered_df = self.dataset.loc[self.dataset['CID'] == sample_id]['SMILES']
         
         if len(filtered_df) == 1:
             molecule_smile = filtered_df.iloc[0]  # get graph string

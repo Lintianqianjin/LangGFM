@@ -91,7 +91,7 @@ class FB15K237GraphGenerator(EdgeTaskGraphGenerator):
             # Skip the target edge
             if not (src == target_src and dst == target_dst): 
                 edge_text = self.etypeid2rel[str(self.graph.edge_types[edge_idx].item())]
-                G.add_edge(src, dst, type='relation', name = edge_text)
+                G.add_edge(src, dst, type='relation', description = edge_text)
         
         return G
     

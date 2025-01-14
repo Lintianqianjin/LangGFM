@@ -43,8 +43,8 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
         "Please estimate whether the give molecule is likely to inhibit BACE-1.")
         return query
 
-    def get_answer(self, sample):
-        filtered_df = self.df.loc[self.df['molecule_index'] == sample]['label']
+    def get_answer(self, sample_id):
+        filtered_df = self.df.loc[self.df['molecule_index'] == sample_id]['label']
         if len(filtered_df) == 1:
             label = filtered_df.iloc[0]  # get graph string
         else:
@@ -57,8 +57,8 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
         
         return answer
     
-    def create_networkx_graph(self, sample):
-        filtered_df = self.df.loc[self.df['molecule_index'] == sample]['graph']
+    def create_networkx_graph(self, sample_id):
+        filtered_df = self.df.loc[self.df['molecule_index'] == sample_id]['graph']
         if len(filtered_df) == 1:
             graph = filtered_df.iloc[0]  # get graph string
         else:

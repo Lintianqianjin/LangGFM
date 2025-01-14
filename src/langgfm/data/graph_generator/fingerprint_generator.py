@@ -151,7 +151,7 @@ class FingerprintGraphGenerator(GraphTaskGraphGenerator):
             "Each node is labeled with a two-dimensional attribute giving its position. The edges are attributed with an angle "\
             "denoting the orientation of the edge with respect to the horizontal direction."
             
-    def get_query(self, sample=None):
+    def get_query(self, sample_id=None):
         query = ("Fingerprint patterns are traditionally classified into three broad categories: loops, whorls, and arches, each with further subdivisions. "
         "Here's a general interpretation based on standard fingerprint classifications: "
         "L: Loop, A loop pattern in fingerprint classification.\n"
@@ -172,7 +172,7 @@ class FingerprintGraphGenerator(GraphTaskGraphGenerator):
         "Please infer which category the given fingerprint belongs to from the above, and answer with the abbreviation of the category.")
         return query
     
-    def get_answer(self, sample):
+    def get_answer(self, sample_id):
         category = self.graphs_df.at[sample, 'label']
         answer = f"The given fingerprint is likely to belong to {category}."
         return answer
@@ -190,8 +190,8 @@ class FingerprintGraphGenerator(GraphTaskGraphGenerator):
         
         return G_new
     
-    def create_networkx_graph(self, sample):
-        graph = self.graphs_df.at[sample, 'graph']
+    def create_networkx_graph(self, sample_id):
+        graph = self.graphs_df.at[sample_id, 'graph']
         graph = self.__reindex_graph(graph)
         
         return graph

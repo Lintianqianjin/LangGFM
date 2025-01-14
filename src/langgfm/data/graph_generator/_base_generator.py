@@ -349,14 +349,14 @@ class GraphTaskGraphGenerator(InputGraphGenerator):
         pass
     
     @abstractmethod
-    def get_answer(self, sample) -> str:
+    def get_answer(self, sample_id) -> str:
         """
         Get the label of the graph."""
         
         pass
     
     @abstractmethod
-    def create_networkx_graph(self, sample) -> nx.Graph:
+    def create_networkx_graph(self, sample_id) -> nx.Graph:
         """
         Create a NetworkX graph from the graph.
         
@@ -367,7 +367,7 @@ class GraphTaskGraphGenerator(InputGraphGenerator):
         """
         pass
     
-    def generate_graph(self, sample: int) -> nx.Graph:
+    def generate_graph(self, sample_id: int) -> nx.Graph:
         """
         Generate the entire graph
 
@@ -377,15 +377,15 @@ class GraphTaskGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph for the sample.
         """
-        G = self.create_networkx_graph(sample)
+        G = self.create_networkx_graph(sample_id=sample_id)
         
-        query = self.get_query() # no need to specify target node or edge
-        answer = self.get_answer(sample)
+        query = self.get_query(sample_id=sample_id)
+        answer = self.get_answer(sample_id=sample_id)
         
         new_G, node_idx_mapping_old_to_new = shuffle_nodes_randomly(G)
         
         metadata = {
-            "raw_sample_id": sample,
+            "raw_sample_id": sample_id,
             "main_task": {
                 "query": query,
                 "answer": answer,
