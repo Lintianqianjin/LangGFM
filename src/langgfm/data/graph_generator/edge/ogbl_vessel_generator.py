@@ -4,8 +4,8 @@ import networkx as nx
 import torch
 import pandas as pd
 
-from .utils.ogb_dataset import CustomPygLinkPropPredDataset
-from ._base_generator import EdgeTaskGraphGenerator
+from ..utils.ogb_dataset import CustomPygLinkPropPredDataset
+from .._base_generator import EdgeTaskGraphGenerator
 
 @EdgeTaskGraphGenerator.register("ogbl_vessel")
 class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
@@ -14,6 +14,8 @@ class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
     from the OGBL-Vessel dataset using NetworkX format.
     """
 
+    directed = False
+    
     def __convert_edges_to_dict(self, edges:torch.Tensor) -> dict:
         """
         Convert edge tensors to a dictionary where keys are (src, dst) tuples 

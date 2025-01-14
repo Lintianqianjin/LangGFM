@@ -7,8 +7,8 @@ import torch
 import pandas as pd
 from tqdm import tqdm
 from collections import defaultdict
-from ._base_generator import EdgeTaskGraphGenerator
-from .utils.graph_utils import get_node_slices, get_edge_idx_in_graph, get_edge_idx_in_etype
+from .._base_generator import EdgeTaskGraphGenerator
+from ..utils.graph_utils import get_node_slices, get_edge_idx_in_graph, get_edge_idx_in_etype
 from langgfm.utils.io import load_jsonl
 
 @EdgeTaskGraphGenerator.register("yelp_review")
@@ -17,6 +17,8 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
     YelpReviewGraphGenerator: A generator for creating k-hop subgraphs 
     from the Yelp dataset using NetworkX format.
     """
+    
+    directed = True
 
     def load_data(self):
         """

@@ -9,9 +9,9 @@ import torch
 import pandas as pd
 from tqdm import tqdm
 
-from .utils.graph_utils import get_edge_idx_in_graph, represent_edges_with_multiplex_id
+from ..utils.graph_utils import get_edge_idx_in_graph, represent_edges_with_multiplex_id
 
-from ._base_generator import EdgeTaskGraphGenerator
+from .._base_generator import EdgeTaskGraphGenerator
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
 from langgfm.utils.logger import logger
@@ -19,6 +19,8 @@ logger.set_level(logging.WARNING)
 
 @EdgeTaskGraphGenerator.register("fb15k237")
 class FB15K237GraphGenerator(EdgeTaskGraphGenerator):
+    
+    directed = True
     
     def load_data(self):
         self.root = "./data/FB15K237"

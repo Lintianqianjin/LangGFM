@@ -13,6 +13,8 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
     BaceGraphGenerator: A generator for creating graphs 
     from the Bace dataset using NetworkX format.
     """
+    
+    directed = False
 
     def load_data(self):
         """

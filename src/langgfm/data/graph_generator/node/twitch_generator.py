@@ -14,6 +14,7 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
     TwitchGraphGenerator: A generator for creating k-hop subgraphs 
     from the Twitch dataset using NetworkX format.
     """
+    directed = False
     
     def load_data(self):
         """

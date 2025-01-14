@@ -11,6 +11,8 @@ class OgbnArxivGraphGenerator(NodeTaskGraphGenerator):
     OgbnArxivGraphGenerator: A generator for creating k-hop subgraphs 
     from the OGBN-Arxiv dataset using NetworkX format.
     """
+    
+    directed = True
 
     def load_data(self):
         """

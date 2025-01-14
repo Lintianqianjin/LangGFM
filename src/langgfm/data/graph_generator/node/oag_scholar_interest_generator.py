@@ -16,7 +16,7 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
     OAGScholarInterestGraphGenerator: A generator for creating k-hop subgraphs 
     from the OAG Scholar Interest dataset using NetworkX format.
     """
-    graph_description = ""
+    directed = True
 
     def load_data(self):
         """

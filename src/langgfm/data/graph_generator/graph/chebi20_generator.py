@@ -13,6 +13,9 @@ class ChEBI20GraphGenerator(GraphTaskGraphGenerator):
     BaceGraphGenerator: A generator for creating graphs 
     from the ChEBI20 dataset using NetworkX format.
     """
+    
+    directed = False
+    
     def load_data(self):
         """
         Load the ESOL dataset and preprocess required mappings.

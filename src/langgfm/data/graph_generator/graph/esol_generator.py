@@ -14,6 +14,8 @@ class ESOLGraphGenerator(GraphTaskGraphGenerator):
     from the Bace dataset using NetworkX format.
     """
     
+    directed = False
+    
     def load_data(self):
         """
         Load the ESOL dataset and preprocess required mappings.

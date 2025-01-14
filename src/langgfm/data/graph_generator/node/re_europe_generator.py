@@ -19,6 +19,8 @@ class REEuropeGraphGenerator(NodeTaskGraphGenerator):
     and load signals to predict next 24-hour peak load for a specific bus.
     """
 
+    directed = False
+    
     graph_description = (
         "Generator uses the RE-Europe dataset (Metadata + Nodal_TS + capacity layouts + generator info) "
         "to build a graph with bus nodes, generator nodes, and AC/HVDC line edges. "

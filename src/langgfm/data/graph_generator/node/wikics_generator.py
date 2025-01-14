@@ -12,6 +12,8 @@ class WikicsGraphGenerator(NodeTaskGraphGenerator):
     from the WikiCS dataset using NetworkX format.
     """
 
+    directed = True
+    
     def load_data(self):
         """
         Load the WikiCS dataset and preprocess required mappings.

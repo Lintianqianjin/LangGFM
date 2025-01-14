@@ -33,15 +33,16 @@ class TestRealGraphGenerator(unittest.TestCase):
             print(f"Creating generator for {dataset}...")
             # get the configuration for the dataset
             config = self.graph_generator_configs.get(dataset, {})
+            self.generators[dataset] = InputGraphGenerator.create(dataset, **config)
             # create the generator instance
-            if config['task_level'] == 'node':
-                self.generators[dataset] = NodeTaskGraphGenerator.create(dataset, **config)
-            elif config['task_level'] == 'edge':
-                self.generators[dataset] = EdgeTaskGraphGenerator.create(dataset, **config)
-            elif config['task_level'] == 'graph':
-                self.generators[dataset] = GraphTaskGraphGenerator.create(dataset, **config)
-            else:
-                raise ValueError("Invalid task type.")
+            # if config['task_level'] == 'node':
+            #     self.generators[dataset] = NodeTaskGraphGenerator.create(dataset, **config)
+            # elif config['task_level'] == 'edge':
+            #     self.generators[dataset] = EdgeTaskGraphGenerator.create(dataset, **config)
+            # elif config['task_level'] == 'graph':
+            #     self.generators[dataset] = GraphTaskGraphGenerator.create(dataset, **config)
+            # else:
+            #     raise ValueError("Invalid task type.")
             
     def test_load_data(self):
         """

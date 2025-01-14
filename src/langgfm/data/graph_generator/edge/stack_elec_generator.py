@@ -10,8 +10,8 @@ from torch_geometric.data import Data
 from collections import Counter
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
-from .utils.graph_utils import get_edge_idx_in_graph
-from ._base_generator import EdgeTaskGraphGenerator
+from ..utils.graph_utils import get_edge_idx_in_graph
+from .._base_generator import EdgeTaskGraphGenerator
 from langgfm.utils.logger import logger
 logger.set_level("DEBUG")
 
@@ -20,6 +20,8 @@ class StackElecGraphGenerator(EdgeTaskGraphGenerator):
     """
     StackElecGraphGenerator: A generator for creating k-hop subgraphs from the StackExchange dataset using NetworkX format.
     """
+    
+    directed = True
     
     def load_data(self):
         self.root = "data/stack_elec"

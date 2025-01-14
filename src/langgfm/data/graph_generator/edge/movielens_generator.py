@@ -4,9 +4,9 @@ import networkx as nx
 import torch
 import pandas as pd
 
-from .utils.graph_utils import get_node_slices
+from ..utils.graph_utils import get_node_slices
 
-from ._base_generator import EdgeTaskGraphGenerator
+from .._base_generator import EdgeTaskGraphGenerator
 from torch_geometric.datasets import MovieLens1M
 
 import pgeocode
@@ -19,6 +19,8 @@ class Movielens1MGraphGenerator(EdgeTaskGraphGenerator):
     MovielensGraphGenerator: A generator for creating k-hop subgraphs 
     from the MovieLens dataset using NetworkX format.
     """
+    
+    directed = True
     
     def load_data(self):
         """

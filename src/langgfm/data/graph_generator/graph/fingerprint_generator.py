@@ -14,6 +14,8 @@ class FingerprintGraphGenerator(GraphTaskGraphGenerator):
     from the Fingerprint dataset using NetworkX format.
     """
     
+    directed = True
+    
     def load_data(self):
         """
         Load the Fingerprint dataset and preprocess required mappings.
