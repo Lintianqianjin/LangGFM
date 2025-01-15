@@ -74,7 +74,7 @@ class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
         train_edge, valid_edge, test_edge = split_edge["train"], split_edge["valid"], split_edge["test"]
         
         self.edge_label_mapping = self.__convert_edges_to_dict(train_edge)
-        self.all_samples = set(self.edge_label_mapping.keys())
+        self.all_samples = list(self.edge_label_mapping.keys())
     
     @property
     def graph_description(self):

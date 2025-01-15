@@ -42,8 +42,14 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
         self.node_type_mapping = {0: 'author', 1: 'paper', 2: 'venue'}
         self.edge_type_mapping = {0:'writes', 1:'cites', 2:'publishes'}
         self.graph = self.graph.to_homogeneous()
-        
-        
+    
+    @property
+    def graph_description(self):
+        desc = (
+            "This is an academic graph from DBLP. Nodes are authors, papers, and venues. "
+            "Edges are authors write papers, papers cite other papers, and venues publish papers."
+        )
+        return desc
     
     def get_query(self, target_node_idx):
         query = (f"Scholars usually describe their research interests with a few words or phrases in their profiles. "

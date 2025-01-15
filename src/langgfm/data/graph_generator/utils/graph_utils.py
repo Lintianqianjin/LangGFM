@@ -18,9 +18,8 @@ from torch_geometric.typing import (
     torch_frame,
 )
 
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
-from langgfm.utils.logger import logger
+import logging
+from ....utils.logger import logger
 
 
 def get_node_slices(num_nodes: Dict[str, int]) -> Dict[str, Tuple[int, int]]:
@@ -76,8 +75,8 @@ def represent_edges_with_multiplex_id(edge_index: torch.Tensor, edge_indices_can
         # multiplex_id 即这个 e_idx 在 edge_list 里的位置
         # （因为 edge_list 已经排过序，index 即可代表此边在该组多重边中的“第几个”）
         multiplex_id = edge_list.index(e_idx)
-        if multiplex_id > 0:
-            logger.debug(f"Found multi-edge: {src} -> {dst}, edge_list={edge_list}, multiplex_id={multiplex_id}")
+        # if multiplex_id > 0:
+        #     logger.debug(f"Found multi-edge: {src} -> {dst}, edge_list={edge_list}, multiplex_id={multiplex_id}")
 
         results.append((src, dst, multiplex_id))
 
