@@ -2,6 +2,27 @@ import os
 import yaml
 import json
 import pandas as pd
+import re
+import jsbeautifier
+
+
+def save_beautiful_json(data, file_path):
+    """
+    Save a JSON file with indentation for human readability
+    """
+    json_string = json.dumps(data)
+    formatted_json = jsbeautifier.beautify(json_string)
+
+    formatted_json = re.sub(r"\],\s*\n\s*\[", "], [", formatted_json)
+
+    # 替换 "[\n        [" 为 "[["
+    formatted_json = re.sub(r'\[\s*\n\s*\[', '[[', formatted_json)
+
+    # 替换 "]\n    ]" 为 "]]"
+    formatted_json = re.sub(r'\]\s*\n\s*\]', ']]', formatted_json)
+
+    with open(file_path, "w", encoding="utf-8") as file:
+        file.write(formatted_json)
 
 
 def safe_mkdir(dir):

@@ -1,14 +1,46 @@
+common_format: &common_format
+  - "gml"
+  - "json"
+  - "table"
+  - "graphml"
+
+node_counting: 
+  format: *common_format
+
+edge_counting:
+  format: *common_format
+
+node_attribute_retrieval:
+  format: *common_format
+
+edge_attribute_retrieval:
+  format: *common_format
+
+degree_counting:
+  format: *common_format
+
+edge_existence:
+  format: *common_format
+
+connectivity:
+  format: *common_format
+
+shortest_path:
+  format: *common_format
+
+cycle_checking:
+  format: *common_format
+
+hamilton_path:
+  format: *common_format
+
+graph_automorphic:
+  format: *common_format
+
 graph_structure_detection: 
-  generator: {}
-  index:
-    - 101
-    - 102
-    - 103
-  format:
-    - "gml"
-    - "json"
+  format: *common_format
 
-
+# semantic tasks
 bace:
   ssl_setting:
     node_feature_masked_autoencoder:
