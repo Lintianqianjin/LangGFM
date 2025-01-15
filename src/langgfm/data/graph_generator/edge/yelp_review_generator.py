@@ -31,33 +31,33 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
         # Corresponding one-to-one with (user, review, business) edges in sequence
         self.raw_reviews_info = load_jsonl(f"{self.root}/yelp_academic_dataset_review.json", return_type="dataframe")
         self.raw_reviews_info["date"] = pd.to_datetime(self.raw_reviews_info["date"], errors='coerce')
-        print(f"{self.raw_reviews_info.shape=}")
+        # print(f"{self.raw_reviews_info.shape=}")
         
         # Corresponding one-to-one with user nodes in sequence
         self.raw_users_info = load_jsonl(f"{self.root}/yelp_academic_dataset_user.json", return_type="dataframe")
         self.raw_users_info["yelping_since"] = pd.to_datetime(self.raw_users_info["yelping_since"], errors='coerce')
-        print(f"{self.raw_users_info.shape=}")
+        # print(f"{self.raw_users_info.shape=}")
         
         # Corresponding one-to-one with business nodes in sequence
         self.raw_businesses_info = load_jsonl(f"{self.root}/yelp_academic_dataset_business.json", return_type="dataframe")
-        print(f"{self.raw_businesses_info.shape=}")
+        # print(f"{self.raw_businesses_info.shape=}")
         
         # Corresponding one-to-one with (user, tip, business) edges in sequence
         self.raw_tips_info = load_jsonl(f"{self.root}/yelp_academic_dataset_tip.json", return_type="dataframe")
         self.raw_tips_info["date"] = pd.to_datetime(self.raw_tips_info["date"], errors='coerce')
-        print(f"{self.raw_tips_info.shape=}")
+        # print(f"{self.raw_tips_info.shape=}")
 
         #   - Nodes: user, business
         #   - Edges: (user, 'friend', user), (user, 'review', business), (user, 'tip', business)
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", FutureWarning)  # suppress torch.load warning of `weight_only`
             self.hetero_data = torch.load(f"{self.root}/yelp.pt")
-        print(f"{self.hetero_data=}")
+        # print(f"{self.hetero_data=}")
         self.node_slices = get_node_slices(self.hetero_data.num_nodes_dict)
     
         # 将异质图转为同质图
         self.graph = self.hetero_data.to_homogeneous()
-        print(f"{self.graph=}")
+        # print(f"{self.graph=}")
         self.node_type_mapping = {0: 'user', 1: 'business'}
         self.edge_type_mapping = {0:'friend', 1:'review', 2:'tip'}
         
@@ -72,9 +72,18 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
             edge_dict[(int(src), int(dst), multiplex_id)] = idx  # Store the edge index
             edge_count[key] += 1   # Increment the count for this (src, dst) pair
             
-        self.all_samples = set(edge_dict.keys())
+        self.all_samples = list(edge_dict.keys())
 
-
+    @property
+    def graph_description(self):
+        """
+        Get the description of the graph.
+        """
+        desc = "This graph is a heterogeneous graph about reviews on the Yelp platform. "\
+            "Each node is either a business or a user. Each edge represents that "\
+            "two users are friends, or a user reviewed a business, or a user left a tip for a business."
+        return desc
+    
     def get_query(self, target_src_node_idx: int, target_dst_node_idx: int):
         """
         生成一个提示/问题，询问 user 对 business 的评论内容。

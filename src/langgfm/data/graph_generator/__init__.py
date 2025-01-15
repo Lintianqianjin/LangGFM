@@ -12,7 +12,7 @@ from .node.re_europe_generator import REEuropeGraphGenerator
 
 # Edge
 from .edge.ogbl_vessel_generator import OgblVesselGraphGenerator
-from .edge.movielens_generator import MovieLens1M
+from .edge.movielens_generator import Movielens1MGraphGenerator
 from .edge.yelp_review_generator import YelpReviewGraphGenerator
 from .edge.fb15k237_generator import FB15K237GraphGenerator
 from .edge.stack_elec_generator import StackElecGraphGenerator

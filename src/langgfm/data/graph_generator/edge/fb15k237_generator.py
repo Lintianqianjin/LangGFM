@@ -14,7 +14,6 @@ from ..utils.graph_utils import get_edge_idx_in_graph, represent_edges_with_mult
 from .._base_generator import EdgeTaskGraphGenerator
 
 from ....utils.logger import logger
-logger.set_level(logging.WARNING)
 
 @EdgeTaskGraphGenerator.register("fb15k237")
 class FB15K237GraphGenerator(EdgeTaskGraphGenerator):
@@ -31,7 +30,7 @@ class FB15K237GraphGenerator(EdgeTaskGraphGenerator):
 
         self.graph = data
         
-        logger.info(f"{data=}")
+        # logger.info(f"{data=}")
         
         with open(f"{self.root}/etypeid2rel.json") as etypeid2rel, open(f"{self.root}/node_features_list.json") as node_features_list, open(f"{self.root}/etype_split_distribution.json") as etype_distribution:
             self.etypeid2rel = json.load(etypeid2rel)
@@ -43,7 +42,7 @@ class FB15K237GraphGenerator(EdgeTaskGraphGenerator):
         self.labels = list(map(lambda x: self.etypeid2rel[x], self.etype_distribution.keys()))
         
         edge_indices_candidates = torch.logical_or(torch.logical_or(self.graph.train_mask, self.graph.valid_mask), self.graph.test_mask).nonzero(as_tuple=True)[0].numpy()
-        logger.debug(f"{edge_indices_candidates=}")
+        # logger.debug(f"{edge_indices_candidates=}")
         edges = self.graph.edge_index.T[edge_indices_candidates] # torch.tensor [num_edges, 2]
         # convert edges into set of tuples
         resutls = represent_edges_with_multiplex_id(self.graph.edge_index,edge_indices_candidates)
@@ -65,8 +64,8 @@ class FB15K237GraphGenerator(EdgeTaskGraphGenerator):
         src, dst, multiplex_id = edge
         edge_idx = get_edge_idx_in_graph(src, dst, self.graph.edge_index, multiplex_id=multiplex_id)
         
-        logger.debug(f"{edge_idx=}")
-        logger.debug(f"{self.graph.edge_types[edge_idx]=}")
+        # logger.debug(f"{edge_idx=}")
+        # logger.debug(f"{self.graph.edge_types[edge_idx]=}")
         ground_truth = self.etypeid2rel[str(self.graph.edge_types[edge_idx].item())]
         
         answer = f"The most likely relation between the entity with node id {target_src_node_idx} and entity with node id {target_dst_node_idx} is {ground_truth}."
