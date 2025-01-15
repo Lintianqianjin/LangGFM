@@ -57,7 +57,7 @@ class ChEBI20GraphGenerator(GraphTaskGraphGenerator):
         if len(filtered_df) == 1:
             molecule_desc = filtered_df.iloc[0]  # get graph string
         else:
-            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for CID={sample}")
+            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for CID={sample_id}")
 
         answer = f"The given molecule can be described as: \"{molecule_desc}\"" # no need for period
         
@@ -70,7 +70,7 @@ class ChEBI20GraphGenerator(GraphTaskGraphGenerator):
         if len(filtered_df) == 1:
             molecule_smile = filtered_df.iloc[0]  # get graph string
         else:
-            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for CID={sample}")
+            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for CID={sample_id}")
 
         G = smiles2graph(molecule_smile)
         
