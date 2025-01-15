@@ -15,6 +15,8 @@ class FingerprintGraphGenerator(GraphTaskGraphGenerator):
     """
     
     directed = True
+    has_node_attr = True
+    has_edge_attr = True
     
     def load_data(self):
         """
@@ -175,7 +177,7 @@ class FingerprintGraphGenerator(GraphTaskGraphGenerator):
         return query
     
     def get_answer(self, sample_id):
-        category = self.graphs_df.at[sample, 'label']
+        category = self.graphs_df.at[sample_id, 'label']
         answer = f"The given fingerprint is likely to belong to {category}."
         return answer
     

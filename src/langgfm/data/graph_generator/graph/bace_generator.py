@@ -15,6 +15,8 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
     """
     
     directed = False
+    has_node_attr = True
+    has_edge_attr = True
 
     def load_data(self):
         """
@@ -50,7 +52,7 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
         if len(filtered_df) == 1:
             label = filtered_df.iloc[0]  # get graph string
         else:
-            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample}")
+            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample_id}")
         
         if label == "No":
             answer = "No, the given molecule is unlikely to inhibit BACE-1."
@@ -64,7 +66,7 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
         if len(filtered_df) == 1:
             graph = filtered_df.iloc[0]  # get graph string
         else:
-            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample}")
+            raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample_id}")
     
         G = smiles2graph(graph)
         

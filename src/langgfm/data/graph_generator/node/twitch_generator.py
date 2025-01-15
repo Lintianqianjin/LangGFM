@@ -15,6 +15,8 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
     from the Twitch dataset using NetworkX format.
     """
     directed = False
+    has_node_attr = True
+    has_edge_attr = False
     
     def load_data(self):
         """

@@ -6,7 +6,7 @@ setup(
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     install_requires=[
-        # 在这里添加你的依赖，如:
+        # dependency
         # "numpy>=1.21.0",
         # "torch>=2.0.0"
     ],
@@ -16,7 +16,7 @@ setup(
     description="A package for LangGFM project",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/your-repo/langgfm",  # 可选
+    url="https://github.com/your-repo/langgfm",  # optional
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

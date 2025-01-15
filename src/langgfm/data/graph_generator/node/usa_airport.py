@@ -13,6 +13,8 @@ class USAirportGraphGenerator(NodeTaskGraphGenerator):
     from the USAirport dataset using NetworkX format.
     """
     directed = False
+    has_node_attr = False
+    has_edge_attr = False
 
     def load_data(self):
         """
