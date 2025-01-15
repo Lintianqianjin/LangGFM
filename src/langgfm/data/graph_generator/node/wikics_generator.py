@@ -13,6 +13,8 @@ class WikicsGraphGenerator(NodeTaskGraphGenerator):
     """
 
     directed = True
+    has_node_attr = True
+    has_edge_attr = False
     
     def load_data(self):
         """

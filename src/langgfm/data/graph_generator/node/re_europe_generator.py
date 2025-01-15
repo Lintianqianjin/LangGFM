@@ -20,6 +20,8 @@ class REEuropeGraphGenerator(NodeTaskGraphGenerator):
     """
 
     directed = False
+    has_node_attr = False
+    has_edge_attr = True
     
     graph_description = (
         "Generator uses the RE-Europe dataset (Metadata + Nodal_TS + capacity layouts + generator info) "
