@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 import os
+
+import warnings
+
 import torch
 import networkx as nx
 from networkx.readwrite import json_graph
@@ -420,7 +423,9 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         """
         Load the dataset and preprocess required mappings.
         """
-        dataset = torch.load(self.root)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", FutureWarning)  # suppress torch.load warning of `weight_only`
+            dataset = torch.load(self.root)
         self.graphs, self.labels = dataset['graphs'], dataset['labels']
 
     def generate_graph(self, sample_id: int) -> nx.Graph:
@@ -431,7 +436,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph representing the specific sample.
         """
-        G = json_graph.node_link_graph(self.graphs[sample_id], directed=False)
+        G = json_graph.node_link_graph(self.graphs[sample_id], directed=False) # , edges="edges"
         # print(f"load: {G=}")
         G = nx.MultiDiGraph(G)
         # print(f"multidi: {G=}")

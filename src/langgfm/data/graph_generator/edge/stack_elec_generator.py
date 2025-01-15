@@ -9,10 +9,10 @@ import pandas as pd
 from torch_geometric.data import Data
 from collections import Counter
 
-from ..utils.graph_utils import get_edge_idx_in_graph
+from ..utils.graph_utils import get_edge_idx_in_graph, represent_edges_with_multiplex_id
 from .._base_generator import EdgeTaskGraphGenerator
 from ....utils.logger import logger
-logger.set_level("DEBUG")
+
 
 @EdgeTaskGraphGenerator.register("stack_elec")
 class StackElecGraphGenerator(EdgeTaskGraphGenerator):
@@ -29,7 +29,7 @@ class StackElecGraphGenerator(EdgeTaskGraphGenerator):
         
         self.entity_text = pd.read_csv(f"{self.root}/entity_text.csv", index_col=0)
         self.edge_list = pd.read_csv(f"{self.root}/edge_list.csv", index_col=0)
-        logger.debug(f"{Counter([(row['u'], row['i']) for row_idx, row in self.edge_list.iterrows()]).most_common(10)=}")
+        logger.debug(f"{Counter([(row['u'].item(), row['i'].item()) for row_idx, row in self.edge_list.iterrows()]).most_common(10)=}")
         # logger.debug(self.edge_list.loc[self.edge_list['i'] < 67155])
         self.relation_text = pd.read_csv(f"{self.root}/relation_text.csv", index_col=0)
         
@@ -45,8 +45,10 @@ class StackElecGraphGenerator(EdgeTaskGraphGenerator):
             data = torch.load(f"{self.root}/data.pt", weights_only=False)
             
         self.graph = data
-        
-        self.all_samples = set([(edge_index[0, i].item(), edge_index[1, i].item()) for i in range(edge_index.size(1))])
+        resutls = represent_edges_with_multiplex_id(self.graph.edge_index, range(self.graph.edge_index.size(1)))
+        # logger.debug(f"{resutls=}")
+        self.all_samples = list(resutls)
+        # self.all_samples = set([(edge_index[0, i].item(), edge_index[1, i].item()) for i in range(edge_index.size(1))])
         
     def graph_description(self):
         desc = ("This is a graph constructed from question-and-answer data related to electronic techniques of the Stack Exchange platform, "
@@ -68,9 +70,10 @@ class StackElecGraphGenerator(EdgeTaskGraphGenerator):
         Args:
             edge (tuple): The node indices of the src and dst node.
         """
-        src, dst = edge
-        edge_idx = get_edge_idx_in_graph(src, dst, self.graph.edge_index)
-        label = self.graph.edge_label[edge_idx]
+        src, dst, multiplex_id = edge
+        edge_idx = get_edge_idx_in_graph(src, dst, self.graph.edge_index, multiplex_id=multiplex_id)
+        label = self.graph.edge_label[edge_idx].item()
+        logger.debug(f"{label=}")
         
         if label == 1:
             answer = (f"The edge from user with node id {target_src_node_idx} to question with node id {target_dst_node_idx} "

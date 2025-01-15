@@ -50,6 +50,6 @@ class Logger:
         self.log(logging.CRITICAL, message)
 
 # create global Logger instance
-logger = Logger(level=logging.ERROR)
+logger = Logger(level=logging.ERROR, log_file="log.txt")
 
-logger = Logger(level=logging.INFO)
+# logger = Logger(level=logging.INFO)

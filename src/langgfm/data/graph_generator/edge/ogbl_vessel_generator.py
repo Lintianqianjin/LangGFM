@@ -124,7 +124,7 @@ class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
         G = nx.MultiDiGraph()
         
         for raw_node_idx, new_node_idx in node_mapping.items():
-            x, y, z = self.graph.x[raw_node_idx].numpy()
+            x, y, z = self.graph.x[raw_node_idx].numpy().round(4)
             G.add_node(new_node_idx, type='bifurcation', x=x.item(), y=y.item(), z=z.item())
 
         target_src = node_mapping[edge[0]]

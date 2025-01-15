@@ -152,7 +152,7 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
                     "send_useful_votes": df_row["useful"].item(),
                     "send_funny_votes": df_row["funny"].item(),
                     "send_cool_votes": df_row["cool"].item(),
-                    "elite_year": df_row["elite"].item(),
+                    "elite_year": df_row["elite"],
                     "compliment_hot": df_row["compliment_hot"].item(),
                     "compliment_more": df_row["compliment_more"].item(),
                     "compliment_profile": df_row["compliment_profile"].item(),

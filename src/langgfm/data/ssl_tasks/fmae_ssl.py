@@ -134,6 +134,7 @@ class FeatureMaskedAutoencoder(SelfSupervisedGraphTask):
         if node_features:
             nodes = list(node_features.keys())
             num_nodes_to_mask = int(len(nodes) * self.mask_node_ratio)
+            num_nodes_to_mask = max(1, num_nodes_to_mask)  # Ensure at least one node is masked.
             masked_nodes = random.sample(nodes, num_nodes_to_mask)
             masked_nodes_features = {node: node_features[node] for node in masked_nodes}
             
@@ -161,6 +162,7 @@ class FeatureMaskedAutoencoder(SelfSupervisedGraphTask):
         if edge_features:
             edges = list(edge_features.keys())
             num_edges_to_mask = int(len(edges) * self.mask_edge_ratio)
+            num_edges_to_mask = max(1, num_edges_to_mask)  # Ensure at least one edge is masked.
             selected_edges = random.sample(edges, num_edges_to_mask)
             
             # Mask the selected edges and optionally their reverse edges.

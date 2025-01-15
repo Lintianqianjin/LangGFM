@@ -57,7 +57,7 @@ class DatasetGenerationCoordinator:
         "load indices for each dataset, from {self.root}/indices.json"
         with open(os.path.join(self.root, "indices.json"), "r") as file:
             self.indices = json.load(file)
-        assert set(self.indices.keys()) == self.job_tasks, "Indices should be provided for all datasets."
+        assert set(self.indices.keys()) == self.job_tasks, f"Indices should be provided for all datasets. {(set(self.indices.keys()) - self.job_tasks)=} {(self.job_tasks - set(self.indices.keys()))=}"
 
 
     def _mkdir(self):

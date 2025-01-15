@@ -1,6 +1,6 @@
 import json
 import networkx as nx
-
+import warnings
 import torch
 import pandas as pd
 from torch_geometric.utils import to_undirected
@@ -25,7 +25,9 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
         # Load dataset and graph
         self.root = './data'
         
-        self.graph = torch.load(f"{self.root}/Twitch/twitch.pt")
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", FutureWarning)
+            self.graph = torch.load(f"{self.root}/Twitch/twitch.pt")
         self.graph.edge_index = to_undirected(self.graph.edge_index)
         
         self.nodes = pd.read_csv(f"{self.root}/Twitch/large_twitch_features.csv")

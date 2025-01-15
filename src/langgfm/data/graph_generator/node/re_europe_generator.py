@@ -247,9 +247,9 @@ class REEuropeGraphGenerator(NodeTaskGraphGenerator):
                 
                 feautres = {
                     # "voltage (kV)": bus_info['voltage'].item(), most are 380
-                    "COSMO_solar_capacity_proportional (MWh)": bus_info['Proportional_solar_COSMO'].item(),
-                    "COSMO_wind_capacity_proportional (MWh)": bus_info['Proportional_wind_COSMO'].item(),
-                    "daily_avg_load_last_7_days_recent_to_old (MW)": past_load_data.values.round(2).tolist(),
+                    "COSMO_proportional_solar_capacity": f"{bus_info['Proportional_solar_COSMO'].item()} (MWh)",
+                    "COSMO_proportional_wind_capacity": f"{bus_info['Proportional_wind_COSMO'].item()} (MWh)",
+                    "daily_avg_load_in_MW_last_7_days_recent_to_old": f"{past_load_data.values.round(2).tolist()}",
                 }
                 
                 G.add_node(
@@ -262,12 +262,12 @@ class REEuropeGraphGenerator(NodeTaskGraphGenerator):
                 generator_info = self.generator_info.iloc[generator_idx]
                 # print(f"{generator_info=}")
                 feautres = {
-                    "capacity (MW)": generator_info['capacity'].item(),
-                    "marginal_cost ($/MWh)": generator_info['lincost'].item(),
-                    "cycle_cost ($)": generator_info['cyclecost'].item(),
-                    "minimal_up_time (hours)": generator_info['minuptime'].item(),
-                    "minimal_down_time (hours)": generator_info['mindowntime'].item(),
-                    "minimal_production (MW)": generator_info['minonlinecapacity'].item(),
+                    "capacity": f"{generator_info['capacity'].round(2).item()} MW",
+                    "marginal_cost": f"{generator_info['lincost'].item()} $/MWh",
+                    "cycle_cost": f"{generator_info['cyclecost'].item()} $",
+                    "minimal_up_time": f"{generator_info['minuptime'].item()} hours",
+                    "minimal_down_time": f"{generator_info['mindowntime'].item()} hours",
+                    "minimal_production": f"{generator_info['minonlinecapacity'].round(2).item()} MW",
                 }
                 G.add_node(
                     new_node_idx, type = 'generator',
@@ -308,7 +308,7 @@ class REEuropeGraphGenerator(NodeTaskGraphGenerator):
                     "reactance_per_unit": edge_data['X'].values[0].item(),
                     "susceptance_per_unit": edge_data['Y'].values[0].item(),
                     # "thermal_limit (MW)": self.network_edges.at[edge_idx, 'limit'], # most are zeros
-                    "great_circle_distance (km)": edge_data['length'].values[0].item()
+                    "great_circle_distance": f"{edge_data['length'].values[0].item()} (km)"
                 }
                 
                 G.add_edge(src, dst, type="transmission_line", **feautres)
