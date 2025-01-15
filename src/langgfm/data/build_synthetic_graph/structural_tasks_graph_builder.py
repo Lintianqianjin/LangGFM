@@ -11,7 +11,7 @@ from tqdm import tqdm
 from abc import ABC, abstractmethod
 from networkx.readwrite import json_graph
 
-from utils import (
+from langgfm.data.build_synthetic_graph.utils import (
     create_random_graph,
     create_random_bipartite_graph, 
     create_random_graph_node_weights, 

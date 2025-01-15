@@ -12,6 +12,7 @@ from ..data.ssl_tasks.tae_ssl import TopologyAutoencoder
 from ..data.ssl_tasks.fmae_ssl import NodeFeatureMaskedAutoencoder, EdgeFeatureMaskedAutoencoder
 from ..data.graph_text_transformation.nxg_to_text import GraphTextualizer
 from ..configs.instruction_template import PROMPT_TEMPLATE
+from ..utils.logger import logger
 
 
 
@@ -30,6 +31,8 @@ class DatasetGenerationCoordinator:
         # load the config and indices
         self._load_config()
         self._load_indices()
+        # rm common_format, common_node_feature_masked_autoencoder, common_edge_feature_masked_autoencoder from the list
+
         
         # Root path for saving outputs
         # self.root = os.path.join("./experiments/", job_name)
@@ -43,10 +46,19 @@ class DatasetGenerationCoordinator:
         with open(os.path.join(self.root, "data_generation.yaml"), "r") as file:
             self.config = yaml.safe_load(file)
         
+        self.job_tasks = set(self.config.keys()) \
+            - set([
+                "common_format", 
+                "common_node_feature_masked_autoencoder", 
+                "common_edge_feature_masked_autoencoder"
+        ])
+
     def _load_indices(self):
         "load indices for each dataset, from {self.root}/indices.json"
         with open(os.path.join(self.root, "indices.json"), "r") as file:
             self.indices = json.load(file)
+        assert set(self.indices.keys()) == self.job_tasks, "Indices should be provided for all datasets."
+
 
     def _mkdir(self):
         """Create the job root directory if it doesn't exist."""
@@ -256,11 +268,13 @@ class DatasetGenerationCoordinator:
 
         # Create parallel tasks for each dataset
         tasks = []
-        for dataset_name in self.config:
-            tasks.append(
-                asyncio.create_task(self._parallel_dataset_task(dataset_name))
-            )
-
+        for dataset_name in self.job_tasks:
+            try:
+                tasks.append(
+                    asyncio.create_task(self._parallel_dataset_task(dataset_name))
+                )
+            except Exception as e:
+                logger.error(f"Error in dataset {dataset_name}: {e}")
         # Wait for all to finish
         await asyncio.gather(*tasks)
 
