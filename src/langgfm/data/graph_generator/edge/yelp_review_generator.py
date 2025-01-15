@@ -19,6 +19,8 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
     """
     
     directed = True
+    has_node_attr = True
+    has_edge_attr = True
 
     def load_data(self):
         """

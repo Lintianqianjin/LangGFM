@@ -17,6 +17,8 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
     from the OAG Scholar Interest dataset using NetworkX format.
     """
     directed = True
+    has_node_attr = True
+    has_edge_attr = False
 
     def load_data(self):
         """

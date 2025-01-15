@@ -5,7 +5,7 @@ import time
 import json
 
 
-from langgfm.data.dataset_generation_coordinator import AsyncDataGenerationCoordinator
+from langgfm.data.dataset_generation_coordinator import DatasetGenerationCoordinator
 
 
 class TestDataGeneration(unittest.TestCase):
@@ -16,16 +16,17 @@ class TestDataGeneration(unittest.TestCase):
         Setup runs before each test method. We'll define a config
         and a unique job name so we don't collide with other runs.
         """
-        self.job_name = "test"
-        self.root_path = os.path.join("./data/instruction_data/", self.job_name)
+        self.job_path = "./experiments/train/train_v1"
+        self.root = self.job_path
+        # self.root_path = os.path.join("./data/instruction_data/", self.job_name)
         # Example input config (mirroring your example)
 
         # Clean up any prior run data if it exists
-        if os.path.exists(self.root_path):
-            # Caution: This removes the entire directory contents
-            # in a real test environment you might use a safer approach
-            import shutil
-            shutil.rmtree(self.root_path)
+        # if os.path.exists(self.root_path):
+        #     # Caution: This removes the entire directory contents
+        #     # in a real test environment you might use a safer approach
+        #     import shutil
+        #     shutil.rmtree(self.root_path)
 
     def test_data_generation_pipeline(self):
         """
@@ -33,8 +34,8 @@ class TestDataGeneration(unittest.TestCase):
         then check that the file is not empty.
         """
         # Instantiate the coordinator with our config
-        coordinator = AsyncDataGenerationCoordinator(
-            job_name=self.job_name
+        coordinator = DatasetGenerationCoordinator(
+            self.job_path
         )
 
         start_time = time.time()
@@ -45,10 +46,10 @@ class TestDataGeneration(unittest.TestCase):
         print(f"Pipeline finished in {elapsed:.2f} seconds.")
 
         # Check if the job root path was created
-        self.assertTrue(os.path.isdir(self.root_path), "Job root directory should exist.")
+        self.assertTrue(os.path.isdir(self.root), "Job root directory should exist.")
 
         # Check if data.json was created
-        data_file = os.path.join(self.root_path, "data.json")
+        data_file = os.path.join(self.root, "instruction_dataset.json")
         self.assertTrue(os.path.isfile(data_file), "data.json should be created after pipeline runs.")
 
         # Check if data.json is non-empty
@@ -75,8 +76,8 @@ class TestDataGeneration(unittest.TestCase):
         Uncomment to delete generated files after the test.
         """
         # import shutil
-        # if os.path.exists(self.root_path):
-        #     shutil.rmtree(self.root_path)
+        # if os.path.exists(self.root):
+        #     shutil.rmtree(self.root)
         pass
 
 if __name__ == "__main__":

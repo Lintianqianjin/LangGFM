@@ -1,0 +1,12 @@
+{
+    "bace": [1,2],
+    "movielens1m": [
+        [4027,1931],
+        [751,558],
+        [186,793]
+    ],
+    "graph_structure_detection": [
+        1,
+        2
+    ]
+}

@@ -1,0 +1,57 @@
+graph_structure_detection: 
+  generator: {}
+  format:
+    - "gml"
+    - "json"
+
+
+bace:
+  generator: {}
+  ssl_setting:
+    node_feature_masked_autoencoder:
+      generator:
+        mask_node_ratio: 0.2
+        mask_edge_ratio: 0.2
+        mask_reverse_edges: true
+      augment_ratio: 1
+    edge_feature_masked_autoencoder:
+      generator:
+        mask_node_ratio: 0.2
+        mask_edge_ratio: 0.2
+        mask_reverse_edges: true
+      augment_ratio: 1
+    topology_autoencoder:
+      generator:
+        distinguish_directions: false
+      augment_ratio: 2
+  format:
+    - "gml"
+    - "json"
+    - "table"
+    - "graphml"
+
+# movielens1m:
+#   generator:
+#     task_level: "edge"
+#     num_hops: 1
+#     sampling: true
+#     neighbor_size:
+#       - 50
+#     random_seed: 42
+#   index:
+#     - [4027, 1931]
+#     - [751, 558]
+#     - [186, 793]
+#   datatype:
+#     directed: true
+#   ssl_setting:
+#     node_feature_masked_autoencoder:
+#       generator:
+#         mask_node_ratio: 0.2
+#         mask_edge_ratio: 0.2
+#         mask_reverse_edges: true
+#       augment_ratio: 1
+#   format:
+#     - "json"
+#     - "table"
+#     - "graphml"

@@ -15,6 +15,8 @@ class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
     """
 
     directed = False
+    has_node_attr = True
+    has_edge_attr = False
     
     def __convert_edges_to_dict(self, edges:torch.Tensor) -> dict:
         """
