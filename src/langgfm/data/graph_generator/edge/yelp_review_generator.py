@@ -146,24 +146,24 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
                 feats = {
                     "type": "user",
                     "yelping_since": df_row["yelping_since"].strftime("%Y-%m"),
-                    "review_count": df_row["review_count"],
-                    "average_stars": df_row["average_stars"],
-                    "fans": df_row["fans"],
-                    "send_useful_votes": df_row["useful"],
-                    "send_funny_votes": df_row["funny"],
-                    "send_cool_votes": df_row["cool"],
-                    "elite_year": df_row["elite"],
-                    "compliment_hot": df_row["compliment_hot"],
-                    "compliment_more": df_row["compliment_more"],
-                    "compliment_profile": df_row["compliment_profile"],
-                    "compliment_cute": df_row["compliment_cute"],
-                    "compliment_list": df_row["compliment_list"],
-                    "compliment_note": df_row["compliment_note"],
-                    "compliment_plain": df_row["compliment_plain"],
-                    "compliment_cool": df_row["compliment_cool"],
-                    "compliment_funny": df_row["compliment_funny"],
-                    "compliment_writer": df_row["compliment_writer"],
-                    "compliment_photos": df_row["compliment_photos"]
+                    "review_count": df_row["review_count"].item(),
+                    "average_stars": df_row["average_stars"].item(),
+                    "fans": df_row["fans"].item(),
+                    "send_useful_votes": df_row["useful"].item(),
+                    "send_funny_votes": df_row["funny"].item(),
+                    "send_cool_votes": df_row["cool"].item(),
+                    "elite_year": df_row["elite"].item(),
+                    "compliment_hot": df_row["compliment_hot"].item(),
+                    "compliment_more": df_row["compliment_more"].item(),
+                    "compliment_profile": df_row["compliment_profile"].item(),
+                    "compliment_cute": df_row["compliment_cute"].item(),
+                    "compliment_list": df_row["compliment_list"].item(),
+                    "compliment_note": df_row["compliment_note"].item(),
+                    "compliment_plain": df_row["compliment_plain"].item(),
+                    "compliment_cool": df_row["compliment_cool"].item(),
+                    "compliment_funny": df_row["compliment_funny"].item(),
+                    "compliment_writer": df_row["compliment_writer"].item(),
+                    "compliment_photos": df_row["compliment_photos"].item()
                 }
                 G.add_node(new_node_idx, **feats)
             
@@ -173,9 +173,9 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
                 feats = {
                     "type": "business",
                     "categories": df_row["categories"],
-                    "stars": df_row["stars"],
+                    "stars": df_row["stars"].item(),
                     "location": f"{df_row['city'], df_row['state']}",
-                    "review_count": df_row["review_count"]
+                    "review_count": df_row["review_count"].item()
                 }
                 G.add_node(new_node_idx, **feats)
             else:
@@ -204,12 +204,12 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
                 review_info = self.raw_reviews_info.iloc[edge_idx_within_etype]
                 feats = {
                     "type": "Review",
-                    "stars": review_info['stars'],
+                    "stars": review_info['stars'].item(),
                     "date": review_info['date'].strftime("%Y-%m-%d"),
                     "text": review_info['text'],
-                    "receive_useful_votes": review_info['useful'],
-                    "receive_funny_votes": review_info['funny'],
-                    "receive_cool_votes": review_info['cool']
+                    "receive_useful_votes": review_info['useful'].item(),
+                    "receive_funny_votes": review_info['funny'].item(),
+                    "receive_cool_votes": review_info['cool'].item()
                 }
                 # compare the date of the edge with the target edge
                 # if later than the target edge, remove the edge
@@ -222,7 +222,7 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
                     "type": "Tip",
                     "date": tip_info['date'].strftime("%Y-%m-%d"),
                     "text": tip_info['text'],
-                    "compliment_count": tip_info['compliment_count']
+                    "compliment_count": tip_info['compliment_count'].item()
                 }
                 # compare the date of the edge with the target edge
                 # if later than the target edge, remove the edge

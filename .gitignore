@@ -3,6 +3,7 @@
 /src/langgfm/data/outputs/*
 !src/langgfm/data/outputs/.gitkeep
 
+/data_cache/*
 /data/*
 !data/README.md
 
