@@ -1,8 +1,16 @@
+/data_cache
+/model
+/LLaMA-Factory
 /experiments/**/results/
+/experiments/**/ckpts/
+/experiments/**/merged_model/
 /experiments/**/*.json
+/experiments/**/*.jsonl
 /input_graph_generator.py
 /src/langgfm/data/outputs/*
 !src/langgfm/data/outputs/.gitkeep
+log.*
+*.log
 
 /data_cache/*
 /data/*
