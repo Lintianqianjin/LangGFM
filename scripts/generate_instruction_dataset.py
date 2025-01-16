@@ -14,15 +14,17 @@ def main():
         required=True,
         help="Path to the dataset generation job directory."
     )
-    # 解析参数
+    parser.add_argument(
+        "--continue_flag",
+        action="store_true",
+        help="Continue from the last checkpoint."
+    )
+
     args = parser.parse_args()
-
-    # 获取 job_path 参数
     job_path = args.job_path
+    _continue = args.continue_flag
 
-    # try:
-    # 创建并运行 DatasetGenerationCoordinator
-    coordinator = DatasetGenerationCoordinator(job_path)
+    coordinator = DatasetGenerationCoordinator(job_path,_continue)
     coordinator.pipeline()
     print("Dataset generation pipeline completed successfully.")
     # except Exception as e:

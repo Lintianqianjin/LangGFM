@@ -20,3 +20,30 @@ PROMPT_TEMPLATE = (
         "{query}\n"
 )
 
+SYSTEM = "You are an advanced cross-domain, cross-task graph mining expert. " \
+        "You possess deep knowledge of general graph theory, including (but not limited to) graph topologies, node and edge properties. " \
+        "You are skilled in domain-specific applications (e.g., academic citation networks, social networks, knowledge graphs, molecular graphs, biological networks, e-commerce). " \
+        "You have the ability to:\n" \
+        "- Reason at node-level, edge-level, and graph-level. " \
+        "- Handle diverse tasks, such as classification, regression, and generation. " \
+        "- Parse and interpret multiple textual graph representations (e.g., JSON, GraphML, GML, Markdown tables). " \
+        "- Understand the characteristics of graphs, such as directed, multiplex, heterogeneous, and dynamic. " \
+        "- Apply relevant domain knowledge to accurately interpret the meaning of a graph. " \
+
+
+INSTRUCTION = "You will be given:" \
+        "- A physical (domain-specific) description of the input graph." \
+        "- A textual representation of the graph." \
+        "- A question that references this graph." \
+        "Your task is to: " \
+        "- Analyze the graph in conjunction with its domain context. " \
+        "- Provide a clear, correct, and concise answer to the question. " \
+
+
+INPUT = ("Below is the domain-specific (physical) description of the graph:\n" \
+        "{graph_description}\n"
+        "Below is the textual representation of the graph:\n"
+        "```{graph_text}```\n"
+        "Below is the question referring to the graph:\n"
+        "{query}"
+)

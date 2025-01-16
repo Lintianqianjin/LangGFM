@@ -16,7 +16,8 @@ class TestDataGeneration(unittest.TestCase):
         Setup runs before each test method. We'll define a config
         and a unique job name so we don't collide with other runs.
         """
-        self.job_path = "./experiments/train/train_v1"
+        self.job_path = "./experiments/training_v1_mini_debug"
+        # self.job_path = "./experiments/training_v1_mini"
         self.root = self.job_path
         # self.root_path = os.path.join("./data/instruction_data/", self.job_name)
         # Example input config (mirroring your example)
