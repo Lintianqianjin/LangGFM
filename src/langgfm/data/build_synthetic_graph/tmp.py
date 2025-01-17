@@ -114,12 +114,12 @@ def check_shortest_path(task='shortest_path'):
 
 
 if __name__ == "__main__":
-    tasks = [
-        'node_counting', 'edge_counting', 'node_attribute_retrieval','edge_attribute_retrieval', 
-        'degree_counting', 'edge_existence',
-        'connectivity', 'shortest_path', 'cycle_checking',
-        'hamilton_path', 'graph_automorphic'
-    ]
+    # tasks = [
+    #     'node_counting', 'edge_counting', 'node_attribute_retrieval','edge_attribute_retrieval', 
+    #     'degree_counting', 'edge_existence',
+    #     'connectivity', 'shortest_path', 'cycle_checking',
+    #     'hamilton_path', 'graph_automorphic'
+    # ]
     # transform_labels('node_counting')
     # transform_labels('edge_counting')
     # transform_labels('graph_automorphic')
@@ -136,9 +136,9 @@ if __name__ == "__main__":
     # check_label_distribution('hamilton_path')
     # check_label_distribution('graph_automorphic')
 
-    # check_shortest_path(task='shortest_path')
+    check_shortest_path(task='shortest_path')
 
     # restore the splits 
 
-
+    
             

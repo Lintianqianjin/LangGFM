@@ -3,7 +3,7 @@ import sys
 import json
 import asyncio
 import yaml
-
+from tqdm.asyncio import tqdm_asyncio
 from typing import Dict, Any, List
 
 from ..data.graph_generator._base_generator import InputGraphGenerator
@@ -45,7 +45,6 @@ class DatasetGenerationCoordinator:
         self.data_file_lock = asyncio.Lock()
 
         if not _continue:
-            # Clear the data file
             with open(self.data_filepath, "w") as f:
                 f.write("[]")
 
@@ -149,8 +148,6 @@ class DatasetGenerationCoordinator:
         generator,
         sample_id,
         output_formats,
-        # directed,
-        # graph_description,
         ssl_settings
     ):
         """
@@ -179,29 +176,21 @@ class DatasetGenerationCoordinator:
             # 2) SSL tasks
             if ssl_settings:  # If no ssl_settings, skip
                 for ssl_task_name, ssl_config in ssl_settings.items():
-                    try:
-                        ssl_results = await self._ssl_task_graph_generator(main_graph, ssl_task_name, ssl_config)
-                        # continue
-                        for (ssl_graph, ssl_query, ssl_answer) in ssl_results:
-                            for fmt in output_formats:
-                                formatted_ssl_sample = self.format_sample(
-                                    graph=ssl_graph,
-                                    query=ssl_query,
-                                    answer=ssl_answer,
-                                    fmt=fmt,
-                                    directed=generator.directed,
-                                    graph_description=generator.graph_description,
-                                    dataset=generator.dataset_name,
-                                    task_type=ssl_task_name,
-                                    metadata=metadata,
-                                )
-                                all_formatted.append(formatted_ssl_sample)
-                    except Exception as e:
-                        logger.info(f"Error in SSL task {ssl_task_name}: {e}. {sample_id=}")
-                        # 输出图的全部信息
-                        logger.info(f"{main_graph.nodes(data=True)=}")  # 节点及属性
-                        logger.info(f"{main_graph.edges(data=True)=}")  # 边及属性
-                        logger.info(f"{main_graph.graph=}", )  # 图的全局属性
+                    ssl_results = await self._ssl_task_graph_generator(main_graph, ssl_task_name, ssl_config)
+                    for (ssl_graph, ssl_query, ssl_answer) in ssl_results:
+                        for fmt in output_formats:
+                            formatted_ssl_sample = self.format_sample(
+                                graph=ssl_graph,
+                                query=ssl_query,
+                                answer=ssl_answer,
+                                fmt=fmt,
+                                directed=generator.directed,
+                                graph_description=generator.graph_description,
+                                dataset=generator.dataset_name,
+                                task_type=ssl_task_name,
+                                metadata=metadata,
+                            )
+                            all_formatted.append(formatted_ssl_sample)
         except Exception as e:
             logger.info(f"Error in main task: {e}. {sample_id=}")
             return []
@@ -225,36 +214,28 @@ class DatasetGenerationCoordinator:
         # Create the main generator
         generator_config = task_config.get("generator", {})
         generator = InputGraphGenerator.create(dataset_name, **generator_config)
-        # graph_description = generator.graph_description
-        # directed = generator.directed
         generator.dataset_name = dataset_name
 
-        # Collect tasks for concurrency at the sample level
-        tasks = []
-        for sample_id in sample_indices:
-            tasks.append(
-                asyncio.create_task(
-                    self._generate_samples_for_one_index(
-                        generator=generator,
-                        sample_id=sample_id,
-                        output_formats=output_formats,
-                        # directed=directed,
-                        # graph_description=graph_description,
-                        ssl_settings=ssl_settings
-                    )
+        # Collect tasks for concurrency at the sample level, Wrap tasks in tqdm
+        tasks = [
+            asyncio.create_task(
+                self._generate_samples_for_one_index(
+                    generator=generator,
+                    sample_id=sample_id,
+                    output_formats=output_formats,
+                    ssl_settings=ssl_settings,
                 )
             )
-        
-        # Run them concurrently
-        results = await asyncio.gather(*tasks)
+            for sample_id in sample_indices
+        ]
+
+        # Run them concurrently, Track progress with tqdm
+        results = await tqdm_asyncio.gather(*tasks, desc=f"Processing {dataset_name}", total=len(tasks))
 
         # Flatten
-        dataset_samples = []
-        for res in results:
-            dataset_samples.extend(res)
-
+        dataset_samples = [sample for task_results in results for sample in task_results]
         return dataset_samples
-
+    
     # -------------------------------------------------------------------
     # Parallel dataset tasks & pipeline orchestration
     # -------------------------------------------------------------------
@@ -311,15 +292,11 @@ class DatasetGenerationCoordinator:
         """
         Orchestrates dataset generation and tokenization in parallel.
         """
-        tasks = []
-        for dataset_name in self.job_tasks:
-            try:
-                tasks.append(
-                    asyncio.create_task(self._parallel_dataset_task(dataset_name))
-                )
-            except Exception as e:
-                logger.error(f"Error in dataset {dataset_name}: {e}")
-        await asyncio.gather(*tasks)
+        tasks = [
+            asyncio.create_task(self._parallel_dataset_task(dataset_name))
+            for dataset_name in self.job_tasks
+        ]
+        await tqdm_asyncio.gather(*tasks, desc="Processing datasets", total=len(tasks))
         print("--- All datasets processed and appended into data.json ---")
 
     def pipeline(self):

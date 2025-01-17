@@ -413,6 +413,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         )[task]
         self.root = os.path.join(os.path.dirname(__file__), self.config['file_path'])
         self.load_data()
+        self.all_samples = list(range(len(self.graphs)))
 
     @property
     def graph_description(self):

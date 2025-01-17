@@ -5,9 +5,7 @@ from langgfm.utils.logger import logger
 logger.set_level(logging.WARNING)
 
 def main():
-    # 创建解析器
     parser = argparse.ArgumentParser(description="Run the dataset generation pipeline.")
-    # 添加参数
     parser.add_argument(
         "--job_path",
         type=str,

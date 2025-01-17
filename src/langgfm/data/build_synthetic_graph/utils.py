@@ -170,7 +170,7 @@ def create_smaller_graph(min_nodes, max_nodes, max_edges, min_sparsity, max_spar
     return G
 
 
-def create_random_graph_node_weights(min_nodes, max_nodes, min_sparsity, max_sparsity, directed=True):
+def create_random_graph_node_weights(min_nodes, max_nodes, min_sparsity, max_sparsity, weighted=True, directed=True):
     if not 0 <= max_sparsity <= 1 or not 0 <= min_sparsity <= 1:
         raise ValueError("Sparsity must be between 0 and 1.")
 
