@@ -26,7 +26,7 @@ class ExplagraphsGraphGenerator(GraphTaskGraphGenerator):
         self.root = './data/explagraph'
         self.samples = pd.read_csv(f'{self.root}/explagraph_train_dev.tsv', sep='\t')
         
-        self.all_samples = set(self.samples.index.tolist())
+        self.all_samples = self.samples.index.tolist()
     
     @property
     def graph_description(self):

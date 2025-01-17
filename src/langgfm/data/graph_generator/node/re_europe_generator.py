@@ -131,7 +131,7 @@ class REEuropeGraphGenerator(NodeTaskGraphGenerator):
 
         num_days = len(np.unique(self.bus_load_data.index.date))
         num_days = num_days - 7  # 7 days of past data
-        self.all_samples = set(range(len(self.network_nodes) * num_days))
+        self.all_samples = list(range(len(self.network_nodes) * num_days))
         
     def __load_bus_day_avg_load(self, df: pd.DataFrame, target_date: datetime):
         """

@@ -31,7 +31,7 @@ class AMinerGraphGenerator(NodeTaskGraphGenerator):
         # number of authors is 1693531
         # number of labelled authors is 246678
         self.author_labelled_index = self.graph['author']['y_index']
-        self.all_samples = set(self.author_labelled_index.tolist())
+        self.all_samples = list(self.author_labelled_index.tolist())
         # print(f"{self.all_sample_ids=}")
         # print(f"{self.author_labelled_index=}")
         # author_labels is a tensor of size 246678, corresponding to the author_labelled_index

@@ -35,7 +35,7 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
         self.author_nodes["Research_Interests"] = self.author_nodes["Research_Interests"].apply(lambda x: x if isinstance(x, list) else ast.literal_eval(x))
         self.author_labelled_index = self.author_nodes.loc[self.author_nodes['labelled']]['node_idx'].to_list()
         
-        self.all_samples = set(self.author_labelled_index)
+        self.all_samples = list(self.author_labelled_index)
         
         self.paper_nodes = pd.read_csv(f'{self.root}/raw/paper_nodes.csv')
         self.venue_nodes = pd.read_csv(f'{self.root}/raw/venue_nodes.csv')

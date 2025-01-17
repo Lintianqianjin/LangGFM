@@ -23,21 +23,33 @@ class ChEBI20GraphGenerator(GraphTaskGraphGenerator):
         Load the ESOL dataset and preprocess required mappings.
         """
         self.root = './data/ChEBI-20-MM'
-        self.dataset_train = pd.read_csv(f'{self.root}/train.csv', header=0)
-        # print(f"{len(set(self.dataset_train['CID']))=}")
-        # print(f"{self.dataset_train.shape=}")
-        self.dataset_valid = pd.read_csv(f'{self.root}/validation.csv', header=0)
-        # print(f"{len(set(self.dataset_valid['CID']))=}")
-        # print(f"{self.dataset_valid.shape=}")
-        self.dataset_test = pd.read_csv(f'{self.root}/test.csv', header=0)
-        # print(f"{len(set(self.dataset_test['CID']))=}")
-        # print(f"{self.dataset_test.shape=}")
         
-        self.dataset = pd.concat([self.dataset_train, self.dataset_valid, self.dataset_test],axis=0)
-        # print(f"{len(set(all_samples['CID']))=}")
-        # print(f"{all_samples.shape=}")
-        
-        self.all_samples = set(self.dataset['CID'])
+        if not os.path.exists(f"{self.root}/filtered_dataset.csv"):
+            self.dataset_train = pd.read_csv(f'{self.root}/train.csv', header=0)
+            # print(f"{len(set(self.dataset_train['CID']))=}")
+            # print(f"{self.dataset_train.shape=}")
+            self.dataset_valid = pd.read_csv(f'{self.root}/validation.csv', header=0)
+            # print(f"{len(set(self.dataset_valid['CID']))=}")
+            # print(f"{self.dataset_valid.shape=}")
+            self.dataset_test = pd.read_csv(f'{self.root}/test.csv', header=0)
+            # print(f"{len(set(self.dataset_test['CID']))=}")
+            # print(f"{self.dataset_test.shape=}")
+            
+            self.dataset = pd.concat([self.dataset_train, self.dataset_valid, self.dataset_test],axis=0)
+            # print(f"{len(set(all_samples['CID']))=}")
+            # print(f"{all_samples.shape=}")
+            # check all the samples in dataset, using smiles2graph to check if the graph has at least 3 node and 2 edges
+            # then remove the samples that do not meet the requirement in the dataset
+            
+            self.dataset['graph'] = self.dataset['SMILES'].apply(smiles2graph)
+            self.dataset = self.dataset[self.dataset['graph'].apply(lambda x: x.number_of_nodes() >= 3 and x.number_of_edges() >= 2)]
+            # remove the 'graph' column
+            self.dataset = self.dataset.drop(columns=['graph'])
+            self.dataset.to_csv(f"{self.root}/filtered_dataset.csv", index=False)
+        else:
+            self.dataset = pd.read_csv(f"{self.root}/filtered_dataset.csv", header=0)
+            
+        self.all_samples = self.dataset['CID'].tolist()
         # self.all_samples = set(self.df['molecule_index'].tolist())
     
     def get_query(self,**kwargs):

@@ -49,7 +49,7 @@ class FB15K237GraphGenerator(EdgeTaskGraphGenerator):
         # convert edges into set of tuples
         resutls = represent_edges_with_multiplex_id(self.graph.edge_index,edge_indices_candidates)
         # logger.debug(f"{resutls=}")
-        self.all_samples = set(resutls)
+        self.all_samples = list(resutls)
     
     def graph_description(self):
         desc = "This graph is a subgraph from the knowledge graph FB15K237 where nodes represent entities and edges represent relationships."

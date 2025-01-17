@@ -37,7 +37,7 @@ class FingerprintGraphGenerator(GraphTaskGraphGenerator):
         graphs_df = graphs_df[graphs_df['number_of_nodes']>=5]
         self.graphs_df = graphs_df[graphs_df.graphs_node_flag==True]
         
-        self.all_samples = set(self.graphs_df.index.tolist())
+        self.all_samples = self.graphs_df.index.tolist()
         
     
     

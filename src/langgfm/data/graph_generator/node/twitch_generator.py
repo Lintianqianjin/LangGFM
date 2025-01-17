@@ -48,7 +48,7 @@ class TwitchGraphGenerator(NodeTaskGraphGenerator):
 
         self.node_idx_label_mapping = self.nodes[['mature']].to_dict()['mature'] # key is node id (int)
 
-        self.all_samples = set(range(self.graph.num_nodes))
+        self.all_samples = list(range(self.graph.num_nodes))
     
     @property
     def graph_description(self):

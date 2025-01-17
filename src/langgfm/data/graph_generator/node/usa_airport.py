@@ -25,7 +25,13 @@ class USAirportGraphGenerator(NodeTaskGraphGenerator):
         
         self.graph = torch.load(f'{self.root}/USAAirport/usa_airport.pt')
         self.node_idx_label_mapping = self.graph.y.numpy() # array
-        self.all_samples = set(range(self.graph.num_nodes))
+        self.all_samples = list(range(self.graph.num_nodes))
+    
+    @property
+    def graph_description(self):
+        desc = "This graph is a airport network graph. Each node represents an airport. Each edge represents a direct flight between two airports"
+        return desc
+    
     
     def get_query(self, target_node_idx: int) -> str:
         """

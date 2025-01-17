@@ -1,0 +1,14 @@
+common_format: &common_format
+  - "gml"
+  - "json"
+  - "table"
+  - "graphml"
+
+ogbn_arxiv:
+  generator:
+    task_level: "node"
+    num_hops: 2
+    sampling: true
+    neighbor_size: 15
+    random_seed: 42
+  format: *common_format
