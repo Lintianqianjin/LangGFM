@@ -7,6 +7,7 @@ import networkx as nx
 import torch
 import math
 
+from collections import deque
 from tqdm import tqdm
 from abc import ABC, abstractmethod
 from networkx.readwrite import json_graph
@@ -299,8 +300,40 @@ class ShortestPathDatasetBuilder(SyntheticDatasetBuilder):
     # TODO
     def _get_label(self, graph):
         sample_nodes = random.sample(list(graph.nodes), 2)
-        return (nx.shortest_path_length(graph, sample_nodes[0], sample_nodes[1]), sample_nodes)
+        # return (nx.shortest_path_length(graph, sample_nodes[0], sample_nodes[1]), sample_nodes)
+        return (list(nx.all_shortest_paths(graph, sample_nodes[0], sample_nodes[1])), sample_nodes)
     
+    def _generate_graphs_labels(self) -> tuple:
+        
+        valid = 0
+        try_ = 0
+        graphs, labels = [], []
+
+        pbar = tqdm(total=self.num_graphs)
+        while valid < self.num_graphs:
+            try_ += 1
+            random_graph = self._graph_generate_function()(
+                self.config["min_nodes"],
+                self.config["max_nodes"],
+                self.config["min_sparsity"],
+                self.config["max_sparsity"],
+                self.config['is_weighted'],
+                self.config['is_directed']
+            )
+            if (self.task == "connectivity") ^ nx.is_connected(random_graph):
+                graphs.append(json_graph.node_link_data(random_graph))
+                label = self._get_label(random_graph)
+                if len(label[0]) > 1:
+                    continue
+                else:
+                    # print(label)
+                    # exit()
+                    labels.append((label[0][0], label[1]))
+                    valid += 1
+                    pbar.update(1)
+        pbar.close()
+
+        return graphs, labels
 
 @StructuralTaskDatasetBuilder.register('cycle_checking')
 class CycleCheckingDatasetBuilder(SyntheticDatasetBuilder):
@@ -321,8 +354,70 @@ class HamiltonPathDatasetBuilder(SyntheticDatasetBuilder):
         super().__init__(task, seed)
     
     def _get_label(self, graph):
-        return (nx.is_hamiltonian(graph), ())
+        label = "Yes" if self.find_hamiltonian_path(graph) else "No"
+        return (label, ())
     
+    def _generate_graphs_labels(self) -> tuple:
+        graphs, labels = [], []
+        num_label_true, num_label_false = 0, 0
+        target_count = self.num_graphs // 2  # Target count for each label
+        pbar = tqdm(total=self.num_graphs)
+
+        while num_label_true < target_count or num_label_false < target_count:
+            random_graph = self._graph_generate_function()(
+                self.config["min_nodes"],
+                self.config["max_nodes"],
+                self.config["min_sparsity"],
+                self.config["max_sparsity"],
+                self.config['is_weighted'],
+                self.config['is_directed']
+            )
+
+            # Check label and ensure balance
+            label = self._get_label(random_graph)
+            label_value = label[0]
+            if label_value == 'Yes' and num_label_true < target_count:
+                # Add to true-labeled dataset
+                graphs.append(json_graph.node_link_data(random_graph))
+                labels.append((label_value, label[1]))
+                num_label_true += 1
+                pbar.update(1)
+            elif label_value == "No" and num_label_false < target_count:
+                # Add to false-labeled dataset
+                graphs.append(json_graph.node_link_data(random_graph))
+                labels.append((label_value, label[1]))
+                num_label_false += 1
+                pbar.update(1)
+        pbar.close()
+        return graphs, labels
+
+    
+    @staticmethod
+    def find_hamiltonian_path(G, max_iterations=9999):
+        # Initialize variables
+        visited = set()
+        stack = deque([(node, [node]) for node in G])  # Each start node with initial path
+        
+        while stack:
+            current_node, path = stack.pop()
+            visited.add(current_node)
+            
+            # Check if we have found a Hamiltonian path
+            if len(path) == len(G):
+                return path
+            
+            # Add unvisited neighbors to the stack for further exploration
+            unvisited_neighbors = [neighbor for neighbor in G.neighbors(current_node) if neighbor not in visited]
+            for neighbor in unvisited_neighbors:
+                new_path = path + [neighbor]
+                stack.append((neighbor, new_path))
+                
+            # Limit iterations if specified
+            # if max_iterations is not None and stack.count > max_iterations:
+            if max_iterations is not None and len(stack) > max_iterations:
+                return None  # Return None if we exceed the maximum iterations without finding a solution
+        
+        return None  # No Hamiltonian path found within the given iterations or starting points
 
 @StructuralTaskDatasetBuilder.register('graph_automorphic')
 class GraphAutomorphicDatasetBuilder(SyntheticDatasetBuilder):
@@ -332,8 +427,43 @@ class GraphAutomorphicDatasetBuilder(SyntheticDatasetBuilder):
         super().__init__(task, seed)
     
     def _get_label(self, graph):
-        return (nx.is_isomorphic(graph, graph), ())
+        automorphisms = list(nx.algorithms.isomorphism.GraphMatcher(graph, graph).isomorphisms_iter())
+        label = 'Yes' if len(automorphisms) > 1 else 'No'
+        return (label, ())
 
+    def _generate_graphs_labels(self) -> tuple:
+        graphs, labels = [], []
+        num_label_true, num_label_false = 0, 0
+        target_count = self.num_graphs // 2  # Target count for each label
+        pbar = tqdm(total=self.num_graphs)
+
+        while num_label_true < target_count or num_label_false < target_count:
+            random_graph = self._graph_generate_function()(
+                self.config["min_nodes"],
+                self.config["max_nodes"],
+                self.config["min_sparsity"],
+                self.config["max_sparsity"],
+                self.config['is_weighted'],
+                self.config['is_directed']
+            )
+
+            # Check label and ensure balance
+            label = self._get_label(random_graph)
+            label_value = label[0]
+            if label_value == 'Yes' and num_label_true < target_count:
+                # Add to true-labeled dataset
+                graphs.append(json_graph.node_link_data(random_graph))
+                labels.append((label_value, label[1]))
+                num_label_true += 1
+                pbar.update(1)
+            elif label_value == "No" and num_label_false < target_count:
+                # Add to false-labeled dataset
+                graphs.append(json_graph.node_link_data(random_graph))
+                labels.append((label_value, label[1]))
+                num_label_false += 1
+                pbar.update(1)
+        pbar.close()
+        return graphs, labels
 
 @StructuralTaskDatasetBuilder.register('graph_structure_detection')
 class GraphStructureDetectionBuilder(StructuralTaskDatasetBuilder):
