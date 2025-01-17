@@ -24,7 +24,7 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
         """
         self.root = './data/bace'
         self.df = pd.read_csv(f"{self.root}/bace.csv",index_col=0)
-        self.all_samples = set(self.df['molecule_index'].tolist())
+        self.all_samples = list(self.df['molecule_index'].tolist())
     
     @property
     def graph_description(self):

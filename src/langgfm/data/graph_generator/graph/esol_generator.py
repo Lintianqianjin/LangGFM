@@ -24,7 +24,7 @@ class ESOLGraphGenerator(GraphTaskGraphGenerator):
         """
         self.root = './data/esol'
         self.df = pd.read_csv(f"{self.root}/esol.csv",index_col=0)
-        self.all_samples = set(self.df['molecule_index'].tolist())
+        self.all_samples = self.df['molecule_index'].tolist()
     
     def get_query(self, **kwargs):
         query = ("Aqueous solubility is one of the most critical properties of a therapeutic compound. "
