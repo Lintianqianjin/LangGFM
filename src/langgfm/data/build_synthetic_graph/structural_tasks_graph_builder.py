@@ -90,7 +90,7 @@ class StructuralTaskDatasetBuilder(ABC):
             'val': val_mask.nonzero(as_tuple=True)[0].tolist(),
             'test': test_mask.nonzero(as_tuple=True)[0].tolist(),
         }
-        split_path = os.path.join(os.path.dirname(__file__), '../../configs/dataset_splits.json') if split_path is None else split_path
+        split_path = os.path.join(os.path.dirname(__file__), '../../configs/data_splits_structure.json') if split_path is None else split_path
         if os.path.exists(split_path):
             with open(split_path, 'r') as f:
                 all_splits = json.load(f)
@@ -237,7 +237,9 @@ class DegreeCountingDatasetBuilder(SyntheticDatasetBuilder):
 
     def _get_label(self, graph):
         sample_node = random.choice(list(graph.nodes))
-        return (graph.degree(sample_node), (sample_node))
+        # print((graph.degree(sample_node), (sample_node)))
+        # exit()
+        return (graph.degree(sample_node), [sample_node])
     
 
 @StructuralTaskDatasetBuilder.register('edge_existence')
@@ -321,7 +323,6 @@ class ShortestPathDatasetBuilder(SyntheticDatasetBuilder):
                 self.config['is_directed']
             )
             if (self.task == "connectivity") ^ nx.is_connected(random_graph):
-                graphs.append(json_graph.node_link_data(random_graph))
                 label = self._get_label(random_graph)
                 if len(label[0]) > 1:
                     continue
@@ -329,6 +330,7 @@ class ShortestPathDatasetBuilder(SyntheticDatasetBuilder):
                     # print(label)
                     # exit()
                     labels.append((label[0][0], label[1]))
+                    graphs.append(json_graph.node_link_data(random_graph))
                     valid += 1
                     pbar.update(1)
         pbar.close()

@@ -64,7 +64,7 @@ class DatasetGenerationCoordinator:
         "load indices for each dataset, from {self.root}/indices.json"
         with open(os.path.join(self.root, "indices.json"), "r") as file:
             self.indices = json.load(file)
-        assert set(self.indices.keys()) >= self.job_tasks, f"Indices for {(set(self.indices.keys()) - self.job_tasks)} are missing."
+        assert set(self.indices.keys()) >= self.job_tasks, f"Indices for {(self.job_tasks - set(self.indices.keys()))} are missing."
 
     def _append_dataset_samples(self, dataset_samples: list):
         """
@@ -239,21 +239,6 @@ class DatasetGenerationCoordinator:
     # -------------------------------------------------------------------
     # Parallel dataset tasks & pipeline orchestration
     # -------------------------------------------------------------------
-
-    async def _parallel_dataset_task(self, dataset_name: str):
-        """
-        A single 'task' that generates samples for a dataset in parallel
-        (sample-level concurrency), then appends them to data.json 
-        using a lock to avoid conflicts.
-        """
-        print(f"Starting dataset: {dataset_name}")
-        dataset_samples = await self.generate_by_dataset(dataset_name)
-        
-        # Safely append to the shared data.json file
-        async with self.data_file_lock:
-            self._append_dataset_samples(dataset_samples)
-
-        print(f"Done dataset: {dataset_name} with {len(dataset_samples)} samples.")
 
     async def batch_tokenize_and_append(self, samples, batch_size=1000, num_workers=4):
         """

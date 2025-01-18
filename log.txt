@@ -16,3 +16,4 @@
 2025-01-16 14:10:44,103 - INFO - [dataset_generation_coordinator.py:206] Error in main task: None is not a string. sample_id=[372348, 61597, 0]
 2025-01-16 15:28:17,022 - INFO - [dataset_generation_coordinator.py:210] Generating 499 samples for yelp_review.
 2025-01-16 15:40:07,158 - INFO - [dataset_generation_coordinator.py:195] Error in main task: None is not a string. sample_id=[372348, 61597, 0]
+2025-01-17 20:26:06,157 - INFO - [dataset_generation_coordinator.py:210] Generating 10 samples for chebi20.

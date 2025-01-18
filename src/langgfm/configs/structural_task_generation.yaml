@@ -1,156 +1,147 @@
-# node_counting: 
-#   graph_type: "random"
-#   task_type: "rg"
-#   min_nodes: 10
-#   max_nodes: 50
-#   min_sparsity: 0.02 # products
-#   max_sparsity: 0.20 # cora
-#   is_weighted: False
-#   is_directed: False
-#   train_size: 100
-#   val_size: 100
-#   test_size: 200
-#   query_format: "How many nodes are there in the graph?"
-#   answer_format: "There are {} nodes in the graph."
-#   file_path: "../../../../data/node_counting/raw/data.pt"
+node_counting: 
+  graph_type: "random"
+  task_type: "rg"
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 5000
+  val_size: 100
+  test_size: 200
+  query_format: "How many nodes are there in the graph?"
+  answer_format: "There are {} nodes in the graph."
+  file_path: "../../../../data/node_counting/raw/data.pt"
   
+edge_counting: 
+  graph_type: "random"
+  task_type: "rg"
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 5000
+  val_size: 100
+  test_size: 200
+  query_format: "How many edges are there in the graph?"
+  answer_format: "There are {} edges in the graph."
+  file_path: "../../../../data/edge_counting/raw/data.pt"
 
-# edge_counting: 
-#   graph_type: "random"
-#   task_type: "rg"
-#   min_nodes: 10
-#   max_nodes: 50
-#   min_sparsity: 0.02 # products
-#   max_sparsity: 0.20 # cora
-#   is_weighted: False
-#   is_directed: False
-#   train_size: 100
-#   val_size: 100
-#   test_size: 200
-#   query_format: "How many edges are there in the graph?"
-#   answer_format: "There are {} edges in the graph."
-#   file_path: "../../../../data/edge_counting/raw/data.pt"
+node_attribute_retrieval: 
+  graph_type: "node_weights"
+  task_type: "rg"
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 5000
+  val_size: 100
+  test_size: 300
+  query_format: "What is the value of attribute [{}] for node [{}]?"
+  answer_format: "The value of attribute [{}] for node [{}] is {}."
+  file_path: "../../../../data/node_attribute_retrieval/raw/data.pt"
 
+edge_attribute_retrieval: 
+  graph_type: "random"
+  task_type: "rg"
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: True
+  is_directed: False
+  train_size: 5000
+  val_size: 100
+  test_size: 200
+  query_format: "What is the value of attribute [{}] for edge [{}]?"
+  answer_format: "The value of attribute [{}] for edge [{}] is {}."
+  file_path: "../../../../data/edge_attribute_retrieval/raw/data.pt"
 
-# node_attribute_retrieval: 
-#   graph_type: "node_weights"
-#   task_type: "rg"
-#   min_nodes: 10
-#   max_nodes: 50
-#   min_sparsity: 0.02 # products
-#   max_sparsity: 0.20 # cora
-#   is_weighted: False
-#   is_directed: False
-#   train_size: 100
-#   val_size: 100
-#   test_size: 300
-#   query_format: "What is the value of attribute [{}] for node [{}]?"
-#   answer_format: "The value of attribute [{}] for node [{}] is {}."
-#   file_path: "../../../../data/node_attribute_retrieval/raw/data.pt"
+degree_counting: 
+  graph_type: "random"
+  task_type: "rg"
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 5000
+  val_size: 100
+  test_size: 200
+  query_format: "What is the degree of node [{}]?"
+  answer_format: "The degree of node [{}] is {}."
+  file_path: "../../../../data/degree_counting/raw/data.pt"
 
+edge_existence: 
+  graph_type: "random"
+  task_type: "cls"
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 # products
+  max_sparsity: 0.20 # cora
+  is_weighted: False
+  is_directed: False
+  train_size: 5000
+  val_size: 100
+  test_size: 200
+  query_format: "Is there an edge between node [{}] and node [{}]?"
+  answer_format: "{}"
+  file_path: "../../../../data/edge_existence/raw/data.pt"
 
-# edge_attribute_retrieval: 
-#   graph_type: "random"
-#   task_type: "rg"
-#   min_nodes: 10
-#   max_nodes: 50
-#   min_sparsity: 0.02 # products
-#   max_sparsity: 0.20 # cora
-#   is_weighted: True
-#   is_directed: False
-#   train_size: 100
-#   val_size: 100
-#   test_size: 200
-#   query_format: "What is the value of attribute [{}] for edge [{}]?"
-#   answer_format: "The value of attribute [{}] for edge [{}] is {}."
-#   file_path: "../../../../data/edge_attribute_retrieval/raw/data.pt"
+connectivity: 
+  graph_type: "random"
+  task_type: "cls"
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.02 
+  max_sparsity: 0.08 
+  is_weighted: False
+  is_directed: False
+  train_size: 5000
+  val_size: 100
+  test_size: 200
+  query_format: "Is there an path between node [{}] and node [{}]?"
+  answer_format: "{}"
+  file_path: "../../../../data/connectivity/raw/data.pt"
 
+shortest_path: 
+  graph_type: "random"
+  task_type: "rg"
+  min_nodes: 10
+  max_nodes: 50
+  min_sparsity: 0.10 
+  max_sparsity: 0.30 
+  is_weighted: False
+  is_directed: False
+  train_size: 5000
+  val_size: 100
+  test_size: 200
+  query_format: "Please generate the shortest path in the graph from node {} to node {} in a list format
+  if there is at least one shortest path between the two nodes."
+  answer_format: "The shortest paths from node {} to node {} are as follows: {}."
+  file_path: "../../../../data/shortest_path/raw/data.pt"
 
-# degree_counting: 
-#   graph_type: "random"
-#   task_type: "rg"
-#   min_nodes: 10
-#   max_nodes: 50
-#   min_sparsity: 0.02 # products
-#   max_sparsity: 0.20 # cora
-#   is_weighted: False
-#   is_directed: False
-#   train_size: 100
-#   val_size: 100
-#   test_size: 200
-#   query_format: "What is the degree of node [{}]?"
-#   answer_format: "The degree of node [{}] is {}."
-#   file_path: "../../../../data/degree_counting/raw/data.pt"
-
-
-# edge_existence: 
-#   graph_type: "random"
-#   task_type: "cls"
-#   min_nodes: 10
-#   max_nodes: 50
-#   min_sparsity: 0.02 # products
-#   max_sparsity: 0.20 # cora
-#   is_weighted: False
-#   is_directed: False
-#   train_size: 100
-#   val_size: 100
-#   test_size: 200
-#   query_format: "Is there an edge between node [{}] and node [{}]?"
-#   answer_format: "{}"
-#   file_path: "../../../../data/edge_existence/raw/data.pt"
-
-
-# connectivity: 
-#   graph_type: "random"
-#   task_type: "cls"
-#   min_nodes: 10
-#   max_nodes: 50
-#   min_sparsity: 0.02 
-#   max_sparsity: 0.08 
-#   is_weighted: False
-#   is_directed: False
-#   train_size: 100
-#   val_size: 100
-#   test_size: 200
-#   query_format: "Is there an path between node [{}] and node [{}]?"
-#   answer_format: "{}"
-#   file_path: "../../../../data/connectivity/raw/data.pt"
-
-
-# shortest_path: 
-#   graph_type: "random"
-#   task_type: "rg"
-#   min_nodes: 10
-#   max_nodes: 50
-#   min_sparsity: 0.10 
-#   max_sparsity: 0.30 
-#   is_weighted: False
-#   is_directed: False
-#   train_size: 100
-#   val_size: 100
-#   test_size: 200
-#   query_format: "Please generate all shortest paths in the graph from node {} to node {} in a list format
-#   if there is at least one shortest path between the two nodes."
-#   answer_format: "All the shortest paths from node {} to node {} are as follows: {}."
-#   file_path: "../../../../data/shortest_path/raw/data.pt"
-
-
-# cycle_checking: 
-#   graph_type: "random"
-#   task_type: "cls"
-#   min_nodes: 5
-#   max_nodes: 15
-#   min_sparsity: 0.08
-#   max_sparsity: 0.15 
-#   is_weighted: False
-#   is_directed: False
-#   train_size: 100
-#   val_size: 100
-#   test_size: 200
-#   query_format: "Please verify whether there is a cycle in the graph or not, and output Yes or No."
-#   answer_format: "{}"
-#   file_path: "../../../../data/cycle_checking/raw/data.pt"
-
+cycle_checking: 
+  graph_type: "random"
+  task_type: "cls"
+  min_nodes: 5
+  max_nodes: 15
+  min_sparsity: 0.08
+  max_sparsity: 0.15 
+  is_weighted: False
+  is_directed: False
+  train_size: 5000
+  val_size: 100
+  test_size: 200
+  query_format: "Please verify whether there is a cycle in the graph or not, and output Yes or No."
+  answer_format: "{}"
+  file_path: "../../../../data/cycle_checking/raw/data.pt"
 
 hamilton_path: 
   graph_type: "random"
@@ -161,14 +152,13 @@ hamilton_path:
   max_sparsity: 0.40 
   is_weighted: false
   is_directed: false
-  train_size: 100
+  train_size: 5000
   val_size: 100
   test_size: 200
   query_format: "Given a graph, you need to output Yes or No, indicating whether there is a Hamiltonian path in the graph or not.
   Note that a Hamiltonian path in graph refers to a path that visits each node exactly once."
   answer_format: "{}"
   file_path: "../../../../data/hamilton_path/raw/data.pt"
-
 
 graph_automorphic: 
   graph_type: "random"
@@ -179,7 +169,7 @@ graph_automorphic:
   max_sparsity: 0.60 # cora
   is_weighted: False
   is_directed: False
-  train_size: 100
+  train_size: 5000
   val_size: 100
   test_size: 200
   query_format: "Given a graph, a non-trivial automorphism refers that the graph has more automorphisms beyond the identity mapping (each vertex maps to itself).
@@ -188,12 +178,11 @@ graph_automorphic:
   answer_format: "{}"
   file_path: "../../../../data/graph_automorphic/raw/data.pt"
 
-
 graph_structure_detection: 
   task_type: "cls"
   min_nodes: 15
   max_nodes: 30
-  train_size: 100
+  train_size: 5000
   val_size: 100
   test_size: 200
   seed: 42

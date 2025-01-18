@@ -1,4 +1,4 @@
-from .._base_generator import StructuralTaskGraphGenerator
+from langgfm.data.graph_generator._base_generator import StructuralTaskGraphGenerator
 
 
 @StructuralTaskGraphGenerator.register("degree_counting")

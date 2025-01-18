@@ -73,7 +73,9 @@ def transform_labels(task):
         for label in dataset['labels']:
             new_labels.append((label[2]['weight'], (label[0], label[1])))
     elif task in ["degree_counting"]:
+        print(f"{dataset['labels']=}")
         print(f"{dataset['labels'][0]=}")
+        exit()
         new_labels = []
         for label in dataset['labels']:
             new_labels.append((label[1], (label[0],)))
@@ -126,7 +128,7 @@ if __name__ == "__main__":
     # transform_labels('hamilton_path')
     # transform_labels('node_attribute_retrieval')
     # transform_labels('edge_attribute_retrieval')
-    # transform_labels('degree_counting')
+    transform_labels('degree_counting')
     # transform_labels('edge_existence')
     # transform_labels('connectivity')
     # transform_labels('shortest_path')
@@ -136,7 +138,7 @@ if __name__ == "__main__":
     # check_label_distribution('hamilton_path')
     # check_label_distribution('graph_automorphic')
 
-    check_shortest_path(task='shortest_path')
+    # check_shortest_path(task='shortest_path')
 
     # restore the splits 
 

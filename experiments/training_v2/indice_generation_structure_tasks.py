@@ -16,8 +16,8 @@ from langgfm.utils.io import save_beautiful_json
 
 
 structure_splits = json.load(open('src/langgfm/configs/data_splits_structure.json'))
-train_v1_structure_splits = {task: structure_splits[task]['train'] for task in structure_splits}
-train_v1_structure_mini_splits = {task: structure_splits[task]['train'][:10] for task in structure_splits}
+train_structure_splits = {task: structure_splits[task]['train'] for task in structure_splits}
+# train_structure_mini_splits = {task: structure_splits[task]['train'][:10] for task in structure_splits}
 
 # with open('experiments/training_v1/indices_structure.json', 'w') as f:
 #     json.dump(train_v1_splits, f)
@@ -25,8 +25,8 @@ train_v1_structure_mini_splits = {task: structure_splits[task]['train'][:10] for
 # with open('experiments/training_v1/indices_structure_mini.json', 'w') as f:
     # json.dump(train_v1_mini_splits, f)
 
-save_beautiful_json(train_v1_structure_splits, 'experiments/training_v1/indices_structure.json')
-save_beautiful_json(train_v1_structure_mini_splits, 'experiments/training_v1/indices_structure_mini.json')
+save_beautiful_json(train_structure_splits, 'experiments/training_v2/indices_structure.json')
+# save_beautiful_json(train_structure_mini_splits, 'experiments/training_v2/indices_structure_mini.json')
 
 
 # train_v1_semantic_splits = json.load(open('experiments/training_v1/indices_semantic.json'))
