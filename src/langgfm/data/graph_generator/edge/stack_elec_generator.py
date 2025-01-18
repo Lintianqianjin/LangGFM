@@ -11,7 +11,6 @@ from collections import Counter
 
 from ..utils.graph_utils import get_edge_idx_in_graph, represent_edges_with_multiplex_id
 from .._base_generator import EdgeTaskGraphGenerator
-from ....utils.logger import logger
 
 
 @EdgeTaskGraphGenerator.register("stack_elec")
@@ -29,7 +28,6 @@ class StackElecGraphGenerator(EdgeTaskGraphGenerator):
         
         self.entity_text = pd.read_csv(f"{self.root}/entity_text.csv", index_col=0)
         self.edge_list = pd.read_csv(f"{self.root}/edge_list.csv", index_col=0)
-        logger.debug(f"{Counter([(row['u'].item(), row['i'].item()) for row_idx, row in self.edge_list.iterrows()]).most_common(10)=}")
         # logger.debug(self.edge_list.loc[self.edge_list['i'] < 67155])
         self.relation_text = pd.read_csv(f"{self.root}/relation_text.csv", index_col=0)
         
@@ -73,7 +71,6 @@ class StackElecGraphGenerator(EdgeTaskGraphGenerator):
         src, dst, multiplex_id = edge
         edge_idx = get_edge_idx_in_graph(src, dst, self.graph.edge_index, multiplex_id=multiplex_id)
         label = self.graph.edge_label[edge_idx].item()
-        logger.debug(f"{label=}")
         
         if label == 1:
             answer = (f"The edge from user with node id {target_src_node_idx} to question with node id {target_dst_node_idx} "

@@ -45,6 +45,7 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
         
         # Corresponding one-to-one with business nodes in sequence
         self.raw_businesses_info = load_jsonl(f"{self.root}/yelp_academic_dataset_business.json", return_type="dataframe")
+        self.raw_businesses_info = self.raw_businesses_info.fillna("")
         # print(f"{self.raw_businesses_info.shape=}")
         
         # Corresponding one-to-one with (user, tip, business) edges in sequence

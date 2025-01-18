@@ -3,32 +3,49 @@ import inspect
 import os
 
 class Logger:
-    def __init__(self, name="Logger", level=logging.DEBUG, log_file=None):
+    def __init__(self, name="Logger", level=logging.DEBUG, log_file=None, console_level=None, file_level=None):
+        """
+        Custom Logger class.
+
+        :param name: Logger name
+        :param level: Default logging level for the Logger
+        :param log_file: File path for logging, if None, no file logging
+        :param console_level: Logging level for the console, defaults to Logger's level
+        :param file_level: Logging level for the file, defaults to Logger's level
+        """
         self.logger = logging.getLogger(name)
-        self.set_level(level)  # 统一设置 level
-        
+        self.logger.setLevel(level)
+        # self.set_level(level)  # Set the default logging level for the Logger
+
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
-        # 清除已有的 Handler，防止日志重复
+        # Clear existing handlers to avoid duplicate logs
         if self.logger.hasHandlers():
             self.logger.handlers.clear()
 
-        # console logger
+        # Add console handler
+        if console_level is None:
+            console_level = level  # Default to Logger's level
         console_handler = logging.StreamHandler()
+        console_handler.setLevel(console_level)
         console_handler.setFormatter(formatter)
         self.logger.addHandler(console_handler)
 
-        # log file
+        # Add file handler
         if log_file:
+            if file_level is None:
+                file_level = level  # Default to Logger's level
             file_handler = logging.FileHandler(log_file, encoding='utf-8')
+            file_handler.setLevel(file_level)
             file_handler.setFormatter(formatter)
             self.logger.addHandler(file_handler)
 
-    def set_level(self, level):
-        """ 动态修改日志级别 """
-        self.logger.setLevel(level)
+    # def set_level(self, level):
+    #     """Dynamically change the logging level of the Logger."""
+    #     self.logger.setLevel(level)
 
     def log(self, level, message):
+        """Log a message with additional caller information."""
         caller_frame = inspect.stack()[2]
         filename = os.path.basename(caller_frame.filename)
         line_number = caller_frame.lineno
@@ -49,7 +66,10 @@ class Logger:
     def critical(self, message):
         self.log(logging.CRITICAL, message)
 
-# create global Logger instance
-logger = Logger(level=logging.ERROR, log_file="log.txt")
-
-# logger = Logger(level=logging.INFO)
+logger = Logger(
+    name="main_looger",  # Logger name
+    level=logging.DEBUG,  # Default Logger level
+    log_file="0117.log",  # File path for logging
+    console_level=logging.DEBUG,  # Console logging level
+    file_level=logging.DEBUG  # File logging level
+)
