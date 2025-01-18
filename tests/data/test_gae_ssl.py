@@ -12,7 +12,11 @@ import os
 from langgfm.data.graph_generator import OgbnArxivGraphGenerator
 from langgfm.data.ssl_tasks.tae_ssl import TopologyAutoencoder
 from langgfm.utils.random_control import set_seed
-from langgfm.utils.logger import logger
+
+
+import logging
+logger = logging.getLogger("main_logger")
+
 
 class TestTopologyAutoencoder(unittest.TestCase):
     

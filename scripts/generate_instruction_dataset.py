@@ -1,32 +1,22 @@
-import argparse
+import fire
 from langgfm.data.dataset_generation_coordinator import DatasetGenerationCoordinator
-import logging
-from langgfm.utils.logger import logger
-logger.set_level(logging.WARNING)
 
-def main():
-    parser = argparse.ArgumentParser(description="Run the dataset generation pipeline.")
-    parser.add_argument(
-        "--job_path",
-        type=str,
-        required=True,
-        help="Path to the dataset generation job directory."
+def main(job_path: str, continue_flag: bool = False, return_token_length: bool = True, tokenizer_name_or_path: str = "meta-llama/Llama-3.1-8B-Instruct"):
+    """
+    Run the dataset generation pipeline.
+
+    Args:
+        job_path (str): Path to the dataset generation job directory.
+        continue_flag (bool): Continue from the last checkpoint if set to True.
+    """
+    coordinator = DatasetGenerationCoordinator(
+        job_path=job_path,
+        is_continue=continue_flag,
+        return_token_length=return_token_length,
+        tokenizer_name_or_path=tokenizer_name_or_path
     )
-    parser.add_argument(
-        "--continue_flag",
-        action="store_true",
-        help="Continue from the last checkpoint."
-    )
-
-    args = parser.parse_args()
-    job_path = args.job_path
-    _continue = args.continue_flag
-
-    coordinator = DatasetGenerationCoordinator(job_path,_continue)
     coordinator.pipeline()
     print("Dataset generation pipeline completed successfully.")
-    # except Exception as e:
-    #     print(f"An error occurred during dataset generation: {e}")
 
 if __name__ == "__main__":
-    main()
+    fire.Fire(main)

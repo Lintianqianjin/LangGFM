@@ -6,6 +6,10 @@ import copy
 import random
 
 
+import logging
+logger = logging.getLogger("main_logger")
+
+
 class FeatureMaskedAutoencoder(SelfSupervisedGraphTask):
     def __init__(self, mask_node_ratio=0.2, mask_edge_ratio=0.2, mask_reverse_edges=True, mask_value="Unknown", random_seed=None):
         """
@@ -239,6 +243,8 @@ class EdgeFeatureMaskedAutoencoder(FeatureMaskedAutoencoder):
         """
         
         masked_edges = list(modify_outputs["masked_edges_features"].keys())
+        # print(f"{masked_edges=}")
+        logger.debug(f"{masked_edges=}")
         selected_edge = random.choice(masked_edges)
         
         if modify_outputs['modified_graph'].is_multigraph(): 

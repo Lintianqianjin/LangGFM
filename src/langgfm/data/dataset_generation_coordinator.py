@@ -1,4 +1,5 @@
 import os
+import psutil
 import sys
 import json
 import asyncio
@@ -6,19 +7,25 @@ import yaml
 from tqdm.asyncio import tqdm_asyncio
 from typing import Dict, Any, List
 
+import networkx as nx
+
 from ..data.graph_generator._base_generator import InputGraphGenerator
 from ..data.ssl_tasks.base_ssl import SelfSupervisedGraphTask
 from ..data.ssl_tasks.tae_ssl import TopologyAutoencoder
 from ..data.ssl_tasks.fmae_ssl import NodeFeatureMaskedAutoencoder, EdgeFeatureMaskedAutoencoder
 from ..data.graph_text_transformation.nxg_to_text import GraphTextualizer
 from ..configs.instruction_template import SYSTEM, INSTRUCTION, INPUT
-from ..utils.logger import logger
-import logging
-logger.set_level(logging.INFO)
 
 from multiprocessing import Pool
+from functools import partial
 import asyncio
 from ..utils.language_model import count_tokens_batch
+from transformers import AutoTokenizer
+
+from datasets import Dataset
+
+import logging
+logger = logging.getLogger("main_logger")
 
 
 class DatasetGenerationCoordinator:
@@ -36,15 +43,22 @@ class DatasetGenerationCoordinator:
     ]
     TODO: add pbar for progress tracking.
     """
-    def __init__(self, job_path: str = "./experiments/default_job", _continue: bool = False):
+    def __init__(self, job_path: str = "./experiments/default_job", is_continue: bool = False, return_token_length: bool = False, tokenizer_name_or_path: str = None):
         self.root = job_path
         self.data_filepath = os.path.join(self.root, "instruction_dataset.json")
         self.textualizer = GraphTextualizer()   # Suppose this is imported
         self._load_config()
         self._load_indices()
         self.data_file_lock = asyncio.Lock()
+        self.return_token_length = return_token_length
+        if self.return_token_length:
+            assert tokenizer_name_or_path is not None, "Please provide a tokenizer name or path."
+            self.tokenizer_name_or_path = tokenizer_name_or_path
+            self.tokenizer = AutoTokenizer.from_pretrained(self.tokenizer_name_or_path, use_fast=True)
 
-        if not _continue:
+        self.num_proc = psutil.cpu_count(logical=True)
+        
+        if not is_continue:
             with open(self.data_filepath, "w") as f:
                 f.write("[]")
 
@@ -108,6 +122,8 @@ class DatasetGenerationCoordinator:
         
         # try:
         for _ in range(ssl_ratio):
+            logger.debug(f"{self.textualizer.export(graph, format='table')=}")
+            # print(f"{self.textualizer.export(graph, format='table')=}")
             ssl_sample = ssl_task_generator.generate_sample(graph)
             generated_samples.append(
                 (ssl_sample["modified_graph"], ssl_sample["query"], ssl_sample["answer"])
@@ -158,42 +174,44 @@ class DatasetGenerationCoordinator:
 
         # 1) Main task
         main_graph, main_query, main_answer, metadata = await self._main_task_graph_generator(generator, sample_id)
-        try:
-            for fmt in output_formats:
-                formatted_sample = self.format_sample(
-                    graph=main_graph,
-                    query=main_query,
-                    answer=main_answer,
-                    fmt=fmt,
-                    directed=generator.directed,
-                    graph_description=generator.graph_description,
-                    dataset=generator.dataset_name,
-                    task_type="main",
-                    metadata=metadata,
-                )
-                all_formatted.append(formatted_sample)
+        # try:
+        for fmt in output_formats:
+            formatted_sample = self.format_sample(
+                graph=main_graph,
+                query=main_query,
+                answer=main_answer,
+                fmt=fmt,
+                directed=generator.directed,
+                graph_description=generator.graph_description,
+                dataset=generator.dataset_name,
+                task_type="main",
+                metadata=metadata,
+            )
+            all_formatted.append(formatted_sample)
 
-            # 2) SSL tasks
-            if ssl_settings:  # If no ssl_settings, skip
-                for ssl_task_name, ssl_config in ssl_settings.items():
-                    ssl_results = await self._ssl_task_graph_generator(main_graph, ssl_task_name, ssl_config)
-                    for (ssl_graph, ssl_query, ssl_answer) in ssl_results:
-                        for fmt in output_formats:
-                            formatted_ssl_sample = self.format_sample(
-                                graph=ssl_graph,
-                                query=ssl_query,
-                                answer=ssl_answer,
-                                fmt=fmt,
-                                directed=generator.directed,
-                                graph_description=generator.graph_description,
-                                dataset=generator.dataset_name,
-                                task_type=ssl_task_name,
-                                metadata=metadata,
-                            )
-                            all_formatted.append(formatted_ssl_sample)
-        except Exception as e:
-            logger.info(f"Error in main task: {e}. {sample_id=}")
-            return []
+        # 2) SSL tasks
+        if ssl_settings:  # If no ssl_settings, skip
+            for ssl_task_name, ssl_config in ssl_settings.items():
+                ssl_results = await self._ssl_task_graph_generator(main_graph, ssl_task_name, ssl_config)
+                for (ssl_graph, ssl_query, ssl_answer) in ssl_results:
+                    for fmt in output_formats:
+                        formatted_ssl_sample = self.format_sample(
+                            graph=ssl_graph,
+                            query=ssl_query,
+                            answer=ssl_answer,
+                            fmt=fmt,
+                            directed=generator.directed,
+                            graph_description=generator.graph_description,
+                            dataset=generator.dataset_name,
+                            task_type=ssl_task_name,
+                            metadata=metadata,
+                        )
+                        all_formatted.append(formatted_ssl_sample)
+        # except Exception as e:
+            # logger.info(e)
+            # # logger.info(e)
+            # logger.info(f"Error with {sample_id=}")
+            # return []
 
         return all_formatted
 
@@ -236,40 +254,27 @@ class DatasetGenerationCoordinator:
         dataset_samples = [sample for task_results in results for sample in task_results]
         return dataset_samples
     
-    # -------------------------------------------------------------------
-    # Parallel dataset tasks & pipeline orchestration
-    # -------------------------------------------------------------------
-
-    async def _parallel_dataset_task(self, dataset_name: str):
-        """
-        A single 'task' that generates samples for a dataset in parallel
-        (sample-level concurrency), then appends them to data.json 
-        using a lock to avoid conflicts.
-        """
-        print(f"Starting dataset: {dataset_name}")
-        dataset_samples = await self.generate_by_dataset(dataset_name)
-        
-        # Safely append to the shared data.json file
-        async with self.data_file_lock:
-            self._append_dataset_samples(dataset_samples)
-
-        print(f"Done dataset: {dataset_name} with {len(dataset_samples)} samples.")
 
     async def batch_tokenize_and_append(self, samples, batch_size=1000, num_workers=4):
         """
         Tokenize instructions in batches using multiprocessing, then append to the dataset file.
         """
-        instructions = [sample["instruction"] + sample['input'] + sample["output"] + sample["system"]
-            for sample in samples]
-        batches = [instructions[i:i + batch_size] for i in range(0, len(instructions), batch_size)]
+        instructions = [
+            f"{sample['system']}\n{sample['instruction']}\n{sample['input']}\n{sample['output']}"
+            for sample in samples
+        ]
+        # batches = [instructions[i:i + batch_size] for i in range(0, len(instructions), batch_size)]
         token_counts = []
 
-        # Parallel token counting
-        with Pool(num_workers) as pool:
-            for result in pool.imap(count_tokens_batch, batches):
-                token_counts.extend(result)
+        # load to Hugging Face Dataset
+        tmp_dataset = Dataset.from_dict({"text": instructions})
+        # current_load = psutil.cpu_percent(percpu=False) / 100
+        # _num_proc = max(1, int(self.num_proc * (1 - current_load)))
+        tmp_dataset = tmp_dataset.map(lambda sample: self.tokenizer(sample['text']), batched=True, num_proc=self.num_proc)
+        tmp_dataset = tmp_dataset.map(lambda sample: {"#tokens":len(sample['input_ids'])}, num_proc=self.num_proc)
 
         # Add token counts to samples
+        token_counts = tmp_dataset["#tokens"]
         for sample, count in zip(samples, token_counts):
             sample["#tokens"] = count
 
@@ -281,12 +286,14 @@ class DatasetGenerationCoordinator:
         """
         A single 'task' that generates samples for a dataset and processes tokens in parallel.
         """
-        print(f"Starting dataset: {dataset_name}")
+        logger.info(f"Starting dataset: {dataset_name}")
         dataset_samples = await self.generate_by_dataset(dataset_name)
 
         # Tokenize and append
         await self.batch_tokenize_and_append(dataset_samples, batch_size=1000, num_workers=8)
-        print(f"Done dataset: {dataset_name} with {len(dataset_samples)} samples.")
+        
+        
+        logger.info(f"Done dataset: {dataset_name} with {len(dataset_samples)} samples.")
 
     async def _async_pipeline(self):
         """
@@ -297,7 +304,7 @@ class DatasetGenerationCoordinator:
             for dataset_name in self.job_tasks
         ]
         await tqdm_asyncio.gather(*tasks, desc="Processing datasets", total=len(tasks))
-        print("--- All datasets processed and appended into data.json ---")
+        logger.info("--- All datasets processed and appended into data.json ---")
 
     def pipeline(self):
         """
@@ -305,4 +312,5 @@ class DatasetGenerationCoordinator:
         Uses asyncio.run(...) to kick off asynchronous tasks.
         """
         asyncio.run(self._async_pipeline())
-        print("--- Pipeline finished ---")
+        logger.info("--- Pipeline finished ---")
+        

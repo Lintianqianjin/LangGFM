@@ -13,7 +13,6 @@ from ..utils.graph_utils import get_edge_idx_in_graph, represent_edges_with_mult
 
 from .._base_generator import EdgeTaskGraphGenerator
 
-from ....utils.logger import logger
 
 @EdgeTaskGraphGenerator.register("fb15k237")
 class FB15K237GraphGenerator(EdgeTaskGraphGenerator):
