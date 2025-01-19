@@ -9,6 +9,8 @@ from ..utils.graph_utils import get_node_slices
 
 from .._base_generator import NodeTaskGraphGenerator
 
+import logging
+logger = logging.getLogger("root")
 
 @NodeTaskGraphGenerator.register("oag_scholar_interest")
 class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
@@ -28,7 +30,9 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
         self.root = './data/oag_scholar_interest'
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", FutureWarning)  # suppress torch.load warning of `weight_only`
-            self.graph = torch.load(f'{self.root}/raw/dblp_hetero_data.pt')
+            self.hetero_graph = torch.load(f'{self.root}/raw/dblp_hetero_data.pt')
+            logger.info(f"{self.hetero_graph=}")
+            
         
         self.author_nodes = pd.read_csv(f'{self.root}/raw/author_nodes_with_interests.csv')
         self.author_nodes["Research_Interests"] = self.author_nodes["Research_Interests"].fillna("[]")
@@ -40,10 +44,10 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
         self.paper_nodes = pd.read_csv(f'{self.root}/raw/paper_nodes.csv')
         self.venue_nodes = pd.read_csv(f'{self.root}/raw/venue_nodes.csv')
         
-        self.node_slices = get_node_slices(self.graph.num_nodes_dict)
+        self.node_slices = get_node_slices(self.hetero_graph.num_nodes_dict)
         self.node_type_mapping = {0: 'author', 1: 'paper', 2: 'venue'}
         self.edge_type_mapping = {0:'writes', 1:'cites', 2:'publishes'}
-        self.graph = self.graph.to_homogeneous()
+        self.graph = self.hetero_graph.to_homogeneous()
     
     @property
     def graph_description(self):
@@ -85,6 +89,7 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
         Returns:
             nx.Graph: NetworkX graph object.
         """
+        logger.info(f"{node_mapping=}")
         # Create a NetworkX graph
         G = nx.MultiDiGraph()
         for raw_node_idx, new_node_idx in node_mapping.items():
@@ -108,7 +113,7 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
                 venue_idx = raw_node_idx - self.node_slices['venue'][0]
                 G.add_node(
                     new_node_idx, type = 'venue', 
-                    name = self.venues.at[venue_idx,'name_d']
+                    name = self.venue_nodes.at[venue_idx,'name_d']
                 )
         
         for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:

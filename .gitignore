@@ -4,6 +4,7 @@
 /experiments/**/results/
 /experiments/**/ckpts/
 /experiments/**/merged_model/
+/experiments/**/training_output/
 /experiments/**/*.json
 /experiments/**/*.jsonl
 /input_graph_generator.py
@@ -11,6 +12,9 @@
 !src/langgfm/data/outputs/.gitkeep
 log.*
 *.log
+*.tar.gz
+*.tar
+debug.ipynb
 
 /data_cache/*
 /data/*

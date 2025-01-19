@@ -17,7 +17,7 @@ class Logger:
         self.logger.setLevel(level)
         # self.set_level(level)  # Set the default logging level for the Logger
 
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s ')
 
         # Clear existing handlers to avoid duplicate logs
         if self.logger.hasHandlers():
@@ -67,7 +67,7 @@ class Logger:
         self.log(logging.CRITICAL, message)
 
 logger = Logger(
-    name="main_looger",  # Logger name
+    name="root",  # Logger name
     level=logging.DEBUG,  # Default Logger level
     log_file="0117.log",  # File path for logging
     console_level=logging.DEBUG,  # Console logging level

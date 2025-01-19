@@ -47,7 +47,8 @@ class StackElecGraphGenerator(EdgeTaskGraphGenerator):
         # logger.debug(f"{resutls=}")
         self.all_samples = list(resutls)
         # self.all_samples = set([(edge_index[0, i].item(), edge_index[1, i].item()) for i in range(edge_index.size(1))])
-        
+    
+    @property
     def graph_description(self):
         desc = ("This is a graph constructed from question-and-answer data related to electronic techniques of the Stack Exchange platform, "
         "forming a dynamic bipartite structure that captures multi-round interactions between users and questions. "
@@ -105,7 +106,7 @@ class StackElecGraphGenerator(EdgeTaskGraphGenerator):
             relation_idx = self.graph.edge_relation_idx[edge_idx].item()
             relation_text = self.relation_text.at[relation_idx, 'text']
             
-            G.add_edge(src, dst, content=relation_text)
+            G.add_edge(src, dst, type="reply", content=relation_text)
             
         
         return G

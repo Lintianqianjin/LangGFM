@@ -118,7 +118,7 @@ class NodeTaskGraphGenerator(InputGraphGenerator):
             sub_graph_edge_mask: The edge mask of the overall graph for sub_graph_edge_index.
         '''
         # print(f"{sample_id=}")
-        sub_graph_edge_index, sub_graph_nodes, sub_graph_edge_mask = generate_node_centric_k_hop_subgraph(
+        sub_graph_nodes, sub_graph_edge_mask = generate_node_centric_k_hop_subgraph(
             self.graph, sample_id, self.num_hops, self.neighbor_size, 
             self.random_seed, self.sampling
         )

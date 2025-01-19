@@ -15,7 +15,7 @@ from langgfm.utils.random_control import set_seed
 
 
 import logging
-logger = logging.getLogger("main_logger")
+logger = logging.getLogger("root")
 
 
 class TestTopologyAutoencoder(unittest.TestCase):
