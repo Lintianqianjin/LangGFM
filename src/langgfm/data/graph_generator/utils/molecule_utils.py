@@ -208,15 +208,15 @@ def atom_to_feature(atom):
     """
     atom_feature = {
         "atom": chem_dict[int(atom.GetAtomicNum())],
-        "atomic_number": str(atom.GetAtomicNum()),
+        "atomic_number": int(atom.GetAtomicNum()),
         "chirality": allowable_features_map["possible_chirality_dict"][
             str(atom.GetChiralTag())
         ],
         # + " chirality",
-        "degree": str(atom.GetTotalDegree()),
-        "formal_charge": str(atom.GetFormalCharge()),
-        "num_of_hydrogen": str(atom.GetTotalNumHs()),
-        "num_of_radical_electrons": str(atom.GetNumRadicalElectrons()),
+        "degree": int(atom.GetTotalDegree()),
+        "formal_charge": int(atom.GetFormalCharge()),
+        "num_of_hydrogen": int(atom.GetTotalNumHs()),
+        "num_of_radical_electrons": int(atom.GetNumRadicalElectrons()),
         "hybridization": str(atom.GetHybridization()),
         # "is aromatic: " if atom.GetIsAromatic() else "not aromatric",
         "aromatic": str(atom.GetIsAromatic()),

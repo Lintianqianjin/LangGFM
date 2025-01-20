@@ -3,24 +3,6 @@ common_format: &id003
 - json
 - table
 - graphml
-common_node_feature_masked_autoencoder: &id001
-  generator:
-    mask_node_ratio: 0.2
-    mask_edge_ratio: 0.2
-    mask_reverse_edges: true
-  augment_ratio: 1
-common_edge_feature_masked_autoencoder: &id002
-  generator:
-    mask_node_ratio: 0.2
-    mask_edge_ratio: 0.2
-    mask_reverse_edges: true
-  augment_ratio: 1
+
 chebi20:
-  ssl_setting:
-    node_feature_masked_autoencoder: *id001
-    edge_feature_masked_autoencoder: *id002
-    topology_autoencoder:
-      generator:
-        distinguish_directions: false
-      augment_ratio: 1
   format: *id003

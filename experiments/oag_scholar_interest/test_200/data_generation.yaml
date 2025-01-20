@@ -3,6 +3,7 @@ common_format: &id002
 - json
 - table
 - graphml
+<<<<<<< HEAD
 common_node_feature_masked_autoencoder: &id001
   generator:
     mask_node_ratio: 0.2
@@ -15,6 +16,9 @@ common_edge_feature_masked_autoencoder:
     mask_edge_ratio: 0.2
     mask_reverse_edges: true
   augment_ratio: 1
+=======
+
+>>>>>>> origin/main
 oag_scholar_interest:
   generator:
     task_level: node
@@ -24,10 +28,13 @@ oag_scholar_interest:
     - 50
     - 5
     random_seed: 42
+<<<<<<< HEAD
   ssl_setting:
     node_feature_masked_autoencoder: *id001
     topology_autoencoder:
       generator:
         distinguish_directions: true
       augment_ratio: 1
+=======
+>>>>>>> origin/main
   format: *id002

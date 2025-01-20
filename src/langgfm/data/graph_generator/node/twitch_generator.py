@@ -3,6 +3,7 @@ import networkx as nx
 import warnings
 import torch
 import pandas as pd
+pd.set_option('future.no_silent_downcasting', True)
 from torch_geometric.utils import to_undirected
 
 from .._base_generator import NodeTaskGraphGenerator

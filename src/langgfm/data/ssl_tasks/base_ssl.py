@@ -6,7 +6,7 @@ import sys
 
 
 import logging
-logger = logging.getLogger("main_logger")
+logger = logging.getLogger("root")
 
 
 class SelfSupervisedGraphTask(ABC):

@@ -7,7 +7,7 @@ import random
 
 
 import logging
-logger = logging.getLogger("main_logger")
+logger = logging.getLogger("root")
 
 
 class FeatureMaskedAutoencoder(SelfSupervisedGraphTask):

@@ -3,18 +3,6 @@ common_format: &id002
 - json
 - table
 - graphml
-common_node_feature_masked_autoencoder: &id001
-  generator:
-    mask_node_ratio: 0.2
-    mask_edge_ratio: 0.2
-    mask_reverse_edges: true
-  augment_ratio: 1
-common_edge_feature_masked_autoencoder:
-  generator:
-    mask_node_ratio: 0.2
-    mask_edge_ratio: 0.2
-    mask_reverse_edges: true
-  augment_ratio: 1
 ogbn_arxiv:
   generator:
     task_level: node
@@ -24,10 +12,4 @@ ogbn_arxiv:
     - 20
     - 10
     random_seed: 42
-  ssl_setting:
-    node_feature_masked_autoencoder: *id001
-    topology_autoencoder:
-      generator:
-        distinguish_directions: true
-      augment_ratio: 1
   format: *id002

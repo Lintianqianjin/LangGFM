@@ -287,7 +287,7 @@ class REEuropeGraphGenerator(NodeTaskGraphGenerator):
             
             if edge_type == 0:
                 edge_type = 'close_to'
-                G.add_edge(src, dst, type="close_to")
+                G.add_edge(src, dst, type="close_to") # directed edge
             
             elif edge_type == 1:
                 edge_type = 'transmission_line'
@@ -312,5 +312,7 @@ class REEuropeGraphGenerator(NodeTaskGraphGenerator):
                 }
                 
                 G.add_edge(src, dst, type="transmission_line", **feautres)
+                # this is an undirected edge type
+                G.add_edge(dst, src, type="transmission_line", **feautres)
             
         return G

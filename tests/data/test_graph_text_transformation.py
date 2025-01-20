@@ -7,25 +7,43 @@
 
 import unittest
 import tempfile
+import random
 import networkx as nx
 import json
 import sys
 import os
 
-from langgfm.data.graph_generator import OgbnArxivGraphGenerator
+from langgfm.data.graph_generator import InputGraphGenerator
 from langgfm.data.graph_text_transformation.nxg_to_text import GraphTextualizer
 from langgfm.data.graph_text_transformation.text_to_nxg import TextualizedGraphLoader
+import logging
+logger = logging.getLogger("root")
+
 
 class TestGraphTextTransformation(unittest.TestCase):
+    
+    @classmethod
+    def setUpClass(cls):
+        """
+        Initialize class-level configuration. 
+        Parse dataset name from command-line arguments.
+        """
+        if len(sys.argv) > 1:
+            cls.dataset_name = sys.argv.pop()  # Remove and get the last argument
+        else:
+            # 'ogbn_arxiv', 'wikics', 'aminer', 're_europe','oag_scholar_interest',  'usa_airport', 'twitch'
+            # 'stack_elec','fb15k237', 'ogbl_vessel','movielens1m','yelp_review','ogbl_vessel'
+            # 'explagraphs' ,'chebi20', 'esol', 'fingerprint', 'bace'
+            cls.dataset_name = "re_europe"  # Default dataset name
     
     def setUp(self):
         """
         Initialize the generator and textualizer for testing.
         """
-        self.generator = OgbnArxivGraphGenerator(num_hops=2, sampling=True, neighbor_size=15, random_seed=0)
-        dataset_type_path = os.path.join(os.path.dirname(__file__), '../../src/langgfm/configs/dataset_type.json')
-        with open(dataset_type_path, "r") as f:
-            self.dataset_type = json.load(f)
+        self.generator = InputGraphGenerator.create(self.dataset_name, sampling=True, num_hops=2, neighbor_size=[5,3],random_seed = 0)
+        # dataset_type_path = os.path.join(os.path.dirname(__file__), '../../src/langgfm/configs/dataset_type.json')
+        # with open(dataset_type_path, "r") as f:
+        #     self.dataset_type = json.load(f)
         self.textualizer = GraphTextualizer()
         self.loader = TextualizedGraphLoader()
 
@@ -34,16 +52,18 @@ class TestGraphTextTransformation(unittest.TestCase):
         Test the graph text transformation pipeline.
         """
         # generate a graph
-        sample_id = self.generator.all_idx[0].item()  # Select a sample node ID
+        sample_id = random.choice(self.generator.all_samples)  # Select a sample node ID
         G, metadata = self.generator.generate_graph(sample_id=sample_id)
+        logger.info(f"Sampled Graph {G.nodes=}")
+        logger.info(f"Sampled Graph {G.edges=}")
 
         # convert the graph to different formats
-        for format in ['json', 'graphml', 'gml', 'table']:
-            graph_text = self.textualizer.export(G, format=format, **self.dataset_type['ogbn_arxiv'])
+        for format in ['json', 'graphml', 'gml', 'table']: # 'json', 'graphml', 'gml', 
+            graph_text = self.textualizer.export(G, format=format, directed = self.generator.directed)
             self.assertIsInstance(graph_text, str, "Graph text should be a string.")
             self.assertGreater(len(graph_text), 0, "Graph text should not be empty.")
-            print(f"Graph text in {format} format:")
-            print(graph_text)
+            logger.info(f"Graph text in {format} format:")
+            logger.info(graph_text)
 
             # save the graph text to a temporaty file for testing, using tempfile.NamedTemporaryFile
             with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
@@ -62,21 +82,24 @@ class TestGraphTextTransformation(unittest.TestCase):
 
             # compare the loaded graph with the original graph
             self.assertEqual(set(G.nodes), set(G_loaded.nodes), f"Graph loaded from {format}. Node sets should match.")
+            logger.info(f"{set(G.edges)=}")
+            logger.info(f"{set(G_loaded.edges)=}")
             self.assertEqual(set(G.edges), set(G_loaded.edges), f"Graph loaded from {format}. Edge sets should match.")
             print("Graph loaded successfully.")
             
             # convert the loaded graph to graph_text again
-            graph_text_loaded = self.textualizer.export(G_loaded, format=format, **self.dataset_type['ogbn_arxiv'])
+            graph_text_loaded = self.textualizer.export(G_loaded, format=format, directed = self.generator.directed)
+            logger.info(graph_text)
+            logger.info(graph_text_loaded)
             self.assertEqual(graph_text, graph_text_loaded, f"Graph loaded from {format}. Graph text should match.")
-            print(f"Graph text loaded in {format} format:")
-            print(graph_text_loaded)
+            # print(f"Graph text loaded in {format} format:")
+            # print(graph_text_loaded)
             
             # remove the temporary file
             os.remove(filename)
-            print(f"Temporary file {filename} removed.")
+            # print(f"Temporary file {filename} removed.")
 
 
 
 if __name__ == '__main__':
-    import unittest
     unittest.main()
