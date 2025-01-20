@@ -1,0 +1,8 @@
+common_format: &id001
+- gml
+- json
+- table
+- graphml
+
+cycle_checking:
+  format: *id001

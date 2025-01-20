@@ -6,14 +6,23 @@
 /experiments/**/merged_model/
 /experiments/**/training_output/
 /experiments/**/*.json
+/experiments/**/*.pt
+/experiments/**/*.pth
+/experiments/**/*.txt
+/experiments/**/*.bin
+/experiments/**/*.safetensors
+/experiments/**/*.md
 /experiments/**/*.jsonl
 /input_graph_generator.py
 /src/langgfm/data/outputs/*
 !src/langgfm/data/outputs/.gitkeep
 log.*
+*.out
+*.err
 *.log
 *.tar.gz
 *.tar
+*.slurm
 debug.ipynb
 
 /data_cache/*

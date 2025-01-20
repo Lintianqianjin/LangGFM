@@ -34,6 +34,7 @@ def generate_yaml_file(file_path=None, **kwargs):
 
     output_dir = os.path.join(
         file_path,
+        "ckpts",
         model_name_or_path.split('/')[1],
         f"{lora_rank=}",
         f"{lora_alpha=}",
@@ -176,7 +177,12 @@ def run_llamafactory_training(ymal_path: str):
 
 
 def main(train_dir: str, eval_dir:str = None, **kwargs):
-    
+    """
+    Run the training pipeline basd on Llamafactory.
+    Args:
+        train_dir (str): Path to the training dataset, where contains `instrcution_dataset.json`
+        eval_dir (str): Path to the evaluation dataset, where contains `instrcution_dataset.json`
+    """
     train_dir = train_dir.rstrip('/')
     eval_dir = eval_dir.rstrip('/')
     

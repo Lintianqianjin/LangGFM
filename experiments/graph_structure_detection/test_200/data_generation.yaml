@@ -1,0 +1,8 @@
+common_format: &id001
+- gml
+- json
+- table
+- graphml
+
+graph_structure_detection:
+  format: *id001

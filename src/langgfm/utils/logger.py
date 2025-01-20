@@ -68,8 +68,8 @@ class Logger:
 
 logger = Logger(
     name="root",  # Logger name
-    level=logging.DEBUG,  # Default Logger level
+    level=logging.WARNING,  # Default Logger level
     log_file="0117.log",  # File path for logging
-    console_level=logging.DEBUG,  # Console logging level
-    file_level=logging.DEBUG  # File logging level
+    console_level=logging.WARNING,  # Console logging level
+    file_level=logging.WARNING  # File logging level
 )

@@ -1,0 +1,8 @@
+common_format: &id001
+- gml
+- json
+- table
+- graphml
+
+degree_counting:
+  format: *id001

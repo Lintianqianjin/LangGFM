@@ -1,0 +1,8 @@
+common_format: &id001
+- gml
+- json
+- table
+- graphml
+
+node_attribute_retrieval:
+  format: *id001
