@@ -135,6 +135,7 @@ def update_dataset_info(file_name: str):
             "prompt": "instruction",
             "query": "input",
             "response": "output",
+            "system": "system"
         }
     }
     dataset_name = file_name.strip(".json")
