@@ -7,6 +7,7 @@ import yaml
 from tqdm.asyncio import tqdm_asyncio
 from typing import Dict, Any, List
 
+import pandas as pd
 import networkx as nx
 
 from ..data.graph_generator._base_generator import InputGraphGenerator
@@ -312,9 +313,11 @@ class DatasetGenerationCoordinator:
             result = df.groupby(group_columns)['#tokens'].agg(
                 count='count',
                 min_tokens='min',
+                quantile_25_tokens=lambda x: x.quantile(0.25),
+                median_tokens=lambda x: x.median(),
+                quantile_75_tokens=lambda x: x.quantile(0.75),
                 max_tokens='max',
                 mean_tokens='mean',
-                median_tokens=lambda x: x.median(),
                 std_dev_tokens='std',
                 less_than_15000=lambda x: (x < 15000).sum()  # Count of #tokens < 15000
             ).reset_index()
