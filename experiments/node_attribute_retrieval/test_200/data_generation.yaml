@@ -3,6 +3,5 @@ common_format: &id001
 - json
 - table
 - graphml
-
 node_attribute_retrieval:
   format: *id001

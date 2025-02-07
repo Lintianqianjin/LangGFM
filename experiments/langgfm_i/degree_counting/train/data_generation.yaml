@@ -1,0 +1,5 @@
+common_format: &id001
+- table
+
+degree_counting:
+  format: *id001

@@ -3,7 +3,6 @@ common_format: &id003
 - json
 - table
 - graphml
-
 stack_elec:
   generator:
     task_level: edge

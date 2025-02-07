@@ -3,7 +3,6 @@ common_format: &id002
 - json
 - table
 - graphml
-
 ogbl_vessel:
   generator:
     task_level: edge

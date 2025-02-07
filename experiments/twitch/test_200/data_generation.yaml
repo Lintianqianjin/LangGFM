@@ -3,7 +3,6 @@ common_format: &id002
 - json
 - table
 - graphml
-
 twitch:
   generator:
     task_level: node

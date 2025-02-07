@@ -7,6 +7,7 @@ import yaml
 from tqdm.asyncio import tqdm_asyncio
 from typing import Dict, Any, List
 
+import pandas as pd
 import networkx as nx
 
 from ..data.graph_generator._base_generator import InputGraphGenerator
@@ -306,6 +307,31 @@ class DatasetGenerationCoordinator:
         await tqdm_asyncio.gather(*tasks, desc="Processing datasets", total=len(tasks))
         logger.info("--- All datasets processed and appended into data.json ---")
 
+    def check_token_length(self):
+        def analyze_tokens(df, group_columns):
+            # Group by the specified columns and calculate stats for #tokens
+            result = df.groupby(group_columns)['#tokens'].agg(
+                count='count',
+                min_tokens='min',
+                quantile_25_tokens=lambda x: x.quantile(0.25),
+                median_tokens=lambda x: x.median(),
+                quantile_75_tokens=lambda x: x.quantile(0.75),
+                max_tokens='max',
+                mean_tokens='mean',
+                std_dev_tokens='std',
+                less_than_15000=lambda x: (x < 15000).sum()  # Count of #tokens < 15000
+            ).reset_index()
+
+            # Sort the result for better readability
+            return result.sort_values(by=group_columns)
+        
+        df = pd.read_json(self.data_filepath, orient='records')
+        stats = analyze_tokens(df, ['dataset', 'graph_format'])
+        # save stats to a csv file
+        stats.to_csv(os.path.join(self.root, "token_stats.csv"), index=False)
+        logger.info(f"Token stats saved to {os.path.join(self.root, 'token_stats.csv')}")
+
+
     def pipeline(self):
         """
         Entry point for running the coordinator. 
@@ -313,4 +339,6 @@ class DatasetGenerationCoordinator:
         """
         asyncio.run(self._async_pipeline())
         logger.info("--- Pipeline finished ---")
+        self.check_token_length() 
+
         

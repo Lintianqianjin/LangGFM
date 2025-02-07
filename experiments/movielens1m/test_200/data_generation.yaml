@@ -3,7 +3,6 @@ common_format: &id003
 - json
 - table
 - graphml
-
 movielens1m:
   generator:
     task_level: edge
