@@ -12,7 +12,11 @@ def run_llamafactory_vllm_infer(model_name_or_path, adapter_name_or_path, datase
     else:
         absolute_model_path = model_name_or_path
         
-    absolute_adapter_path = os.path.abspath(adapter_name_or_path)
+    if adapter_name_or_path is not None:
+        absolute_adapter_path = os.path.abspath(adapter_name_or_path)
+    else:
+        absolute_adapter_path = None
+        
     output_dir = os.path.abspath(output_dir)
     logger.info(f"{output_dir=}")
     if not os.path.exists(output_dir):
@@ -22,7 +26,7 @@ def run_llamafactory_vllm_infer(model_name_or_path, adapter_name_or_path, datase
     llama_factory_dir = "LLaMA-Factory"
     os.chdir(llama_factory_dir)
 
-    command = f"DISABLE_VERSION_CHECK=1 python scripts/vllm_infer.py --model_name_or_path {absolute_model_path} --adapter_name_or_path {absolute_adapter_path} --dataset {dataset} --save_name {absolute_output_dir_path} --cutoff_len 16000 --top_k 1 --temperature 0.01"
+    command = f"VLLM_SKIP_P2P_CHECK=1 DISABLE_VERSION_CHECK=1 python scripts/vllm_infer.py --model_name_or_path {absolute_model_path} --adapter_name_or_path {absolute_adapter_path} --dataset {dataset} --save_name {absolute_output_dir_path} --cutoff_len 16000 --top_k 1 --temperature 0.01"
 
     process = subprocess.Popen(
         command,

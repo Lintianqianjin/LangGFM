@@ -23,6 +23,7 @@ log.*
 *.tar.gz
 *.tar
 *.slurm
+.nfs*
 debug.ipynb
 
 /data_cache/*

@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
 # 第一个参数作为 dataset
-DATASET="$1"
+EXP_PATH="$1"
 
 # 若未传入 dataset，给出提示并退出
-if [ -z "$DATASET" ]; then
+if [ -z "$EXP_PATH" ]; then
   echo "Usage: $0 <dataset>"
   exit 1
 fi
 
 # 这里通过 cat 的方式生成一个临时 SLURM 脚本
-cat <<EOF > temp_${DATASET}.slurm
+cat <<EOF > temp_${EXP_PATH}.slurm
 #!/bin/bash
-#SBATCH --job-name=${DATASET}
-#SBATCH --output=${DATASET}.out
-#SBATCH --error=${DATASET}.err
+#SBATCH --job-name=${EXP_PATH}
+#SBATCH --output=slurm_logs/${EXP_PATH}.out
+#SBATCH --error=slurm_logs/${EXP_PATH}.err
 #SBATCH --partition=short                 # Partition name, ensure this supports A100 or H100 GPUs
 #SBATCH --gres=gpu:1                     # Request 2 GPUs (A100 or H100)
 #SBATCH --constraint="A100|H100"        # Allow both A100 and H100 GPUs

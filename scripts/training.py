@@ -28,10 +28,13 @@ def generate_yaml_file(file_path=None, **kwargs):
     warmup_ratio = kwargs.get("warmup_ratio", 0.4)
     
     per_device_train_batch_size = kwargs.get("per_device_train_batch_size", 1)
-    gradient_accumulation_steps = kwargs.get("gradient_accumulation_steps", 8)
+    
     num_gpus = torch.cuda.device_count()
-    batch_size = num_gpus*per_device_train_batch_size*gradient_accumulation_steps
-
+    batch_size = kwargs.get("batch_size", 32)
+    gradient_accumulation_steps = batch_size//num_gpus//per_device_train_batch_size
+    # num_gpus*per_device_train_batch_size*gradient_accumulation_steps
+    gradient_accumulation_steps = gradient_accumulation_steps
+    
     output_dir = os.path.join(
         file_path,
         "ckpts",
@@ -75,7 +78,7 @@ def generate_yaml_file(file_path=None, **kwargs):
         # dataset
         "dataset": kwargs.get("dataset", ""),
         "template": kwargs.get("template", "qwen"),
-        "cutoff_len": kwargs.get("cutoff_len", 16000),
+        "cutoff_len": kwargs.get("cutoff_len", 15000),
         "max_samples": kwargs.get("max_samples", 100000),
         "overwrite_cache": kwargs.get("overwrite_cache", True),
         "preprocessing_num_workers": kwargs.get("preprocessing_num_workers", max_processor_count),
@@ -89,7 +92,7 @@ def generate_yaml_file(file_path=None, **kwargs):
         
         # train
         "per_device_train_batch_size": kwargs.get("per_device_train_batch_size", 1),
-        "gradient_accumulation_steps": kwargs.get("gradient_accumulation_steps", 8),
+        "gradient_accumulation_steps": kwargs.get("gradient_accumulation_steps", 16),
         "learning_rate": kwargs.get("learning_rate", 1.0e-4),
         "num_train_epochs": kwargs.get("num_train_epochs", 5.0),
         "lr_scheduler_type": kwargs.get("lr_scheduler_type", "cosine"),
@@ -138,7 +141,7 @@ def update_dataset_info(file_name: str):
             "system": "system"
         }
     }
-    dataset_name = file_name.strip(".json")
+    dataset_name = file_name.removesuffix(".json")
     dataset_info[dataset_name] = new_dataset_info
 
     with open(dataset_info_path, "w") as f:
