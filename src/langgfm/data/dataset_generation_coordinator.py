@@ -306,6 +306,29 @@ class DatasetGenerationCoordinator:
         await tqdm_asyncio.gather(*tasks, desc="Processing datasets", total=len(tasks))
         logger.info("--- All datasets processed and appended into data.json ---")
 
+    def check_token_length(self):
+        def analyze_tokens(df, group_columns):
+            # Group by the specified columns and calculate stats for #tokens
+            result = df.groupby(group_columns)['#tokens'].agg(
+                count='count',
+                min_tokens='min',
+                max_tokens='max',
+                mean_tokens='mean',
+                median_tokens=lambda x: x.median(),
+                std_dev_tokens='std',
+                less_than_15000=lambda x: (x < 15000).sum()  # Count of #tokens < 15000
+            ).reset_index()
+
+            # Sort the result for better readability
+            return result.sort_values(by=group_columns)
+        
+        df = pd.read_json(self.data_filepath, orient='records')
+        stats = analyze_tokens(df, ['dataset', 'graph_format'])
+        # save stats to a csv file
+        stats.to_csv(os.path.join(self.root, "token_stats.csv"), index=False)
+        logger.info(f"Token stats saved to {os.path.join(self.root, 'token_stats.csv')}")
+
+
     def pipeline(self):
         """
         Entry point for running the coordinator. 
@@ -313,4 +336,6 @@ class DatasetGenerationCoordinator:
         """
         asyncio.run(self._async_pipeline())
         logger.info("--- Pipeline finished ---")
+        self.check_token_length() 
+
         

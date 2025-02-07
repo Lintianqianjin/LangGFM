@@ -3,21 +3,5 @@ common_format: &id001
 - json
 - table
 - graphml
-<<<<<<< HEAD
-common_node_feature_masked_autoencoder:
-  generator:
-    mask_node_ratio: 0.2
-    mask_edge_ratio: 0.2
-    mask_reverse_edges: true
-  augment_ratio: 1
-common_edge_feature_masked_autoencoder:
-  generator:
-    mask_node_ratio: 0.2
-    mask_edge_ratio: 0.2
-    mask_reverse_edges: true
-  augment_ratio: 1
-=======
-
->>>>>>> origin/main
 node_counting:
   format: *id001
