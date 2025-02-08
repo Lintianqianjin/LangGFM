@@ -248,9 +248,11 @@ class YelpReviewGraphGenerator(EdgeTaskGraphGenerator):
         # convert it into ids in homogeneous graph object
         user_id, business_id, multiplex_id = sample
         business_id += self.node_slices['business'][0]
-        sample = (user_id, business_id, multiplex_id)
+        new_sample = (user_id, business_id, multiplex_id) # sample id in homogeneous graph object
         
-        return super().generate_graph(sample, edge_index)
+        new_G, metadata = super().generate_graph(new_sample, edge_index)
+        metadata['raw_sample_id'] = sample # sample id in heterogeneous graph object
+        return new_G, metadata
 
     @property
     def YelpReviewGeneration(self):

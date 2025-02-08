@@ -38,9 +38,9 @@ conda activate vllm
 cd ~/projects/LangGFM
 
 # Execute Python scripts
-python scripts/inference.py --model_name_or_path meta-llama/Llama-3.3-70B-Instruct --dataset experiments__langgfm_i__${DATASET}__test --output_dir experiments/langgfm_i/${DATASET}/test/ckpts/Llama-3.3-70B-Instruct --top_k 1 --temperature 0.
-python scripts/inference.py --model_name_or_path deepseek-ai/DeepSeek-R1-Distill-Llama-70B --dataset experiments__langgfm_i__${DATASET}__test --output_dir experiments/langgfm_i/${DATASET}/test/ckpts/DeepSeek-R1-Distill-Llama-70B --top_k 1 --temperature 0.
-python scripts/inference.py --model_name_or_path Qwen/Qwen2.5-72B-Instruct --dataset experiments__langgfm_i__${DATASET}__test --output_dir experiments/langgfm_i/${DATASET}/test/ckpts/Qwen2.5-72B-Instruct --top_k 1 --temperature 0.
+python scripts/inference.py --model_name_or_path meta-llama/Llama-3.3-70B-Instruct --dataset experiments__langgfm_i__${DATASET}__test_200 --output_dir experiments/langgfm_i/${DATASET}/test_200/ckpts/openllm/Llama-3.3-70B-Instruct --top_k 1 --temperature 0.
+python scripts/inference.py --model_name_or_path deepseek-ai/DeepSeek-R1-Distill-Llama-70B --dataset experiments__langgfm_i__${DATASET}__test_200 --output_dir experiments/langgfm_i/${DATASET}/test_200/ckpts/openllm/DeepSeek-R1-Distill-Llama-70B --top_k 1 --temperature 0.
+python scripts/inference.py --model_name_or_path Qwen/Qwen2.5-72B-Instruct --dataset experiments__langgfm_i__${DATASET}__test_200 --output_dir experiments/langgfm_i/${DATASET}/test_200/ckpts/openllm/Qwen2.5-72B-Instruct --top_k 1 --temperature 0.
 EOF
 
 # 使用临时脚本提交作业

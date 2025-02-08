@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+explagraphs,table,200,530,554.75,587.0,629.25,768,600.71,54.61915562148521,200

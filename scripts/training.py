@@ -128,30 +128,30 @@ def exp_dir_to_file_name(exp_dir: str) -> str:
     return exp_dir.replace("/", "__") + ".json"
 
 
-def update_dataset_info(file_name: str):
-    dataset_info_path = "LLaMA-Factory/data/dataset_info.json"
-    dataset_info = json.load(open(dataset_info_path))
+# def update_dataset_info(file_name: str):
+#     dataset_info_path = "LLaMA-Factory/data/dataset_info.json"
+#     dataset_info = json.load(open(dataset_info_path))
 
-    new_dataset_info = {
-        "file_name": file_name,
-        "columns": {
-            "prompt": "instruction",
-            "query": "input",
-            "response": "output",
-            "system": "system"
-        }
-    }
-    dataset_name = file_name.removesuffix(".json")
-    dataset_info[dataset_name] = new_dataset_info
+#     new_dataset_info = {
+#         "file_name": file_name,
+#         "columns": {
+#             "prompt": "instruction",
+#             "query": "input",
+#             "response": "output",
+#             "system": "system"
+#         }
+#     }
+#     dataset_name = file_name.removesuffix(".json")
+#     dataset_info[dataset_name] = new_dataset_info
 
-    with open(dataset_info_path, "w") as f:
-        json.dump(dataset_info, f, indent=4)
+#     with open(dataset_info_path, "w") as f:
+#         json.dump(dataset_info, f, indent=4)
 
-    return dataset_name
+#     return dataset_name
 
-def copy_instruction_dataset_to_data_dir(exp_dir, file_name: str):
-    ins_ds = os.path.join(exp_dir, "instruction_dataset.json")
-    shutil.copy(ins_ds, f"LLaMA-Factory/data/{file_name}")
+# def copy_instruction_dataset_to_data_dir(exp_dir, file_name: str):
+#     ins_ds = os.path.join(exp_dir, "instruction_dataset.json")
+#     shutil.copy(ins_ds, f"LLaMA-Factory/data/{file_name}")
 
 
 def run_llamafactory_training(ymal_path: str):
@@ -190,17 +190,22 @@ def main(train_dir: str, eval_dir:str = None, **kwargs):
     train_dir = train_dir.rstrip('/')
     eval_dir = eval_dir.rstrip('/')
     
-    if eval_dir is not None:
-        eval_fname = exp_dir_to_file_name(eval_dir)
-        eval_dataset_name = update_dataset_info(eval_fname)
-        copy_instruction_dataset_to_data_dir(eval_dir, eval_fname)
-        kwargs['eval_dataset'] = eval_dataset_name
-        
-    train_fname = exp_dir_to_file_name(train_dir)
-    train_dataset_name = update_dataset_info(train_fname)
-    copy_instruction_dataset_to_data_dir(train_dir, train_fname)
+    # if eval_dir is not None:
+    #     eval_fname = exp_dir_to_file_name(eval_dir)
+    #     eval_dataset_name = update_dataset_info(eval_fname)
+    #     copy_instruction_dataset_to_data_dir(eval_dir, eval_fname)
+    #     kwargs['eval_dataset'] = eval_dataset_name
     
-    yaml_file_path = generate_yaml_file(file_path=f"{train_dir}", dataset=train_dataset_name, **kwargs)
+    eval_fname = exp_dir_to_file_name(eval_dir)
+    eval_fname = eval_fname.removesuffix('.json')
+    kwargs['eval_dataset'] = eval_fname
+    
+    train_fname = exp_dir_to_file_name(train_dir)
+    train_fname = train_fname.removesuffix('.json')
+    # train_dataset_name = update_dataset_info(train_fname)
+    # copy_instruction_dataset_to_data_dir(train_dir, train_fname)
+    
+    yaml_file_path = generate_yaml_file(file_path=f"{train_dir}", dataset=train_fname, **kwargs)
     
     run_llamafactory_training(yaml_file_path)
 

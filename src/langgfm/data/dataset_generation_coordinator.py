@@ -269,10 +269,10 @@ class DatasetGenerationCoordinator:
 
         # load to Hugging Face Dataset
         tmp_dataset = Dataset.from_dict({"text": instructions})
-        # current_load = psutil.cpu_percent(percpu=False) / 100
-        # _num_proc = max(1, int(self.num_proc * (1 - current_load)))
-        tmp_dataset = tmp_dataset.map(lambda sample: self.tokenizer(sample['text']), batched=True, num_proc=self.num_proc)
-        tmp_dataset = tmp_dataset.map(lambda sample: {"#tokens":len(sample['input_ids'])}, num_proc=self.num_proc)
+        current_load = psutil.cpu_percent(percpu=False) / 100
+        _num_proc = max(1, int(self.num_proc * (1 - current_load)))
+        tmp_dataset = tmp_dataset.map(lambda sample: self.tokenizer(sample['text']), batched=True, num_proc=_num_proc)
+        tmp_dataset = tmp_dataset.map(lambda sample: {"#tokens":len(sample['input_ids'])}, num_proc=_num_proc)
 
         # Add token counts to samples
         token_counts = tmp_dataset["#tokens"]

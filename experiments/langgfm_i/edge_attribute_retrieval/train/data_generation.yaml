@@ -1,5 +1,0 @@
-common_format: &id001
-- table
-
-edge_attribute_retrieval:
-  format: *id001

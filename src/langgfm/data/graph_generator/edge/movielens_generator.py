@@ -144,6 +144,7 @@ class Movielens1MGraphGenerator(EdgeTaskGraphGenerator):
         
         return df
 
+
     def get_query(self, target_src_node_idx:int, target_dst_node_idx:int):
         '''
         '''
@@ -218,13 +219,14 @@ class Movielens1MGraphGenerator(EdgeTaskGraphGenerator):
             # print(f"{(edge_attrs['Timestamp'].item()<target_edge_timestamp.item())=}")
             if edge_attrs['Timestamp'].item()<target_edge_timestamp:
                 G.add_edge(
-                    src, dst, rating = int(edge_attrs['Rating'].values[0]), 
+                    src, dst, type="Rate", score = int(edge_attrs['Rating'].values[0]), 
                     time = edge_attrs['Timestamp'].values[0]
                 )
             else:
                 continue # do not add edges that are rated after the target edge
         
         return G
+    
     
     def generate_graph(self, sample: tuple, edge_index = None):
         '''
@@ -233,9 +235,11 @@ class Movielens1MGraphGenerator(EdgeTaskGraphGenerator):
         # convert it into ids in homogeneous graph object
         user_id, movie_id = sample
         user_id += self.node_slices['user'][0] # in homogeneous graph movies is before users
-        sample = (user_id, movie_id)
+        new_sample = (user_id, movie_id) # node idx in homo graph
         
-        return super().generate_graph(sample, edge_index)
+        new_G, metadata = super().generate_graph(new_sample, edge_index)
+        metadata["raw_sample_id"] = sample
+        return new_G, metadata
         
     @property
     def graph_description(self):

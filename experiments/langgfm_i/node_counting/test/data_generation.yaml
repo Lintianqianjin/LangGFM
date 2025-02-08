@@ -1,5 +1,0 @@
-common_format: &id001
-- table
-
-node_counting:
-  format: *id001

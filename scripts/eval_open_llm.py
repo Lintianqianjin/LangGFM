@@ -1,3 +1,4 @@
+import fire
 import json
 import os
 from tqdm import tqdm
@@ -111,6 +112,7 @@ def run_verification(file_path: str, model_name: str = "meta-llama/Llama-3.3-70B
     return new_file_path
 
 if __name__ == "__main__":
-    run_verification("experiments/langgfm_i/wikics/test/ckpts/Qwen2.5-72B-Instruct/predictions.json", model_name="meta-llama/Llama-3.3-70B-Instruct")
+    fire.Fire(run_verification)
+    # run_verification("experiments/langgfm_i/wikics/test/ckpts/Qwen2.5-72B-Instruct/predictions.json", model_name="meta-llama/Llama-3.3-70B-Instruct")
 # Example usage
 # run_verification("your_prediction_file.jsonl")

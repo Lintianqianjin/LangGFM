@@ -33,7 +33,10 @@ class FB15K237GraphGenerator(EdgeTaskGraphGenerator):
         
         # logger.info(f"{data=}")
         
-        with open(f"{self.root}/etypeid2rel.json") as etypeid2rel, open(f"{self.root}/node_features_list.json") as node_features_list, open(f"{self.root}/etype_split_distribution.json") as etype_distribution:
+        with open(f"{self.root}/etypeid2rel.json") as etypeid2rel, \
+            open(f"{self.root}/node_features_list.json") as node_features_list, \
+            open(f"{self.root}/etype_split_distribution.json") as etype_distribution:
+            
             self.etypeid2rel = json.load(etypeid2rel)
             self.node_features_list = json.load(node_features_list)
             self.etype_distribution = json.load(etype_distribution)
