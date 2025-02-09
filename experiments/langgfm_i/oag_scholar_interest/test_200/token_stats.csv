@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+oag_scholar_interest,table,200,514,764.25,1231.5,2843.75,5651,1912.015,1412.003247385834,200

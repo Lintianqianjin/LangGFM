@@ -190,7 +190,7 @@ def get_khop_subgraph(
         # torch.manual_seed(random_seed)
         set_seed(random_seed)
     
-    logger.info(f"f{edge_index=}")
+    logger.debug(f"f{edge_index=}")
     
     # 3) Determine the number of nodes in the graph
     all_nodes = torch.cat([edge_index[0], edge_index[1]], dim=0)
@@ -267,7 +267,7 @@ def get_khop_subgraph(
     edge_v = edge_index[1]
     sub_graph_edge_mask = visited_mask[edge_u] & visited_mask[edge_v]
     
-    logger.info(f"{sub_graph_nodes=}")
+    logger.debug(f"{sub_graph_nodes=}")
     return sub_graph_nodes, sub_graph_edge_mask
 
 
@@ -287,7 +287,7 @@ def generate_node_centric_k_hop_subgraph(graph, sample_id, num_hops, neighbor_si
         sub_graph_edge_index: The combined edge index of the subgraph.
         sub_graph_nodes: The set of nodes in the subgraph.
     """
-    logger.info(f"{graph=}")
+    logger.debug(f"{graph=}")
     if sampling:
         # Generate k-hop subgraph with neighbor sampling
     #     src_to_tgt_subset, src_to_tgt_edge_index, _, src_to_tgt_edge_mask = k_hop_sampled_subgraph(
@@ -324,7 +324,7 @@ def generate_node_centric_k_hop_subgraph(graph, sample_id, num_hops, neighbor_si
     # sub_graph_edge_index = graph.edge_index.T[sub_graph_edge_mask].T
     # sub_graph_nodes = set(src_to_tgt_subset.numpy().tolist()) | set(tgt_to_src_subset.numpy().tolist())
     # sub_graph_edge_index, 
-    logger.info(f"{sub_graph_nodes=}")
+    logger.debug(f"{sub_graph_nodes=}")
     return sub_graph_nodes, sub_graph_edge_mask
 
 

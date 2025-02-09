@@ -259,10 +259,10 @@ class GraphTextualizer:
         #     nx.write_gml(graph, output)
         #     return output.getvalue()
         # print(graph)
-        logger.info(graph)
-        logger.info(f"{graph.nodes(data=True)=}")
+        logger.debug(graph)
+        logger.debug(f"{graph.nodes(data=True)=}")
         str_list = list(nx.generate_gml(graph))
-        logger.info(str_list)
+        logger.debug(str_list)
         graph_text = '\n'.join(nx.generate_gml(graph))
         return graph_text
 

@@ -6,6 +6,7 @@
 /experiments/**/merged_model/
 /experiments/**/training_output/
 /experiments/**/*.json
+!/experiments/**/indices.json
 /experiments/**/*.pt
 /experiments/**/*.pth
 /experiments/**/*.txt

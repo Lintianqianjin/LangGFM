@@ -1,6 +1,5 @@
 common_format: &id003
 - table
-
 movielens1m:
   generator:
     task_level: edge
