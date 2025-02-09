@@ -5,7 +5,9 @@ import json
 import numpy as np
 from tqdm import tqdm
 from openai import OpenAI
-from bert_score import score as bertscore
+# from bert_score import score as bertscore
+from rouge_score import rouge_scorer
+
 # LAUNCH vLLM SERVER FIRST
 # Example: nohup vllm serve deepseek-ai/DeepSeek-R1-Distill-Qwen-32B --dtype auto --api-key 12345 &> server.log &
 
@@ -54,6 +56,7 @@ def extract_info(dataset, text):
             return None
     elif dataset.lower() == "oag_scholar_interest":
         # Use regex to search for research interests information in the format "<interest1>, <interest2>, ..."
+        # E.g., The author with id 5 would likely describe research interests as Biomechanics, Tissue Engineering, and Acoustics.
         match = re.search(r'The author with id \d+ would likely describe research interests as (.*).', text)
         if match:
             # Return the extracted research interests
@@ -105,15 +108,35 @@ def compute_metric(dataset, predictions, labels):
         predictions = [safe_float(x) for x in predictions]
         labels = list(map(float, labels))
         error = rmse(np.array(list(predictions)), np.array(list(labels)))
-        return error
+        return {"rmse": error}
     
     elif dataset == "oag_scholar_interest":
         # 使用 bert-score 计算文本相似度
         # 注意：确保 predictions 和 labels 都是字符串列表
         # 默认语言设为英语（lang="en"），可以根据需要调整
-        P, R, F1 = bertscore(predictions, labels, lang="en", verbose=True)
-        # 返回 F1 分数的平均值作为整体得分
-        return F1.mean().item()
+        # P, R, F1 = bertscore(predictions, labels, lang="en", verbose=True)
+        scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
+        rouge1_scores = []
+        rouge2_scores = []
+        rougeL_scores = []
+        for pred, label in zip(predictions, labels):
+            scores = scorer.score(label, pred)
+            rouge1_scores.append(scores['rouge1'].fmeasure)
+            rouge2_scores.append(scores['rouge2'].fmeasure)
+            rougeL_scores.append(scores['rougeL'].fmeasure)
+        
+        avg_rouge1 = np.mean(rouge1_scores)
+        avg_rouge2 = np.mean(rouge2_scores)
+        avg_rougeL = np.mean(rougeL_scores)
+
+        # 返回一个字典，其中包含 bert 的 F1 和三个 rouge 指标的平均值
+        return {
+            # "bert_f1": F1,
+            "rouge1": avg_rouge1,
+            "rouge2": avg_rouge2,
+            "rougeL": avg_rougeL
+        }
+
     
     return 0.0
 
@@ -203,7 +226,7 @@ def run_inference(file_path: str, model_name: str):
     save_results(output_file, samples)
     
     metric = compute_metric(entry.get('dataset', ""), preds, labels)
-    print(f"Metric: {metric:.4f}")
+    print(metric)
 
 def save_results(file_path: str, data):
     """
