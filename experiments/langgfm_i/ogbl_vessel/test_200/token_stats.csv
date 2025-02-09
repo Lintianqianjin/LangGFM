@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+ogbl_vessel,table,200,509,893.5,1014.5,1138.0,1495,1017.095,187.5636869393739,200
