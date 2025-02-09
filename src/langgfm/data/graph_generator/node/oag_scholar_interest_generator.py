@@ -45,7 +45,9 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
         self.venue_nodes = pd.read_csv(f'{self.root}/raw/venue_nodes.csv')
         
         self.node_slices = get_node_slices(self.hetero_graph.num_nodes_dict)
-        self.node_type_mapping = {0: 'author', 1: 'paper', 2: 'venue'}
+        # target node type author is the first node type, 
+        # so no need to adjust sample_id since same sample_id in heterogeneous graph and homogeneous graph
+        self.node_type_mapping = {0: 'author', 1: 'paper', 2: 'venue'} 
         self.edge_type_mapping = {0:'writes', 1:'cites', 2:'publishes'}
         self.graph = self.hetero_graph.to_homogeneous()
     

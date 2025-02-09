@@ -1,5 +1,0 @@
-common_format: &id001
-- table
-
-edge_counting:
-  format: *id001

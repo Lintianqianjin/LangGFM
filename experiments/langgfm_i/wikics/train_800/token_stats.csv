@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+wikics,table,800,440,891.5,1642.0,2931.75,5692,2054.67375,1394.9929655838662,800

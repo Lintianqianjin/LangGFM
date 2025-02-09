@@ -1,5 +1,0 @@
-common_format: &id001
-- table
-
-hamilton_path:
-  format: *id001
