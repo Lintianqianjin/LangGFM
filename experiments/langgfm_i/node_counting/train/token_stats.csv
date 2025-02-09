@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+node_counting,table,800,526,1291.5,1762.0,2355.0,3741,1833.5475,721.0681343060722,800
