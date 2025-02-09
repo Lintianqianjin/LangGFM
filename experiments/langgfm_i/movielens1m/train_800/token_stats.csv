@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+movielens1m,table,800,1801,2985.0,3966.5,5039.5,6060,4002.5075,1193.6952365830443,800

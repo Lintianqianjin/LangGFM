@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+fb15k237,table,800,1432,3924.0,5263.0,6388.5,8074,5070.87,1549.7880562755088,800

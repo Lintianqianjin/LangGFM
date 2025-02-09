@@ -260,11 +260,33 @@ class DatasetGenerationCoordinator:
 
         # Load to Hugging Face Dataset
         tmp_dataset = Dataset.from_dict({"text": instructions})
-        current_load = psutil.cpu_percent(percpu=False) / 100
-        _num_proc = max(1, int(self.num_proc * (1 - current_load)))
-        tmp_dataset = tmp_dataset.map(lambda sample: self.tokenizer(sample['text']), batched=True, num_proc=_num_proc)
-        tmp_dataset = tmp_dataset.map(lambda sample: {"#tokens": len(sample['input_ids'])}, num_proc=_num_proc)
+        
+        # Get the current CPU usage as a percentage and convert it to a ratio (0 to 1)
+        current_load = psutil.cpu_percent(percpu=False) / 100.0
 
+        # Adjust the number of processes based on the CPU idle percentage
+        cpu_based_proc = int(self.num_proc * (1 - current_load))
+
+        # Define the minimum required memory per process (e.g., 1GB) in bytes
+        required_mem_per_proc = 2 * 1024 * 1024  # 1GB
+
+        # Retrieve the available system memory in bytes
+        available_mem = psutil.virtual_memory().available
+
+        # Calculate the maximum number of processes that can be supported by the available memory
+        max_proc_by_mem = available_mem // required_mem_per_proc
+
+        # Determine the final number of processes by taking the minimum between the CPU-based and memory-based limits,
+        # ensuring that at least one process is used (even if available memory is below 1GB)
+        _num_proc = max(1, int(min(cpu_based_proc, max_proc_by_mem)))
+        _num_proc = min(_num_proc, 32)
+        
+        logger.info(f"Tokenizing instructions with {_num_proc} processes.")
+        
+        tmp_dataset = tmp_dataset.map(lambda sample: self.tokenizer(sample['text'], return_attention_mask=False), batched=True, num_proc=_num_proc)
+        logger.info(f"{tmp_dataset.column_names=}")
+        tmp_dataset = tmp_dataset.map(lambda sample: {"#tokens": len(sample['input_ids'])}, remove_columns=["input_ids"])
+        logger.info(f"{tmp_dataset.column_names=}")
         # Add token counts to samples
         token_counts = tmp_dataset["#tokens"]
         for sample, count in zip(samples, token_counts):

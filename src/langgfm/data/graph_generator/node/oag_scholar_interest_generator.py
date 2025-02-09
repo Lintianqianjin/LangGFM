@@ -91,7 +91,7 @@ class OAGScholarInterestGraphGenerator(NodeTaskGraphGenerator):
         Returns:
             nx.Graph: NetworkX graph object.
         """
-        logger.info(f"{node_mapping=}")
+        logger.debug(f"{node_mapping=}")
         # Create a NetworkX graph
         G = nx.MultiDiGraph()
         for raw_node_idx, new_node_idx in node_mapping.items():

@@ -153,7 +153,7 @@ class Movielens1MGraphGenerator(EdgeTaskGraphGenerator):
         """
         query = (f"Each user rates a movie on a five-star scale, with only whole stars allowed. "
                  f"Please infer the rating of the user with node id {target_src_node_idx} "
-                 f"for the movie with node id {target_dst_node_idx}?")
+                 f"for the movie with node id {target_dst_node_idx}.")
         return query
     
     
