@@ -18,9 +18,9 @@ cat <<EOF > slurm_scripts/generate_instruction_${DATASET_NAME}.slurm
 #SBATCH --job-name=insgen-${DATASET_NAME}
 #SBATCH --output=slurm_logs/insgen_${DATASET_NAME}.out
 #SBATCH --error=slurm_logs/insgen_${DATASET_NAME}.err
-#SBATCH --cpus-per-task=64
-#SBATCH --mem=128G
-#SBATCH --time=15:00:00
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=64G
+#SBATCH --time=12:00:00
 
 source ~/softwares/anaconda3/bin/activate
 conda activate GFM

@@ -20,6 +20,7 @@ def generate_yaml_file(file_path=None, **kwargs):
     
     # create a subdir for output
     model_name_or_path = kwargs.get("model_name_or_path", "Qwen/Qwen2.5-0.5B-Instruct")
+    
     lora_rank = kwargs.get("lora_rank", 8)
     lora_alpha = kwargs.get("lora_alpha", 16)
     lora_dropout = kwargs.get("lora_dropout", 0.)
@@ -48,6 +49,12 @@ def generate_yaml_file(file_path=None, **kwargs):
         f"{batch_size=}"
     )
     
+    if "Qwen" in model_name_or_path:
+        template = "qwen"
+    elif "Llama-3.1" in model_name_or_path:
+        template = "llama3"
+    else:
+        template = None
     
     path = Path(output_dir)
     
@@ -62,7 +69,7 @@ def generate_yaml_file(file_path=None, **kwargs):
     
     data = {
         # model
-        "model_name_or_path": kwargs.get("model_name_or_path", "Qwen/Qwen2.5-0.5B-Instruct"),
+        "model_name_or_path": model_name_or_path,
         "trust_remote_code": kwargs.get("trust_remote_code", True),
         
         # method
@@ -77,7 +84,7 @@ def generate_yaml_file(file_path=None, **kwargs):
 
         # dataset
         "dataset": kwargs.get("dataset", ""),
-        "template": kwargs.get("template", "qwen"),
+        "template": template,
         "cutoff_len": kwargs.get("cutoff_len", 15000),
         "max_samples": kwargs.get("max_samples", 100000),
         "overwrite_cache": kwargs.get("overwrite_cache", True),

@@ -1,0 +1,15 @@
+### Note: DO NOT use quantized model or quantization_bit when merging lora adapters
+
+### model
+model_name_or_path: Qwen/Qwen2.5-7B-Instruct
+adapter_name_or_path: experiments/langgfm_i/ogbn_arxiv/train_800/ckpts/Qwen2.5-7B-Instruct/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=50/warmup_ratio=0.2/batch_size=64/checkpoint-100
+template: qwen
+finetuning_type: lora
+trust_remote_code: true
+use_rslora: true
+
+### export
+export_dir: experiments/langgfm_i/ogbn_arxiv/train_800/ckpts/Qwen2.5-7B-Instruct/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=50/warmup_ratio=0.2/batch_size=64/checkpoint-100/merged
+export_size: 2
+export_device: cpu
+export_legacy_format: false

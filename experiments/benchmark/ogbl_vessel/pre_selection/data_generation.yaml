@@ -1,16 +1,15 @@
-common_format: &id003
+common_format: &id002
 - gml
 - json
 - table
 - graphml
-
-yelp_review:
+ogbl_vessel:
   generator:
     task_level: edge
-    num_hops: 1
+    num_hops: 2
     sampling: true
     neighbor_size:
     - 30
+    - 10
     random_seed: 42
-  format: *id003
-  
+  format: *id002
