@@ -19,9 +19,9 @@ cat <<EOF > slurm_scripts/presample_${DATASET_NAME}_${SAMPLE_SIZE}.slurm
 #SBATCH --job-name=ps-${DATASET_NAME}-${SAMPLE_SIZE}
 #SBATCH --output=slurm_logs/presample_${DATASET_NAME}_${SAMPLE_SIZE}.out
 #SBATCH --error=slurm_logs/presample_${DATASET_NAME}_${SAMPLE_SIZE}.err
-#SBATCH --cpus-per-task=32
-#SBATCH --mem=128G
-#SBATCH --time=12:00:00
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=196G
+#SBATCH --time=8:00:00
 
 source ~/softwares/anaconda3/bin/activate
 conda activate GFM

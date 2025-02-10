@@ -11,7 +11,7 @@ from .._base_generator import EdgeTaskGraphGenerator
 from ..utils.graph_utils import get_node_slices, get_edge_idx_in_graph, get_edge_idx_in_etype
 from ....utils.io import load_jsonl
 
-from ....utils.logger import logger
+# from ....utils.logger import logger
 
 
 @EdgeTaskGraphGenerator.register("yelp_review")

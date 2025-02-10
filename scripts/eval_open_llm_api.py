@@ -1,11 +1,10 @@
-import re
 import os
 import fire
 import json
-import numpy as np
 from tqdm import tqdm
 from openai import OpenAI
-from bert_score import score as bertscore
+from eval_utils import extract_info, extract_answer, compute_metric
+
 # LAUNCH vLLM SERVER FIRST
 # Example: nohup vllm serve deepseek-ai/DeepSeek-R1-Distill-Qwen-32B --dtype auto --api-key 12345 &> server.log &
 
@@ -17,105 +16,6 @@ client = OpenAI(
     api_key=openai_api_key,
     base_url=openai_api_base,
 )
-
-def rmse(predictions, targets):
-    """
-    Compute the root mean squared error (RMSE) between predictions and targets.
-    
-    Parameters:
-        predictions (numpy.ndarray): Array of predicted values.
-        targets (numpy.ndarray): Array of ground truth values.
-        
-    Returns:
-        float: The RMSE value.
-    """
-    # Compute the squared error for each sample, average them, then take the square root.
-    return np.sqrt(((predictions - targets) ** 2).mean())
-
-def extract_info(dataset, text):
-    """
-    Extract required information from the text based on the dataset name using regex.
-    
-    Parameters:
-        dataset (str): Name of the dataset, e.g., "movielens1m".
-        text (str): The text to search within.
-        
-    Returns:
-        int or None: For the "movielens1m" dataset, returns the extracted rating (as an integer)
-                     if found; otherwise, returns None.
-    """
-    if dataset.lower() == "movielens1m":
-        # Use regex to search for rating information in the format "<number> stars"
-        match = re.search(r'(\d+)\s*star', text)
-        if match:
-            # Return the extracted rating
-            return match.group(1).strip()
-        else:
-            return None
-    elif dataset.lower() == "oag_scholar_interest":
-        # Use regex to search for research interests information in the format "<interest1>, <interest2>, ..."
-        match = re.search(r'The author with id \d+ would likely describe research interests as (.*).', text)
-        if match:
-            # Return the extracted research interests
-            return match.group(1).strip()
-    else:
-        # Additional matching rules can be added for other datasets
-        return None
-
-def extract_answer(text):
-    """
-    Extract the answer from the text.
-    
-    Parameters:
-        text (str): The text to search for the answer.
-        
-    Returns:
-        str: The extracted answer text.
-    """
-    # Use regex to search for answer information in the format "<answer>...</answer>"
-    match = re.search(r'<answer>(.*?)</answer>', text, re.DOTALL)
-    if match:
-        # Return the extracted answer text
-        return match.group(1).strip()
-    else:
-        return None
-
-def compute_metric(dataset, predictions, labels):
-    """
-    Compute the similarity metric between the model predictions and the labels.
-    
-    Parameters:
-        dataset (str): The dataset name.
-        predictions (iterable): An iterable of predictions.
-        labels (iterable): An iterable of ground truth labels.
-        
-    Returns:
-        float: The similarity score between predictions and labels.
-    """
-    if dataset == "movielens1m":
-        # Convert predictions and labels to floats and compute RMSE
-        print(f"{predictions=}")
-        print(f"{labels=}")
-        def safe_float(value, default=3.0):
-            try:
-                return float(value)
-            except (ValueError, TypeError):
-                return default
-
-        predictions = [safe_float(x) for x in predictions]
-        labels = list(map(float, labels))
-        error = rmse(np.array(list(predictions)), np.array(list(labels)))
-        return error
-    
-    elif dataset == "oag_scholar_interest":
-        # 使用 bert-score 计算文本相似度
-        # 注意：确保 predictions 和 labels 都是字符串列表
-        # 默认语言设为英语（lang="en"），可以根据需要调整
-        P, R, F1 = bertscore(predictions, labels, lang="en", verbose=True)
-        # 返回 F1 分数的平均值作为整体得分
-        return F1.mean().item()
-    
-    return 0.0
 
 def load_dataset(file_path: str):
     """
@@ -189,21 +89,22 @@ def run_inference(file_path: str, model_name: str):
         print("-" * 50)
 
     # Save the output file with the original file name plus a suffix _with_prediction under the folder ckpts/openllm/{model_name}
-    output_file = os.path.join(
+    output_dir = os.path.join(
         os.path.dirname(file_path), 
         "ckpts",
         "openllm",
         model_name.split("/")[1]
     )
     
-    if not os.path.exists(output_file):
-        os.makedirs(output_file)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
     
-    output_file = f"{output_file}/{os.path.basename(file_path).split('.')[0]}_with_prediction.json"
+    output_file = f"{output_dir}/{os.path.basename(file_path).split('.')[0]}_with_prediction.json"
     save_results(output_file, samples)
     
     metric = compute_metric(entry.get('dataset', ""), preds, labels)
-    print(f"Metric: {metric:.4f}")
+    
+    save_results(f"{output_dir}/metric.json", metric)
 
 def save_results(file_path: str, data):
     """

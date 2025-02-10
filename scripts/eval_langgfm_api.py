@@ -1,7 +1,10 @@
+import os
 import fire
 import json
 from tqdm import tqdm
 from openai import OpenAI
+
+from eval_utils import extract_info, compute_metric
 
 # LANUCH vLLM SERVER FIRST
 # nohup vllm serve deepseek-ai/DeepSeek-R1-Distill-Qwen-32B --dtype auto --api-key 12345 &> server.log &
@@ -14,45 +17,6 @@ client = OpenAI(
     api_key=openai_api_key,
     base_url=openai_api_base,
 )
-
-def construct_prompt(prediction: str, label: str) -> str:
-    """
-    构造验证 prompt。
-    
-    该 prompt 指示模型验证 Prediction 是否正确地预测了 Label 类别。
-    模型需严格按照规则判断，并只返回 True 或 False。
-    """
-    prompt_template = f"""
-You are a strict text classification validator. Please verify whether the prediction results correctly predict the given category according to the following rules:
-
-# Task  
-Verify whether [Prediction] correctly predicts the [Label] category.
-
-# Verification Rules  
-1. Exact Match Rule:  
-   - The Prediction must contain the complete and accurate Label text.  
-   - The Label text must exist as an independent semantic unit in the Prediction  
-     (it cannot be part of another word).
-
-2. Prediction Intent Rule:  
-   - The Prediction must explicitly classify the Label as the predicted result.  
-   - Merely mentioning the Label without using it as the predicted result should be considered incorrect.  
-   - The following cases must be excluded:  
-     * The Label appears as a counterexample.  
-     * The Label appears as part of a hypothetical discussion.  
-     * The Label appears as background information.
-
-# Output Format  
-Return `True` if the prediction is correct and `False` if it is incorrect. Only return `True` or `False` without any additional text.
-
-Input:  
-Prediction: {prediction}  
-Label: {label}  
-
-Output:
-"""
-    return prompt_template.strip()
-
 def load_dataset(file_path: str):
     """
     加载数据集文件，要求文件为 JSON 格式，内容为包含若干字典的列表，
@@ -65,7 +29,7 @@ def load_dataset(file_path: str):
         dataset = json.load(f)
     return dataset
 
-def query_vllm(prompt: str, model_name: str):
+def query_vllm(instruction, user: str, model_name: str):
     """
     向 vLLM 服务发送 prompt，并返回模型响应内容。
     若出现异常，则返回字符串 "Error"。
@@ -73,7 +37,8 @@ def query_vllm(prompt: str, model_name: str):
     try:
         chat_response = client.chat.completions.create(
             model=model_name,
-            messages=[{"role": "user", "content": prompt}],
+            # messages=[{"role": "system", "content": instruction},{"role": "user", "content": user}],
+            messages=[{"role": "system", "content": ""},{"role": "user", "content": instruction + "\n" + user}],
             temperature=0,  # 保证输出确定性
             max_tokens=32   # 限制输出 token 数量，防止返回冗余文本
         )
@@ -91,45 +56,48 @@ def run_inference(file_path: str, model_name: str):
       3. 记录每个样本的预测、验证结果，并统计正确数目，最终计算准确率。
     """
     samples = load_dataset(file_path)
-    total = len(samples)
-    correct_count = 0
+    # total = len(samples)
+    # correct_count = 0
 
+    preds = []
+    labels = []
+    
     for entry in tqdm(samples, desc="Processing samples"):
         # 1. 生成预测：构造初始 prompt（注意这里的格式可根据你的任务需求调整）
-        initial_prompt = entry["instruction"] + "<|eot_id|>" + entry["input"]
-        prediction = query_vllm(initial_prompt, model_name)
+        # initial_prompt = entry["instruction"] + entry["input"]
+        prediction = query_vllm(entry["instruction"], entry["input"], model_name)
         entry["prediction"] = prediction  # 保存预测结果
-
-        # 2. 验证预测：构造验证 prompt，将预测结果与 ground truth 进行对比
-        verification_prompt = construct_prompt(prediction, entry["output"])
-        verdict = query_vllm(verification_prompt, model_name)
-        entry["judgement"] = verdict  # 保存验证结果
-
-        # 3. 根据验证结果判断是否正确（这里对返回结果统一转小写处理）
-        if verdict.strip().lower() == "true":
-            entry["is_correct"] = True
-            correct_count += 1
-        elif verdict.strip().lower() == "false":
-            entry["is_correct"] = False
-        else:
-            # 若返回结果不符合预期，则视为验证失败，并输出提示信息
-            print(f"Unexpected verifier output for sample: {verdict}")
-            entry["is_correct"] = False
-
-        # 调试信息：打印每个样本的预测、ground truth 和验证结果
-        print(f"Prediction: {prediction}")
+        
+        entry["predicted_answer"] = extract_info(entry.get('dataset', ""), prediction)  # Extracted direct answer
+        entry["answer"] = extract_info(entry.get('dataset', ""), entry['output'])  # Extracted label from prediction
+        preds.append(entry["predicted_answer"])
+        labels.append(entry["answer"])
+        
+        # Debug information: Print each sample's prediction, ground truth, and verification result.
+        # print(f"Prediction: {prediction}")
         print(f"Ground Truth: {entry['output']}")
-        print(f"Verification: {verdict}")
+        print(f"predicted_answer: {entry['predicted_answer']}")
+        print(f"answer: {entry['answer']}")
+        # print(f"Verification: {verdict}")
         print("-" * 50)
 
-    accuracy = correct_count / total if total > 0 else 0
-    print(f"\nTotal Samples: {total}")
-    print(f"Correct Predictions: {correct_count}")
-    print(f"Accuracy: {accuracy:.2%}")
-
-    # 如果需要将带有预测和验证结果的数据保存到文件，可以取消下面的注释
-    output_file = file_path.replace(".json", f"_with_judgement_{correct_count}_{total}.json")
+    # Save the output file with the original file name plus a suffix _with_prediction under the folder ckpts/openllm/{model_name}
+    output_dir = os.path.join(
+        os.path.dirname(file_path), 
+        "ckpts",
+        "langgfm-i",
+        model_name
+    )
+    
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    output_file = f"{output_dir}/{os.path.basename(file_path).split('.')[0]}_with_prediction.json"
     save_results(output_file, samples)
+    
+    metric = compute_metric(entry.get('dataset', ""), preds, labels)
+    
+    save_results(f"{output_dir}/metric.json", metric)
 
 def save_results(file_path: str, data):
     """
