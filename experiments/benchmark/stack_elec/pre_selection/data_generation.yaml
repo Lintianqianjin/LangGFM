@@ -6,9 +6,9 @@ common_format: &id003
 stack_elec:
   generator:
     task_level: edge
-    num_hops: 2
+    num_hops: 1
     sampling: true
     neighbor_size:
-    - 20
+    - 25
     random_seed: 42
   format: *id003

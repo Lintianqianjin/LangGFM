@@ -1,0 +1,8 @@
+common_format: &id003
+- gml
+- json
+- table
+- graphml
+
+esol:
+  format: *id003

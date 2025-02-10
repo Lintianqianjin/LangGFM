@@ -268,7 +268,7 @@ class DatasetGenerationCoordinator:
         cpu_based_proc = int(self.num_proc * (1 - current_load))
 
         # Define the minimum required memory per process (e.g., 1GB) in bytes
-        required_mem_per_proc = 2 * 1024 * 1024  # 1GB
+        required_mem_per_proc = 4 * 1024 * 1024  # 1GB
 
         # Retrieve the available system memory in bytes
         available_mem = psutil.virtual_memory().available
@@ -283,9 +283,9 @@ class DatasetGenerationCoordinator:
         
         logger.info(f"Tokenizing instructions with {_num_proc} processes.")
         
-        tmp_dataset = tmp_dataset.map(lambda sample: self.tokenizer(sample['text'], return_attention_mask=False), batched=True, num_proc=_num_proc)
-        logger.info(f"{tmp_dataset.column_names=}")
-        tmp_dataset = tmp_dataset.map(lambda sample: {"#tokens": len(sample['input_ids'])}, remove_columns=["input_ids"])
+        tmp_dataset = tmp_dataset.map(lambda sample: {"#tokens": len(self.tokenizer(sample['text'], return_attention_mask=False)['input_ids'])}, batched=False, num_proc=_num_proc)
+        # logger.info(f"{tmp_dataset.column_names=}")
+        # tmp_dataset = tmp_dataset.map(lambda sample: {"#tokens": len(sample['input_ids'])}, remove_columns=["input_ids"])
         logger.info(f"{tmp_dataset.column_names=}")
         # Add token counts to samples
         token_counts = tmp_dataset["#tokens"]

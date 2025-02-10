@@ -7,6 +7,9 @@ import pandas as pd
 from ..utils.ogb_dataset import CustomPygLinkPropPredDataset
 from .._base_generator import EdgeTaskGraphGenerator
 
+import logging
+logger = logging.getLogger("root")
+
 @EdgeTaskGraphGenerator.register("ogbl_vessel")
 class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
     """
@@ -130,15 +133,22 @@ class OgblVesselGraphGenerator(EdgeTaskGraphGenerator):
         target_src = node_mapping[edge[0]]
         target_dst = node_mapping[edge[1]]
         
+        logger.debug(f"Creating graph for edge with target src {target_src} and target dst {target_dst}")
+        
         for edge_idx in sub_graph_edge_mask.nonzero(as_tuple=True)[0]:
             raw_src, raw_dst = self.graph.edge_index.T[edge_idx]
             raw_src, raw_dst = raw_src.item(), raw_dst.item()
             src = node_mapping[raw_src]
             dst = node_mapping[raw_dst]
+            
             # Skip the target edge
-            if not (src == target_src and dst == target_dst) or (src == target_dst and dst == target_src): 
+            if not ((src == target_src and dst == target_dst) or (src == target_dst and dst == target_src)): 
+                logger.debug(f"Adding edge from {src} to {dst}")
                 G.add_edge(src, dst, type='vessel')
+                logger.debug(f"Adding reversed edge (due to undirected property) from {dst} to {src}")
                 G.add_edge(dst, src, type='vessel')
+            else:
+                logger.debug(f"Skipping edge between {src} and {dst}")
         
         return G
 

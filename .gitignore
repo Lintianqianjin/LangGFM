@@ -25,7 +25,7 @@ log.*
 *.tar
 *.slurm
 .nfs*
-debug.ipynb
+debug*
 
 /data_cache/*
 /data/*
