@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+re_europe,table,800,752,1329.0,1651.0,2127.5,5286,1783.645,624.3723428396943,800

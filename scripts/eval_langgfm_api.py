@@ -40,7 +40,7 @@ def query_vllm(instruction, user: str, model_name: str):
             # messages=[{"role": "system", "content": instruction},{"role": "user", "content": user}],
             messages=[{"role": "system", "content": ""},{"role": "user", "content": instruction + "\n" + user}],
             temperature=0,  # 保证输出确定性
-            max_tokens=32   # 限制输出 token 数量，防止返回冗余文本
+            max_tokens=128   # 限制输出 token 数量，防止返回冗余文本
         )
         return chat_response.choices[0].message.content.strip()  # 提取响应内容
     except Exception as e:
@@ -75,9 +75,10 @@ def run_inference(file_path: str, model_name: str):
         
         # Debug information: Print each sample's prediction, ground truth, and verification result.
         # print(f"Prediction: {prediction}")
-        print(f"Ground Truth: {entry['output']}")
-        print(f"predicted_answer: {entry['predicted_answer']}")
-        print(f"answer: {entry['answer']}")
+        print(f"{'Ground Truth':<{15}}: {entry['output']}")
+        print(f"{'Response':<{15}}: {entry['prediction']}")
+        print(f"{'prediction':<{15}}: {entry['predicted_answer']}")
+        print(f"{'answer':<{15}}: {entry['answer']}")
         # print(f"Verification: {verdict}")
         print("-" * 50)
 

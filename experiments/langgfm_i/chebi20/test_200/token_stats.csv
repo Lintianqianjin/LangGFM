@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+chebi20,table,200,713,1262.5,1792.0,2144.25,3124,1781.175,573.93002425269,200

@@ -1,8 +1,20 @@
 import re
 import numpy as np
-# from bert_score import score as bertscore
+from bert_score import score as bertscore
 from rouge_score import rouge_scorer
 
+
+def safe_string(value, default=""):
+    if isinstance(value, str):
+        return value
+    return default
+
+def safe_float(value, default=3.0):
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return default
+    
 def rmse(predictions, targets):
     """
     Compute the root mean squared error (RMSE) between predictions and targets.
@@ -44,6 +56,13 @@ def extract_info(dataset, text):
         if match:
             # Return the extracted research interests
             return match.group(1).strip()
+    elif dataset.lower() == "fb15k237":
+        # Use regex to search for {ground_truth} in the following text format:
+        # E.g., The most likely relation between the entity with node id {target_src_node_idx} and entity with node id {target_dst_node_idx} is {ground_truth}.
+        match = re.search(r'The most likely relation between the entity with node id \d+ and entity with node id \d+ is (.+).', text)
+        if match:
+            # Return the extracted research interests
+            return match.group(1).strip()
     else:
         # Additional matching rules can be added for other datasets
         return None
@@ -82,13 +101,8 @@ def compute_metric(dataset, predictions, labels):
         # Convert predictions and labels to floats and compute RMSE
         print(f"{predictions=}")
         print(f"{labels=}")
-        def safe_float(value, default=3.0):
-            try:
-                return float(value)
-            except (ValueError, TypeError):
-                return default
 
-        predictions = [safe_float(x) for x in predictions]
+        predictions = [safe_float(x, default=3.0) for x in predictions]
         labels = list(map(float, labels))
         error = rmse(np.array(list(predictions)), np.array(list(labels)))
         return {"rmse": error}
@@ -97,12 +111,9 @@ def compute_metric(dataset, predictions, labels):
         # 使用 bert-score 计算文本相似度
         # 注意：确保 predictions 和 labels 都是字符串列表
         # 默认语言设为英语（lang="en"），可以根据需要调整
-        # P, R, F1 = bertscore(predictions, labels, lang="en", verbose=True)
-        def safe_string(value, default=""):
-            if isinstance(value, str):
-                return value
-            return default
         predictions = [safe_string(x) for x in predictions]
+        
+        P, R, F1 = bertscore(predictions, labels, lang="en", verbose=True)
         scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
         rouge1_scores = []
         rouge2_scores = []
@@ -121,13 +132,26 @@ def compute_metric(dataset, predictions, labels):
 
         # 返回一个字典，其中包含 bert 的 F1 和三个 rouge 指标的平均值
         return {
-            # "bert_f1": F1,
+            "bert_f1": F1.mean().item(),
             "rouge1": avg_rouge1,
             "rouge2": avg_rouge2,
             "rougeL": avg_rougeL
         }
     
-    return 0.0
+    elif dataset in {"fb15k237"}:
+        # computer exact match
+        # safe conversion to string
+        
+        predictions = [safe_string(x) for x in predictions]
+        
+        correct = 0
+        for pred, label in zip(predictions, labels):
+            if pred == label:
+                correct += 1
+
+        # return accuracy
+        return {"accuracy": correct / len(labels)}
+        
 
 
 if __name__ == "__main__":
@@ -135,8 +159,11 @@ if __name__ == "__main__":
     import json
     
     dataset = "oag_scholar_interest"
-    
-    data = json.load(open("experiments/langgfm_i/oag_scholar_interest/test_200/ckpts/openllm/Qwen2.5-72B-Instruct/instruction_dataset_with_prediction.json","r"))
+    # DeepSeek-R1-Distill-Llama-70B
+    # Qwen2.5-72B-Instruct
+    # Llama-3.3-70B-Instruct
+    data = json.load(open("experiments/langgfm_i/oag_scholar_interest/test_200/ckpts/langgfm-i/meta-llama/Llama-3.1-8B-Instruct-LangGFM-I/instruction_dataset_with_prediction.json","r"))
+    # data = json.load(open("experiments/langgfm_i/oag_scholar_interest/test_200/ckpts/openllm/Llama-3.3-70B-Instruct/instruction_dataset_with_prediction.json","r"))
     predictions = []
     labels = []
     for entry in data:

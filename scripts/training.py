@@ -39,7 +39,7 @@ def generate_yaml_file(file_path=None, **kwargs):
     output_dir = os.path.join(
         file_path,
         "ckpts",
-        model_name_or_path.split('/')[1],
+        model_name_or_path,
         f"{lora_rank=}",
         f"{lora_alpha=}",
         f"{lora_dropout=}",
