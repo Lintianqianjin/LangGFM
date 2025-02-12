@@ -38,7 +38,7 @@ def query_vllm(client, prompt: str, model_name: str):
         print(f"Error querying vLLM: {e}")
         return "Error"
 
-def run_inference(file_path: str, model_name: str,api_key="12345", port=8016):
+def run_inference(file_path: str, model_name: str, api_key="12345", url="http://localhost:8016/v1"):
     """
     For each sample in the dataset, perform the following steps:
       1. Generate a prediction by concatenating the "instruction" and "input" to form a prompt, 
@@ -48,7 +48,7 @@ def run_inference(file_path: str, model_name: str,api_key="12345", port=8016):
       3. Record the prediction and verification results for each sample, and compute the overall metric.
     """
     
-    client = init_client(api_key, port)
+    client = init_client(api_key=api_key, url=url)
     
     samples = load_dataset(file_path)
     # total = len(samples)
@@ -58,6 +58,7 @@ def run_inference(file_path: str, model_name: str,api_key="12345", port=8016):
     labels = []
     
     for entry in tqdm(samples, desc="Processing samples"):
+        
         # 1. Generate prediction: Construct the initial prompt (adjust the format as needed for your task)
         initial_prompt = entry["instruction"] + "<|eot_id|>" + entry["input"] + \
             "\n\nYour response **must** contain a direct, clear, and unambiguous answer "+\
@@ -67,7 +68,9 @@ def run_inference(file_path: str, model_name: str,api_key="12345", port=8016):
             "- The answer **must not** include explanations, qualifiers, or any extraneous text.\n" +\
             "- The enclosed answer **must** be valid for direct use in subsequent calculations of machine learning metrics such as accuracy, RMSE, ROUGE, etc.\n" +\
             "- Responses like 'unable to determine', 'cannot be inferred', or 'None' or any other ambiguous statements are strictly prohibited.\n"
+            
         prediction = query_vllm(client, initial_prompt, model_name)
+        
         entry["prediction"] = prediction  # Prediction with reasoning
         entry["predicted_answer"] = extract_answer(prediction)  # Extracted direct answer
         entry["answer"] = extract_info(entry.get('dataset', ""), entry['output'])  # Extracted label from prediction

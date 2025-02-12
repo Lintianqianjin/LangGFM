@@ -20,9 +20,8 @@ def safe_float(value, default=3.0):
     except (ValueError, TypeError):
         return default
     
-def init_client(api_key="12345", url="localhost", port="8016"):
-    api_base = f"http://{url}:{port}/v1"
-    return OpenAI(api_key=api_key, base_url=api_base)
+def init_client(api_key="12345", url="http://localhost:8016/v1"):
+    return OpenAI(api_key=api_key, base_url=url)
 
 def rmse(predictions, targets):
     """
