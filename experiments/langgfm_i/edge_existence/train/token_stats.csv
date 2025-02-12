@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+edge_existence,table,800,554,1263.75,1760.0,2284.5,3739,1809.5275,695.4916516685703,800

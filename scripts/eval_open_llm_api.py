@@ -3,19 +3,10 @@ import fire
 import json
 from tqdm import tqdm
 from openai import OpenAI
-from eval_utils import extract_info, extract_answer, compute_metric
+from eval_utils import extract_info, extract_answer, compute_metric, init_client
 
 # LAUNCH vLLM SERVER FIRST
 # Example: nohup vllm serve deepseek-ai/DeepSeek-R1-Distill-Qwen-32B --dtype auto --api-key 12345 &> server.log &
-
-# Set the OpenAI-compatible API key and the base URL for vLLM
-openai_api_key = "12345"
-openai_api_base = "http://localhost:8016/v1"
-
-client = OpenAI(
-    api_key=openai_api_key,
-    base_url=openai_api_base,
-)
 
 def load_dataset(file_path: str):
     """
@@ -29,7 +20,7 @@ def load_dataset(file_path: str):
         dataset = json.load(f)
     return dataset
 
-def query_vllm(prompt: str, model_name: str):
+def query_vllm(client, prompt: str, model_name: str):
     """
     Send the prompt to the vLLM service and return the model's response.
     If an exception occurs, return the string "Error".
@@ -47,7 +38,7 @@ def query_vllm(prompt: str, model_name: str):
         print(f"Error querying vLLM: {e}")
         return "Error"
 
-def run_inference(file_path: str, model_name: str):
+def run_inference(file_path: str, model_name: str,api_key="12345", port=8016):
     """
     For each sample in the dataset, perform the following steps:
       1. Generate a prediction by concatenating the "instruction" and "input" to form a prompt, 
@@ -56,6 +47,9 @@ def run_inference(file_path: str, model_name: str):
          a verification prompt, then query the model for a verification result (expected to be True or False).
       3. Record the prediction and verification results for each sample, and compute the overall metric.
     """
+    
+    client = init_client(api_key, port)
+    
     samples = load_dataset(file_path)
     # total = len(samples)
     # correct_count = 0
@@ -73,7 +67,7 @@ def run_inference(file_path: str, model_name: str):
             "- The answer **must not** include explanations, qualifiers, or any extraneous text.\n" +\
             "- The enclosed answer **must** be valid for direct use in subsequent calculations of machine learning metrics such as accuracy, RMSE, ROUGE, etc.\n" +\
             "- Responses like 'unable to determine', 'cannot be inferred', or 'None' or any other ambiguous statements are strictly prohibited.\n"
-        prediction = query_vllm(initial_prompt, model_name)
+        prediction = query_vllm(client, initial_prompt, model_name)
         entry["prediction"] = prediction  # Prediction with reasoning
         entry["predicted_answer"] = extract_answer(prediction)  # Extracted direct answer
         entry["answer"] = extract_info(entry.get('dataset', ""), entry['output'])  # Extracted label from prediction

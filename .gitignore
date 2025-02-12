@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 rsync_auto.sh
+=======
+/baselines
+>>>>>>> origin/yanpw
 /data_cache
 /model
 /LLaMA-Factory
@@ -15,6 +19,7 @@ rsync_auto.sh
 /experiments/**/*.safetensors
 /experiments/**/*.md
 /experiments/**/*.jsonl
+
 /input_graph_generator.py
 /src/langgfm/data/outputs/*
 !src/langgfm/data/outputs/.gitkeep

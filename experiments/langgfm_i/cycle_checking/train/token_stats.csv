@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+cycle_checking,table,800,596,596.0,626.0,626.0,626,616.05375,12.698914874359673,800

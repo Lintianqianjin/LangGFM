@@ -1,6 +1,10 @@
 import re
+import os
+import json
 import numpy as np
+
 from bert_score import score as bertscore
+from openai import OpenAI
 from rouge_score import rouge_scorer
 from sklearn.metrics import roc_auc_score
 
@@ -16,6 +20,10 @@ def safe_float(value, default=3.0):
     except (ValueError, TypeError):
         return default
     
+def init_client(api_key="12345", url="localhost", port="8016"):
+    api_base = f"http://{url}:{port}/v1"
+    return OpenAI(api_key=api_key, base_url=api_base)
+
 def rmse(predictions, targets):
     """
     Compute the root mean squared error (RMSE) between predictions and targets.
@@ -42,6 +50,7 @@ def extract_info(dataset, text):
         int or None: For the "movielens1m" dataset, returns the extracted rating (as an integer)
                      if found; otherwise, returns None.
     """
+    
     if dataset.lower() == "movielens1m":
         # Use regex to search for rating information in the format "<number> stars"
         match = re.search(r'(\d+)\s*star', text)
@@ -71,6 +80,13 @@ def extract_info(dataset, text):
         if match:
             # Return the extracted research interests
             return 0. if match.group(1).strip() == "gaming content streamer" else 1.
+    
+    elif dataset.lower() in {'node_counting', 'edge_counting', 'node_attribute_retrieval', 'edge_attribute_retrieval',
+        'degree_counting', 'edge_existence', 'connectivity', 'shortest_path', 'hamilton_path', 'cycle_checking',
+        'graph_structure_detection', 'graph_automorphic'}:
+        
+        return text
+    
     else:
         # Additional matching rules can be added for other datasets
         return None
@@ -114,6 +130,7 @@ def compute_metric(dataset, predictions, labels):
     Returns:
         float: The similarity score between predictions and labels.
     """
+
     if dataset == "movielens1m":
         # Convert predictions and labels to floats and compute RMSE
         print(f"{predictions=}")
@@ -165,18 +182,63 @@ def compute_metric(dataset, predictions, labels):
         for pred, label in zip(predictions, labels):
             if pred == label:
                 correct += 1
-
-        # return accuracy
+                # return accuracy
         return {"accuracy": correct / len(labels)}
         
     elif dataset in {"twitch"}:
         # compute roc auc
         auc = roc_auc_score(labels, predictions)
         return {"roc_auc": auc}
+    
+    # 其他数据集的处理逻辑可以在这里添加
+    elif dataset in {'node_counting', 'edge_counting', 'node_attribute_retrieval', 'edge_attribute_retrieval',
+        'degree_counting', 'edge_existence', 'connectivity', 'shortest_path', 'hamilton_path', 'cycle_checking',
+        'graph_structure_detection', 'graph_automorphic'}:
+        # 直接返回预测和标签的匹配率
+        correct_count = sum(pred == label for pred, label in zip(predictions, labels))
+        accuracy = correct_count / len(labels)
+        return {"accuracy": accuracy}
+
+    return 0.0
+
+
+def get_best_trained_model(dataset, model_name):
+    """read trainer_state.json and get the best trained model path"""
+    trainer_state_path = os.path.expanduser(
+        # "~/pyan1/projects/LangGFM/experiments/langgfm_i/"
+        "experiments/langgfm_i/"
+        f"{dataset}"
+        "/train/ckpts/"
+        f"{model_name}"
+        "/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=20/warmup_ratio=0.5/batch_size=64/"
+        "trainer_state.json")
+    trainer_state_path_2 = os.path.expanduser(
+        # "~/pyan1/projects/LangGFM/experiments/langgfm_i/"
+        "experiments/langgfm_i/"
+        f"{dataset}"
+        "/train/ckpts/"
+        f"{model_name}"
+        "/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=50/warmup_ratio=0.2/batch_size=64/"
+        "trainer_state.json")
+    # print(trainer_state_path)
+    if os.path.exists(trainer_state_path):
+        trainer_state_path = trainer_state_path
+    elif os.path.exists(trainer_state_path_2):
+        trainer_state_path = trainer_state_path_2
+    try:
+        # return trainer_state_path
+        with open(trainer_state_path, "r") as f:
+            trainer_state = json.load(f)
+        best_model_path = trainer_state["best_model_checkpoint"]
+        return best_model_path
+    except Exception as e:
+        print(f"!!! Error reading trainer_state.json: {e}")
+        return None
+    
 
 if __name__ == "__main__":
     # Test the functions with sample data
-    import json
+    # import json
     
     dataset = "oag_scholar_interest"
     # DeepSeek-R1-Distill-Llama-70B
@@ -191,5 +253,13 @@ if __name__ == "__main__":
         labels.append(entry["answer"])
     metrics = compute_metric(dataset, predictions, labels)
     
-    print(metrics)
-    
+    # print(metrics)
+    for model in ["Llama-3.1-8B-Instruct", "Qwen2.5-7B-Instruct"]:
+        for dataset in ['node_counting', 'edge_counting', 'node_attribute_retrieval', 'edge_attribute_retrieval',
+        'degree_counting', 'edge_existence', 'connectivity', 'shortest_path', 'hamilton_path', 'cycle_checking',
+        'graph_structure_detection', 'graph_automorphic']:
+            best_model = get_best_trained_model(dataset, model)
+            # data
+            # test_path = f"~/projects/LangGFM/experiments/langgfm_i/{dataset}/test/instruction_dataset.json"
+            # os.system(f"bash ~/utils/rsync_auto.sh {test_path} jyu7")
+            os.system(f"bash ~/utils/rsync_auto.sh {best_model} jyu7")

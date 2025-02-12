@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+graph_automorphic,table,800,437,506.0,615.0,811.0,1408,687.1725,219.82374380779962,800

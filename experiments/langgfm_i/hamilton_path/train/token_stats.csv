@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+hamilton_path,table,800,489,1184.0,2014.5,3586.5,6889,2495.83375,1606.686258897206,800

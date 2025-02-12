@@ -36,14 +36,17 @@ cat <<EOF > "$SLURM_SCRIPT"
 module load cuda  # Adjust based on the actual CUDA version
 
 # Activate the Conda environment
-source ~/softwares/anaconda3/bin/activate
+# source ~/softwares/anaconda3/bin/activate
+source ~/miniconda3/bin/activate
 conda activate GFM
 
 # Change to the working directory
 cd ~/projects/LangGFM
 
 # Execute Python script with the provided dataset and model
-python scripts/training.py --train_dir experiments/langgfm_i/$DATASET/train_800 --eval_dir experiments/langgfm_i/$DATASET/test_200 --model_name_or_path $MODEL --lora_rank 64 --lora_alpha 256 --lora_dropout 0. --use_rslora True --learning_rate 2.0e-5 --batch_size 64 --num_train_epochs 50 --warmup_ratio 0.2 --eval_steps 25 --save_steps 25
+python scripts/generate_instruction_dataset.py --job_path experiments/langgfm_i/$DATASET/train
+python scripts/generate_instruction_dataset.py --job_path experiments/langgfm_i/$DATASET/test
+python scripts/training.py --train_dir experiments/langgfm_i/$DATASET/train --eval_dir experiments/langgfm_i/$DATASET/test --model_name_or_path $MODEL --lora_rank 64 --lora_alpha 256 --lora_dropout 0. --use_rslora True --learning_rate 2.0e-5 --batch_size 64 --num_train_epochs 20 --warmup_ratio 0.5 --eval_steps 25 --save_steps 25
 
 EOF
 

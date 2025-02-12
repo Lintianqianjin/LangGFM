@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+edge_attribute_retrieval,table,800,539,1286.0,1829.0,2362.0,3650,1860.39875,691.8033767904076,800
