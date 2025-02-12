@@ -2,6 +2,7 @@ import re
 import numpy as np
 from bert_score import score as bertscore
 from rouge_score import rouge_scorer
+from sklearn.metrics import roc_auc_score
 
 
 def safe_string(value, default=""):
@@ -63,11 +64,18 @@ def extract_info(dataset, text):
         if match:
             # Return the extracted research interests
             return match.group(1).strip()
+    elif dataset.lower() == "twitch":
+        # Use regex to search for {ground_truth} in the following text format:
+        # E.g., The user with node id 6 is likely a {ground_truth}.
+        match = re.search(r'The user with node id \d+ is likely a (.+).', text)
+        if match:
+            # Return the extracted research interests
+            return 0. if match.group(1).strip() == "gaming content streamer" else 1.
     else:
         # Additional matching rules can be added for other datasets
         return None
 
-def extract_answer(text):
+def extract_answer(text, dataset=None, logprobs=None):
     """
     Extract the answer from the text.
     
@@ -77,6 +85,15 @@ def extract_answer(text):
     Returns:
         str: The extracted answer text.
     """
+    if dataset in {"twitch"}:
+        key_token_logprobs = logprobs[10].top_logprobs
+        for token in key_token_logprobs:
+            # print(token)
+            if token.token == ' mature':
+                prob = np.exp(token.logprob)
+                break
+        return prob
+    
     # Use regex to search for answer information in the format "<answer>...</answer>"
     match = re.search(r'<answer>(.*?)</answer>', text, re.DOTALL)
     if match:
@@ -152,7 +169,10 @@ def compute_metric(dataset, predictions, labels):
         # return accuracy
         return {"accuracy": correct / len(labels)}
         
-
+    elif dataset in {"twitch"}:
+        # compute roc auc
+        auc = roc_auc_score(labels, predictions)
+        return {"roc_auc": auc}
 
 if __name__ == "__main__":
     # Test the functions with sample data

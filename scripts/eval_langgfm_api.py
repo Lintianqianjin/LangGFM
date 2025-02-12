@@ -4,7 +4,7 @@ import json
 from tqdm import tqdm
 from openai import OpenAI
 
-from eval_utils import extract_info, compute_metric
+from eval_utils import extract_info, extract_answer, compute_metric
 
 # LANUCH vLLM SERVER FIRST
 # nohup vllm serve deepseek-ai/DeepSeek-R1-Distill-Qwen-32B --dtype auto --api-key 12345 &> server.log &
@@ -40,9 +40,12 @@ def query_vllm(instruction, user: str, model_name: str):
             # messages=[{"role": "system", "content": instruction},{"role": "user", "content": user}],
             messages=[{"role": "system", "content": ""},{"role": "user", "content": instruction + "\n" + user}],
             temperature=0,  # 保证输出确定性
-            max_tokens=128   # 限制输出 token 数量，防止返回冗余文本
+            max_tokens=128,   # 限制输出 token 数量，防止返回冗余文本
+            logprobs=True,
+            top_logprobs=20
         )
-        return chat_response.choices[0].message.content.strip()  # 提取响应内容
+
+        return chat_response.choices[0].message.content.strip(), chat_response.choices[0].logprobs.content  # 提取响应内容
     except Exception as e:
         print(f"Error querying vLLM: {e}")
         return "Error"
@@ -65,10 +68,10 @@ def run_inference(file_path: str, model_name: str):
     for entry in tqdm(samples, desc="Processing samples"):
         # 1. 生成预测：构造初始 prompt（注意这里的格式可根据你的任务需求调整）
         # initial_prompt = entry["instruction"] + entry["input"]
-        prediction = query_vllm(entry["instruction"], entry["input"], model_name)
+        prediction, logprobs = query_vllm(entry["instruction"], entry["input"], model_name)
         entry["prediction"] = prediction  # 保存预测结果
         
-        entry["predicted_answer"] = extract_info(entry.get('dataset', ""), prediction)  # Extracted direct answer
+        entry["predicted_answer"] = extract_answer(dataset = entry.get('dataset', ""), text=prediction, logprobs=logprobs)  # Extracted direct answer
         entry["answer"] = extract_info(entry.get('dataset', ""), entry['output'])  # Extracted label from prediction
         preds.append(entry["predicted_answer"])
         labels.append(entry["answer"])
@@ -97,7 +100,7 @@ def run_inference(file_path: str, model_name: str):
     save_results(output_file, samples)
     
     metric = compute_metric(entry.get('dataset', ""), preds, labels)
-    
+    print(metric)
     save_results(f"{output_dir}/metric.json", metric)
 
 def save_results(file_path: str, data):

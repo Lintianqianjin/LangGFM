@@ -1,3 +1,4 @@
+rsync_auto.sh
 /data_cache
 /model
 /LLaMA-Factory
@@ -17,6 +18,7 @@
 /input_graph_generator.py
 /src/langgfm/data/outputs/*
 !src/langgfm/data/outputs/.gitkeep
+/baseline
 log.*
 *.out
 *.err
