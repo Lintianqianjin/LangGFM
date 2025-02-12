@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+graph_structure_detection,table,200,599,790.0,843.0,1122.0,4623,1304.025,959.3720854636297,200

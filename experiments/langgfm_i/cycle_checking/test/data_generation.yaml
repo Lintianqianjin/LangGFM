@@ -1,0 +1,5 @@
+common_format: &id001
+- table
+
+cycle_checking:
+  format: *id001

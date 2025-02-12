@@ -443,6 +443,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         # print(f"multidi: {G=}")
     
         label, query_entity = self.labels[sample_id]
+        query_entity = [str(x) for x in query_entity]
         query = self._generate_query(query_entity)
         # print(f"labels: {label=}, {query_entity=}")
         # exit()

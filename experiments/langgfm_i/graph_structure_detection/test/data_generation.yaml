@@ -1,0 +1,5 @@
+common_format: &id001
+- table
+
+graph_structure_detection:
+  format: *id001

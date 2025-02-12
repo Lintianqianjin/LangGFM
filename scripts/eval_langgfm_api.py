@@ -4,19 +4,11 @@ import json
 from tqdm import tqdm
 from openai import OpenAI
 
-from eval_utils import extract_info, compute_metric
+from eval_utils import extract_info, compute_metric, init_client
 
 # LANUCH vLLM SERVER FIRST
 # nohup vllm serve deepseek-ai/DeepSeek-R1-Distill-Qwen-32B --dtype auto --api-key 12345 &> server.log &
 
-# 设置 OpenAI 兼容的 API Key 和 vLLM 基础 URL
-openai_api_key = "12345"
-openai_api_base = "http://localhost:8016/v1"
-
-client = OpenAI(
-    api_key=openai_api_key,
-    base_url=openai_api_base,
-)
 def load_dataset(file_path: str):
     """
     加载数据集文件，要求文件为 JSON 格式，内容为包含若干字典的列表，
@@ -29,7 +21,7 @@ def load_dataset(file_path: str):
         dataset = json.load(f)
     return dataset
 
-def query_vllm(instruction, user: str, model_name: str):
+def query_vllm(client, instruction, user: str, model_name: str):
     """
     向 vLLM 服务发送 prompt，并返回模型响应内容。
     若出现异常，则返回字符串 "Error"。
@@ -47,7 +39,7 @@ def query_vllm(instruction, user: str, model_name: str):
         print(f"Error querying vLLM: {e}")
         return "Error"
 
-def run_inference(file_path: str, model_name: str):
+def run_inference(file_path: str, model_name: str, api_key="12345", port=8016):
     """
     对数据集中的每个样本依次进行：
       1. 拼接 "instruction" 和 "input" 构成生成预测的 prompt，调用模型获得预测结果；
@@ -55,6 +47,8 @@ def run_inference(file_path: str, model_name: str):
          调用模型获得验证结果（应为 True 或 False）；
       3. 记录每个样本的预测、验证结果，并统计正确数目，最终计算准确率。
     """
+    client = init_client(api_key, port)
+
     samples = load_dataset(file_path)
     # total = len(samples)
     # correct_count = 0
@@ -65,7 +59,7 @@ def run_inference(file_path: str, model_name: str):
     for entry in tqdm(samples, desc="Processing samples"):
         # 1. 生成预测：构造初始 prompt（注意这里的格式可根据你的任务需求调整）
         # initial_prompt = entry["instruction"] + entry["input"]
-        prediction = query_vllm(entry["instruction"], entry["input"], model_name)
+        prediction = query_vllm(client, entry["instruction"], entry["input"], model_name)
         entry["prediction"] = prediction  # 保存预测结果
         
         entry["predicted_answer"] = extract_info(entry.get('dataset', ""), prediction)  # Extracted direct answer
@@ -96,7 +90,6 @@ def run_inference(file_path: str, model_name: str):
     save_results(output_file, samples)
     
     metric = compute_metric(entry.get('dataset', ""), preds, labels)
-    
     save_results(f"{output_dir}/metric.json", metric)
 
 def save_results(file_path: str, data):
