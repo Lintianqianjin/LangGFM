@@ -27,8 +27,8 @@ cat <<EOF > "$SLURM_SCRIPT"
 #SBATCH --output=slurm_logs/langgfm_i_${DATASET}_${SAFE_MODEL_NAME}.out
 #SBATCH --error=slurm_logs/langgfm_i_${DATASET}_${SAFE_MODEL_NAME}.err
 #SBATCH --gres=gpu:1                     # Request GPUs (A100 or H100)
-#SBATCH --constraint="L40S"         # Allow both A100 and H100 GPUs
-#SBATCH --cpus-per-task=16               # Request CPUs
+#SBATCH --constraint="A100|H100"         # Allow both A100 and H100 GPUs
+#SBATCH --cpus-per-task=8               # Request CPUs
 #SBATCH --mem=64G                        # Request memory
 #SBATCH --time=12:00:00                  # Maximum runtime
 

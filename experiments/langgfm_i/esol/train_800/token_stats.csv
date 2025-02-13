@@ -1,2 +1,2 @@
 dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
-ogbl_vessel,table,200,468,887.5,1007.5,1133.25,1495,1011.01,190.12455557651103,200
+esol,table,800,602,1026.0,1214.0,1546.25,2846,1293.65375,355.50280120277023,800

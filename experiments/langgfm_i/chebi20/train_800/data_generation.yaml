@@ -1,0 +1,5 @@
+common_format: &id003
+- table
+
+chebi20:
+  format: *id003

@@ -1,15 +1,27 @@
 import re
 import os
-import numpy as np
 import json
+import numpy as np
+
+from bert_score import score as bertscore
 from openai import OpenAI
-
-# from bert_score import score as bertscore
 from rouge_score import rouge_scorer
+from sklearn.metrics import roc_auc_score
 
-def init_client(api_key="12345", port="8016"):
-    api_base = f"http://localhost:{port}/v1"
-    return OpenAI(api_key=api_key, base_url=api_base)
+
+def safe_string(value, default=""):
+    if isinstance(value, str):
+        return value
+    return default
+
+def safe_float(value, default=3.0):
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return default
+    
+def init_client(api_key="12345", url="http://localhost:8016/v1"):
+    return OpenAI(api_key=api_key, base_url=url)
 
 def rmse(predictions, targets):
     """
@@ -37,9 +49,6 @@ def extract_info(dataset, text):
         int or None: For the "movielens1m" dataset, returns the extracted rating (as an integer)
                      if found; otherwise, returns None.
     """
-    structure_tasks = ['node_counting', 'edge_counting', 'node_attribute_retrieval', 'edge_attribute_retrieval',
-        'degree_counting', 'edge_existence', 'connectivity', 'shortest_path', 'hamilton_path', 'cycle_checking',
-        'graph_structure_detection', 'graph_automorphic']
     
     if dataset.lower() == "movielens1m":
         # Use regex to search for rating information in the format "<number> stars"
@@ -56,13 +65,32 @@ def extract_info(dataset, text):
         if match:
             # Return the extracted research interests
             return match.group(1).strip()
-    elif dataset.lower() in structure_tasks:
+    elif dataset.lower() == "fb15k237":
+        # Use regex to search for {ground_truth} in the following text format:
+        # E.g., The most likely relation between the entity with node id {target_src_node_idx} and entity with node id {target_dst_node_idx} is {ground_truth}.
+        match = re.search(r'The most likely relation between the entity with node id \d+ and entity with node id \d+ is (.+).', text)
+        if match:
+            # Return the extracted research interests
+            return match.group(1).strip()
+    elif dataset.lower() == "twitch":
+        # Use regex to search for {ground_truth} in the following text format:
+        # E.g., The user with node id 6 is likely a {ground_truth}.
+        match = re.search(r'The user with node id \d+ is likely a (.+).', text)
+        if match:
+            # Return the extracted research interests
+            return 0. if match.group(1).strip() == "gaming content streamer" else 1.
+    
+    elif dataset.lower() in {'node_counting', 'edge_counting', 'node_attribute_retrieval', 'edge_attribute_retrieval',
+        'degree_counting', 'edge_existence', 'connectivity', 'shortest_path', 'hamilton_path', 'cycle_checking',
+        'graph_structure_detection', 'graph_automorphic'}:
+        
         return text
+    
     else:
         # Additional matching rules can be added for other datasets
         return None
 
-def extract_answer(text):
+def extract_answer(text, dataset=None, logprobs=None):
     """
     Extract the answer from the text.
     
@@ -72,6 +100,15 @@ def extract_answer(text):
     Returns:
         str: The extracted answer text.
     """
+    if dataset in {"twitch"}:
+        key_token_logprobs = logprobs[10].top_logprobs
+        for token in key_token_logprobs:
+            # print(token)
+            if token.token == ' mature':
+                prob = np.exp(token.logprob)
+                break
+        return prob
+    
     # Use regex to search for answer information in the format "<answer>...</answer>"
     match = re.search(r'<answer>(.*?)</answer>', text, re.DOTALL)
     if match:
@@ -92,21 +129,13 @@ def compute_metric(dataset, predictions, labels):
     Returns:
         float: The similarity score between predictions and labels.
     """
-    structure_tasks = ['node_counting', 'edge_counting', 'node_attribute_retrieval', 'edge_attribute_retrieval',
-        'degree_counting', 'edge_existence', 'connectivity', 'shortest_path', 'hamilton_path', 'cycle_checking',
-        'graph_structure_detection', 'graph_automorphic']
 
     if dataset == "movielens1m":
         # Convert predictions and labels to floats and compute RMSE
         print(f"{predictions=}")
         print(f"{labels=}")
-        def safe_float(value, default=3.0):
-            try:
-                return float(value)
-            except (ValueError, TypeError):
-                return default
 
-        predictions = [safe_float(x) for x in predictions]
+        predictions = [safe_float(x, default=3.0) for x in predictions]
         labels = list(map(float, labels))
         error = rmse(np.array(list(predictions)), np.array(list(labels)))
         return {"rmse": error}
@@ -115,12 +144,9 @@ def compute_metric(dataset, predictions, labels):
         # 使用 bert-score 计算文本相似度
         # 注意：确保 predictions 和 labels 都是字符串列表
         # 默认语言设为英语（lang="en"），可以根据需要调整
-        # P, R, F1 = bertscore(predictions, labels, lang="en", verbose=True)
-        def safe_string(value, default=""):
-            if isinstance(value, str):
-                return value
-            return default
         predictions = [safe_string(x) for x in predictions]
+        
+        P, R, F1 = bertscore(predictions, labels, lang="en", verbose=True)
         scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
         rouge1_scores = []
         rouge2_scores = []
@@ -139,18 +165,38 @@ def compute_metric(dataset, predictions, labels):
 
         # 返回一个字典，其中包含 bert 的 F1 和三个 rouge 指标的平均值
         return {
-            # "bert_f1": F1,
+            "bert_f1": F1.mean().item(),
             "rouge1": avg_rouge1,
             "rouge2": avg_rouge2,
             "rougeL": avg_rougeL
         }
     
+    elif dataset in {"fb15k237"}:
+        # computer exact match
+        # safe conversion to string
+        
+        predictions = [safe_string(x) for x in predictions]
+        
+        correct = 0
+        for pred, label in zip(predictions, labels):
+            if pred == label:
+                correct += 1
+                # return accuracy
+        return {"accuracy": correct / len(labels)}
+        
+    elif dataset in {"twitch"}:
+        # compute roc auc
+        auc = roc_auc_score(labels, predictions)
+        return {"roc_auc": auc}
+    
     # 其他数据集的处理逻辑可以在这里添加
-    elif dataset in structure_tasks:
+    elif dataset in {'node_counting', 'edge_counting', 'node_attribute_retrieval', 'edge_attribute_retrieval',
+        'degree_counting', 'edge_existence', 'connectivity', 'shortest_path', 'hamilton_path', 'cycle_checking',
+        'graph_structure_detection', 'graph_automorphic'}:
         # 直接返回预测和标签的匹配率
         correct_count = sum(pred == label for pred, label in zip(predictions, labels))
         accuracy = correct_count / len(labels)
-        return {"acc": accuracy}
+        return {"accuracy": accuracy}
 
     return 0.0
 
@@ -193,15 +239,18 @@ if __name__ == "__main__":
     # Test the functions with sample data
     # import json
     
-    # dataset = "oag_scholar_interest"
-    
-    # data = json.load(open("experiments/langgfm_i/oag_scholar_interest/test_200/ckpts/openllm/Qwen2.5-72B-Instruct/instruction_dataset_with_prediction.json","r"))
-    # predictions = []
-    # labels = []
-    # for entry in data:
-    #     predictions.append(entry["predicted_answer"])
-    #     labels.append(entry["answer"])
-    # metrics = compute_metric(dataset, predictions, labels)
+    dataset = "oag_scholar_interest"
+    # DeepSeek-R1-Distill-Llama-70B
+    # Qwen2.5-72B-Instruct
+    # Llama-3.3-70B-Instruct
+    data = json.load(open("experiments/langgfm_i/oag_scholar_interest/test_200/ckpts/langgfm-i/meta-llama/Llama-3.1-8B-Instruct-LangGFM-I/instruction_dataset_with_prediction.json","r"))
+    # data = json.load(open("experiments/langgfm_i/oag_scholar_interest/test_200/ckpts/openllm/Llama-3.3-70B-Instruct/instruction_dataset_with_prediction.json","r"))
+    predictions = []
+    labels = []
+    for entry in data:
+        predictions.append(entry["predicted_answer"])
+        labels.append(entry["answer"])
+    metrics = compute_metric(dataset, predictions, labels)
     
     # print(metrics)
     for model in ["Llama-3.1-8B-Instruct", "Qwen2.5-7B-Instruct"]:

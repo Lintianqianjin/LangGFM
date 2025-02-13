@@ -1,13 +1,11 @@
 common_format: &id003
 - table
-
-yelp_review:
+stack_elec:
   generator:
     task_level: edge
     num_hops: 1
     sampling: true
     neighbor_size:
-    - 30
+    - 25
     random_seed: 42
   format: *id003
-  

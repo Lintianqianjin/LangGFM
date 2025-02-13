@@ -1,7 +1,6 @@
 common_format: &id002
 - table
-
-twitch:
+re_europe:
   generator:
     task_level: node
     num_hops: 2
@@ -11,4 +10,3 @@ twitch:
     - 10
     random_seed: 42
   format: *id002
-  

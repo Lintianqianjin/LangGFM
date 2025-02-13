@@ -39,7 +39,7 @@ def generate_yaml_file(file_path=None, **kwargs):
     output_dir = os.path.join(
         file_path,
         "ckpts",
-        model_name_or_path.split('/')[1],
+        model_name_or_path,
         f"{lora_rank=}",
         f"{lora_alpha=}",
         f"{lora_dropout=}",
@@ -75,6 +75,8 @@ def generate_yaml_file(file_path=None, **kwargs):
         # method
         "stage": kwargs.get("stage", "sft"),
         "do_train": kwargs.get("do_train", True),
+        "do_eval": kwargs.get("do_eval", False),
+        "do_predict": kwargs.get("do_predict", False),
         "finetuning_type": kwargs.get("finetuning_type", "lora"),
         "lora_alpha": kwargs.get("lora_alpha", 16),
         "lora_dropout": kwargs.get("lora_dropout", 0.),
