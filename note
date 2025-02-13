@@ -1,0 +1,19 @@
+
+best model:
+/home/pyan1/projects/LangGFM/experiments/langgfm_i/shortest_path/train/ckpts/Qwen2.5-7B-Instruct/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=50/warmup_ratio=0.2/batch_size=64/checkpoint-1350
+
+server_model: Qwen/Qwen2.5-7B-Instruct
+task: shortest_path 
+port: 8016
+
+vllm:
+
+nohup vllm serve Qwen/Qwen2.5-7B-Instruct --enable-lora --lora-modules '{"name": "shortest_path", "path": "experiments/langgfm_i/shortest_path/train/ckpts/Qwen2.5-7B-Instruct/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=50/warmup_ratio=0.2/batch_size=64/checkpoint-1350", "base_model_name": "Qwen/Qwen2.5-7B-Instruct"}' --api-key 12345 --host 0.0.0.0 --port 8016 --max-model-len 16000 --max-lora-rank 64 > server_shortest_path_langgfm_i.log 2>&1 &
+
+inference:
+
+python scripts/eval_langgfm_api.py --api_key 12345 --port 8016 --file_path experiments/langgfm_i/shortest_path/test/instruction_dataset.json --model_name shortest_path
+
+kill: 
+
+pkill -f "vllm serve Qwen/Qwen2.5-7B-Instruct"

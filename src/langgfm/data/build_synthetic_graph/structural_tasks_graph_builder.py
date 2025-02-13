@@ -579,3 +579,4 @@ class GraphStructureDetectionBuilder(StructuralTaskDatasetBuilder):
             7 : 'circular ladder graph'
         }
         return (class_mapping[label], ())
+

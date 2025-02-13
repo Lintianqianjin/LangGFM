@@ -32,7 +32,7 @@ def query_vllm(client, instruction, user: str, model_name: str):
             # messages=[{"role": "system", "content": instruction},{"role": "user", "content": user}],
             messages=[{"role": "system", "content": ""},{"role": "user", "content": instruction + "\n" + user}],
             temperature=0,  # 保证输出确定性
-            max_tokens=32   # 限制输出 token 数量，防止返回冗余文本
+            max_tokens=64   # 限制输出 token 数量，防止返回冗余文本
         )
         return chat_response.choices[0].message.content.strip()  # 提取响应内容
     except Exception as e:

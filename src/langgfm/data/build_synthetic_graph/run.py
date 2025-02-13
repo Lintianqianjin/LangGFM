@@ -12,9 +12,12 @@ job_config = os.path.join(
 tasks = load_yaml(job_config).keys()
 
 for task in tasks:
-    if task == 'shortest_path':
+    # if task == 'shortest_path':
+    if task == 'edge_attribute_retrieval':
         builder = StructuralTaskDatasetBuilder.create(task)
         builder.build_dataset()
+        
+
     
 
 
