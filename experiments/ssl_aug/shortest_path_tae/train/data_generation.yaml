@@ -1,0 +1,10 @@
+common_format: &id001
+- table
+
+shortest_path:
+  format: *id001
+  ssl_setting:
+    topology_autoencoder:
+      generator:
+        distinguish_directions: true
+      augment_ratio: 1

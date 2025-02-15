@@ -457,7 +457,8 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
                 "query_entity": query_entity,
             }
         }
-
+        # print(f"meta_data: {meta_data=}")
+        # exit()
         return G, meta_data
 
     def _generate_query(self, query_entity):

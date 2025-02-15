@@ -128,7 +128,7 @@ if __name__ == "__main__":
     # transform_labels('hamilton_path')
     # transform_labels('node_attribute_retrieval')
     # transform_labels('edge_attribute_retrieval')
-    transform_labels('degree_counting')
+    # transform_labels('degree_counting')
     # transform_labels('edge_existence')
     # transform_labels('connectivity')
     # transform_labels('shortest_path')
@@ -136,7 +136,7 @@ if __name__ == "__main__":
 
     # check_label_distribution('cycle_checking')
     # check_label_distribution('hamilton_path')
-    # check_label_distribution('graph_automorphic')
+    check_label_distribution('graph_automorphic')
 
     # check_shortest_path(task='shortest_path')
 

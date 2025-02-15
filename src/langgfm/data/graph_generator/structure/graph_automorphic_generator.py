@@ -10,7 +10,7 @@ class GraphAutomorphicGraphGenerator(StructuralTaskGraphGenerator):
         super().__init__(task)
 
     def _generate_answer(self, label, query_entity=None):
-        return self.config['answer_format'].format("Yes" if label else "No")
+        return self.config['answer_format'].format(label)
 
 
 

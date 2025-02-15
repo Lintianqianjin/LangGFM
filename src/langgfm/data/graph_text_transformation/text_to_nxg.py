@@ -39,71 +39,71 @@ class TextualizedGraphLoader:
         ]
         return pd.DataFrame(data, columns=headers)
 
-    def __read_table(self, graph_text):
-        """
-        Read a graph from a Markdown-style table.
+    # def __read_table(self, graph_text):
+    #     """
+    #     Read a graph from a Markdown-style table.
 
-        :param graph_text: The graph representation as a Markdown-style table.
-        :return: A NetworkX graph instance.
-        """
-        node_data = re.search(r"Node Table:\n(.+)\n\nEdge Table", graph_text, re.DOTALL).group(1)
-        node_df = self.__parse_table(node_data)
+    #     :param graph_text: The graph representation as a Markdown-style table.
+    #     :return: A NetworkX graph instance.
+    #     """
+    #     node_data = re.search(r"Node Table:\n(.+)\n\nEdge Table", graph_text, re.DOTALL).group(1)
+    #     node_df = self.__parse_table(node_data)
 
-        edge_data = re.search(r"Edge Table .*:\n(.+)", graph_text, re.DOTALL)
-        if edge_data is not None:
-            edge_df = self.__parse_table(edge_data.group(1))
-        else:
-            edge_df = pd.DataFrame([], columns=['edge'])
+    #     edge_data = re.search(r"Edge Table .*:\n(.+)", graph_text, re.DOTALL)
+    #     if edge_data is not None:
+    #         edge_df = self.__parse_table(edge_data.group(1))
+    #     else:
+    #         edge_df = pd.DataFrame([], columns=['edge'])
 
-        # regex to extract source, target nodes and the edge symbol
+    #     # regex to extract source, target nodes and the edge symbol
         
-        pattern = r"(?P<source>\d+)\s*(?P<edge_type><->|->)\s*(?P<target>\d+)"
+    #     pattern = r"(?P<source>\d+)\s*(?P<edge_type><->|->)\s*(?P<target>\d+)"
         
-        def extract_edge_info(edge_text):
-            # print(edge_text)
-            match = re.search(pattern, edge_text)
-            # print(match)
-            if match:
-                result = [
-                    int(match.group("source")),   # Source node
-                    int(match.group("target")),   # Target node
-                    match.group("edge_type")      # Edge type
-                ]
-                return result
-                # print(result)
-            else:
-                print("No match found.")
+    #     def extract_edge_info(edge_text):
+    #         # print(edge_text)
+    #         match = re.search(pattern, edge_text)
+    #         # print(match)
+    #         if match:
+    #             result = [
+    #                 int(match.group("source")),   # Source node
+    #                 int(match.group("target")),   # Target node
+    #                 match.group("edge_type")      # Edge type
+    #             ]
+    #             return result
+    #             # print(result)
+    #         else:
+    #             print("No match found.")
                     
-        edge_df[['source', 'target', 'edge_type']] = edge_df['edge'].apply(lambda x: extract_edge_info(x)).tolist()
+    #     edge_df[['source', 'target', 'edge_type']] = edge_df['edge'].apply(lambda x: extract_edge_info(x)).tolist()
         
-        edge_df.drop(columns=['edge'], inplace=True)
+    #     edge_df.drop(columns=['edge'], inplace=True)
 
-        # edge_df = edge_df.astype({'source': int, 'target': int})
+    #     # edge_df = edge_df.astype({'source': int, 'target': int})
 
-        if not self.directed and not self.multigraph:
-            G = nx.Graph()
-        elif not self.directed and self.multigraph:
-            G = nx.MultiGraph()
-        elif self.directed and not self.multigraph:
-            G = nx.DiGraph()
-        elif self.directed and self.multigraph:
-            G = nx.MultiDiGraph()
+    #     if not self.directed and not self.multigraph:
+    #         G = nx.Graph()
+    #     elif not self.directed and self.multigraph:
+    #         G = nx.MultiGraph()
+    #     elif self.directed and not self.multigraph:
+    #         G = nx.DiGraph()
+    #     elif self.directed and self.multigraph:
+    #         G = nx.MultiDiGraph()
 
-        for _, row in node_df.iterrows():
-            attrs = {k: row[k] for k in row.index if k != "node"}
-            G.add_node(int(row['node']), **attrs)
+    #     for _, row in node_df.iterrows():
+    #         attrs = {k: row[k] for k in row.index if k != "node"}
+    #         G.add_node(int(row['node']), **attrs)
 
-        for _, row in edge_df.iterrows():
-            attributes = row.drop(['source', 'target', 'edge_type']).to_dict()
-            # key is edge id between a same pair nodes
-            if 'key' in attributes and type(attributes['key']) == str: 
-                attributes['key'] = int(attributes['key'])
-            # print(f"{attributes=}")
-            G.add_edge(row['source'], row['target'], **attributes)
-            if row['edge_type'] == '<->':
-                G.add_edge(row['target'], row['source'], **attributes)
+    #     for _, row in edge_df.iterrows():
+    #         attributes = row.drop(['source', 'target', 'edge_type']).to_dict()
+    #         # key is edge id between a same pair nodes
+    #         if 'key' in attributes and type(attributes['key']) == str: 
+    #             attributes['key'] = int(attributes['key'])
+    #         # print(f"{attributes=}")
+    #         G.add_edge(row['source'], row['target'], **attributes)
+    #         if row['edge_type'] == '<->':
+    #             G.add_edge(row['target'], row['source'], **attributes)
 
-        return G
+    #     return G
     
     
     def __parse_table(self, table_str: str) -> pd.DataFrame:

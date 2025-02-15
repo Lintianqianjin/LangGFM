@@ -33,25 +33,25 @@ def check_vllm_server(host="localhost", port=8016, max_retries=5, delay=3):
             return False
 
 
-def get_all_best_models(datasets, model_name):
+def get_all_best_models(experiments, model_name):
     """Retrieve the best trained model path for each dataset."""
     best_models = {}
-    for dataset in datasets:
-        best_model = get_best_trained_model(dataset, model_name)
+    for exp in experiments:
+        best_model = get_best_trained_model(exp, model_name)
         if best_model:
-            best_models[dataset] = best_model.split("LangGFM/")[-1]
+            best_models[exp] = best_model.split("LangGFM/")[-1]
         else:
-            print(f"⚠️ No best model found for dataset: {dataset}, model: {model_name}. Skipping...")
+            print(f"⚠️ No best model found for dataset: {exp}, model: {model_name}. Skipping...")
     return best_models
 
 
 def start_vllm_servers(best_models, model_name, gpu_id, port, hg_model):
     """Starts the vLLM servers for all datasets."""
-    log_file = f"logs/server_{model_name}_langgfm_i.log"
+    log_file = f"logs/server_{model_name.replace('/','-')}_langgfm_i.log"
     
     lora_modules = " ".join([
-        f"'{{\"name\": \"{dataset}\", \"path\": \"{model_path}\", \"base_model_name\": \"{hg_model}\"}}'"
-        for dataset, model_path in best_models.items()
+        f"'{{\"name\": \"{model_name.replace("/","-")+"-"+exp.replace('/','-')}\", \"path\": \"{model_path}\", \"base_model_name\": \"{hg_model}\"}}'"
+        for exp, model_path in best_models.items()
     ])
     
     vllm_command = (
@@ -74,23 +74,23 @@ def start_vllm_servers(best_models, model_name, gpu_id, port, hg_model):
     return True
 
 
-def run_inference(datasets, port):
+def run_inference(experiments, port, model_name):
     """Runs inference for each dataset."""
-    for dataset in datasets:
+    for exp in experiments:
         inference_command = (
             f"python scripts/eval_langgfm_api.py "
             f"--api_key 12345 --port {port} "
-            f"--file_path experiments/langgfm_i/{dataset}/test/instruction_dataset.json "
-            f"--model_name {dataset} "
+            f"--file_path experiments/{exp}/test/instruction_dataset.json "
+            f"--model_name {model_name.replace("/","-")+"-"+exp.replace('/','-')} "
         )
         
-        print(f"🔍 Running inference for {dataset}...")
+        print(f"🔍 Running inference for {exp}...")
         inference_process = subprocess.run(inference_command, shell=True, check=True)
         
         if inference_process.returncode == 0:
-            print(f"✅ Inference completed successfully for {dataset}.")
+            print(f"✅ Inference completed successfully for {exp}.")
         else:
-            print(f"❌ Inference failed for {dataset}.")
+            print(f"❌ Inference failed for {exp}.")
 
 
 def shutdown_vllm_server(hg_model):
@@ -104,15 +104,22 @@ def shutdown_vllm_server(hg_model):
 def main(model_name):
     """Runs the pipeline for the given model on a specific GPU."""
     datasets = [
-        "node_counting", "edge_counting", "node_attribute_retrieval",
-        "edge_attribute_retrieval", "degree_counting", "shortest_path",
-        "cycle_checking", "hamilton_path", "graph_automorphic",
-        "graph_structure_detection", "edge_existence", "connectivity"
+        # "node_counting", "edge_counting", "node_attribute_retrieval",
+        # "edge_attribute_retrieval", "degree_counting", "shortest_path",
+        # "cycle_checking", "hamilton_path", "graph_automorphic",
+        # "graph_structure_detection", "edge_existence", "connectivity"
+        # "cycle_checking","graph_automorphic",
+        # "edge_attribute_retrieval",
+        # "degree_counting", 
+        "graph_automorphic",
+        "edge_attribute_retrieval",
     ]
+    experiments = ["langgfm_i/"+dataset for dataset in datasets]
     
     gpu_ports = {
-        "Llama-3.1-8B-Instruct": {"gpu_id": "0", "port": 8018, "hg_model":"meta-llama/Llama-3.1-8B-Instruct"},
-        "Qwen2.5-7B-Instruct": {"gpu_id": "0", "port": 8017, "hg_model":"Qwen/Qwen2.5-7B-Instruct"},
+        # "Llama-3.1-8B-Instruct": {"gpu_id": "0", "port": 8018, "hg_model":"meta-llama/Llama-3.1-8B-Instruct"},
+        "meta-llama/Llama-3.1-8B-Instruct": {"gpu_id": "0", "port": 8018, "hg_model":"./models/Llama-3.1-8B-Instruct"},
+        "Qwen/Qwen2.5-7B-Instruct": {"gpu_id": "0", "port": 8017, "hg_model":"Qwen/Qwen2.5-7B-Instruct"},
     }
     
     if model_name not in gpu_ports:
@@ -123,14 +130,14 @@ def main(model_name):
     port = gpu_ports[model_name]["port"]
     hg_model = gpu_ports[model_name]["hg_model"]
     
-    best_models = get_all_best_models(datasets, model_name)
+    best_models = get_all_best_models(experiments, model_name)
     if not best_models:
         print("❌ No valid best models found. Exiting...")
         return
     
     if start_vllm_servers(best_models, model_name, gpu_id, port, hg_model):
         # return "Success"
-        run_inference(datasets, port)
+        run_inference(experiments, port, model_name)
         shutdown_vllm_server(hg_model)
     
     print(f"🎉 Pipeline completed for Model: {model_name} | GPU: {gpu_id} | Port: {port}")

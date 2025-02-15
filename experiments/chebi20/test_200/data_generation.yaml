@@ -1,8 +1,0 @@
-common_format: &id003
-- gml
-- json
-- table
-- graphml
-
-chebi20:
-  format: *id003

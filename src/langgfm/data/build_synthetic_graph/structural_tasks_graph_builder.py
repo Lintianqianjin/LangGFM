@@ -225,6 +225,8 @@ class EdgeAttributeRetrievalDatasetBuilder(SyntheticDatasetBuilder):
     
     def _get_label(self, graph):
         sample_edge = random.choice(list(graph.edges(data=True)))
+        # print(sample_edge[2], ('weight', sample_edge[0], sample_edge[1]))
+        # exit()
         return (sample_edge[2], ('weight', sample_edge[0], sample_edge[1]))
     
 

@@ -58,8 +58,8 @@ edge_attribute_retrieval:
   train_size: 5000
   val_size: 100
   test_size: 200
-  query_format: "What is the value of attribute [{}] for edge [{}]?"
-  answer_format: "The value of attribute [{}] for edge [{}] is {}."
+  query_format: "What is the value of attribute [{}] for edge [{},{}]?"
+  answer_format: "The value of attribute [{}] for edge [{},{}] is {}."
   file_path: "../../../../data/edge_attribute_retrieval/raw/data.pt"
 
 degree_counting: 

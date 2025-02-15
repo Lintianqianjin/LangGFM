@@ -1,0 +1,30 @@
+common_format: &id001
+  - table
+  - gml
+  - graphml
+  - json
+
+connectivity:
+  format: *id001
+cycle_checking:
+  format: *id001
+degree_counting:
+  format: *id001
+edge_attribute_retrieval:
+  format: *id001
+edge_counting:
+  format: *id001
+edge_existence:
+  format: *id001
+graph_automorphic:
+  format: *id001
+graph_structure_detection:
+  format: *id001
+hamilton_path:
+  format: *id001
+node_attribute_retrieval:
+  format: *id001
+node_counting:
+  format: *id001
+shortest_path:
+  format: *id001

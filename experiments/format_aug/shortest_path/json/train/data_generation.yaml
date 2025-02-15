@@ -1,0 +1,5 @@
+common_format: &id001
+- json
+
+shortest_path:
+  format: *id001

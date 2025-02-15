@@ -50,7 +50,7 @@ def run_inference(file_path: str, model_name: str, api_key="12345", port=8016):
          调用模型获得验证结果（应为 True 或 False）；
       3. 记录每个样本的预测、验证结果，并统计正确数目，最终计算准确率。
     """
-    client = init_client(api_key, port)
+    client = init_client(api_key, url=f"http://localhost:{port}/v1")
 
     samples = load_dataset(file_path)
     # total = len(samples)
@@ -62,7 +62,11 @@ def run_inference(file_path: str, model_name: str, api_key="12345", port=8016):
     for entry in tqdm(samples, desc="Processing samples"):
         # 1. 生成预测：构造初始 prompt（注意这里的格式可根据你的任务需求调整）
         # initial_prompt = entry["instruction"] + entry["input"]
-        prediction, logprobs = query_vllm(entry["instruction"], entry["input"], model_name)
+        num_tokens = entry["#tokens"]
+        if num_tokens >= 15000:
+            print(f"Skipping sample with {num_tokens} tokens")
+            continue
+        prediction, logprobs = query_vllm(client, entry["instruction"], entry["input"], model_name)
         entry["prediction"] = prediction  # 保存预测结果
         
         entry["predicted_answer"] = extract_answer(dataset = entry.get('dataset', ""), text=prediction, logprobs=logprobs)  # Extracted direct answer

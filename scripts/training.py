@@ -101,7 +101,7 @@ def generate_yaml_file(file_path=None, **kwargs):
         
         # train
         "per_device_train_batch_size": kwargs.get("per_device_train_batch_size", 1),
-        "gradient_accumulation_steps": kwargs.get("gradient_accumulation_steps", 16),
+        "gradient_accumulation_steps": gradient_accumulation_steps,
         "learning_rate": kwargs.get("learning_rate", 1.0e-4),
         "num_train_epochs": kwargs.get("num_train_epochs", 5.0),
         "lr_scheduler_type": kwargs.get("lr_scheduler_type", "cosine"),

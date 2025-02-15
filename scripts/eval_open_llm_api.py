@@ -38,7 +38,7 @@ def query_vllm(client, prompt: str, model_name: str):
         print(f"Error querying vLLM: {e}")
         return "Error"
 
-def run_inference(file_path: str, model_name: str, api_key="12345", url="http://localhost:8016/v1"):
+def run_inference(file_path: str, model_name: str, api_key="12345", url="http://localhost:8016/v1", tmp_instrction=""):
     """
     For each sample in the dataset, perform the following steps:
       1. Generate a prediction by concatenating the "instruction" and "input" to form a prompt, 
@@ -67,8 +67,8 @@ def run_inference(file_path: str, model_name: str, api_key="12345", url="http://
             "- The answer cannot be directly found in the input, you must infer the best possible estimate.\n" +\
             "- The answer **must not** include explanations, qualifiers, or any extraneous text.\n" +\
             "- The enclosed answer **must** be valid for direct use in subsequent calculations of machine learning metrics such as accuracy, RMSE, ROUGE, etc.\n" +\
-            "- Responses like 'unable to determine', 'cannot be inferred', or 'None' or any other ambiguous statements are strictly prohibited.\n"
-            
+            "- Responses like 'unable to determine', 'cannot be inferred', or 'None' or any other ambiguous statements are strictly prohibited.\n" \
+            + tmp_instrction 
         prediction = query_vllm(client, initial_prompt, model_name)
         
         entry["prediction"] = prediction  # Prediction with reasoning
