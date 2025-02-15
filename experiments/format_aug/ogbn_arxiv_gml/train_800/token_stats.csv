@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+ogbn_arxiv,gml,800,729,1540.0,2941.5,5566.0,11574,3937.30125,2860.4761710955045,800

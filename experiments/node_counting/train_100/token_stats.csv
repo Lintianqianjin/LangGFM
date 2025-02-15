@@ -1,5 +1,0 @@
-dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
-node_counting,gml,100,1487,3712.0,5464.5,7737.0,11762,5928.1,2695.9170943851327,100
-node_counting,graphml,100,1699,4299.0,6367.0,9157.5,14069,6979.76,3252.8697108798565,100
-node_counting,json,100,1713,4438.0,6601.5,9487.5,14578,7222.62,3381.0339156816954,100
-node_counting,table,100,676,1256.0,1712.5,2303.75,3351,1832.82,701.7913785377382,100

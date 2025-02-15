@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+twitch,table,800,502,599.75,711.0,845.0,1110,720.225,152.92465239993052,800

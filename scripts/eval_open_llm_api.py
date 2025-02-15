@@ -31,9 +31,11 @@ def query_vllm(client, prompt: str, model_name: str):
             messages=[{"role": "user", "content": prompt}],
             temperature=0,  # Ensure deterministic output
             # max_tokens=32   # Limit the number of output tokens to avoid redundant text
+            logprobs=True,
+            top_logprobs=20
         )
         # Extract and return the response content
-        return chat_response.choices[0].message.content.strip()
+        return chat_response.choices[0].message.content.strip(), chat_response.choices[0].logprobs.content  # 提取响应内容
     except Exception as e:
         print(f"Error querying vLLM: {e}")
         return "Error"
@@ -63,25 +65,40 @@ def run_inference(file_path: str, model_name: str, api_key="12345", url="http://
         initial_prompt = entry["instruction"] + "<|eot_id|>" + entry["input"] + \
             "\n\nYour response **must** contain a direct, clear, and unambiguous answer "+\
             "enclosed within the `<answer></answer>` tags.\n" + \
-            "- You may perform reasoning and analysis **outside** the `<answer></answer>` tags.\n" +\
+            "- You can perform reasoning and analysis **outside** the `<answer></answer>` tags.\n" +\
             "- The answer cannot be directly found in the input, you must infer the best possible estimate.\n" +\
             "- The answer **must not** include explanations, qualifiers, or any extraneous text.\n" +\
             "- The enclosed answer **must** be valid for direct use in subsequent calculations of machine learning metrics such as accuracy, RMSE, ROUGE, etc.\n" +\
-            "- Responses like 'unable to determine', 'cannot be inferred', or 'None' or any other ambiguous statements are strictly prohibited.\n"
+            "- Responses like 'unable to determine', 'cannot be inferred', or 'None/Null' or any other ambiguous statements are strictly prohibited.\n"
+        
+        if entry.get('dataset', "") == "ogbl_vessel":
+            initial_prompt += "You MUST first directly respond the answer. The answer options are True and False."
+        if entry.get('dataset', "") == "stack_elec":
+            initial_prompt += "You MUST first directly respond the answer only with the tags. The answer options are `** useful **` and `** useless **`."
+        if entry.get('dataset', "") == "bace":
+            initial_prompt += "You MUST first directly respond the answer. The answer options are yes and no."
+        if entry.get('dataset', "") == "twitch":
+            # initial_prompt += "You MUST first directly respond the answer. The answer options are ` mature` and ` gaming`."
+            if "llama-3.3-70b" in model_name.lower():
+                # ** and space make the target token intact
+                initial_prompt += "You MUST first directly respond the answer. The answer options are `** mature **` and `** gaming **`."
             
-        prediction = query_vllm(client, initial_prompt, model_name)
+        prediction, logprobs = query_vllm(client, initial_prompt, model_name)
         
         entry["prediction"] = prediction  # Prediction with reasoning
-        entry["predicted_answer"] = extract_answer(prediction)  # Extracted direct answer
+        # print(f"Prediction: {prediction}")
+        # print(f"logprobs: {logprobs}")
+        # exit()
+        entry["predicted_answer"] = extract_answer(text=prediction, dataset=entry.get('dataset', ""), logprobs=logprobs, model_name=model_name)  # Extracted direct answer
         entry["answer"] = extract_info(entry.get('dataset', ""), entry['output'])  # Extracted label from prediction
         preds.append(entry["predicted_answer"])
         labels.append(entry["answer"])
         
         # Debug information: Print each sample's prediction, ground truth, and verification result.
         # print(f"Prediction: {prediction}")
-        print(f"Ground Truth: {entry['output']}")
-        print(f"predicted_answer: {entry['predicted_answer']}")
-        print(f"answer: {entry['answer']}")
+        print(f"Ground Truth     : {entry['output']}")
+        print(f"Predicted_answer : {entry['predicted_answer']}")
+        print(f"Answer           : {entry['answer']}")
         # print(f"Verification: {verdict}")
         print("-" * 50)
 

@@ -19,17 +19,17 @@ SAFE_MODEL_NAME=$(echo "$MODEL" | sed 's/\//_/g')
 
 # 生成 SLURM 脚本的文件名
 SLURM_SCRIPT="slurm_scripts/temp_langgfm_i_${DATASET}_${SAFE_MODEL_NAME}.slurm"
-
+jobid=$SLURM_JOB_ID
 # 生成 SLURM 脚本
 cat <<EOF > "$SLURM_SCRIPT"
 #!/bin/bash
 #SBATCH --job-name=i-${DATASET}-${SAFE_MODEL_NAME}
-#SBATCH --output=slurm_logs/langgfm_i_${DATASET}_${SAFE_MODEL_NAME}.out
-#SBATCH --error=slurm_logs/langgfm_i_${DATASET}_${SAFE_MODEL_NAME}.err
+#SBATCH --output=slurm_logs/langgfm_i_${DATASET}_${SAFE_MODEL_NAME}_${jobid}.out
+#SBATCH --error=slurm_logs/langgfm_i_${DATASET}_${SAFE_MODEL_NAME}_${jobid}.err
 #SBATCH --gres=gpu:1                     # Request GPUs (A100 or H100)
 #SBATCH --constraint="A100|H100"         # Allow both A100 and H100 GPUs
 #SBATCH --cpus-per-task=8               # Request CPUs
-#SBATCH --mem=64G                        # Request memory
+#SBATCH --mem=32G                        # Request memory
 #SBATCH --time=12:00:00                  # Maximum runtime
 
 # Load necessary modules (if required)
@@ -37,16 +37,16 @@ module load cuda  # Adjust based on the actual CUDA version
 
 # Activate the Conda environment
 # source ~/softwares/anaconda3/bin/activate
-source ~/miniconda3/bin/activate
+source ~/softwares/anaconda3/bin/activate
 conda activate GFM
 
 # Change to the working directory
 cd ~/projects/LangGFM
 
 # Execute Python script with the provided dataset and model
-python scripts/generate_instruction_dataset.py --job_path experiments/langgfm_i/$DATASET/train
-python scripts/generate_instruction_dataset.py --job_path experiments/langgfm_i/$DATASET/test
-python scripts/training.py --train_dir experiments/langgfm_i/$DATASET/train --eval_dir experiments/langgfm_i/$DATASET/test --model_name_or_path $MODEL --lora_rank 64 --lora_alpha 256 --lora_dropout 0. --use_rslora True --learning_rate 2.0e-5 --batch_size 64 --num_train_epochs 20 --warmup_ratio 0.5 --eval_steps 25 --save_steps 25
+# python scripts/generate_instruction_dataset.py --job_path experiments/langgfm_i/$DATASET/train_800
+# python scripts/generate_instruction_dataset.py --job_path experiments/langgfm_i/$DATASET/test_200
+python scripts/training.py --train_dir experiments/langgfm_i/$DATASET/train_800 --eval_dir experiments/langgfm_i/$DATASET/test_200 --model_name_or_path $MODEL --lora_rank 64 --lora_alpha 512 --lora_dropout 0. --use_rslora True --learning_rate 2.0e-5 --batch_size 32 --num_train_epochs 50 --warmup_ratio 0.4 --eval_steps 25 --save_steps 25
 
 EOF
 

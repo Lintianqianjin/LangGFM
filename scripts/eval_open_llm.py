@@ -3,7 +3,7 @@ import json
 import os
 from tqdm import tqdm
 from openai import OpenAI
-
+from eval_utils import extract_info, extract_answer, compute_metric, init_client
 # LANUCH vLLM SERVER FIRST
 # nohup vllm serve deepseek-ai/DeepSeek-R1-Distill-Qwen-32B --dtype auto --api-key 12345 &> server.log &
 
