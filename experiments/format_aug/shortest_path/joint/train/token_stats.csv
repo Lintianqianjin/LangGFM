@@ -1,2 +1,5 @@
 dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+shortest_path,gml,800,951,3131.25,5347.0,8608.0,18948,6152.7575,3791.380760195383,776
 shortest_path,graphml,800,1078,3650.5,6281.5,10224.75,22971,7302.15375,4598.760883617652,739
+shortest_path,json,800,1057,3749.5,6488.5,10594.75,23766,7540.475,4773.625479879281,729
+shortest_path,table,800,565,1131.75,1709.0,2556.0,5246,1919.0,986.2684671841138,800

@@ -353,7 +353,7 @@ def extract_answer(text, dataset=None, logprobs=None, model_name=None):
     #     return prob
     
     # no special processing, model after sft should return the answer in the as same format as the label
-    elif "langgfm" in model_name.lower() and dataset in text_related_semantic_tasks+structure_tasks: 
+    elif "langgfm" in model_name.lower() and dataset in text_related_semantic_tasks | structure_tasks: 
         return extract_info(dataset, text)
     
     else: # open llm & no need to process logit

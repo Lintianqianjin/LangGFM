@@ -1,5 +1,8 @@
 common_format: &id001
 - graphml
+- table
+- gml
+- json
 
 shortest_path:
   format: *id001

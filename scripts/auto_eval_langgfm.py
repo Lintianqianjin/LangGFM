@@ -35,11 +35,13 @@ def check_vllm_server(host="localhost", port=8016, max_retries=5, delay=3):
             return False
 
 
-def pipeline(dataset, model_name, hg_model, gpu_id=0, port=8016, min_ckpt_idx=50, max_ckpt_idx=2425, exp_prefix="langgfm_i",format='json', **kwargs):
+def pipeline(dataset, model_name, hg_model, gpu_id=0, port=8016, min_ckpt_idx=50, max_ckpt_idx=2425, exp_prefix="langgfm_i", **kwargs):
     """Runs the vLLM server, performs inference, and shuts down the server."""
 
-    print(f"\n🚀 Starting Pipeline for Dataset: {dataset} | Model: {model_name} | GPU: {gpu_id} | Port: {port}")
-
+    print(f"\n🚀 Starting Pipeline for Exp: {exp_prefix} | Model: {model_name} | GPU: {gpu_id} | Port: {port}")
+    # safe, for file/module... names
+    safe_exp_prefix = exp_prefix.replace("/","-")
+    safe_hg_model = hg_model.split("/")[-1]
     # result = []
     # code for iter list of epochs, 50 epochs per list, epoch interval is 25, min epoch is 25 ,max epoch is 1600
     def epochs_iter():
@@ -48,13 +50,13 @@ def pipeline(dataset, model_name, hg_model, gpu_id=0, port=8016, min_ckpt_idx=50
             yield [i+j*25 for j,_ in enumerate(range(min_ckpt_idx, min(25*batch_size, max_ckpt_idx), 25))]
     
     # Log file for the server
-    log_file = f"logs/{exp_prefix}_{dataset}_{format}_{hg_model.split('/')[1]}.log"
+    log_file = f"logs/LangGFM-{safe_exp_prefix}-{safe_hg_model}.log"
     
     warmup_ratio = kwargs.get("warmup_ratio", 0.5)
     for epoch_list in epochs_iter():
         lora_modules = [
-            {"name": f"{hg_model}-LangGFM-{exp_prefix}-{dataset}-{format}-{epoch}", 
-             "path": f"experiments/{exp_prefix}/{dataset}/{format}/train/ckpts/{hg_model}/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=20/warmup_ratio={warmup_ratio}/batch_size=64/checkpoint-{epoch}", 
+            {"name": f"LangGFM-{safe_exp_prefix}-{safe_hg_model}-{epoch}", 
+             "path": f"experiments/{exp_prefix}/train/ckpts/{hg_model}/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=20/warmup_ratio={warmup_ratio}/batch_size=32/checkpoint-{epoch}", 
              "base_model_name": hg_model}
             for epoch in epoch_list
         ]
@@ -97,9 +99,9 @@ def pipeline(dataset, model_name, hg_model, gpu_id=0, port=8016, min_ckpt_idx=50
             # Construct the inference command
             inference_command = (
                 f"python scripts/eval_langgfm_api.py "
-                # f"--api_key 12345 --port {port} "
-                f"--file_path experiments/{exp_prefix}/{dataset}/{format}/test/instruction_dataset.json "
-                f"--model_name {hg_model}-LangGFM-{exp_prefix}-{dataset}-{format}-{epoch}"
+                f"--api_key 12345 --url http://localhost:{port}/v1 "
+                f"--file_path experiments/{exp_prefix}/test/instruction_dataset.json "
+                f"--model_name LangGFM-{safe_exp_prefix}-{safe_hg_model}-{epoch}"
             )
             
             print()
@@ -131,7 +133,7 @@ def pipeline(dataset, model_name, hg_model, gpu_id=0, port=8016, min_ckpt_idx=50
         print(f"🎉 Pipeline completed for Dataset: {dataset} | Model: {model_name} | GPU: {gpu_id} | Port: {port}\n")
 
 
-def main(model_name, dataset, min_ckpt_idx=50, max_ckpt_idx=1200, exp_prefix="langgfm_i",format='json',port=8000, **kwargs):
+def main(model_name, dataset, min_ckpt_idx=50, max_ckpt_idx=1200, exp_prefix="langgfm_i", **kwargs):
     """Runs the pipeline for the given model on a specific GPU."""
 
     datasets = [
@@ -153,7 +155,7 @@ def main(model_name, dataset, min_ckpt_idx=50, max_ckpt_idx=1200, exp_prefix="la
     
 
     for dataset in datasets:
-        pipeline(dataset=dataset, model_name=model_name, hg_model=hg_model, gpu_id=gpu_id, port=port, min_ckpt_idx=min_ckpt_idx, max_ckpt_idx=max_ckpt_idx, exp_prefix=exp_prefix,format=format,**kwargs)
+        pipeline(dataset=dataset, model_name=model_name, hg_model=hg_model, gpu_id=gpu_id, port=port, min_ckpt_idx=min_ckpt_idx, max_ckpt_idx=max_ckpt_idx, exp_prefix=exp_prefix,**kwargs)
 
 
 if __name__ == "__main__":
