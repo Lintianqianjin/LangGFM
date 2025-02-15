@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+yelp_review,table,800,1206,3698.0,4734.5,5618.0,8522,4612.655,1336.7228315494137,800

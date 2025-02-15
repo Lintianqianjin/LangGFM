@@ -1,7 +1,0 @@
-common_format: &id001
-- gml
-- json
-- table
-- graphml
-graph_automorphic:
-  format: *id001

@@ -1,0 +1,12 @@
+common_format: &id002
+- table
+twitch:
+  generator:
+    task_level: node
+    num_hops: 2
+    sampling: true
+    neighbor_size:
+    - 30
+    - 15
+    random_seed: 42
+  format: *id002

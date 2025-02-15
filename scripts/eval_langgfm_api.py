@@ -42,7 +42,7 @@ def query_vllm(client, instruction, user: str, model_name: str):
         print(f"Error querying vLLM: {e}")
         return "Error"
 
-def run_inference(file_path: str, model_name: str, api_key="12345", port=8016):
+def run_inference(file_path: str, model_name: str, api_key="12345", url="http://localhost:8016/v1"):
     """
     对数据集中的每个样本依次进行：
       1. 拼接 "instruction" 和 "input" 构成生成预测的 prompt，调用模型获得预测结果；
@@ -50,7 +50,7 @@ def run_inference(file_path: str, model_name: str, api_key="12345", port=8016):
          调用模型获得验证结果（应为 True 或 False）；
       3. 记录每个样本的预测、验证结果，并统计正确数目，最终计算准确率。
     """
-    client = init_client(api_key, url=f"http://localhost:{port}/v1")
+    client = init_client(api_key=api_key, url=url)
 
     samples = load_dataset(file_path)
     # total = len(samples)
@@ -68,8 +68,9 @@ def run_inference(file_path: str, model_name: str, api_key="12345", port=8016):
             continue
         prediction, logprobs = query_vllm(client, entry["instruction"], entry["input"], model_name)
         entry["prediction"] = prediction  # 保存预测结果
-        
-        entry["predicted_answer"] = extract_answer(dataset = entry.get('dataset', ""), text=prediction, logprobs=logprobs)  # Extracted direct answer
+        # print(logprobs)
+        # exit()
+        entry["predicted_answer"] = extract_answer(dataset = entry.get('dataset', ""), text=prediction, logprobs=logprobs, model_name=model_name)  # Extracted direct answer
         entry["answer"] = extract_info(entry.get('dataset', ""), entry['output'])  # Extracted label from prediction
         preds.append(entry["predicted_answer"])
         labels.append(entry["answer"])
@@ -100,6 +101,7 @@ def run_inference(file_path: str, model_name: str, api_key="12345", port=8016):
     metric = compute_metric(entry.get('dataset', ""), preds, labels)
     print(metric)
     save_results(f"{output_dir}/metric.json", metric)
+    return metric
 
 def save_results(file_path: str, data):
     """

@@ -43,6 +43,8 @@ def main(job_path: str, continue_flag: bool = False, return_token_length: bool =
         job_path (str): Path to the dataset generation job directory.
         continue_flag (bool): Continue from the last checkpoint if set to True.
     """
+    job_path = job_path.rstrip('/')
+    
     coordinator = DatasetGenerationCoordinator(
         job_path=job_path,
         is_continue=continue_flag,
