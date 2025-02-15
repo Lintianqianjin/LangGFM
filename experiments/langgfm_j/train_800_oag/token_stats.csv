@@ -1,0 +1,5 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+oag_scholar_interest,gml,2400,450,870.0,1988.5,4521.0,11456,3194.97125,2918.8532797919406,2400
+oag_scholar_interest,graphml,2400,664,1238.75,2741.0,6117.75,15012,4311.97875,3851.849539874435,2399
+oag_scholar_interest,json,2400,479,961.0,2253.0,5267.75,13692,3706.2966666666666,3464.1101038352763,2400
+oag_scholar_interest,table,2400,489,765.0,1339.5,2582.0,5966,1915.48375,1439.2468010966584,2400
