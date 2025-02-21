@@ -1,5 +1,0 @@
-dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
-edge_attribute_retrieval,gml,1600,925,3804.75,5900.0,7961.25,12973,6026.13625,2661.8827082360713,1600
-edge_attribute_retrieval,graphml,1600,1052,4412.0,6906.0,9418.0,15544,7092.2025,3210.0870542406824,1589
-edge_attribute_retrieval,json,1600,1031,4548.0,7155.0,9760.25,16097,7337.09375,3336.5172177625896,1578
-edge_attribute_retrieval,table,1600,539,1308.25,1857.0,2395.0,3748,1889.32875,697.2742575861887,1600

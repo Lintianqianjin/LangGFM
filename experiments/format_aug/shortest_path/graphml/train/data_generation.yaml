@@ -1,5 +1,0 @@
-common_format: &id001
-- graphml
-
-shortest_path:
-  format: *id001
