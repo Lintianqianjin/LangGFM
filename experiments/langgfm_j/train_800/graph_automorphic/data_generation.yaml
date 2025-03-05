@@ -16,4 +16,9 @@ common_edge_feature_masked_autoencoder:
     mask_reverse_edges: true
   augment_ratio: 1
 graph_automorphic:
+  ssl_setting:
+    topology_autoencoder:
+      generator:
+        distinguish_directions: false
+      augment_ratio: 1
   format: *id001

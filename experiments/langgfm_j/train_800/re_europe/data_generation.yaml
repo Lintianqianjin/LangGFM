@@ -25,6 +25,7 @@ re_europe:
     - 10
     random_seed: 42
   ssl_setting:
+    node_feature_masked_autoencoder: *id001
     edge_feature_masked_autoencoder: *id001
     topology_autoencoder:
       generator:

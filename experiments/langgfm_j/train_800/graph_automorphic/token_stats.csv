@@ -1,0 +1,5 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+graph_automorphic,gml,1600,449,741.0,1152.5,1910.25,4251,1430.5875,849.947804655026,1600
+graph_automorphic,graphml,1600,522,860.0,1335.0,2219.5,5092,1674.51875,1017.0589013936232,1600
+graph_automorphic,json,1600,467,821.0,1321.0,2242.0,5215,1671.3875,1058.797403215983,1600
+graph_automorphic,table,1600,425,514.0,625.0,824.75,1468,696.71625,226.0579203446136,1600

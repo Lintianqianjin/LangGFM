@@ -30,7 +30,7 @@ def query_vllm(client, prompt: str, model_name: str):
             model=model_name,
             messages=[{"role": "user", "content": prompt}],
             temperature=0,  # Ensure deterministic output
-            # max_tokens=32   # Limit the number of output tokens to avoid redundant text
+            max_tokens=10,   # Limit the number of output tokens to avoid redundant text
             logprobs=True,
             top_logprobs=20
         )
@@ -67,26 +67,30 @@ def run_inference(file_path: str, model_name: str, api_key="12345", url="http://
             "enclosed within the `<answer></answer>` tags.\n" + \
             "- You can perform reasoning and analysis **outside** the `<answer></answer>` tags.\n" +\
             "- The answer cannot be directly found in the input, you must infer the best possible estimate.\n" +\
-            "- The answer **must not** include explanations, qualifiers, or any extraneous text.\n" +\
+            "- The answer **must not** include explanations, qualifiers, formulations, computations, or any extraneous text.\n" +\
             "- The enclosed answer **must** be valid for direct use in subsequent calculations of machine learning metrics such as accuracy, RMSE, ROUGE, etc.\n" +\
             "- Responses like 'unable to determine', 'cannot be inferred', or 'None/Null' or any other ambiguous statements are strictly prohibited.\n"
         
         if entry.get('dataset', "") == "ogbl_vessel":
-            initial_prompt += "You MUST first directly respond the answer. The answer options are True and False."
+            initial_prompt += "You MUST directly respond the answer at the begining without any other text. The answer options are `True` and `False`, i.e., <answer>True</answer> or <answer>False</answer>."
         if entry.get('dataset', "") == "stack_elec":
-            initial_prompt += "You MUST first directly respond the answer only with the tags. The answer options are `** useful **` and `** useless **`."
+            initial_prompt += "You MUST directly respond the answer at the begining without any other text. The answer options are `** useful **` and `** useless **`, i.e., <answer>** useful **</answer> or <answer>** useless **</answer>."
         if entry.get('dataset', "") == "bace":
-            initial_prompt += "You MUST first directly respond the answer. The answer options are yes and no."
+            initial_prompt += "You MUST first directly respond the answer. The answer options are `** yes **` and `** no **`, i.e., <answer>** yes **</answer> or <answer>** no **</answer>."
         if entry.get('dataset', "") == "twitch":
-            # initial_prompt += "You MUST first directly respond the answer. The answer options are ` mature` and ` gaming`."
-            if "llama-3.3-70b" in model_name.lower():
-                # ** and space make the target token intact
-                initial_prompt += "You MUST first directly respond the answer. The answer options are `** mature **` and `** gaming **`."
+            # ** and space make the target token intact
+            initial_prompt += "You MUST directly respond the answer at the begining without any other text. The answer options are `** mature **` and `** gaming **`, i.e., <answer>** mature **</answer> or <answer>** gaming **</answer>."
+        if entry.get('dataset', "") == "esol":
+            if "qwen2.5-7b-instruct" in model_name.lower():
+                initial_prompt += "The answer should ONLY contain the final result without any calculation."
+        if entry.get('dataset', "") == "explagraphs":
+            # if "qwen2.5-7b-instruct" in model_name.lower():
+            initial_prompt += "The answer options are `support each other` and `counter each other`, i.e., <answer>support each other</answer> or <answer>counter each other</answer>."
             
         prediction, logprobs = query_vllm(client, initial_prompt, model_name)
         
         entry["prediction"] = prediction  # Prediction with reasoning
-        # print(f"Prediction: {prediction}")
+        print(f"Prediction: {prediction}")
         # print(f"logprobs: {logprobs}")
         # exit()
         entry["predicted_answer"] = extract_answer(text=prediction, dataset=entry.get('dataset', ""), logprobs=logprobs, model_name=model_name)  # Extracted direct answer

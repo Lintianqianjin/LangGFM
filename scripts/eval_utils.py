@@ -47,8 +47,16 @@ def locate_target_token_for_openllm(logprobs, dataset, model_name):
             # first token '<', second token 'answer', third token '>'
             # 4th token is the target token, mature or gamining
             # print(f"{logprobs=}")
-            print(f"key token prediction: {logprobs[3].token}")
-            target_token_top_logprobs = logprobs[3].top_logprobs
+            print(f"key token prediction: {logprobs[4].token}")
+            target_token_top_logprobs = logprobs[4].top_logprobs
+            # logprobs, yes_token, no_token
+            return target_token_top_logprobs, " mature", " gaming"
+        elif "langgfm" not in model_name.lower() and "qwen2.5-7b-instruct" in model_name.lower():
+            # first token '<', second token 'answer', third token '>'
+            # 4th token is the target token, mature or gamining
+            # print(f"{logprobs=}")
+            print(f"key token prediction: {logprobs[4].token}")
+            target_token_top_logprobs = logprobs[4].top_logprobs
             # logprobs, yes_token, no_token
             return target_token_top_logprobs, " mature", " gaming"
         elif "llama-3.3-70b-instruct" in model_name.lower():
@@ -56,6 +64,15 @@ def locate_target_token_for_openllm(logprobs, dataset, model_name):
             # 4th token is the target token, mature or gamining
             # print(f"{logprobs[:10]=}")
             # exit()
+            print(f"key token prediction: {logprobs[4].token}")
+            target_token_top_logprobs = logprobs[4].top_logprobs
+            # logprobs, yes_token, no_token
+            return target_token_top_logprobs, " mature", " gaming"
+        elif "langgfm" not in model_name.lower() and "llama-3.1-8b-instruct" in model_name.lower():
+            # first token '<', second token 'answer', third token '>'
+            # 4th token is the target token, mature or gamining
+            # print(f"{logprobs=}")
+            print(f"{model_name=}")
             print(f"key token prediction: {logprobs[4].token}")
             target_token_top_logprobs = logprobs[4].top_logprobs
             # logprobs, yes_token, no_token
@@ -72,6 +89,16 @@ def locate_target_token_for_openllm(logprobs, dataset, model_name):
             target_token_top_logprobs = logprobs[3].top_logprobs
             # logprobs, yes_token, no_token
             return target_token_top_logprobs, "True", "False"
+        elif "langgfm" not in model_name.lower() and "qwen2.5-7b-instruct" in model_name.lower():
+            print(f"key token prediction: {logprobs[3].token}")
+            target_token_top_logprobs = logprobs[3].top_logprobs
+            # logprobs, yes_token, no_token
+            return target_token_top_logprobs, "True", "False"
+        elif "langgfm" not in model_name.lower() and "llama-3.1-8b-instruct" in model_name.lower():
+            print(f"key token prediction: {logprobs[3].token}")
+            target_token_top_logprobs = logprobs[3].top_logprobs
+            # logprobs, yes_token, no_token
+            return target_token_top_logprobs, "True", "False"
         elif "llama-3.3-70b" in model_name.lower():
             print(f"key token prediction: {logprobs[3].token}")
             target_token_top_logprobs = logprobs[3].top_logprobs
@@ -81,20 +108,21 @@ def locate_target_token_for_openllm(logprobs, dataset, model_name):
             key_token_logprobs = logprobs[0].top_logprobs
             return target_token_top_logprobs, "Yes", "No"
     elif dataset == "stack_elec":
-        if "qwen2.5-72b-instruct" in model_name.lower():
+        if "langgfm" not in model_name.lower():
+            # "qwen2.5-72b-instruct" in model_name.lower():
             # first token '<', second token 'answer', third token '>'
             # print(logprobs[:10])
             # exit()
             print(f"key token prediction: {logprobs[4].token}")
             target_token_top_logprobs = logprobs[4].top_logprobs
             return target_token_top_logprobs, " useful", " useless"
-        elif "llama-3.3-70b-instruct" in model_name.lower():
-            # print(logprobs[:10])
-            # exit()
-            print(f"key token prediction: {logprobs[4].token}")
-            target_token_top_logprobs = logprobs[4].top_logprobs
-            return target_token_top_logprobs, "ful", "less"
-        if "langgfm" in model_name.lower() and "llama" in model_name.lower():
+        # elif "llama-3.3-70b-instruct" in model_name.lower():
+        #     # print(logprobs[:10])
+        #     # exit()
+        #     print(f"key token prediction: {logprobs[4].token}")
+        #     target_token_top_logprobs = logprobs[4].top_logprobs
+        #     return target_token_top_logprobs, "ful", "less"
+        elif "langgfm" in model_name.lower() and "llama" in model_name.lower():
             # The edge from user with node id {target_src_node_idx} to question with node id {target_dst_node_idx} is likely to be classified as 'Useful'.
             # -1 token "", -2 token "'.", -3 token "ful" or "less", -4 token "Use" -5 token " '"
             print(f"key token prediction: {logprobs[-3].token}")
@@ -111,18 +139,18 @@ def locate_target_token_for_openllm(logprobs, dataset, model_name):
             # first token '<', second token 'answer', third token '>'
             # 4th token is the target token, yes or no
             # print(f"{logprobs[3]=}")
-            print(f"key token prediction: {logprobs[3].token}")
-            target_token_top_logprobs = logprobs[3].top_logprobs
+            print(f"key token prediction: {logprobs[4].token}")
+            target_token_top_logprobs = logprobs[4].top_logprobs
             # logprobs, yes_token, no_token
-            return target_token_top_logprobs, "yes", "no"
-        elif "langgfm" not in model_name.lower() and "llama-3.3-70b" in model_name.lower():
+            return target_token_top_logprobs, " yes", " no"
+        elif "langgfm" not in model_name.lower(): #  and "llama-3.3-70b" in model_name.lower()
             # first token '<', second token 'answer', third token '>'
             # 4th token is the target token, yes or no
             # print(f"{logprobs[3]=}")
-            print(f"key token prediction: {logprobs[3].token}")
-            target_token_top_logprobs = logprobs[3].top_logprobs
+            print(f"key token prediction: {logprobs[4].token}")
+            target_token_top_logprobs = logprobs[4].top_logprobs
             # logprobs, yes_token, no_token
-            return target_token_top_logprobs, "yes", "no"
+            return target_token_top_logprobs, " yes", " no"
         elif "langgfm" in model_name.lower() and "llama" in model_name.lower():
             print(f"key token prediction: {logprobs[0].token}")
             target_token_top_logprobs = logprobs[0].top_logprobs
@@ -160,8 +188,21 @@ def extract_info(dataset, text):
         int or None: For the "movielens1m" dataset, returns the extracted rating (as an integer)
                      if found; otherwise, returns None.
     """
-    
-    if dataset.lower() == "movielens1m":
+    if dataset.lower() == "ogbn_arxiv":
+        # Use regex to search for {ground_truth} in the following text format:
+        # E.g., The paper with node id 20 likely belongs to the subject area '{ground_truth}'.
+        match = re.search(r'The paper with node id \d+ likely belongs to the subject area \'(.+)\'', text)
+        if match:
+            # Return the extracted research interests
+            return match.group(1).strip()
+    elif dataset.lower() == "wikics":
+        # Use regex to search for {ground_truth} in the following text format:
+        # E.g., The webpage with node id {target_node_idx} likely belongs to the category '{ground_truth}'.
+        match = re.search(r"The webpage with node id \d+ likely belongs to the category '(.+)'.", text)
+        if match:
+            # Return the extracted research interests
+            return match.group(1).strip()
+    elif dataset.lower() == "movielens1m":
         # Use regex to search for rating information in the format "<number> stars"
         match = re.search(r'(\d+)\s*star', text)
         if match:
@@ -169,7 +210,7 @@ def extract_info(dataset, text):
             return match.group(1).strip()
         else:
             return None
-    if dataset.lower() == "re_europe":
+    elif dataset.lower() == "re_europe":
         # Use regex to search for {avg_load} in the format , avg_load is a float number
         # e.g., around {avg_load} MW.
         match = re.search(r'around (\d+\.\d+) MW', text)
@@ -235,7 +276,13 @@ def extract_info(dataset, text):
         if match:
             # Return the extracted research interests
             return match.group(1).strip()
-    
+    elif dataset.lower() == "explagraphs":
+        # Use regex to search for {ground_truth} in the following text format:
+        # E.g., These two arguments {ground_truth}.
+        match = re.search(r'These two arguments (.+).', text)
+        if match:
+            # Return the extracted research interests
+            return match.group(1).strip()
     elif dataset.lower() == "esol":
         # Use regex to search for {label} in the following text format:
         # E.g., The $\log S$ of this compound is likely {label}.""
@@ -306,9 +353,9 @@ def extract_info(dataset, text):
         if match:
             # Return the extracted research interests
             return match.group(1).strip()
-        
+    
     elif dataset.lower() in {
-        "ogbn_arxiv", "wikics",
+        "wikics",
         'node_counting', 'edge_counting', 'node_attribute_retrieval', 'edge_attribute_retrieval',
         'degree_counting', 'edge_existence', 'connectivity', 'shortest_path', 'hamilton_path', 'cycle_checking',
         'graph_structure_detection', 'graph_automorphic'}:
@@ -329,7 +376,7 @@ def extract_answer(text, dataset=None, logprobs=None, model_name=None):
     Returns:
         str: The extracted answer text.
     """
-    text_related_semantic_tasks = {"ogbn_arxiv", "re_europe", "fingerprint", "chebi20", "esol", "ogbn_arxiv", "wikics", "oag_scholar_interest", "yelp_review"}
+    text_related_semantic_tasks = {"ogbn_arxiv", "re_europe", "fingerprint", "chebi20", "esol", "wikics", "oag_scholar_interest", "yelp_review","movielens1m","explagraphs"}
     structure_tasks = {"node_counting", "edge_counting", "node_attribute_retrieval", "edge_attribute_retrieval","degree_counting", "edge_existence", "connectivity", "shortest_path", "hamilton_path", "cycle_checking","graph_structure_detection","graph_automorphic"}
     # AUC
     if dataset in {"twitch", "ogbl_vessel", "stack_elec","bace"}:
@@ -337,21 +384,6 @@ def extract_answer(text, dataset=None, logprobs=None, model_name=None):
         prob = compute_prob_for_auc(key_token_logprobs, yes_token, no_token)
         return prob
 
-    # elif dataset in {"ogbl_vessel"}:
-    #     key_token_logprobs, yes_token, no_token = locate_target_token_for_openllm(logprobs, "ogbl_vessel", model_name)
-    #     prob = compute_prob_for_auc(key_token_logprobs, yes_token, no_token)
-    #     return prob
-
-    # elif dataset in {"stack_elec"}:
-    #     key_token_logprobs, yes_token, no_token = locate_target_token_for_openllm(logprobs, "stack_elec", model_name)
-    #     prob = compute_prob_for_auc(key_token_logprobs, yes_token, no_token)
-    #     return prob
-
-    # elif dataset in {"bace"}:
-    #     key_token_logprobs, yes_token, no_token = locate_target_token_for_openllm(logprobs, "bace", model_name)
-    #     prob = compute_prob_for_auc(key_token_logprobs, yes_token, no_token)
-    #     return prob
-    
     # no special processing, model after sft should return the answer in the as same format as the label
     elif "langgfm" in model_name.lower() and dataset in text_related_semantic_tasks | structure_tasks: 
         return extract_info(dataset, text)
@@ -378,7 +410,7 @@ def compute_metric(dataset, predictions, labels):
         float: The similarity score between predictions and labels.
     """
 
-    if dataset in {"esol",}:
+    if dataset in {"movielens1m", "esol",}:
         # Convert predictions and labels to floats and compute RMSE
         print(f"{predictions=}")
         print(f"{labels=}")
@@ -389,7 +421,9 @@ def compute_metric(dataset, predictions, labels):
         predictions = [safe_float(x, default=default) for x in predictions]
         labels = list(map(float, labels))
         error = rmse(np.array(list(predictions)), np.array(list(labels)))
-        return {"rmse": error}
+        metrics = {"rmse": error}
+        print(metrics)
+        return metrics
     
     elif dataset in {"movielens1m", "re_europe"}:
         if dataset == "re_europe":
@@ -398,7 +432,9 @@ def compute_metric(dataset, predictions, labels):
         labels = list(map(float, labels))
         # compute spearman correlation
         corr, p_value = spearmanr(predictions, labels)
-        return {"spearmanr": corr}
+        metrics = {"spearmanr": corr}
+        print(metrics)
+        return metrics
     
     elif dataset in {"oag_scholar_interest", "yelp_review", "chebi20"}:
         # 使用 bert-score 计算文本相似度
@@ -432,7 +468,7 @@ def compute_metric(dataset, predictions, labels):
         # 返回一个字典，其中包含 bert 的 F1 和三个 rouge 指标的平均值
         return metrics
     
-    elif dataset in {"ogbn_arxiv", "fb15k237", "fingerprint"}:
+    elif dataset in {"ogbn_arxiv", "wikics", "fb15k237", "fingerprint"}:
         # computer exact match
         # safe conversion to string
         
@@ -450,15 +486,19 @@ def compute_metric(dataset, predictions, labels):
     elif dataset in {"twitch", "ogbl_vessel", "stack_elec","bace"}:
         # compute roc auc
         auc = roc_auc_score(labels, predictions)
-        return {"roc_auc": auc}
+        metrics = {"roc_auc": auc}
+        print(metrics)
+        return metrics
     
     # 其他数据集的处理逻辑可以在这里添加
     elif dataset in {"bace",'node_counting', 'edge_counting', 'node_attribute_retrieval', 'edge_attribute_retrieval',
         'degree_counting', 'edge_existence', 'connectivity', 'shortest_path', 'hamilton_path', 'cycle_checking',
-        'graph_structure_detection', 'graph_automorphic'}:
+        'graph_structure_detection', 'graph_automorphic',"explagraphs"}:
         # 直接返回预测和标签的匹配率
         correct_count = sum(pred == label for pred, label in zip(predictions, labels))
         accuracy = correct_count / len(labels)
+        metrics = {"accuracy": accuracy}
+        print(metrics)
         return {"accuracy": accuracy}
 
     return 0.0

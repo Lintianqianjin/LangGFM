@@ -1,0 +1,5 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+graph_structure_detection,gml,1600,969,1707.75,1914.0,2783.0,17194,3420.98375,3442.464761367459,1578
+graph_structure_detection,graphml,1600,883,1415.0,1612.0,2267.0,13809,2796.50125,2750.851379494807,1600
+graph_structure_detection,json,1600,1077,1873.0,2190.0,3199.0,21158,4035.22125,4284.4806393268245,1530
+graph_structure_detection,table,1600,574,764.0,831.0,1050.0,4748,1206.25875,876.0240054272147,1600

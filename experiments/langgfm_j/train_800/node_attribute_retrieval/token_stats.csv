@@ -1,0 +1,5 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+node_attribute_retrieval,gml,1600,885,3362.5,4795.0,6685.5,11187,5089.09875,2206.713866602123,1600
+node_attribute_retrieval,graphml,1600,932,3056.75,4264.0,5806.0,9466,4482.64625,1825.7687749611678,1600
+node_attribute_retrieval,json,1600,975,3927.5,5668.0,7998.0,13557,6041.33125,2698.1917745141786,1600
+node_attribute_retrieval,table,1600,542,1222.0,1596.0,2083.0,3244,1666.30375,572.8580489100798,1600

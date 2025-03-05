@@ -32,10 +32,11 @@ def generate_yaml_file(file_path=None, **kwargs):
     
     num_gpus = torch.cuda.device_count()
     batch_size = kwargs.get("batch_size", 32)
+    assert batch_size >= per_device_train_batch_size*num_gpus, "Batch size should be >= than per_device_train_batch_size*num_gpus"
+    assert batch_size % (per_device_train_batch_size*num_gpus) == 0, "Batch size should be divisible by per_device_train_batch_size*num_gpus"
     gradient_accumulation_steps = batch_size//num_gpus//per_device_train_batch_size
-    # num_gpus*per_device_train_batch_size*gradient_accumulation_steps
-    gradient_accumulation_steps = gradient_accumulation_steps
     
+    # if 
     output_dir = os.path.join(
         file_path,
         "ckpts",
@@ -51,7 +52,7 @@ def generate_yaml_file(file_path=None, **kwargs):
     
     if "Qwen" in model_name_or_path:
         template = "qwen"
-    elif "Llama-3.1" in model_name_or_path:
+    elif "Llama-3" in model_name_or_path:
         template = "llama3"
     else:
         template = None
@@ -67,39 +68,47 @@ def generate_yaml_file(file_path=None, **kwargs):
         path.mkdir(parents=True, exist_ok=True)
     # print("Path created. Starting the experiment.")
     
-    data = {
+    _model = {
         # model
         "model_name_or_path": model_name_or_path,
         "trust_remote_code": kwargs.get("trust_remote_code", True),
-        
-        # method
+    }    
+    
+    _method = {
         "stage": kwargs.get("stage", "sft"),
         "do_train": kwargs.get("do_train", True),
         "do_eval": kwargs.get("do_eval", False),
         "do_predict": kwargs.get("do_predict", False),
         "finetuning_type": kwargs.get("finetuning_type", "lora"),
-        "lora_alpha": kwargs.get("lora_alpha", 16),
-        "lora_dropout": kwargs.get("lora_dropout", 0.),
-        "lora_rank": kwargs.get("lora_rank", 8),
-        "lora_target": kwargs.get("lora_target", "all"),
-        "use_rslora": kwargs.get("use_rslora", False),
-
-        # dataset
+        "deepspeed": kwargs.get("deepspeed", None),
+    }
+    if _method['finetuning_type'] == "lora":
+        _lora_config = {
+            "lora_alpha": kwargs.get("lora_alpha", 16),
+            "lora_dropout": kwargs.get("lora_dropout", 0.),
+            "lora_rank": kwargs.get("lora_rank", 8),
+            "lora_target": kwargs.get("lora_target", "all"),
+            "use_rslora": kwargs.get("use_rslora", False),
+        }
+        _method = _method | _lora_config
+    
+    _dataset = {
         "dataset": kwargs.get("dataset", ""),
         "template": template,
         "cutoff_len": kwargs.get("cutoff_len", 15000),
-        "max_samples": kwargs.get("max_samples", 100000),
+        "max_samples": kwargs.get("max_samples", 1000000),
         "overwrite_cache": kwargs.get("overwrite_cache", True),
         "preprocessing_num_workers": kwargs.get("preprocessing_num_workers", max_processor_count),
-        
-        # output
+    }    
+    
+    _output = {
         "output_dir": kwargs.get("output_dir", output_dir),
         "logging_steps": kwargs.get("logging_steps", 2),
         "save_steps": kwargs.get("save_steps", 100),
         "plot_loss": kwargs.get("plot_loss", True),
         "overwrite_output_dir": kwargs.get("overwrite_output_dir", True),
-        
-        # train
+    }    
+    _train = {
         "per_device_train_batch_size": kwargs.get("per_device_train_batch_size", 1),
         "gradient_accumulation_steps": gradient_accumulation_steps,
         "learning_rate": kwargs.get("learning_rate", 1.0e-4),
@@ -110,23 +119,29 @@ def generate_yaml_file(file_path=None, **kwargs):
         "ddp_timeout": kwargs.get("ddp_timeout", 180000000),
         "flash_attn": kwargs.get("flash_attn", "fa2"),
         "enable_liger_kernel": kwargs.get("enable_liger_kernel", True),
-        
+       
         "report_to": kwargs.get("report_to", "wandb"),
-        "run_name": kwargs.get("dataset", ""), # keep runname same as dataset name
+        "run_name": kwargs.get("run_name", kwargs.get("dataset")), # keep runname same as dataset name if not provided
         
-        "load_best_model_at_end": kwargs.get("load_best_model_at_end", True),
+        "load_best_model_at_end": kwargs.get("load_best_model_at_end", False),
         "metric_for_best_model": kwargs.get("metric_for_best_model", "eval_accuracy"),
-
-        # eval
+    }
+    _eval = {
         "eval_dataset": kwargs.get("eval_dataset", None),
         "bf16_full_eval": kwargs.get("bf16_full_eval", True),
         "val_size": kwargs.get("val_size", 0.0),
         "per_device_eval_batch_size": kwargs.get("per_device_eval_batch_size", 1),
         "eval_strategy": kwargs.get("eval_strategy", "steps"),
         "eval_steps": kwargs.get("eval_steps", 100),
-        "compute_accuracy": kwargs.get("compute_accuracy", True)
+        "compute_accuracy": kwargs.get("compute_accuracy", True),
+        "predict_with_generate": kwargs.get("predict_with_generate", False),
+        "do_sample": kwargs.get("do_sample", False),
+        "max_new_tokens": kwargs.get("max_new_tokens", 4),
     }
+    
 
+    data = _model | _method | _dataset | _output | _train | _eval
+    
     yaml_path = f"{output_dir}/traning.yaml"
     with open(yaml_path, 'w') as file:
         yaml.dump(data, file, sort_keys=False, default_flow_style=False)
@@ -135,33 +150,6 @@ def generate_yaml_file(file_path=None, **kwargs):
 
 def exp_dir_to_file_name(exp_dir: str) -> str:
     return exp_dir.replace("/", "__") + ".json"
-
-
-# def update_dataset_info(file_name: str):
-#     dataset_info_path = "LLaMA-Factory/data/dataset_info.json"
-#     dataset_info = json.load(open(dataset_info_path))
-
-#     new_dataset_info = {
-#         "file_name": file_name,
-#         "columns": {
-#             "prompt": "instruction",
-#             "query": "input",
-#             "response": "output",
-#             "system": "system"
-#         }
-#     }
-#     dataset_name = file_name.removesuffix(".json")
-#     dataset_info[dataset_name] = new_dataset_info
-
-#     with open(dataset_info_path, "w") as f:
-#         json.dump(dataset_info, f, indent=4)
-
-#     return dataset_name
-
-# def copy_instruction_dataset_to_data_dir(exp_dir, file_name: str):
-#     ins_ds = os.path.join(exp_dir, "instruction_dataset.json")
-#     shutil.copy(ins_ds, f"LLaMA-Factory/data/{file_name}")
-
 
 def run_llamafactory_training(ymal_path: str):
     absolute_ymal_path = os.path.abspath(ymal_path)
@@ -188,36 +176,50 @@ def run_llamafactory_training(ymal_path: str):
     else:
         print("Command executed successfully!")
 
+def process_single_dir(dir_path: str):
+    dir_path = dir_path.rstrip('/')
+    fname = exp_dir_to_file_name(dir_path)
+    fname = fname.removesuffix('.json')
+    return fname
 
-def main(train_dir: str, eval_dir:str = None, **kwargs):
+def main(train_dir: str, eval_dir:str = None, exp_dir:str = None, **kwargs):
     """
     Run the training pipeline basd on Llamafactory.
     Args:
-        train_dir (str): Path to the training dataset, where contains `instrcution_dataset.json`
+        train_dir (str): "path1,path2,path3" or "path1" Path to the training dataset, where contains `instrcution_dataset.json`
         eval_dir (str): Path to the evaluation dataset, where contains `instrcution_dataset.json`
+        exp_dir (str): Path to the experiment directory.
     """
-    train_dir = train_dir.rstrip('/')
-    eval_dir = eval_dir.rstrip('/')
     
-    # if eval_dir is not None:
-    #     eval_fname = exp_dir_to_file_name(eval_dir)
-    #     eval_dataset_name = update_dataset_info(eval_fname)
-    #     copy_instruction_dataset_to_data_dir(eval_dir, eval_fname)
-    #     kwargs['eval_dataset'] = eval_dataset_name
+    train_dirs = train_dir.strip(',').split(',')
+    if len(train_dirs) == 1:
+        train_dir = train_dirs[0]
+        exp_dir = train_dir if exp_dir is None else exp_dir
+        train_fname = process_single_dir(train_dir)
+        # train_dir = train_dir.rstrip('/')
+        # train_fname = exp_dir_to_file_name(train_dir)
+        # train_fname = train_fname.removesuffix('.json')
+    else: # multiple training datasets
+        assert exp_dir is not None, "exp_dir must be provided for multiple training datasets."
+        train_fnames = [process_single_dir(d) for d in train_dirs]
+        train_fname = ','.join(train_fnames)
     
-    eval_fname = exp_dir_to_file_name(eval_dir)
-    eval_fname = eval_fname.removesuffix('.json')
+    eval_dirs = eval_dir.strip(',').split(',')
+    if len(eval_dirs) == 1:
+        eval_dir = eval_dirs[0]
+        eval_fname = process_single_dir(eval_dir)
+        # eval_dir = eval_dir.rstrip('/')
+        # eval_fname = exp_dir_to_file_name(eval_dir)
+        # eval_fname = eval_fname.removesuffix('.json')
+    else:
+        eval_fnames = [process_single_dir(d) for d in eval_dirs]
+        eval_fname = ','.join(eval_fnames)
+        
     kwargs['eval_dataset'] = eval_fname
-    
-    train_fname = exp_dir_to_file_name(train_dir)
-    train_fname = train_fname.removesuffix('.json')
-    # train_dataset_name = update_dataset_info(train_fname)
-    # copy_instruction_dataset_to_data_dir(train_dir, train_fname)
-    
-    yaml_file_path = generate_yaml_file(file_path=f"{train_dir}", dataset=train_fname, **kwargs)
+
+    yaml_file_path = generate_yaml_file(file_path=f"{exp_dir}", dataset=train_fname, **kwargs)
     
     run_llamafactory_training(yaml_file_path)
-
-
+    
 if __name__ == "__main__":
     fire.Fire(main)
