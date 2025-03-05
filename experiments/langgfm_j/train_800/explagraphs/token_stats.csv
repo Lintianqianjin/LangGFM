@@ -1,5 +1,0 @@
-dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
-explagraphs,gml,3200,615,646.0,724.0,813.0,1121,748.636875,112.65921809289976,3200
-explagraphs,graphml,3200,872,903.0,1014.0,1136.0,1543,1046.804375,153.06156786395118,3200
-explagraphs,json,3200,662,693.0,780.0,878.0,1213,806.864375,123.67125489331194,3200
-explagraphs,table,3200,526,584.0,621.0,661.0,821,626.6825,59.62070227734469,3200

@@ -1,2 +1,0 @@
-dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
-shortest_path,json,200,1199,3661.25,6320.5,10361.5,22400,7570.305,4838.727308061895,184
