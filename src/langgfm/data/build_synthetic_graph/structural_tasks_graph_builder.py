@@ -304,8 +304,15 @@ class ShortestPathDatasetBuilder(SyntheticDatasetBuilder):
     # TODO
     def _get_label(self, graph):
         sample_nodes = random.sample(list(graph.nodes), 2)
+        # @roc: regenerate and drop samples with length of shortest path == 1.
         # return (nx.shortest_path_length(graph, sample_nodes[0], sample_nodes[1]), sample_nodes)
-        return (list(nx.all_shortest_paths(graph, sample_nodes[0], sample_nodes[1])), sample_nodes)
+        all_shortest_path = list(nx.all_shortest_paths(graph, sample_nodes[0], sample_nodes[1]))
+        if len(all_shortest_path) == 1 and len(all_shortest_path[0]) > 2:
+            return (all_shortest_path[0], sample_nodes)
+        else:
+            return ([], sample_nodes)
+
+        # return (list(nx.all_shortest_paths(graph, sample_nodes[0], sample_nodes[1])), sample_nodes)
     
     def _generate_graphs_labels(self) -> tuple:
         
@@ -326,12 +333,10 @@ class ShortestPathDatasetBuilder(SyntheticDatasetBuilder):
             )
             if (self.task == "connectivity") ^ nx.is_connected(random_graph):
                 label = self._get_label(random_graph)
-                if len(label[0]) > 1:
+                if not label[0]:
                     continue
                 else:
-                    # print(label)
-                    # exit()
-                    labels.append((label[0][0], label[1]))
+                    labels.append((label[0], label[1]))
                     graphs.append(json_graph.node_link_data(random_graph))
                     valid += 1
                     pbar.update(1)
