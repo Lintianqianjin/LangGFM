@@ -8,3 +8,6 @@ python scripts/auto_eval_format_aug.py --exp_prefix format_aug --format graphml 
 
 # gml, 775
 python scripts/auto_eval_format_aug.py --exp_prefix format_aug --format gml --min_ckpt_idx 775 --max_ckpt_idx 785 --model_name Qwen/Qwen2.5-7B-Instruct --dataset shortest_path
+
+# joint, 400
+python scripts/auto_eval_format_aug.py --exp_prefix format_aug --format joint --min_ckpt_idx 400 --max_ckpt_idx 410 --model_name Qwen/Qwen2.5-7B-Instruct --dataset shortest_path

@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+shortest_path,table,400,582,1176.25,1715.0,2644.0,5090,1960.7825,1017.3322428905963,400

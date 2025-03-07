@@ -28,13 +28,8 @@ cat <<EOF > "$SLURM_SCRIPT"
 #SBATCH --error=slurm_logs/langgfm_i_${DATASET}_${SAFE_MODEL_NAME}_${jobid}.err
 #SBATCH --gres=gpu:1                     # Request GPUs (A100 or H100)
 #SBATCH --constraint="A100|H100"         # Allow both A100 and H100 GPUs
-<<<<<<< HEAD
 #SBATCH --cpus-per-task=4               # Request CPUs
 #SBATCH --mem=64G                        # Request memory
-=======
-#SBATCH --cpus-per-task=8               # Request CPUs
-#SBATCH --mem=32G                        # Request memory
->>>>>>> origin/main
 #SBATCH --time=12:00:00                  # Maximum runtime
 
 # Load necessary modules (if required)
@@ -42,26 +37,20 @@ module load cuda  # Adjust based on the actual CUDA version
 
 # Activate the Conda environment
 # source ~/softwares/anaconda3/bin/activate
-source ~/softwares/anaconda3/bin/activate
+source ~/miniconda3/bin/activate
 conda activate GFM
 
 # Change to the working directory
 cd ~/projects/LangGFM
 
 # Execute Python script with the provided dataset and model
-<<<<<<< HEAD
 # python scripts/generate_instruction_dataset.py --job_path experiments/langgfm_i/$DATASET/train
 # python scripts/generate_instruction_dataset.py --job_path experiments/langgfm_i/$DATASET/test
 python scripts/training.py --train_dir experiments/langgfm_i/$DATASET/train --eval_dir experiments/langgfm_i/$DATASET/test --model_name_or_path $MODEL --lora_rank 64 --lora_alpha 256 --lora_dropout 0. --use_rslora True --learning_rate 2.0e-5 --batch_size 64 --num_train_epochs 50 --warmup_ratio 0.2 --eval_steps 25 --save_steps 25
-=======
-# python scripts/generate_instruction_dataset.py --job_path experiments/langgfm_i/$DATASET/train_800
-# python scripts/generate_instruction_dataset.py --job_path experiments/langgfm_i/$DATASET/test_200
-python scripts/training.py --train_dir experiments/langgfm_i/$DATASET/train_800 --eval_dir experiments/langgfm_i/$DATASET/test_200 --model_name_or_path $MODEL --lora_rank 64 --lora_alpha 512 --lora_dropout 0. --use_rslora True --learning_rate 2.0e-5 --batch_size 32 --num_train_epochs 50 --warmup_ratio 0.4 --eval_steps 25 --save_steps 25
->>>>>>> origin/main
 
 EOF
 
 # 提交 SLURM 任务
 sbatch "$SLURM_SCRIPT"
 
-python scripts/training.py --train_dir experiments/langgfm_i/edge_counting/train --eval_dir experiments/langgfm_i/edge_counting/test --model_name_or_path Qwen/Qwen2.5-7B-Instruct --lora_rank 64 --lora_alpha 256 --lora_dropout 0. --use_rslora True --learning_rate 2.0e-5 --batch_size 64 --num_train_epochs 50 --warmup_ratio 0.2 --eval_steps 25 --save_steps 25
+# python scripts/training.py --train_dir experiments/langgfm_i/edge_counting/train --eval_dir experiments/langgfm_i/edge_counting/test --model_name_or_path Qwen/Qwen2.5-7B-Instruct --lora_rank 64 --lora_alpha 256 --lora_dropout 0. --use_rslora True --learning_rate 2.0e-5 --batch_size 64 --num_train_epochs 50 --warmup_ratio 0.2 --eval_steps 25 --save_steps 25

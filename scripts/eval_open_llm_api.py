@@ -30,7 +30,7 @@ def query_vllm(client, prompt: str, model_name: str):
             model=model_name,
             messages=[{"role": "user", "content": prompt}],
             temperature=0,  # Ensure deterministic output
-            # max_tokens=32   # Limit the number of output tokens to avoid redundant text
+            max_tokens=512,   # Limit the number of output tokens to avoid redundant text
             logprobs=True,
             top_logprobs=20
         )
@@ -82,7 +82,11 @@ def run_inference(file_path: str, model_name: str, api_key="12345", url="http://
             if "llama-3.3-70b" in model_name.lower():
                 # ** and space make the target token intact
                 initial_prompt += "You MUST first directly respond the answer. The answer options are `** mature **` and `** gaming **`."
-            
+        
+        if entry.get('dataset', "") in ["edge_existence", "hamilton_path", "cycle_checking", "graph_automorphic", "connectivity"]:
+            initial_prompt += "The answer options are `Yes` and `No`, i.e., <answer>Yes</answer> or <answer>No</answer>."
+        if entry.get('dataset', "") in ["shortest_path"]:
+            initial_prompt += "The answer should in a list format i.e., <answer>[x,x,x,...]</answer>"
         prediction, logprobs = query_vllm(client, initial_prompt, model_name)
         
         entry["prediction"] = prediction  # Prediction with reasoning
@@ -97,8 +101,9 @@ def run_inference(file_path: str, model_name: str, api_key="12345", url="http://
         # Debug information: Print each sample's prediction, ground truth, and verification result.
         # print(f"Prediction: {prediction}")
         print(f"Ground Truth     : {entry['output']}")
-        print(f"Predicted_answer : {entry['predicted_answer']}")
+        print(f"Prediction       : {entry['prediction']}")
         print(f"Answer           : {entry['answer']}")
+        print(f"Predicted_answer : {entry['predicted_answer']}")
         # print(f"Verification: {verdict}")
         print("-" * 50)
 
