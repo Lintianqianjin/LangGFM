@@ -51,7 +51,11 @@ def pipeline(datasets, model_name, hg_model, gpu_id=0, port=8016, min_ckpt_idx=5
             yield [i+j*100 for j,_ in enumerate(range(min_ckpt_idx, min(min_ckpt_idx+100*batch_size, max_ckpt_idx), 100))]
     
     # Log file for the server
+<<<<<<< HEAD
     log_file = f"logs/LangGFM-{safe_exp_prefix}-{safe_hg_model}.log"
+=======
+    log_file = f"LangGFM-J-{safe_exp_prefix}-{safe_hg_model}.log"
+>>>>>>> origin/main
     
     warmup_ratio = kwargs.get("warmup_ratio", 0.2)
     num_train_epochs = kwargs.get("num_train_epochs", 50)
@@ -103,7 +107,11 @@ def pipeline(datasets, model_name, hg_model, gpu_id=0, port=8016, min_ckpt_idx=5
                 inference_command = (
                     f"python scripts/eval_langgfm_api.py "
                     f"--api_key 12345 --url http://localhost:{port}/v1 "
+<<<<<<< HEAD
                     f"--file_path experiments/langgfm_i/{dataset}/test/instruction_dataset.json "
+=======
+                    f"--file_path experiments/langgfm_i/{dataset}/test_200/instruction_dataset.json "
+>>>>>>> origin/main
                     f"--model_name LangGFM-{safe_exp_prefix}-{safe_hg_model}-{epoch}"
                 )
                 
@@ -132,6 +140,7 @@ def main(model_name, datasets=None, min_ckpt_idx=50, max_ckpt_idx=1200, exp_pref
     
     # datasets = structure_datasets
     datasets = [
+<<<<<<< HEAD
         "node_counting",
         "edge_counting",
         "node_attribute_retrieval",
@@ -144,6 +153,23 @@ def main(model_name, datasets=None, min_ckpt_idx=50, max_ckpt_idx=1200, exp_pref
         "graph_automorphic",
         "shortest_path",
         "graph_structure_detection"
+=======
+        # "node_counting",
+        # "edge_counting",
+        # "node_attribute_retrieval",
+        # "edge_attribute_retrieval",
+        # "degree_counting",
+        # "edge_existence",
+        # "cycle_checking",
+        # "hamilton_path",
+        # "connectivity",
+        # "graph_automorphic",
+        # "shortest_path",
+        # "graph_structure_detection"
+        "ogbn_arxiv",
+        # "wikics",
+        # "re_europe"
+>>>>>>> origin/main
     ]
 
     gpu_ports = {

@@ -6,6 +6,7 @@ rsync_auto.sh
 /data_cache
 /model
 /LLaMA-Factory
+/DIY-LLaMA-Factory
 /experiments/**/results/
 /experiments/**/ckpts/
 /experiments/**/merged_model/
@@ -19,7 +20,8 @@ rsync_auto.sh
 /experiments/**/*.safetensors
 /experiments/**/*.md
 /experiments/**/*.jsonl
-
+**debug**
+**log**
 /input_graph_generator.py
 /src/langgfm/data/outputs/*
 !src/langgfm/data/outputs/.gitkeep

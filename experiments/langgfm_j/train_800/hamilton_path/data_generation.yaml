@@ -1,0 +1,24 @@
+common_format: &id001
+- gml
+- json
+- table
+- graphml
+common_node_feature_masked_autoencoder:
+  generator:
+    mask_node_ratio: 0.2
+    mask_edge_ratio: 0.2
+    mask_reverse_edges: true
+  augment_ratio: 1
+common_edge_feature_masked_autoencoder:
+  generator:
+    mask_node_ratio: 0.2
+    mask_edge_ratio: 0.2
+    mask_reverse_edges: true
+  augment_ratio: 1
+hamilton_path:
+  ssl_setting:
+    topology_autoencoder:
+      generator:
+        distinguish_directions: false
+      augment_ratio: 1
+  format: *id001

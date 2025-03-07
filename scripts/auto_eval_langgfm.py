@@ -50,8 +50,9 @@ def pipeline(dataset, model_name, hg_model, gpu_id=0, port=8016, min_ckpt_idx=50
             yield [i+j*25 for j,_ in enumerate(range(min_ckpt_idx, min(25*batch_size, max_ckpt_idx), 25))]
     
     # Log file for the server
-    log_file = f"logs/LangGFM-{safe_exp_prefix}-{safe_hg_model}.log"
+    log_file = f"LangGFM-{safe_exp_prefix}-{safe_hg_model}.log"
     
+<<<<<<< HEAD
     warmup_ratio = kwargs.get("warmup_ratio", 0.2)
     num_train_epochs = kwargs.get("num_train_epochs", 50)
     batch_size = kwargs.get("batch_size", 64)
@@ -60,6 +61,14 @@ def pipeline(dataset, model_name, hg_model, gpu_id=0, port=8016, min_ckpt_idx=50
         lora_modules = [
             {"name": f"LangGFM-{safe_exp_prefix}-{safe_hg_model}-{epoch}", 
              "path": f"experiments/{exp_prefix}/train/ckpts/{hg_model}/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs={num_train_epochs}/warmup_ratio={warmup_ratio}/batch_size={batch_size}/checkpoint-{epoch}", 
+=======
+    warmup_ratio = kwargs.get("warmup_ratio", 0.5)
+    batch_size = kwargs.get("batch_size", 16)
+    for epoch_list in epochs_iter():
+        lora_modules = [
+            {"name": f"LangGFM-{safe_exp_prefix}-{safe_hg_model}-{epoch}", 
+             "path": f"experiments/{exp_prefix}/train/ckpts/{hg_model}/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=20/warmup_ratio={warmup_ratio}/batch_size={batch_size}/checkpoint-{epoch}", 
+>>>>>>> origin/main
              "base_model_name": hg_model}
             for epoch in epoch_list
         ]

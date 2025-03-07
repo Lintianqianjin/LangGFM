@@ -113,10 +113,13 @@ class DatasetGenerationCoordinator:
         
         for _ in range(ssl_ratio):
             logger.debug(f"{self.textualizer.export(graph, format='table')=}")
-            ssl_sample = ssl_task_generator.generate_sample(graph)
-            generated_samples.append(
-                (ssl_sample["modified_graph"], ssl_sample["query"], ssl_sample["answer"])
-            )
+            try:
+                ssl_sample = ssl_task_generator.generate_sample(graph)
+                generated_samples.append(
+                    (ssl_sample["modified_graph"], ssl_sample["query"], ssl_sample["answer"])
+                )
+            except:
+                continue
 
         return generated_samples
 

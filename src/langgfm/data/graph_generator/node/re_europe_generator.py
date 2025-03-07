@@ -20,7 +20,7 @@ class REEuropeGraphGenerator(NodeTaskGraphGenerator):
     """
 
     directed = False
-    has_node_attr = False
+    has_node_attr = True
     has_edge_attr = True
     
     graph_description = (

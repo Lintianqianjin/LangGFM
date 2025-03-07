@@ -44,17 +44,20 @@ def pipeline(dataset, model_name, hg_model, gpu_id=0, port=8016, min_ckpt_idx=50
     # code for iter list of epochs, 50 epochs per list, epoch interval is 25, min epoch is 25 ,max epoch is 1600
     def epochs_iter():
         batch_size = 50
-        for i in range(min_ckpt_idx, max_ckpt_idx, 25*batch_size):
-            yield [i+j for j in range(min_ckpt_idx, min(25*batch_size, max_ckpt_idx), 25)]
+        epochs = list(range(min_ckpt_idx, max_ckpt_idx, 25))
+        for i in range(len(epochs)//batch_size+1):
+            yield epochs[i*batch_size:i*batch_size+batch_size]
     
     # Log file for the server
     log_file = f"{exp_prefix}_{dataset}_{hg_model.split('/')[1]}.log"
     
     warmup_ratio = kwargs.get("warmup_ratio", 0.2)
+    batch_size = kwargs.get("batch_size", 64)
+    lora_alpha = kwargs.get("lora_alpha", 256)
     for epoch_list in epochs_iter():
         lora_modules = [
             {"name": f"{hg_model}-LangGFM-{exp_prefix}-{epoch}", 
-             "path": f"experiments/{exp_prefix}/{dataset}/train_800/ckpts/{hg_model}/lora_rank=64/lora_alpha=256/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=50/warmup_ratio={warmup_ratio}/batch_size=64/checkpoint-{epoch}", 
+             "path": f"experiments/{exp_prefix}/{dataset}/train_800/ckpts/{hg_model}/lora_rank=64/lora_alpha={lora_alpha}/lora_dropout=0.0/learning_rate=2e-05/num_train_epochs=50/warmup_ratio={warmup_ratio}/batch_size={batch_size}/checkpoint-{epoch}", 
              "base_model_name": hg_model}
             for epoch in epoch_list
         ]

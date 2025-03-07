@@ -89,6 +89,7 @@ class SelfSupervisedGraphTask(ABC):
                 - 'query': The query for the self-supervised task.
                 - 'answer': The answer to the query.
         """
+        # print(f"{graph=}")
         modify_outputs = self.modify_graph(graph)
         logger.debug(f"{modify_outputs=}")
         # print(f"{modify_outputs=}")
