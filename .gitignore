@@ -1,12 +1,13 @@
 l40s_infer_llama30b.sh
 **/checkpoint/
-slurm_jobs
+/slurm_jobs
+/slurm_scripts
 rsync_auto.sh
 /baselines
 /data_cache
 /model
 /LLaMA-Factory
-/DIY-LLaMA-Factory
+/LLaMA-Factory-LangGFM
 /experiments/**/results/
 /experiments/**/ckpts/
 /experiments/**/merged_model/

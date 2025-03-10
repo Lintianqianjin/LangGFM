@@ -135,10 +135,10 @@ class DatasetGenerationCoordinator:
         )
         
         return {
-            "instruction": SYSTEM + "\n\n" + INSTRUCTION,
+            "instruction": INSTRUCTION,
             "input": input_text,
             "output": answer,
-            # "system": SYSTEM,
+            "system": SYSTEM,
             "dataset": kwargs.get("dataset", "unknown"),
             "task_type": kwargs.get("task_type", "main"),
             "graph_format": fmt,

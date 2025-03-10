@@ -417,8 +417,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
 
     @property
     def graph_description(self):
-        return "Here is an synthetic undirected graph whose nodes are marked " \
-            "with numbers, and edges are <source, target> pairs."
+        return "Here is an synthetic graph."
     
     def load_data(self):
         """
@@ -437,10 +436,16 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph representing the specific sample.
         """
-        G = json_graph.node_link_graph(self.graphs[sample_id], directed=False) # , edges="edges"
+    
+        
+        G = json_graph.node_link_graph(self.graphs[sample_id], directed=False, edges="links") # , 
         # print(f"load: {G=}")
         G = nx.MultiDiGraph(G)
         # print(f"multidi: {G=}")
+        # 删除所有边的weight属性
+        for u, v, data in G.edges(data=True):
+            if 'weight' in data:
+                del data['weight']
     
         label, query_entity = self.labels[sample_id]
         query_entity = [str(x) for x in query_entity]

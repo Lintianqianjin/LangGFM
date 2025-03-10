@@ -168,7 +168,7 @@ class Movielens1MGraphGenerator(EdgeTaskGraphGenerator):
         ]['Rating'].values[0]
         
         answer = (f"The user with node id {target_src_node_idx} is likely to rate the movie "
-          f"with node id {target_dst_node_idx} {rating} {'stars' if rating > 1 else 'star'}.")
+          f"with node id {target_dst_node_idx} <answer> {rating} {'stars' if rating > 1 else 'star'} </answer>.")
     
         return answer
         
@@ -244,5 +244,5 @@ class Movielens1MGraphGenerator(EdgeTaskGraphGenerator):
     @property
     def graph_description(self):
         return "This graph is a heterogeneous graph where users rate movies. "\
-            "Each node represents a user or a movie. The titles and genres (separated by \"|\") of the movies are known. "\
-            "Each edge represents a user rating for a movie. The rating value and the time of the rating are known."
+            "Each node represents a user or a movie. "\
+            "Each edge represents a rating record. "

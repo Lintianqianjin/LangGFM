@@ -1,12 +1,19 @@
 import os
 import torch
+import random
 import json
 import shutil
+import shlex
 import subprocess
 import fire
 import yaml
 import psutil
 from pathlib import Path
+
+
+def load_yaml_config(yaml_file):
+    with open(yaml_file, 'r') as f:
+        return yaml.safe_load(f)
 
 def generate_yaml_file(file_path=None, **kwargs):
     # run_name = file_path.replace("/", "__")
@@ -79,8 +86,7 @@ def generate_yaml_file(file_path=None, **kwargs):
         "do_train": kwargs.get("do_train", True),
         "do_eval": kwargs.get("do_eval", False),
         "do_predict": kwargs.get("do_predict", False),
-        "finetuning_type": kwargs.get("finetuning_type", "lora"),
-        "deepspeed": kwargs.get("deepspeed", None),
+        "finetuning_type": kwargs.get("finetuning_type", "lora")
     }
     if _method['finetuning_type'] == "lora":
         _lora_config = {
@@ -91,6 +97,9 @@ def generate_yaml_file(file_path=None, **kwargs):
             "use_rslora": kwargs.get("use_rslora", False),
         }
         _method = _method | _lora_config
+    
+    if kwargs.get("deepspeed", None) is not None:
+        _method["deepspeed"] = kwargs.get("deepspeed", None)
     
     _dataset = {
         "dataset": kwargs.get("dataset", ""),
@@ -123,8 +132,8 @@ def generate_yaml_file(file_path=None, **kwargs):
         "report_to": kwargs.get("report_to", "wandb"),
         "run_name": kwargs.get("run_name", kwargs.get("dataset")), # keep runname same as dataset name if not provided
         
-        "load_best_model_at_end": kwargs.get("load_best_model_at_end", False),
-        "metric_for_best_model": kwargs.get("metric_for_best_model", "eval_accuracy"),
+        # "load_best_model_at_end": kwargs.get("load_best_model_at_end", False),
+        # "metric_for_best_model": kwargs.get("metric_for_best_model", None),
     }
     _eval = {
         "eval_dataset": kwargs.get("eval_dataset", None),
@@ -138,6 +147,11 @@ def generate_yaml_file(file_path=None, **kwargs):
         "do_sample": kwargs.get("do_sample", False),
         "max_new_tokens": kwargs.get("max_new_tokens", 4),
     }
+    
+    if "output_logits" in kwargs:
+        _eval["output_logits"] = kwargs.get("output_logits", False)
+        if kwargs["output_logits"]:
+            _eval["return_dict_in_generate"] = True
     
 
     data = _model | _method | _dataset | _output | _train | _eval
@@ -153,17 +167,34 @@ def exp_dir_to_file_name(exp_dir: str) -> str:
 
 def run_llamafactory_training(ymal_path: str):
     absolute_ymal_path = os.path.abspath(ymal_path)
-    llama_factory_dir = "LLaMA-Factory"
+    yaml_config = load_yaml_config(absolute_ymal_path)
+    
+    llama_factory_dir = "LLaMA-Factory-LangGFM"
     os.chdir(llama_factory_dir)
 
-    command = f"DISABLE_VERSION_CHECK=1 llamafactory-cli train {absolute_ymal_path}"
+    master_addr = os.getenv("MASTER_ADDR", "127.0.0.1")
+    master_port = os.getenv("MASTER_PORT", str(random.randint(20001, 29999)))
+    nnodes=os.getenv("NNODES", "1")
+    node_rank=os.getenv("NODE_RANK", "0")
+    nproc_per_node=os.getenv("NPROC_PER_NODE", str(torch.cuda.device_count()))
+    # add all the key-value pairs in the yaml file as command line arguments
+    cmd_args = " ".join(f"--{key} {shlex.quote(str(value))}" for key, value in yaml_config.items())
+
+    # full cmd
+    command = (f"DISABLE_VERSION_CHECK=1 torchrun --nnodes {nnodes} --node_rank {node_rank} "
+               f"--nproc_per_node {nproc_per_node} --master_addr {master_addr} --master_port {master_port} "
+               f"src/train.py {cmd_args}")
+    print(command)
+    # exit()
+    # command = f"DISABLE_VERSION_CHECK=1 python src/train.py {absolute_ymal_path}"
 
     process = subprocess.Popen(
         command,
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-        text=True
+        text=True,
+        # env={"DISABLE_VERSION_CHECK": "1"}
     )
 
     for line in process.stdout:
@@ -188,7 +219,7 @@ def main(train_dir: str, eval_dir:str = None, exp_dir:str = None, **kwargs):
     Args:
         train_dir (str): "path1,path2,path3" or "path1" Path to the training dataset, where contains `instrcution_dataset.json`
         eval_dir (str): Path to the evaluation dataset, where contains `instrcution_dataset.json`
-        exp_dir (str): Path to the experiment directory.
+        exp_dir (str): Path to the experiment directory, where yaml and ckpt will be saved.
     """
     
     train_dirs = train_dir.strip(',').split(',')
