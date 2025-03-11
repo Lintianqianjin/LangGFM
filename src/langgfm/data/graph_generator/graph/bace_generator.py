@@ -44,7 +44,7 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
         "Key features of BACE1 inhibitors include: high affinity (stable binding to Asp32 and Asp228, mimicking APP binding), "
         "selectivity (avoiding inhibition of homologous proteins), good brain penetration (optimizing lipophilicity and reducing "
         "P-gp efflux), metabolic stability (prolonging half-life), and low side effects (minimizing non-Aβ-related impacts). "
-        "Please estimate whether the give molecule is likely to inhibit BACE-1.")
+        "Please estimate whether the given molecule is likely to inhibit BACE-1.")
         return query
 
     def get_answer(self, sample_id):

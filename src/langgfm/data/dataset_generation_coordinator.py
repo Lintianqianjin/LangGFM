@@ -112,7 +112,7 @@ class DatasetGenerationCoordinator:
         ssl_task_generator = SelfSupervisedGraphTask.create(ssl_task_name, **ssl_generator_config)
         
         for _ in range(ssl_ratio):
-            logger.debug(f"{self.textualizer.export(graph, format='table')=}")
+            # logger.debug(f"{self.textualizer.export(graph, format='table')=}")
             try:
                 ssl_sample = ssl_task_generator.generate_sample(graph)
                 generated_samples.append(
@@ -127,9 +127,10 @@ class DatasetGenerationCoordinator:
         """
         Create a final instruction-training record including token count.
         """
-        graph_text = self.textualizer.export(graph, fmt, directed=directed)
+        graph_text = self.textualizer.export(graph, fmt, simplify_if_no_multi=True, directed=directed)
         input_text = INPUT.format(
             graph_description=graph_description,
+            format=fmt,
             graph_text=graph_text,
             query=query
         )

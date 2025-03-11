@@ -4,13 +4,13 @@ import fire
 import shutil
 from langgfm.data.dataset_generation_coordinator import DatasetGenerationCoordinator
 
-LLAMA_FACTORY_DIR = "LLaMA-Factory-LangGFM"
+DATA_DIR = "data/llamafactory"
 
 def exp_dir_to_file_name(exp_dir: str) -> str:
     return exp_dir.replace("/", "__") + ".json"
 
 def update_dataset_info(file_name: str):
-    dataset_info_path = f"{LLAMA_FACTORY_DIR}/data/dataset_info.json"
+    dataset_info_path = os.path.join(DATA_DIR, "dataset_info.json")
     dataset_info = json.load(open(dataset_info_path))
 
     new_dataset_info = {
@@ -32,7 +32,8 @@ def update_dataset_info(file_name: str):
 
 def copy_instruction_dataset_to_data_dir(exp_dir, file_name: str):
     ins_ds = os.path.join(exp_dir, "instruction_dataset.json")
-    shutil.copy(ins_ds, f"{LLAMA_FACTORY_DIR}/data/{file_name}")
+    target_file_path = os.path.join(DATA_DIR, file_name)
+    shutil.copy(ins_ds, target_file_path)
 
 
 def main(job_path: str, continue_flag: bool = False, return_token_length: bool = True, tokenizer_name_or_path: str = "meta-llama/Llama-3.1-8B-Instruct"):

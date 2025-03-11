@@ -1,5 +1,6 @@
 l40s_infer_llama30b.sh
 **/checkpoint/
+**/wandb/
 /slurm_jobs
 /slurm_scripts
 rsync_auto.sh

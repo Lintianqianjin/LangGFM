@@ -102,13 +102,14 @@ def generate_yaml_file(file_path=None, **kwargs):
         _method["deepspeed"] = kwargs.get("deepspeed", None)
     
     _dataset = {
+        "dataset_dir": kwargs.get("dataset_dir", None),
         "dataset": kwargs.get("dataset", ""),
         "template": template,
         "cutoff_len": kwargs.get("cutoff_len", 15000),
         "max_samples": kwargs.get("max_samples", 1000000),
         "overwrite_cache": kwargs.get("overwrite_cache", True),
         "preprocessing_num_workers": kwargs.get("preprocessing_num_workers", max_processor_count),
-    }    
+    }
     
     _output = {
         "output_dir": kwargs.get("output_dir", output_dir),
@@ -142,16 +143,16 @@ def generate_yaml_file(file_path=None, **kwargs):
         "per_device_eval_batch_size": kwargs.get("per_device_eval_batch_size", 1),
         "eval_strategy": kwargs.get("eval_strategy", "steps"),
         "eval_steps": kwargs.get("eval_steps", 100),
-        "compute_accuracy": kwargs.get("compute_accuracy", True),
-        "predict_with_generate": kwargs.get("predict_with_generate", False),
-        "do_sample": kwargs.get("do_sample", False),
-        "max_new_tokens": kwargs.get("max_new_tokens", 4),
+        # "compute_accuracy": kwargs.get("compute_accuracy", True),
+        "predict_with_generate": kwargs.get("predict_with_generate", True),
+        # "do_sample": kwargs.get("do_sample", False),
+        # "max_new_tokens": kwargs.get("max_new_tokens", 4),
     }
     
-    if "output_logits" in kwargs:
-        _eval["output_logits"] = kwargs.get("output_logits", False)
-        if kwargs["output_logits"]:
-            _eval["return_dict_in_generate"] = True
+    # if "output_logits" in kwargs:
+    #     _eval["output_logits"] = kwargs.get("output_logits", False)
+    #     if kwargs["output_logits"]:
+    #         _eval["return_dict_in_generate"] = True
     
 
     data = _model | _method | _dataset | _output | _train | _eval
@@ -169,8 +170,8 @@ def run_llamafactory_training(ymal_path: str):
     absolute_ymal_path = os.path.abspath(ymal_path)
     yaml_config = load_yaml_config(absolute_ymal_path)
     
-    llama_factory_dir = "LLaMA-Factory-LangGFM"
-    os.chdir(llama_factory_dir)
+    # llama_factory_dir = "LangGFM-SFT"
+    # os.chdir(llama_factory_dir)
 
     master_addr = os.getenv("MASTER_ADDR", "127.0.0.1")
     master_port = os.getenv("MASTER_PORT", str(random.randint(20001, 29999)))
@@ -183,8 +184,10 @@ def run_llamafactory_training(ymal_path: str):
     # full cmd
     command = (f"DISABLE_VERSION_CHECK=1 torchrun --nnodes {nnodes} --node_rank {node_rank} "
                f"--nproc_per_node {nproc_per_node} --master_addr {master_addr} --master_port {master_port} "
-               f"src/train.py {cmd_args}")
-    print(command)
+               f"training/llamafactory/src/train.py {cmd_args}")
+    
+    print("\n",command,"\n")
+    
     # exit()
     # command = f"DISABLE_VERSION_CHECK=1 python src/train.py {absolute_ymal_path}"
 

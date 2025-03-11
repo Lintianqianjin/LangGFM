@@ -17,7 +17,7 @@ class InputGraphGenerator(ABC):
     from different datasets. Each dataset should implement its
     specific logic by subclassing this class.
     """
-    
+    raw_data_dir = "./data/graph_data"
     registry = {}
 
     @classmethod
@@ -93,6 +93,9 @@ class NodeTaskGraphGenerator(InputGraphGenerator):
     based on node-centric sampling logic.
     """
     def __init__(self, num_hops=2, sampling=False, neighbor_size: int = None, random_seed: int = None, **kwargs):
+        
+        self.raw_data_dir = os.path.join(self.raw_data_dir, "node")
+        
         self.num_hops = num_hops
         self.sampling = sampling
         self.neighbor_size = neighbor_size
@@ -208,6 +211,9 @@ class EdgeTaskGraphGenerator(InputGraphGenerator):
     based on edge-centric sampling logic.
     """
     def __init__(self, num_hops=2, sampling=False, neighbor_size: int = None, random_seed: int = None, **kwargs):
+        
+        self.raw_data_dir = os.path.join(self.raw_data_dir, "edge")
+        
         self.num_hops = num_hops
         self.sampling = sampling
         self.neighbor_size = neighbor_size
@@ -342,6 +348,7 @@ class GraphTaskGraphGenerator(InputGraphGenerator):
     def __init__(self, **kwargs):
         """
         Initialize the dataset and load the data. No sampling is required."""
+        self.raw_data_dir = os.path.join(self.raw_data_dir, "graph")
         self.load_data()
     
     @abstractmethod

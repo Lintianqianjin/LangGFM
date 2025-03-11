@@ -46,7 +46,7 @@ INSTRUCTION = "You will be given:\n" \
 
 INPUT = ("Below is the physical (domain-specific) description of the graph:\n" \
         "{graph_description}\n"
-        "Below is the textual representation of the graph:\n"
+        "Below is the textual representation of the graph in {format} format:\n"
         "```{graph_text}```\n"
         "Below is the question about the graph:\n"
         "{query}"
