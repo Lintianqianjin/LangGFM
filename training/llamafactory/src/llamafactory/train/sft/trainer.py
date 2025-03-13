@@ -333,7 +333,7 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
                         compute_result=is_last_step,
                     )
 
-                del losses, logits, labels, inputs
+                del losses, logits, labels, inputs, gen_output_logits
                 torch.cuda.empty_cache()
 
             # Gather all tensors and put them back on the CPU if we have done enough accumulation steps.
@@ -344,7 +344,7 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
                 all_inputs.to_cpu_and_numpy()
                 all_gen_output_logits.to_cpu_and_numpy()
 
-                del losses, logits, labels, inputs
+                del losses, logits, labels, inputs, gen_output_logits
                 torch.cuda.empty_cache()
 
         # After all calls to `.gather_function`, reset to `gather_for_metrics`:

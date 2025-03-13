@@ -1,4 +1,6 @@
+sleep_and_srun.sh
 l40s_infer_llama30b.sh
+.*
 **/checkpoint/
 **/wandb/
 /slurm_jobs
@@ -7,6 +9,7 @@ rsync_auto.sh
 /baselines
 /data_cache
 /Logic-RL
+/vllm
 /model
 /LLaMA-Factory
 /LLaMA-Factory-LangGFM
