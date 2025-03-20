@@ -8,7 +8,7 @@ from .._base_generator import GraphTaskGraphGenerator
 from ..utils.molecule_utils import smiles2graph
 
 @GraphTaskGraphGenerator.register("hiv")
-class BaceGraphGenerator(GraphTaskGraphGenerator):
+class HIVGraphGenerator(GraphTaskGraphGenerator):
     """
     BaceGraphGenerator: A generator for creating graphs 
     from the Bace dataset using NetworkX format.
@@ -43,9 +43,11 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
             raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample_id}")
         
         if label == "No":
-            answer = "<answer> No </answer>, the given molecule does not inhibit HIV virus replication."
+            answer = "<answer> No </answer>"
+            # , the given molecule does not inhibit HIV virus replication.
         elif label == "Yes":
-            answer = "<answer> Yes </answer>, the given molecule inhibits HIV virus replication."
+            answer = "<answer> Yes </answer>"
+            # , the given molecule inhibits HIV virus replication.
         
         return answer
     

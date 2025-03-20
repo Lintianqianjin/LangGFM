@@ -41,7 +41,7 @@ def get_evaluation_settings(dataset_name, tokenizer):
                 "max_new_tokens": 64,
             },
         }
-    elif "bace" in dataset_name:
+    elif contains_any(dataset_name, ["bace", "hiv"]):
         return {
             "compute_metrics": ComputeAucMetrics(tokenizer=tokenizer),
             "preprocess_generated_output_logits_for_metrics": BinaryClassificationProbabilityCalculator(

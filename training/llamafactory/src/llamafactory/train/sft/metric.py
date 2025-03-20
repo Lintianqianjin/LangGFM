@@ -96,11 +96,14 @@ class BinaryClassificationProbabilityCalculator:
         
         # Stack the logits to form a tensor of shape [batch_size, sequence_length, 2]
         # combined_logits = torch.stack([positive_logits, negative_logits], dim=-1)
-        logit_diff = positive_logits - negative_logits
-        
+        logit_diff = positive_logits.to(torch.float32) - negative_logits.to(torch.float32)
+        # Clip values to prevent extreme numbers that may cause instability
+        logit_diff = torch.clamp(logit_diff, min=-50, max=50)
+
         # Apply softmax on the last dimension to obtain the probability distribution
         # probabilities = torch.softmax(combined_logits, dim=-1)
-        positive_prob = 1 / (1 + torch.exp(-logit_diff))
+        # Use sigmoid for stable probability computation
+        positive_prob = torch.sigmoid(logit_diff)
         
         # print(positive_prob.shape)
         # Return the probability corresponding to the positive token (assumed at index 0)
@@ -452,36 +455,6 @@ class ComputeAucMetrics:
         # Extract predicted probabilities
         pred_tokens = np.where(pred_tokens != IGNORE_INDEX, pred_tokens, self.tokenizer.pad_token_id)
         pred_texts = self.tokenizer.batch_decode(pred_tokens, skip_special_tokens=True)
-        
-        # def extract_non_special_tokens(tokenizer, tokens):
-        #     """
-        #     参数:
-        #     tokenizer: 已初始化的tokenizer，需提供：
-        #         - tokenizer.all_special_tokens: 一个列表，包含所有special token（例如"[CLS]"、"[SEP]"等）
-        #         - tokenizer.convert_tokens_to_string: 将一个token列表转换成对应的文本piece
-        #     tokens: token的列表，可能包含special tokens
-
-        #     返回:
-        #     一个字典，键为非special token（注意：如果有重复token，后者会覆盖前者），
-        #     值为一个字典，包含两个键：
-        #         - "text_piece": 对应的文本piece
-        #         - "non_special_index": 该token在所有非special token中的顺序（从0开始）
-        #     """
-        #     result = []
-        #     non_special_counter = 0
-
-        #     for token in tokens:
-        #         # 如果该token是special token，则跳过
-        #         text_piece = tokenizer.decode([token])
-        #         if text_piece in tokenizer.all_special_tokens:
-        #             continue
-        #         result.append((
-        #             non_special_counter, text_piece, int(token)
-        #         ))
-        #         non_special_counter += 1
-
-        #     return result
-
 
         predicted_probs = []
         for sample_idx, pred_text in enumerate(pred_texts):

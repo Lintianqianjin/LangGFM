@@ -24,7 +24,7 @@ from .graph.esol_generator import ESOLGraphGenerator
 from .graph.chebi20_generator import ChEBI20GraphGenerator
 from .graph.explagraphs_generator import ExplagraphsGraphGenerator
 from .graph.zinc_generator import ZincGraphGenerator
-
+from .graph.hiv_generator import HIVGraphGenerator
 # Structure
 # 0-hop
 from .structure.node_counting_generator import NodeCountingGraphGenerator

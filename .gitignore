@@ -13,6 +13,7 @@ rsync_auto.sh
 /model
 /LLaMA-Factory
 /LLaMA-Factory-LangGFM
+/experiments
 /experiments/**/results/
 /experiments/**/ckpts/
 /experiments/**/merged_model/
@@ -26,6 +27,7 @@ rsync_auto.sh
 /experiments/**/*.safetensors
 /experiments/**/*.md
 /experiments/**/*.jsonl
+/experiments/**/token_stats.csv
 **debug**
 **log**
 /input_graph_generator.py

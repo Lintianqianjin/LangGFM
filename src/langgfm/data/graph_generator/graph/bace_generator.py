@@ -55,9 +55,11 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
             raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample_id}")
         
         if label == "No":
-            answer = "<answer> No </answer>, the given molecule is unlikely to inhibit BACE-1."
+            answer = "<answer> No </answer>"
+            # , the given molecule is unlikely to inhibit BACE-1.
         elif label == "Yes":
-            answer = "<answer> Yes </answer>, the given molecule is likely to inhibit BACE-1."
+            answer = "<answer> Yes </answer>"
+            # , the given molecule is likely to inhibit BACE-1.
         
         return answer
     
