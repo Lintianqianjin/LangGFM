@@ -122,9 +122,8 @@ shortest_path:
   train_size: 5000
   val_size: 100
   test_size: 200
-  query_format: "Please generate the shortest path in the graph from node {} to node {} in a list format
-  if there is at least one shortest path between the two nodes."
-  answer_format: "The shortest paths from node {} to node {} are as follows: {}."
+  query_format: "Please generate the shortest path(s) from node {} to node {} in a list format. "
+  answer_format: "The shortest path(s) from node {} to node {} are as follows: <answer> {} </answer>."
   file_path: "../../../../data/shortest_path/raw/data.pt"
 
 cycle_checking: 

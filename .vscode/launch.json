@@ -1,0 +1,9 @@
+{
+    "name": "Attach to SLURM Node",
+    "type": "python",
+    "request": "attach",
+    "connect": {
+        "host": "localhost",
+        "port": 5678
+    }
+}

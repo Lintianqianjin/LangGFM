@@ -22,7 +22,7 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
         """
         Load the Bace dataset and preprocess required mappings.
         """
-        self.root = './data/bace'
+        self.root = os.path.join(self.raw_data_dir, "bace")
         self.df = pd.read_csv(f"{self.root}/bace.csv",index_col=0)
         self.all_samples = list(self.df['molecule_index'].tolist())
     
@@ -33,18 +33,18 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
             
     def get_query(self, **kwargs):
         query = ("β-Secretase 1 (BACE-1) encodes a member of the peptidase A1 family of aspartic proteases. "
-        "Alternative splicing results in multiple transcript variants, at least one of which encodes a "
-        "preproprotein that is proteolytically processed to generate the mature protease. This transmembrane "
-        "protease catalyzes the first step in the formation of amyloid beta peptide from amyloid precursor protein. "
-        "Amyloid beta peptides are the main constituent of amyloid beta plaques, which accumulate in the brains of "
-        "human Alzheimer's disease patients. "
+        # "Alternative splicing results in multiple transcript variants, at least one of which encodes a "
+        # "preproprotein that is proteolytically processed to generate the mature protease. This transmembrane "
+        # "protease catalyzes the first step in the formation of amyloid beta peptide from amyloid precursor protein. "
+        # "Amyloid beta peptides are the main constituent of amyloid beta plaques, which accumulate in the brains of "
+        # "human Alzheimer's disease patients. "
         "The active site of BACE1 is located in its extracellular domain and contains a typical aspartic protease catalytic "
         "site, composed of two conserved aspartic acid residues (Asp32 and Asp228), forming a catalytic dyad. This active site "
         "is situated in a highly hydrophilic cleft, enabling it to bind to the β-site of APP for specific cleavage. "
         "Key features of BACE1 inhibitors include: high affinity (stable binding to Asp32 and Asp228, mimicking APP binding), "
         "selectivity (avoiding inhibition of homologous proteins), good brain penetration (optimizing lipophilicity and reducing "
         "P-gp efflux), metabolic stability (prolonging half-life), and low side effects (minimizing non-Aβ-related impacts). "
-        "Please estimate whether the give molecule is likely to inhibit BACE-1.")
+        "Does the given molecule inhibit BACE-1?")
         return query
 
     def get_answer(self, sample_id):
@@ -55,9 +55,11 @@ class BaceGraphGenerator(GraphTaskGraphGenerator):
             raise ValueError(f"Expected one row, but found {len(filtered_df)} rows for molecule_index={sample_id}")
         
         if label == "No":
-            answer = "No, the given molecule is unlikely to inhibit BACE-1."
+            answer = "<answer> No </answer>"
+            # , the given molecule is unlikely to inhibit BACE-1.
         elif label == "Yes":
-            answer = "Yes, the given molecule is likely to inhibit BACE-1."
+            answer = "<answer> Yes </answer>"
+            # , the given molecule is likely to inhibit BACE-1.
         
         return answer
     

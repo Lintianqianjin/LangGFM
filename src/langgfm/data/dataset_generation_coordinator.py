@@ -95,7 +95,7 @@ class DatasetGenerationCoordinator:
         """
         Generate the main-task graph (and associated query/answer).
         """
-        graph, metadata = generator.generate_graph(sample_id)
+        graph, metadata = generator.generate_graph(sample_id)   
         query = metadata["main_task"]["query"]
         answer = metadata["main_task"]["answer"]
         return graph, query, answer, metadata
@@ -112,7 +112,7 @@ class DatasetGenerationCoordinator:
         ssl_task_generator = SelfSupervisedGraphTask.create(ssl_task_name, **ssl_generator_config)
         
         for _ in range(ssl_ratio):
-            logger.debug(f"{self.textualizer.export(graph, format='table')=}")
+            # logger.debug(f"{self.textualizer.export(graph, format='table')=}")
             try:
                 ssl_sample = ssl_task_generator.generate_sample(graph)
                 generated_samples.append(
@@ -127,18 +127,19 @@ class DatasetGenerationCoordinator:
         """
         Create a final instruction-training record including token count.
         """
-        graph_text = self.textualizer.export(graph, fmt, directed=directed)
+        graph_text = self.textualizer.export(graph, fmt, simplify_if_no_multi=True, directed=directed)
         input_text = INPUT.format(
             graph_description=graph_description,
+            format=fmt,
             graph_text=graph_text,
             query=query
         )
         
         return {
-            "instruction": SYSTEM + "\n\n" + INSTRUCTION,
+            "instruction": INSTRUCTION,
             "input": input_text,
             "output": answer,
-            # "system": SYSTEM,
+            "system": SYSTEM,
             "dataset": kwargs.get("dataset", "unknown"),
             "task_type": kwargs.get("task_type", "main"),
             "graph_format": fmt,
@@ -211,13 +212,17 @@ class DatasetGenerationCoordinator:
 
         results = []
         for sample_id in tqdm(sample_indices, desc=f"Processing {dataset_name}"):
-            result = self._generate_samples_for_one_index(
-                generator=generator,
-                sample_id=sample_id,
-                output_formats=output_formats,
-                ssl_settings=ssl_settings,
-            )
-            results.append(result)
+            try:
+                result = self._generate_samples_for_one_index(
+                    generator=generator,
+                    sample_id=sample_id,
+                    output_formats=output_formats,
+                    ssl_settings=ssl_settings,
+                )
+                results.append(result)
+            except Exception as e:
+                logger.error(f"Error processing sample_id={sample_id} in {dataset_name}: {e}")
+                continue
 
         # Flatten the list of lists
         dataset_samples = [sample for task_results in results for sample in task_results]

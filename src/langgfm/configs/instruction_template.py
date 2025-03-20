@@ -28,22 +28,26 @@ SYSTEM = "You are an advanced cross-domain, cross-task graph mining expert.\n" \
         "- Handle diverse tasks, such as classification, regression, and generation.\n" \
         "- Parse and interpret multiple textual graph representations (e.g., JSON, GraphML, GML, Markdown tables).\n" \
         "- Understand the characteristics of graphs, such as directed, multiplex, heterogeneous, and dynamic.\n" \
-        "- Apply relevant domain knowledge to accurately interpret the meaning of a graph.\n" \
+        "- Apply relevant domain knowledge to accurately interpret the meaning of a graph.\n"
 
+# REASONING = "You FIRST think about the reasoning process as an internal monologue and then provide the final response. " \
+#             "The reasoning process MUST BE enclosed within <think> </think> tags. The final response MUST BE put in \boxed{}."
 
 INSTRUCTION = "You will be given:\n" \
-        "- A physical (domain-specific) description of the input graph.\n" \
+        "- A physical (domain-specific) description of a graph.\n" \
         "- A textual representation of the graph.\n" \
         "- A question about the graph.\n" \
-        "Your task is to:\n" \
-        "- Analyze the graph in conjunction with its domain context.\n" \
-        "- Provide a clear, correct, and concise answer to the question.\n" \
+        "Your task is to " \
+        "thoroughly understand the graph and conduct a comprehensive analysis to " \
+        "provide a clear, correct, and concise answer to the question.\n" \
+        "You are required to provide your answer enclosed within <answer> </answer> tags, i.e., " \
+        "<answer> your answer here </answer>.\n" 
 
 
-INPUT = ("Below is the domain-specific (physical) description of the graph:\n" \
+INPUT = ("Below is the physical (domain-specific) description of the graph:\n" \
         "{graph_description}\n"
-        "Below is the textual representation of the graph:\n"
+        "Below is the textual representation of the graph in {format} format:\n"
         "```{graph_text}```\n"
-        "Below is the question referring to the graph:\n"
+        "Below is the question about the graph:\n"
         "{query}"
 )

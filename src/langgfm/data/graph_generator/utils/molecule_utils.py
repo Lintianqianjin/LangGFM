@@ -3,7 +3,7 @@ import numpy as np
 
 from rdkit import Chem
 from rdkit.Chem import rdmolops
-
+from rdkit.Chem.MolStandardize import rdMolStandardize
 
 chem_dict = {
     1: "Hydrogen",
@@ -265,8 +265,11 @@ def smiles2graph(smiles_string, removeHs=True, reorder_atoms=False):
     :input: SMILES string (str)
     :return: graph object
     """
-
+    # print(f"{smiles_string=}")
+    # smiles_string = rdMolStandardize.StandardizeSmiles(smiles_string)
+    # print(f"standard {smiles_string=}")
     mol = Chem.MolFromSmiles(smiles_string)
+    # print(f"{mol=}")
     cycle_score = compute_cycle(mol)
     mol = mol if removeHs else Chem.AddHs(mol)
     if reorder_atoms:

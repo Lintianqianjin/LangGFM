@@ -17,7 +17,7 @@ class InputGraphGenerator(ABC):
     from different datasets. Each dataset should implement its
     specific logic by subclassing this class.
     """
-    
+    raw_data_dir = "./data/graph_data"
     registry = {}
 
     @classmethod
@@ -93,6 +93,9 @@ class NodeTaskGraphGenerator(InputGraphGenerator):
     based on node-centric sampling logic.
     """
     def __init__(self, num_hops=2, sampling=False, neighbor_size: int = None, random_seed: int = None, **kwargs):
+        
+        self.raw_data_dir = os.path.join(self.raw_data_dir, "node")
+        
         self.num_hops = num_hops
         self.sampling = sampling
         self.neighbor_size = neighbor_size
@@ -208,6 +211,9 @@ class EdgeTaskGraphGenerator(InputGraphGenerator):
     based on edge-centric sampling logic.
     """
     def __init__(self, num_hops=2, sampling=False, neighbor_size: int = None, random_seed: int = None, **kwargs):
+        
+        self.raw_data_dir = os.path.join(self.raw_data_dir, "edge")
+        
         self.num_hops = num_hops
         self.sampling = sampling
         self.neighbor_size = neighbor_size
@@ -342,6 +348,7 @@ class GraphTaskGraphGenerator(InputGraphGenerator):
     def __init__(self, **kwargs):
         """
         Initialize the dataset and load the data. No sampling is required."""
+        self.raw_data_dir = os.path.join(self.raw_data_dir, "graph")
         self.load_data()
     
     @abstractmethod
@@ -417,8 +424,7 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
 
     @property
     def graph_description(self):
-        return "Here is an synthetic undirected graph whose nodes are marked " \
-            "with numbers, and edges are <source, target> pairs."
+        return "Here is an synthetic graph."
     
     def load_data(self):
         """
@@ -437,10 +443,16 @@ class StructuralTaskGraphGenerator(InputGraphGenerator):
         Returns:
             nx.Graph: A NetworkX graph representing the specific sample.
         """
-        G = json_graph.node_link_graph(self.graphs[sample_id], directed=False) # , edges="edges"
+    
+        
+        G = json_graph.node_link_graph(self.graphs[sample_id], directed=False, edges="links") # , 
         # print(f"load: {G=}")
         G = nx.MultiDiGraph(G)
         # print(f"multidi: {G=}")
+        # 删除所有边的weight属性
+        for u, v, data in G.edges(data=True):
+            if 'weight' in data:
+                del data['weight']
     
         label, query_entity = self.labels[sample_id]
         query_entity = [str(x) for x in query_entity]

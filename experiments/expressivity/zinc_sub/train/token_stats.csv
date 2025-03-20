@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+zinc,table,10000,571,819.75,888.0,948.0,1190,887.5536,97.91121175625774,10000

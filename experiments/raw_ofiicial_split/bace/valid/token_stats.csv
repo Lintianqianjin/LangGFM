@@ -1,0 +1,2 @@
+dataset,graph_format,count,min_tokens,quantile_25_tokens,median_tokens,quantile_75_tokens,max_tokens,mean_tokens,std_dev_tokens,less_than_15000
+bace,table,151,1271,2115.0,2343.0,2609.5,3167,2334.0132450331125,361.6337002503125,151
