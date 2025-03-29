@@ -191,7 +191,7 @@ def get_train_args(args: Optional[Union[dict[str, Any], list[str]]] = None) -> _
         _set_transformers_logging()
 
     # Check arguments
-    if finetuning_args.stage != "sft":
+    if finetuning_args.stage != "sft" and finetuning_args.stage != "spt":
         if training_args.predict_with_generate:
             raise ValueError("`predict_with_generate` cannot be set as True except SFT.")
 
