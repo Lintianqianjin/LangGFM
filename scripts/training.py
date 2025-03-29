@@ -95,6 +95,7 @@ def generate_yaml_file(file_path=None, **kwargs):
             "lora_rank": kwargs.get("lora_rank", 8),
             "lora_target": kwargs.get("lora_target", "all"),
             "use_rslora": kwargs.get("use_rslora", False),
+            "use_dora": kwargs.get("use_dora", False),
         }
         _method = _method | _lora_config
     
@@ -114,10 +115,13 @@ def generate_yaml_file(file_path=None, **kwargs):
     _output = {
         "output_dir": kwargs.get("output_dir", output_dir),
         "logging_steps": kwargs.get("logging_steps", 2),
-        "save_steps": kwargs.get("save_steps", 100),
+        "save_strategy": kwargs.get("save_strategy", "steps"),
         "plot_loss": kwargs.get("plot_loss", True),
         "overwrite_output_dir": kwargs.get("overwrite_output_dir", True),
     }    
+    if _output["save_strategy"] == "steps":
+        _output["save_steps"] = kwargs.get("save_steps", 100)
+        
     _train = {
         "per_device_train_batch_size": kwargs.get("per_device_train_batch_size", 1),
         "gradient_accumulation_steps": gradient_accumulation_steps,
@@ -142,12 +146,13 @@ def generate_yaml_file(file_path=None, **kwargs):
         "val_size": kwargs.get("val_size", 0.0),
         "per_device_eval_batch_size": kwargs.get("per_device_eval_batch_size", 1),
         "eval_strategy": kwargs.get("eval_strategy", "steps"),
-        "eval_steps": kwargs.get("eval_steps", 100),
         # "compute_accuracy": kwargs.get("compute_accuracy", True),
         "predict_with_generate": kwargs.get("predict_with_generate", True),
         # "do_sample": kwargs.get("do_sample", False),
         # "max_new_tokens": kwargs.get("max_new_tokens", 4),
     }
+    if _eval["eval_strategy"] == "steps":
+        _eval["eval_steps"] = kwargs.get("eval_steps", 100)
     
     # if "output_logits" in kwargs:
     #     _eval["output_logits"] = kwargs.get("output_logits", False)

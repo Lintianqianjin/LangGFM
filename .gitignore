@@ -1,3 +1,5 @@
+/examples
+/verl
 sleep_and_srun.sh
 l40s_infer_llama30b.sh
 .*
